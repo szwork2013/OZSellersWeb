@@ -1,0 +1,514 @@
+angular.module('oz.ProviderApp')
+  .controller('ProviderPolicyController', ['$scope', '$state', '$http', '$timeout', '$sce', '$log', '$rootScope', function($scope, $state, $http, $timeout, $sce, $log, $rootScope) {
+     // $log.debug(" provider policy");
+     $scope.tabForPolicy={};
+
+    $rootScope.$watch('selectedBranchId', function (selectedBranchId) {
+      $rootScope.selectedBranchId=selectedBranchId;
+      if($scope.tabForPolicy.op == true){
+          $scope.getOP();
+      }else if($scope.tabForPolicy.rp == true){
+          $scope.getRP();
+      }else if($scope.tabForPolicy.pp == true){
+          $scope.getPP();
+      }else if($scope.tabForPolicy.dp == true){
+          $scope.getDP();
+      }else if($scope.tabForPolicy.cp == true){
+          $scope.getCP();
+      }
+      
+    });
+   // ------------------------op-----------------------------------
+     $scope.new_ordering_policy;
+     $scope.ordering_policy;
+     $scope.opEditor=0;
+     $scope.opAddEditor=0;
+     $scope.addPolicyOP=function(ordering_policy){
+	   // $log.debug(ordering_policy);
+     if(ordering_policy==""){
+      $rootScope.OZNotify("Please enter policy", 'error');  
+     }else{
+        if($rootScope.selectedBranchId && $rootScope.selectedproviderid){
+            $http({
+               method: 'POST',
+               url: ' /api/branchpolicy/'+$rootScope.selectedproviderid+'/'+$rootScope.selectedBranchId +'?type=ordering_policy',
+               data:{"text":ordering_policy}, 
+             }).success(function(data, status, headers, cfg){
+               $scope.handleAddOPData(data);
+            }).error(function(data, status, headers, cfg){
+               $rootScope.OZNotify(status, 'error');  
+           });
+        }
+     }
+   
+     };
+
+     $scope.editPolicyOP=function(ordering_policy){
+	   // $log.debug(ordering_policy);
+      if(ordering_policy==""){
+       $rootScope.OZNotify("Please enter policy", 'error');  
+      }else{
+        if($rootScope.selectedBranchId && $rootScope.selectedproviderid){ 
+           $http({
+    	        method: 'PUT',
+    	        url: ' /api/branchpolicy/'+$rootScope.selectedproviderid+'/'+$rootScope.selectedBranchId +'?type=ordering_policy',
+    	        data:{"text":ordering_policy}, 
+    	    	 }).success(function(data, status, headers, cfg){
+    	    	    $scope.handleAddOPData(data);
+    		 	   }).error(function(data, status, headers, cfg){
+    		        $rootScope.OZNotify(status, 'error');  
+    		   	 });
+          }
+      }
+     };
+
+     $scope.handleAddOPData=function(data){
+     	if(data.success){
+         $rootScope.OZNotify(data.success.message, 'success');  
+         $scope.opAddEditor=0;
+         $scope.opEditor=0;
+         $scope.opEditorEdit=0;
+         $scope.getOP();
+     	}
+     	else {
+     		console.log(data.error);
+         if(data.error.code=='AL001'){
+          $rootScope.showModal();
+        }
+     	}
+     	// console.log(data);
+     }
+
+     $scope.getOP=function(){
+      if($rootScope.selectedBranchId && $rootScope.selectedproviderid){ 
+  	    $http({
+  	          method: 'GET',
+  	          url: '/api/branchpolicy/'+$rootScope.selectedproviderid+'/'+$rootScope.selectedBranchId +'?type=ordering_policy',
+  	    	   }).success(function(data, status, headers, cfg){
+  	    	      $scope.handleGetOPData(data);
+  		    	 }).error(function(data, status, headers, cfg){
+  		         $rootScope.OZNotify(status, 'error');  
+  		    	 });
+            }
+     };
+     $scope.getOP();
+
+     $scope.handleGetOPData=function(data){
+       if(data.error){
+          if(data.error.code=='AL001'){
+            $rootScope.showModal();
+          }
+       	 $scope.opAddEditor=1;
+       
+       }
+       else if(data.success){
+       	$scope.opAddEditor=0;
+       	$scope.ordering_policy=data.success.policy.ordering_policy;
+       }
+
+     };
+     
+     $scope.cancelOP=function(){
+         $scope.opAddEditor=0;
+         $scope.opEditor=0;
+         $scope.opEditorEdit=0;
+         $scope.getOP();
+
+     };
+
+   // ------------------------rp-----------------------------------
+
+     $scope.new_refunds_policy;
+     $scope.refunds_policy;
+     $scope.rpEditor=0;
+     $scope.rpAddEditor=0;
+     $scope.addPolicyRP=function(refunds_policy){
+	   // $log.debug(refunds_policy);
+      if(refunds_policy==""){
+       $rootScope.OZNotify("Please enter policy", 'error');  
+      }else{
+       if($rootScope.selectedBranchId && $rootScope.selectedproviderid){  
+         $http({
+  	        method: 'POST',
+  	        url: ' /api/branchpolicy/'+$rootScope.selectedproviderid+'/'+$rootScope.selectedBranchId +'?type=refunds_policy',
+  	        data:{"text":refunds_policy}, 
+  	    	  }).success(function(data, status, headers, cfg){
+  	    	    $scope.handleAddRPData(data);
+  		 	    }).error(function(data, status, headers, cfg){
+  		        $rootScope.OZNotify(status, 'error');  
+  		   	 });
+          }
+        }
+     };
+
+     $scope.editPolicyRP=function(refunds_policy){
+	   // $log.debug("Saving..");
+	   // $log.debug(refunds_policy);
+      if(refunds_policy==""){
+       $rootScope.OZNotify("Please enter policy", 'error');  
+      }else{
+       if($rootScope.selectedBranchId && $rootScope.selectedproviderid){  
+         $http({
+  	        method: 'PUT',
+  	        url: ' /api/branchpolicy/'+$rootScope.selectedproviderid+'/'+$rootScope.selectedBranchId +'?type=refunds_policy',
+  	        data:{"text":refunds_policy}, 
+  	    	 }).success(function(data, status, headers, cfg){
+  	    	    $scope.handleAddRPData(data);
+  		   	 }).error(function(data, status, headers, cfg){
+  		       $rootScope.OZNotify(status, 'error');  
+  		   	 });
+          }
+        }
+     };
+
+     $scope.handleAddRPData=function(data){
+     	if(data.success){
+         $rootScope.OZNotify(data.success.message, 'success');  
+         $scope.rpAddEditor=0;
+         $scope.rpEditor=0;
+         $scope.rpEditorEdit=0;
+         $scope.getRP();
+     	}
+     	else {
+         if(data.error.code=='AL001'){
+            $rootScope.showModal();
+          }
+     		console.log(data.error);
+     	}
+     	// console.log(data);
+     }
+
+     $scope.getRP=function(){
+       if($rootScope.selectedBranchId && $rootScope.selectedproviderid){  
+    	    $http({
+    	        method: 'GET',
+    	        url: '/api/branchpolicy/'+$rootScope.selectedproviderid+'/'+$rootScope.selectedBranchId +'?type=refunds_policy',
+    	    	 }).success(function(data, status, headers, cfg){
+    	    	    $scope.handleGetRPData(data);
+    		 	 }).error(function(data, status, headers, cfg){
+    		        $rootScope.OZNotify(status, 'error');  
+    		   	 });
+          }
+     };
+   
+
+     $scope.handleGetRPData=function(data){
+       if(data.error){
+         if(data.error.code=='AL001'){
+            $rootScope.showModal();
+          }
+       	 $scope.rpAddEditor=1;
+       }
+       else if(data.success){
+       	$scope.rpAddEditor=0;
+       	$scope.refunds_policy=data.success.policy.refunds_policy;
+       	// console.log($scope.refunds_policy);
+       }
+
+     };
+
+      $scope.cancelRP=function(){
+         $scope.rpAddEditor=0;
+         $scope.rpEditor=0;
+         $scope.rpEditorEdit=0;
+         $scope.getRP();
+
+     };
+
+   // ------------------------rp-----------------------------------
+
+// ------------------------pp-----------------------------------
+
+     $scope.new_price_policy;
+     $scope.price_policy;
+     $scope.ppEditor=0;
+     $scope.ppAddEditor=0;
+     $scope.addPolicyPP=function(price_policy){
+     // $log.debug(price_policy);
+      if(price_policy==""){
+       $rootScope.OZNotify("Please enter policy", 'error');  
+      }else{
+       $http({
+          method: 'POST',
+          url: ' /api/branchpolicy/'+$rootScope.selectedproviderid+'/'+$rootScope.selectedBranchId +'?type=price_policy',
+          data:{"text":price_policy}, 
+         }).success(function(data, status, headers, cfg){
+            $scope.handleAddPPData(data);
+         }).error(function(data, status, headers, cfg){
+            $rootScope.OZNotify(status, 'error');  
+         });
+      }
+     };
+
+     $scope.editPolicyPP=function(price_policy){
+     // $log.debug("Saving..");
+     // $log.debug(price_policy);
+      if(price_policy==""){
+       $rootScope.OZNotify("Please enter policy", 'error');  
+      }else{
+       $http({
+          method: 'PUT',
+          url: ' /api/branchpolicy/'+$rootScope.selectedproviderid+'/'+$rootScope.selectedBranchId +'?type=price_policy',
+          data:{"text":price_policy}, 
+         }).success(function(data, status, headers, cfg){
+            $scope.handleAddPPData(data);
+         }).error(function(data, status, headers, cfg){
+           $rootScope.OZNotify(status, 'error');  
+         });
+       }
+     };
+
+     $scope.handleAddPPData=function(data){
+      if(data.success){
+         $rootScope.OZNotify(data.success.message, 'success');  
+         $scope.ppAddEditor=0;
+         $scope.ppEditor=0;
+         $scope.ppEditorEdit=0;
+         $scope.getPP();
+      }
+      else {
+        if(data.error.code=='AL001'){
+            $rootScope.showModal();
+          }
+        console.log(data.error);
+      }
+      // console.log(data);
+     }
+
+     $scope.getPP=function(){
+       if($rootScope.selectedBranchId && $rootScope.selectedproviderid){  
+          $http({
+              method: 'GET',
+              url: '/api/branchpolicy/'+$rootScope.selectedproviderid+'/'+$rootScope.selectedBranchId +'?type=price_policy',
+             }).success(function(data, status, headers, cfg){
+                $scope.handleGetPPData(data);
+           }).error(function(data, status, headers, cfg){
+                $rootScope.OZNotify(status, 'error');  
+             });
+         }
+     };
+   
+
+     $scope.handleGetPPData=function(data){
+       if(data.error){
+         if(data.error.code=='AL001'){
+            $rootScope.showModal();
+          }
+         $scope.ppAddEditor=1;
+       }
+       else if(data.success){
+        $scope.ppAddEditor=0;
+        $scope.price_policy=data.success.policy.price_policy;
+        // console.log($scope.price_policy);
+       }
+
+     };
+
+      $scope.cancelPP=function(){
+         $scope.ppAddEditor=0;
+         $scope.ppEditor=0;
+         $scope.ppEditorEdit=0;
+         $scope.getPP();
+
+     };
+
+
+   // ------------------------pp-----------------------------------
+
+   
+   // ------------------------dp-----------------------------------
+
+     $scope.new_delivery_policy;
+     $scope.delivery_policy;
+     $scope.dpEditor=0;
+     $scope.dpAddEditor=0;
+     $scope.addPolicyDP=function(delivery_policy){
+     // $log.debug(delivery_policy);
+      if(delivery_policy==""){
+        $rootScope.OZNotify("Please enter policy", 'error');  
+      }else{
+       $http({
+          method: 'POST',
+          url: ' /api/branchpolicy/'+$rootScope.selectedproviderid+'/'+$rootScope.selectedBranchId +'?type=delivery_policy',
+          data:{"text":delivery_policy}, 
+         }).success(function(data, status, headers, cfg){
+            $scope.handleAddDPData(data);
+         }).error(function(data, status, headers, cfg){
+            $rootScope.OZNotify(status, 'error');  
+         });
+       }
+     };
+
+     $scope.editPolicyDP=function(delivery_policy){
+     // $log.debug(price_policy);
+      if(delivery_policy==""){
+        $rootScope.OZNotify("Please enter policy", 'error');  
+      }else{
+       $http({
+          method: 'PUT',
+          url: ' /api/branchpolicy/'+$rootScope.selectedproviderid+'/'+$rootScope.selectedBranchId +'?type=delivery_policy',
+          data:{"text":delivery_policy}, 
+         }).success(function(data, status, headers, cfg){
+            $scope.handleAddDPData(data);
+         }).error(function(data, status, headers, cfg){
+           $rootScope.OZNotify(status, 'error');  
+         });
+       }
+     };
+
+     $scope.handleAddDPData=function(data){
+      if(data.success){
+         $rootScope.OZNotify(data.success.message, 'success');  
+         $scope.dpAddEditor=0;
+         $scope.dpEditor=0;
+         $scope.dpEditorEdit=0;
+         $scope.getDP();
+      }
+      else {
+          if(data.error.code=='AL001'){
+            $rootScope.showModal();
+          }
+        console.log(data.error);
+      }
+      // console.log(data);
+     }
+
+     $scope.getDP=function(){
+       if($rootScope.selectedBranchId && $rootScope.selectedproviderid){  
+        $http({
+            method: 'GET',
+            url: '/api/branchpolicy/'+$rootScope.selectedproviderid+'/'+$rootScope.selectedBranchId +'?type=delivery_policy',
+           }).success(function(data, status, headers, cfg){
+              $scope.handleGetDPData(data);
+         }).error(function(data, status, headers, cfg){
+              $rootScope.OZNotify(status, 'error');  
+           });
+       }
+     };
+
+   
+
+     $scope.handleGetDPData=function(data){
+       if(data.error){
+          if(data.error.code=='AL001'){
+            $rootScope.showModal();
+          }
+         $scope.dpAddEditor=1;
+       }
+       else if(data.success){
+        $scope.dpAddEditor=0;
+        $scope.delivery_policy=data.success.policy.delivery_policy;
+        // console.log($scope.delivery_policy);
+       }
+
+     };
+
+      $scope.cancelDP=function(){
+         $scope.dpAddEditor=0;
+         $scope.dpEditor=0;
+         $scope.dpEditorEdit=0;
+         $scope.getDP();
+     };
+
+   // ------------------------dp-----------------------------------
+
+
+// ------------------------cp-----------------------------------
+
+     $scope.new_cancellation_policy;
+     $scope.cancellation_policy;
+     $scope.cpEditor=0;
+     $scope.cpAddEditor=0;
+     $scope.addPolicyCP=function(cancellation_policy){
+     // $log.debug(cancellation_policy);
+      if(cancellation_policy==""){
+        $rootScope.OZNotify("Please enter policy", 'error');  
+      }else{
+       $http({
+          method: 'POST',
+          url: ' /api/branchpolicy/'+$rootScope.selectedproviderid+'/'+$rootScope.selectedBranchId +'?type=cancellation_policy',
+          data:{"text":cancellation_policy}, 
+         }).success(function(data, status, headers, cfg){
+            $scope.handleAddCPData(data);
+         }).error(function(data, status, headers, cfg){
+            $rootScope.OZNotify(status, 'error');  
+         });
+       }
+     };
+
+     $scope.editPolicyCP=function(cancellation_policy){
+     // $log.debug("Saving..");
+     // $log.debug(price_policy);
+      if(cancellation_policy==""){
+        $rootScope.OZNotify("Please enter policy", 'error');  
+      }else{
+       $http({
+          method: 'PUT',
+          url: ' /api/branchpolicy/'+$rootScope.selectedproviderid+'/'+$rootScope.selectedBranchId +'?type=cancellation_policy',
+          data:{"text":cancellation_policy}, 
+         }).success(function(data, status, headers, cfg){
+            $scope.handleAddCPData(data);
+         }).error(function(data, status, headers, cfg){
+           $rootScope.OZNotify(status, 'error');  
+         });
+       }
+     };
+
+     $scope.handleAddCPData=function(data){
+      if(data.success){
+         $rootScope.OZNotify(data.success.message, 'success');  
+         $scope.cpAddEditor=0;
+         $scope.cpEditor=0;
+         $scope.cpEditorEdit=0;
+         $scope.getCP();
+      }
+      else {
+          if(data.error.code=='AL001'){
+            $rootScope.showModal();
+          }
+        console.log(data.error);
+      }
+      // console.log(data);
+     }
+
+     $scope.getCP=function(){
+       if($rootScope.selectedBranchId && $rootScope.selectedproviderid){  
+
+        $http({
+            method: 'GET',
+            url: '/api/branchpolicy/'+$rootScope.selectedproviderid+'/'+$rootScope.selectedBranchId +'?type=cancellation_policy',
+           }).success(function(data, status, headers, cfg){
+              $scope.handleGetCPData(data);
+         }).error(function(data, status, headers, cfg){
+              $rootScope.OZNotify(status, 'error');  
+           });
+     }
+     };
+   
+
+     $scope.handleGetCPData=function(data){
+       if(data.error){
+          if(data.error.code=='AL001'){
+            $rootScope.showModal();
+          }
+         $scope.cpAddEditor=1;
+       }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+       else if(data.success){
+        $scope.cpAddEditor=0;
+        $scope.cancellation_policy=data.success.policy.cancellation_policy;
+        // console.log($scope.cancellation_policy);
+       }
+
+     };
+
+     $scope.cancelCP=function(){
+         $scope.cpAddEditor=0;
+         $scope.cpEditor=0;
+         $scope.cpEditorEdit=0;
+         $scope.getCP();
+     };
+
+   // ------------------------cp-----------------------------------
+
+ }]);
+

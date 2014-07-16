@@ -1,0 +1,383 @@
+/**
+* Main routing configuration
+**/
+
+angular.module('oz.OrderZappApp')
+.config(['$stateProvider', '$urlRouterProvider', '$uiViewScrollProvider', function($stateProvider, $urlRouterProvider, $uiViewScrollProvider) { 
+  $uiViewScrollProvider.useAnchorScroll(); 
+
+  $stateProvider
+    .state('home', {
+      // url: '',
+      abstract: true,
+      templateUrl: 'OrderZapp/home/views/home.tpl.html'
+    })    
+    .state('home.start', {
+      // url: '/signup',
+      views: {
+        'oz-signup' : {
+          templateUrl:  'user/views/oz.signup.tpl.html',
+          controller: 'OZRegistrationController'
+        },
+        'oz-signin' : {
+          templateUrl:  'user/views/oz.signin.tpl.html',
+          controller : 'OZSigninController'
+        }
+      }
+    })  
+    .state('home.start-forgotpassword', {
+      views: {
+        'oz-signup' : {
+          templateUrl:  'user/views/oz.signup.tpl.html',
+          controller: 'OZRegistrationController'
+        },
+        'oz-signin' : {
+          templateUrl:  'user/views/oz.forgotpassword.tpl.html',
+          controller : 'OZSigninController'
+        }
+      }
+    }) 
+    .state('staticcontent', {
+      abstract: true,
+      templateUrl: 'OrderZapp/staticContent/views/oz.staticcontent.tpl.html'
+    })     
+    .state('staticcontent.terms', {
+      views: {
+        'static-content': { 
+          templateUrl: 'OrderZapp/staticContent/views/oz.staticcontent.terms.tpl.html'
+        }
+      }
+    })
+    .state('staticcontent.privacy', {
+      views: {
+        'static-content': { 
+          templateUrl: 'OrderZapp/staticContent/views/oz.staticcontent.privacy.tpl.html'
+        }
+      }
+    })
+    .state('usersettings', {
+      abstract: true,
+      templateUrl: 'user/views/oz.user.settings.tpl.html',
+      controller: 'UserSettingController',
+      resolve: {
+        MyUserData: function(UserSettingService, $rootScope) {
+          return UserSettingService.MySettings.GetMyUserSettings({userid: $rootScope.usersession.currentUser.userid}).$promise;
+        }
+      }
+    })     
+    .state('usersettings.manage', {
+      views: {
+        'user-settings': { 
+          templateUrl: 'user/views/oz.user.manage.settings.tpl.html'
+        }
+      }
+    })
+    .state('seller', {
+      abstract: true,
+      templateUrl: 'ProviderWall/ManageSeller/views/oz.seller.tpl.html',
+      controller: 'ManageSellerController',
+      resolve: {
+        MyProviderList: function(ManageSellerService, $rootScope) {
+          return ManageSellerService.MyProvider.GetMyProvider().$promise;
+        },
+        ProviderCategoryList: function(ManageSellerService, $rootScope) {
+          return ManageSellerService.LevelOneCategory.GetSellerCategory().$promise;
+        } 
+      }
+    })     
+    .state('seller.view', {
+      views: {
+        'manage-seller': { 
+          templateUrl: 'ProviderWall/ManageSeller/views/oz.seller.manage.tpl.html'
+        }
+      }
+    })
+    .state('sellerbranch', {
+      abstract: true,
+      templateUrl: 'ProviderWall/ManageBranch/views/oz.seller.branch.tpl.html',
+      controller: 'ManageSellerBranchController',
+      resolve: {
+        MyProviderBranchList: function(ManageSellerService, $rootScope) {
+          if (!$rootScope.selectedproviderid){
+            var NoProviderBranchExist = 'No branch exist for this seller account';
+            return NoProviderBranchExist;
+          } else {
+            return ManageSellerService.MyProviderBranch.GetMyProviderBranch({providerid:$rootScope.selectedproviderid}).$promise;
+          }
+        },
+        MySelectedProvider: function(ManageSellerService, $rootScope) {
+          if (!$rootScope.selectedproviderid) {
+            var NoProviderExist = 'No provider exist for this account';
+            return NoProviderExist;
+          } else {
+            return ManageSellerService.SelectedProvider.GetSelectedProvider({providerid:$rootScope.selectedproviderid}).$promise;
+          }
+        }
+      }
+    })     
+    .state('sellerbranch.view', {
+      views: {
+        'manage-branch': { 
+          templateUrl: 'ProviderWall/ManageBranch/views/oz.seller.branch.manage.tpl.html'
+        }
+      }
+    })
+    .state('providerorders', {
+      abstract: true,
+      templateUrl: 'ProviderWall/ManageOrders/views/oz.providerwall.tpl.html',
+      controller: 'ProviderController',
+      resolve: {
+        GetBranches: function(ProviderServices, $rootScope) {
+          if (!$rootScope.selectedproviderid) {
+            var NoProviderExist = 'No seller exist for this account';
+            return NoProviderExist;            
+          } else {
+            return ProviderServices.get_branches.getBranches({providerid:$rootScope.selectedproviderid}).$promise;
+          }
+        },
+        BranchOrderCount: function(ProviderServices,GetBranches, $rootScope) {
+          if (!$rootScope.selectedBranchId) {
+            if (GetBranches.success !== undefined && GetBranches.success.branches.length > 0) {
+              var branchid = GetBranches.success.branches[0].branchid;
+              return ProviderServices.get_order_count.getOrderCount({providerid:$rootScope.selectedproviderid, branchid: branchid}).$promise;
+            } else {
+              var NoBranchExist = 'No branch exist for this seller';
+              return NoBranchExist;
+            }
+          } else {
+            return ProviderServices.get_order_count.getOrderCount({providerid:$rootScope.selectedproviderid, branchid: $rootScope.selectedBranchId}).$promise;
+          }
+          
+        }
+      }
+    })     
+    .state('providerorders.view', {
+      views: {
+        'provider-view' : {
+            templateUrl:  'ProviderWall/ManageOrders/views/oz.providerwall.provider-view.tpl.html'
+          },
+        'order-counter' : {
+          templateUrl : 'ProviderWall/ManageOrders/views/oz.providerwall.order-counter.tpl.html'
+        },
+        'advertisment' : {
+          templateUrl : 'ProviderWall/ManageOrders/views/oz.providerwall.advertisment.tpl.html'
+        }
+      }
+    })
+    .state('providerorders.view.orderbyBranch', {
+      controller:'ManageOrderController',
+      templateUrl:  'ProviderWall/ManageOrders/views/oz.providerContent.orderbyBranch.tpl.html'
+    }) 
+    .state('manageproduct', {
+      abstract: true,
+      templateUrl: 'ProviderWall/ManageProduct/views/oz.manage.product.tpl.html',
+      controller:'ManageProductController',
+      resolve: {
+        userproducttags: function(ProviderServices, $rootScope) {
+          var n = ProviderServices.get_productUserTags.getProductUserTags().$promise;
+          console.log(n);
+          return n;
+        }
+      }  
+    })     
+    .state('manageproduct.view', {
+      views: {
+        'manage-product': { 
+          templateUrl:  'ProviderWall/ManageProduct/views/oz.providerContent.manageProduct.tpl.html'
+          }
+        }
+    })
+    .state('managediscount', {
+      abstract: true,
+      templateUrl: 'ProviderWall/ManageDiscount/views/oz.manage.discount.tpl.html'
+    })     
+    .state('managediscount.view', {
+      views: {
+        'manage-discount': { 
+          controller:'OZProductDiscountController',
+          templateUrl:'ProviderWall/ManageDiscount/views/oz.providerContent.manageDiscount.tpl.html'
+        }
+      }
+    })
+    .state('managedeliverycharges', {
+      abstract: true,
+      templateUrl: 'ProviderWall/ManageDeliveryCharges/views/oz.deliverycharges.tpl.html',
+      resolve: {
+        CountryData: function(GetLocationService, $rootScope) {
+          return GetLocationService.LocationData.GetAllLocationData({keydata: 'country', data:'country'}).$promise;
+        },
+        StateData: function(GetLocationService, CountryData, $rootScope) {
+          if (CountryData.success && CountryData.success.country.length !== 0) {
+            var countries = CountryData.success.country;
+            var result = countries.indexOf("IN");
+            if (result !== -1) {
+              return GetLocationService.LocationData.GetAllLocationData({keydata: 'state', data:'IN'}).$promise;
+            } else {
+              return GetLocationService.LocationData.GetAllLocationData({keydata: 'state', data:CountryData.success.country[0]}).$promise;
+            }
+          }
+        },
+        CityData: function(GetLocationService, StateData, $rootScope) {
+          if (StateData.success && StateData.success.states.length !==0) {
+            var states = StateData.success.states;
+            var result = states.indexOf("Maharashtra");
+            if (result !== -1) {
+              console.log(result);
+              return GetLocationService.LocationData.GetAllLocationData({keydata: 'city', data:'Maharashtra'}).$promise;
+            } else {
+              return GetLocationService.LocationData.GetAllLocationData({keydata: 'city', data:StateData.success.states[0]}).$promise;
+            }
+          }
+        },
+        ZipcodeData: function(GetLocationService, CityData, $rootScope) {
+          if (CityData.success && CityData.success.city.length !==0) {
+            console.log(CityData);
+            var cities = CityData.success.city;
+            var result = cities.indexOf("Pune");
+            if (result !== -1) {
+              console.log(result);
+              return GetLocationService.LocationData.GetAllLocationData({keydata: 'zipcode', data:'Pune'}).$promise;
+            } else {
+              return GetLocationService.LocationData.GetAllLocationData({keydata: 'zipcode', data:CityData.success.city[0]}).$promise;
+            }
+          }
+        }
+      }
+    })     
+    .state('managedeliverycharges.view', {
+      views: {
+        'manage-deliverycharges': { 
+          controller:'ManageDeliveryChargesController',
+          templateUrl:'ProviderWall/ManageDeliveryCharges/views/oz.deliverycharges.manage.tpl.html'
+        }
+      }
+    })
+    .state('managepolicy', {
+      abstract: true,
+      templateUrl: 'ProviderWall/ManagePolicy/views/oz.manage.policy.tpl.html'
+    })     
+    .state('managepolicy.view', {
+      views: {
+        'manage-policy': { 
+          controller:'ProviderPolicyController',
+          templateUrl:'ProviderWall/ManagePolicy/views/oz.providerContent.policy.tpl.html'
+        }
+      }
+    })
+    .state('manageprices', {
+      abstract: true,
+      templateUrl: 'ProviderWall/ManagePrices/views/oz.manage.prices.tpl.html'
+    })     
+    .state('manageprices.view', {
+      views: {
+        'manage-prices': { 
+          controller:'ManagePriceController',
+          templateUrl:'ProviderWall/ManagePrices/views/oz.providerContent.managePrice.tpl.html'
+        }
+      }
+    })
+    .state('manageusergroup', {
+      abstract: true,
+      templateUrl: 'ProviderWall/ManageUserGroup/views/oz.manage.usergroup.tpl.html'
+    })     
+    .state('manageusergroup.view', {
+      views: {
+        'manage-usergroup': { 
+          controller:'OZUserGroupController',
+          templateUrl:'ProviderWall/ManageUserGroup/views/oz.providerContent.userGroup.tpl.html'
+        }
+      }
+    }) 
+
+   .state('manageproductavailability', {
+      abstract: true,
+      templateUrl: 'ProviderWall/ManageProductAvailability/views/oz.manage.product.availability.tpl.html'
+    })     
+    .state('manageproductavailability.view', {
+      views: {
+        'manage-productavailability': { 
+          controller:'OZProductAvailabilityController',
+          templateUrl:'ProviderWall/ManageProductAvailability/views/oz.manage.product.availability.content.tpl.html'
+        }
+      }
+    }) 
+
+    .state('oz', {
+      url: '',
+      abstract: true,
+      templateUrl: 'OrderZapp/oz/views/oz.tpl.html',
+    })    
+    .state('oz.ozWall', {
+      // url: '/oz',
+      resolve : {
+        getInitialCount : function(OZGetCount)
+        {
+                  return OZGetCount.getCount.count().$promise;
+        }
+      },
+      views: {
+        'OrderZappWallView' : {
+            templateUrl:  'OrderZapp/oz/views/oz.oz_content.tpl.html',
+            controller : 'OZWallController',
+          },
+        'search' : {
+          templateUrl : 'OrderZapp/oz/views/oz.sidebar.search.tpl.html',
+          controller : 'OZWallSearchController',
+        },
+        'counters' : {
+          templateUrl : 'OrderZapp/oz/views/oz.counter.tpl.html',
+          controller : 'OZWallCounterController',
+        }
+      }
+    })
+    .state('oz.ozWall.ozOrderViewContent',{
+      templateUrl : 'OrderZapp/oz/views/oz.order.view.tpl.html',
+    })
+    .state('oz.ozWall.ozProductContent', {
+      templateUrl : 'OrderZapp/oz/views/oz.product.view.tpl.html',
+    }) 
+    .state('oz.ozWall.ozT&CContent', {
+      templateUrl : 'OrderZapp/oz/views/oz.termsandconditions.view.tpl.html'
+    })
+    
+    .state("oz.ozWall.ozHelp", {
+      templateUrl : 'OrderZapp/oz/views/oz.helpContents.tpl.html'
+    })
+    .state("oz.ozWall.ozAbout", {
+      templateUrl : 'OrderZapp/oz/views/oz.about.tpl.html'
+    })
+    .state("oz.ozWall.ozPrivacy", {
+      templateUrl : 'OrderZapp/oz/views/oz.privacy.tpl.html'
+    })
+    .state("oz.ozWall.ozSellerParticipationAgreement",{
+      templateUrl : 'OrderZapp/oz/views/oz.seller.participation.agreement.tpl.html'
+    }) .state("oz.ozWall.ozProviderAcceptance",{
+      templateUrl : 'OrderZapp/oz/views/oz.provider.acceptance.tpl.html'
+    })
+    .state('oz.ozWall.ozManageCategoriesTab',
+    {
+          templateUrl : 'OrderZapp/oz/views/oz.manage_categories.tpl.html',
+          controller : 'OZAdminController'
+    })
+    .state('oz.ozWall.ozManageUserdefinedTags',
+    {
+      templateUrl : 'OrderZapp/oz/views/oz.userdefined.tags.tpl.html',
+      controller : 'OZAdminController'
+    }).
+    state('oz.ozWall.ozManageSellerParticipation',
+    {
+      templateUrl : 'OrderZapp/oz/views/oz.seller.participation.manage.tpl.html',
+      controller : 'OZAdminController'
+    })
+    .state('oz.ozWall.ozManageProductConfigurations',
+    {
+      templateUrl : 'OrderZapp/oz/views/oz.ozWall.ozManageProductConfiguration.tpl.html' ,
+      controller : 'OZAdminController'
+    })
+    .state('oz.ozWall.ozManageLocations',
+    {
+      templateUrl : 'OrderZapp/oz/views/oz.manage.zipcodes.tpl.html',
+      controller : 'OZManageLocationController'
+    })
+
+  }]);

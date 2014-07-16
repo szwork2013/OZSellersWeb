@@ -1,0 +1,90 @@
+<div id="oz-signup-view" class="container">
+
+	<form style="width: 90%; margin-top: 60px; " name="signupForm" id="oz-signup-form" novalidate>
+
+		<center>
+			<h3 style=" text-transform:uppercase; font-weight: bold; font-size:20px;color: #8A847C;" id="oz-signin-heading">Sign Up</h3>
+		</center>
+
+		<div id="oz-signup-input-group" class="input-group">
+	  	<input type="text" name="mobileno" class="form-control" ng-model="user.mobileno" ng-pattern="/^[0-9]{10}$/" placeholder="Mobile No." required />
+		</div>
+
+		<div id="oz-signup-input-group" class="input-group">
+	  	<input type="email" name="email" class="form-control" ng-model="user.email" placeholder="Email" required />
+	  </div>
+
+		<div id="oz-signup-input-group" class="input-group">
+	  	<input type="password" name="password" class="form-control" ng-model="user.password" ng-minlength="3" ng-maxlength="15" placeholder="Password" required />
+		</div>
+
+		<div id="oz-signup-input-group" class="input-group">
+	  	<input type="text" name="username" class="form-control" ng-model="user.username" placeholder="Username" required />
+		</div>
+
+    <div id="oz-signup-input-group" class="input-group">
+				<p id="oz-general-terms">By clicking Sign Up, you agree to our<a href="" style="color: rgb(97, 139, 8);" ng-click="showStaticTemplates('pp')" id="oz-general-terms-link" class="link"> Privacy</a>&nbsp;and&nbsp;<a href="" style="color: rgb(97, 139, 8);" ng-click="showStaticTemplates('tc')" id="oz-general-terms-link" class="link">Terms</a>.</p>
+		</div>
+
+	</form>	
+
+	<form ng-show="verify_user" style="width: 90%;" name="verificationForm" id="oz-signup-form" novalidate>
+
+		<div id="oz-signup-input-group" class="input-group">
+	  	<input type="text" name="token" class="form-control" ng-model="verification.token" placeholder=" verification token" required />
+		</div>
+
+		<div id="oz-signup-input-group" class="input-group">
+			<p id="oz-general-terms">Please enter verification token sent to your mobile no.</p>
+		</div>
+
+	</form>
+
+	<form ng-show="consumer_verify_user" style="width: 90%;" name="consumerVerificationForm" id="oz-signup-form" novalidate>
+
+		<div id="oz-signup-input-group" class="input-group">
+	  	<input type="text" name="consumertoken" class="form-control" ng-model="consumerverification.token" placeholder="verification token" required />
+		</div>
+
+		<div id="oz-signup-input-group" class="input-group">
+			<p id="oz-general-terms">Please enter verification token sent to your mobile no.</p>
+		</div>
+
+	</form>
+
+	<div ng-show="consumer_verify_user" id="oz-signup-input-group" class="input-group">
+		<button style="width: 90%;background-color:#EC670D;border-color: #E47814; font-size:18px;font-weight:bold;border-radius:1px;" class="btn btn-primary" ng-click="consumerVerify()">Verify</button>
+	</div>
+
+	<div ng-show="verify_user" id="oz-signup-input-group" class="input-group">
+		<button style="width: 90%;background-color:#EC670D;border-color: #E47814; font-size:18px;font-weight:bold;border-radius:1px;" class="btn btn-primary" ng-click="verify()">Verify</button>
+	</div>
+
+  <div ng-hide="(verify_user || consumer_verify_user)" id="oz-signup-input-group" class="input-group">
+		<button style="width: 90%;background-color:#EC670D;border-color: #E47814; font-size:18px;font-weight:bold;border-radius:1px;" class="btn btn-primary" ng-click="signup()">Sign Up</button>
+	</div>
+
+	<div id="oz-signin-input-group" ng-show="(signupForm.mobileno.$dirty && signupForm.mobileno.$invalid) || (signupForm.email.$dirty && signupForm.email.$invalid) || (signupForm.password.$dirty && signupForm.password.$invalid) || (signupForm.username.$dirty && signupForm.username.$invalid) || (signupForm.$invalid && signupForm.submitted)" style="width: 90%; background-color:black; opacity:.85;color:white;letter-spacing:1px; font-size:11px;" class="alert alert-danger">
+    <ul class="error-ul">
+      <li ng-show="(signupForm.mobileno.$dirty && signupForm.mobileno.$error.required) || (signupForm.mobileno.$error.required && signupForm.submitted)">Mobile No. is required!</li>
+      <li ng-show="(signupForm.mobileno.$dirty && signupForm.mobileno.$error.pattern) || (signupForm.mobileno.$invalid && signupForm.submitted)">Mobile No. must be in 10 digits only!
+      <li ng-show="(signupForm.email.$dirty && signupForm.email.$invalid)|| (signupForm.email.$invalid && signupForm.submitted)">Email is required and must be valid!</li>
+      <li ng-show="(signupForm.password.$dirty && signupForm.password.$error.required)|| (signupForm.password.$error.required && signupForm.submitted)">Password is required!</li>
+      <li ng-show="(signupForm.password.$dirty && (signupForm.password.$error.minlength ||signupForm.password.$error.maxlength ))|| (signupForm.password.$invalid && signupForm.submitted)">Password must be between 3 and 15 characters!</li>
+      <li ng-show="(signupForm.username.$dirty && signupForm.username.$error.required)|| (signupForm.username.$invalid && signupForm.submitted)">Username is required!</li>
+    </ul>
+  </div> 
+
+  <div id="oz-signin-input-group" ng-show="(verificationForm.token.$dirty && verificationForm.token.$invalid) || (verificationForm.$invalid && verificationForm.submitted)" style="width: 90%; background-color:black; opacity:.85;color:white;letter-spacing:1px; font-size:11px;" class="alert alert-danger">
+    <ul class="error-ul">
+    	<li ng-show="(verificationForm.token.$dirty && verificationForm.token.$error.required) || (verificationForm.token.$invalid && verificationForm.submitted)">Verification token is required!
+    </ul>
+  </div> 
+
+  <div id="oz-signin-input-group" ng-show="(verificationForm.consumertoken.$dirty && verificationForm.consumertoken.$invalid) || (verificationForm.$invalid && verificationForm.submitted)" style="width: 90%; background-color:black; opacity:.85;color:white;letter-spacing:1px; font-size:11px;" class="alert alert-danger">
+	  <ul class="error-ul">
+	  	<li ng-show="(verificationForm.consumertoken.$dirty && verificationForm.consumertoken.$error.required) || (verificationForm.consumertoken.$invalid && verificationForm.submitted)">Verification token is required!
+	  </ul>
+	</div> 
+
+</div>

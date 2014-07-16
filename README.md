@@ -1,4 +1,4 @@
-OrderZapp-Sellers-Web
-=====================
+OrderZapp-ServerApp
+===================
 
-OrderZapp Sellers Web application
+OrderZapp is an e-commerce marketplace

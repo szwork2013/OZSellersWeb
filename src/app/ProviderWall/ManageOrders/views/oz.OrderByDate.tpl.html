@@ -1,0 +1,25 @@
+<!--/*
+  * Overview: order Template
+  * Dated: 24-07-14.
+  * Author: Bhagyashri Jangam
+  * 
+  */-->
+<li ng-repeat="dayorder in orders">
+<a href="" class="prodo-cursor" ng-init="showorders=true" ng-click="showorders = showorders === false ? true: false;">
+ <div class="   orderdate" ng-show="(tabForOrders.recieved ==true || tabForOrders.approval == true) && dayorder.deliverydatetime" ><!--  2nd line -->
+        <span class="bold" ng-show="tabForOrders.recieved == true ">Preferred  Delivery Date : </span>
+        <span class="bold" ng-show="tabForOrders.approval == true "> Delivery Date : </span>
+      
+       <span class="oz-contentsRight">
+       {{getDate(dayorder)}}
+       <!--  {{ dayorder.deliverydatetime.day  }} / {{ dayorder.deliverydatetime.month  }} / {{ dayorder.deliverydatetime.year  }}  -->
+       </span> 
+      <span class="pull-right badge bgGray radius5" ng-bind="dayorder.suborders.length"></span>
+  </div>
+ </a> 
+  <ul class="listStyle" ng-show="showorders ==true">
+    <li  ng-repeat="order in dayorder.suborders" class="todoitem">
+       <div ng-include="'../ProviderWall/ManageOrders/views/oz.OrderContent.tpl.html'"></div>
+    </li>
+  </ul>
+</li>

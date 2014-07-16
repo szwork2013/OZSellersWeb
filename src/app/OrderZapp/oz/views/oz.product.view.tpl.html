@@ -1,0 +1,26 @@
+<br> <div class = "mainOrderContainer" ng-if =  "products.length > 0">
+        <div ng-repeat = "product in products">
+          <div class = "highlighrOrderContainer">
+        	<div class = "subOrderContainer" class = "fontsize">
+        	    <b class = "fontsize">Delivery Date : </b><span ng-bind = "product.deliverydate" class = "fontsize"></span>
+        	</div>
+        	    
+
+            <table class = "table table-hover " >
+                <tr class = "fontsize">
+                		<th style  = 'text-align : center'> Product Name </th>
+                		<th style  = 'text-align : center'> Quantity </th>
+                		<th style  = 'text-align : center'> Price </th>
+                </tr>
+
+                <tr ng-repeat = "list in product.products" class = "fontsize">
+                        <td ng-bind = "list.productname+' ['+list.productcode+ '] ' "></td>
+                        <td ng-bind = "list.qty + ' ' + list.uom"></td>
+                        <td ng-bind = "list.orderprice + ' ' + list.currency" style  = 'text-align : right;padding-left : 4%'></td>
+                </tr>
+
+            </table>
+
+          </div>
+        </div>
+     </div>

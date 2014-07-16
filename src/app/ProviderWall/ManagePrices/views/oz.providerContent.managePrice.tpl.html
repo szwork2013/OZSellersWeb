@@ -1,0 +1,257 @@
+<div style="border: 1px solid #EEE8E8; border-radius:6px; padding:10px;" class="">
+ <div ng-show="ErrMsging" id="ErrMsging" class="prodo-ErrMsging" ></div>
+     
+
+
+<div  ng-show="selectedBranchId  " >
+<div ng-show="productPricelist.length>0" id="tabs">
+    <ul id="tabPrice" class=" policyTab nav nav-pills" ng-init="tabForPrice.np = true;
+      tabForPrice.hp = false; tabForPrice.ahp = false;searchPro1='' ; searchPro=''" >
+      <li class="tabPolicyLi" ng-class="{active3 : tabForPrice.np == 1}" >
+        <a  class="prodo-cursor" id="prodoCommentTab" ng-click="tabForPrice.np = true;
+      tabForPrice.hp = false; tabForPrice.ahp = false;searchPro1='' ; searchPro=''">
+         Normal Price
+        </a>
+      </li>
+
+      <li class="tabPolicyLi" ng-class="{active3 : tabForPrice.hp == 1}"  >
+        <a id="prodoCommentSearchTab" class="prodo-cursor" ng-click="tabForPrice.np = false;
+      tabForPrice.hp = true; tabForPrice.ahp = false;searchPro1='' ; searchPro=''" >
+     	 Holding Price
+         </a>
+      </li>
+
+   <!--     <li class="tabPolicyLi" ng-class="{active3 : tabForPrice.ahp == 1}"  >
+        <a id="prodoCommentSearchTab" class="prodo-cursor" ng-click="tabForPrice.np = false;
+      tabForPrice.hp = false; tabForPrice.ahp = true;searchPro1='' ; searchPro=''" >
+      	 Activate Holding Price
+         </a>
+      </li> -->
+    </ul>
+</div>
+
+ <center>
+   <img ng-hide="noProducts || products.length>0" src = '../assets/images/spinner1.GIF' >
+</center>
+
+<div class="tab-content" >
+
+ <div id="Remove" ng-show="tabForPrice.np == true" >
+     <br/>
+   
+   
+
+
+
+
+
+<div  ng-show="productPricelist.length>0"> <!--  first tab  -->
+
+
+
+ <input ng-show = 'products.length > 0' class = "form-control" type = "text " ng-model = 'searchPro1' style = 'margin-bottom : 4px' placeholder = 'Filter products from the list'  ng-hide = 'products.length === 0'>
+      <div ng-hide="editorPrice.editorEnabled==1" class="prodo.productAdmin1 pull-right "  id="prodo.productAdmin"  >
+			
+		        <a href="" class="btn btn-primary  btn-bottom-margin" ng-click="enableEditorPrice()" ><i class="fa fa-pencil-square-o "></i>  &nbsp; Update </a>
+
+		        <br>
+	 </div>	
+
+  <form  id="Edit"  name="priceForm"   >   
+ 
+
+    <table class="table child table-hover  prodo-productTableFont">
+    
+    <tr>
+       <td colspan="3" ng-show="editorPrice.editorEnabled==1">
+        
+        <div  ng-show="priceForm.$dirty" class="prodo-product-Invalid">{{priceForm.price.$error}}
+              <span ng-show="priceForm.$error.required">Please enter valid product price</span>
+              <span ng-show="priceForm.$error.min">Product price can not be less than 0 </span>
+             <!--  <span ng-show="priceForm.$error.number">Please enter valid price</span> -->
+        </div> 
+
+                  <a   ng-click="changePrice(productPricelist); " class="btn btn-primary   pull-right prodo-margin5"   ><i class="fa fa-floppy-o"></i>  &nbsp; Save</a>
+                  <a class="btn btn-default   pull-right prodo-margin5"  ng-click="disableEditorPrice();" > <i class="glyphicon glyphicon-remove"></i> &nbsp; Cancel </a>
+     </td>
+    </tr>
+
+    	<tr>
+    		<td class="ozWidth30">
+    			<b>Product Name [product code]</b>
+    		</td>
+    		<td class="ozWidth30">
+    			<b> Current Price</b>
+    		</td>
+    		<td class="ozWidth30" ng-show="editorPrice.editorEnabled==1">
+    			<b> New Price</b>
+    		</td>
+    	</tr>
+
+    	<tr ng-repeat="product in productPricelist | filter : searchPro1"> 
+    	   <td class="ozWidth30">
+    		 <span >{{product.productname}} [ {{product.productcode}} ]</span>
+    		</td>
+    		<td class="ozWidth30">
+    			&#x20B9;   <span ng-bind="product.price "></span>
+    		</td><!-- class="prodo-product-Invalid" prodo-validation-->
+    		<td class="ozWidth30" ng-show="editorPrice.editorEnabled==1">
+    			 <input  ng-model="product.newprice"   id="prodo-product-features_textfield" class="form-control prodo-validation" ng-maxlength="50" min="0" type="number"   required  />  
+    			
+    			    
+
+    		</td>
+    	</tr>
+     
+
+    </table>
+
+ </form>
+
+
+
+</div>
+
+ </div> 
+<!-- //////////////////////////  holding price //////////////////////////////////////////////////-->
+  <div id="Remove" ng-show="tabForPrice.hp == true" >
+    <br/>
+   
+    <input ng-show = 'products.length > 0' class = "form-control" type = "text " ng-model = 'searchPro' style = 'margin-bottom : 4px' placeholder = 'Filter products from the list'  ng-hide = 'products.length === 0'>
+
+    <table class = 'table table-hover' ng-show = 'products.length > 0' >
+      <tr >
+        <td style = 'width : 15%'>
+          <b>Product Name</b>
+        </td>
+        <td style = 'width : 10%'>
+          <b>Current Price</b>
+        </td>
+        <td style = 'width: 40%'>
+          <b>Product Holding Price</b>
+        </td>
+        <td style = 'width : 35%'>
+          <b>Status</b>
+        </td>
+      </tr>
+      <tr ng-repeat = 'list in products | filter : searchPro'>
+        <td ng-bind = 'list.productname'></td>
+        <td >
+          {{list.price.currency}} {{list.price.value}} / {{list.price.uom}}
+        </td>
+    
+        <td ng-hide = 'list.editing || list.holding_price.fromdate === null || list.holding_price.todate === null || list.holding_price === undefined' style = 'width: 50%' >
+
+         <div style = 'width : 18%; float : left' ng-if = 'list.holding_price.value !== null'> {{list.holding_price.currency}} {{list.holding_price.value}} / {{list.holding_price.uom}}</div>&nbsp;
+
+          <div style = 'width : 39%; float : left' ng-if = 'list.holding_price.fromdate !== null'> From : <span ng-bind = 'list.holding_price.fromdate | date : "yyyy-MM-dd HH:mm:ss "'></span> </div>&nbsp;
+          <div style = 'width : 39%; float : right' ng-if = 'list.holding_price.todate !== null'> To: <span ng-bind = 'list.holding_price.todate | date : "yyyy-MM-dd HH:mm:ss "'></span></div>
+        </td>
+        <td ng-show = 'list.holding_price === undefined || list.holding_price.fromdate === null || list.holding_price.todate === null'>
+        </td>
+
+          <td ng-show = 'list.editing' style = 'width: 50%'>
+            <div > 
+       <form name="priceFormHolding">
+
+        <div  ng-show="priceFormHolding.$dirty" class="prodo-product-Invalid">{{priceForm.price.$error}}
+              <span ng-show="priceFormHolding.$error.required">Please enter valid product price</span>
+              <span ng-show="priceFormHolding.$error.min">Product price can not be less than 0 </span>
+         </div> 
+
+             <table>
+               <tr>
+                 <td colspan="2">
+                   <b> Enter Holding Price</b>   <input  placeholder="Enter Holding Price" ng-model="list.holding_price.value"   id="prodo-product-features_textfield" class="form-control prodo-validation" ng-maxlength="50" min="0" type="number"   required  />  
+                 </td>
+               </tr>
+               <tr>
+                 <td>
+                    <b> From</b> 
+                 </td>
+                 <td>
+                    <b> To</b> 
+                 </td>
+               </tr>
+
+               <tr>
+                 <td>
+                    <input type="text" placeholder="Please select start date" ng-model="list.holding_price.fromdate" class="form-control disableEditingMode" name="startDate"  datepicker-popup="{{format}}"  is-open="opened1" min="today"  datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" readonly="true"> 
+                 </td>
+                 <td>
+                     <input type="text" placeholder="Please select start date" ng-model="list.holding_price.todate" class="form-control disableEditingMode" name="startDate"  datepicker-popup="{{format}}"  is-open="opened3" min="today"  datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close"  readonly="true">  
+                 </td>
+               </tr>
+
+               <tr>
+                 <td clss="MyTimepicker">
+                      <timepicker  ng-model="list.holding_price.fromdate"  show-meridian="ismeridian" ng-change = 'verifyStartDate(list.holding_price.fromdate, list)' name="minweight" ></timepicker> 
+
+                 </td>
+                 <td clss="MyTimepicker">
+                    <timepicker ng-model="list.holding_price.todate"  show-meridian="ismeridian" ng-change = 'verifyEndDate(list.holding_price.todate, list)'></timepicker> 
+                 </td>
+               </tr>
+
+
+
+             </table>
+         </form>
+              </div>          
+
+
+          </td>
+          <td ng-hide = 'list.editing'>
+              <button ng-show="list.holding_price" class = 'pull-right  btn btn-sm btn-default' ng-click = 'edit(list)' ><i class="fa fa-pencil"></i>  &nbsp; Holding Price</button>
+
+                <button ng-hide="list.holding_price" class = 'pull-right  btn btn-sm btn-default' ng-click = 'edit(list)' ><i class="fa fa-plus"></i>  &nbsp; Holding Price</button>
+
+               <button class = 'btn btn-sm btn-primary' ng-click = 'activateHolpingPrice(list)'  ng-show = "list.holding_price   && list.holding_price.status !=='active' "> Activate</button>
+
+                 <em style="color:green"  ng-show = "list.holding_price   && list.holding_price.status =='active' "> Activated</em>
+
+          </td>
+            <td ng-show = 'list.editing'>
+
+              <a  ng-click = 'addHoldingPrice(list)' class="btn btn-primary btn-sm"   ><i class="fa fa-floppy-o"></i>  &nbsp; Save</a>
+              <a class="btn btn-default btn-sm"  ng-click = 'cancel(list)' > <i class="glyphicon glyphicon-remove"></i> &nbsp; Cancel </a>
+
+
+          </td>
+      </tr>
+    </table>
+
+
+
+ </div> 
+
+<!-- //////////////////////////  holding price //////////////////////////////////////////////////-->
+
+<!--   <div id="Remove" ng-show="tabForPrice.ahp == true" >
+    <br/>
+
+ </div>  -->
+</div>
+</div>
+ <div  class="OZ-PolicyNotAddedMsg row" ng-hide="branches.length>0" >
+       <div class="col-md-12">
+         <div class="no-message"> 
+         <center>
+           <em style="font-size:16px;"> Please add branch first to perform further operations </em>
+         </center>
+       </div>
+      </div>
+     </div>
+
+  <div  class="OZ-PolicyNotAddedMsg row" ng-show="noProducts  && branches.length>0">
+       <div class="col-md-12">
+          <div  class="no-message"> 
+                  <center>
+                  <em style="font-size:16px;"> No Products added </em>
+                  </center>
+           </div>
+        </div>
+      </div>
+
+      
+</div>

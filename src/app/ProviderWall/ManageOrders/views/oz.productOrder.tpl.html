@@ -1,0 +1,74 @@
+<!--/*
+  * Overview: order Template
+  * Dated: 24-06-14.
+  * Author: Bhagyashri Jangam
+  * 
+  */-->
+<li  ng-repeat="order in orders">
+    <div class="list-group-item orderbox"> <!-- ngrepeat outer box css-->
+         
+      <div class=" margintop5 productsDate highlighrOrderContainer"  ><!--  2nd line -->
+       <em class="oz-adress" ng-class="{TextGray : order.deliverydate < today }"> {{ fromNow(order.deliverydate)  }}</em>  
+      </div>
+
+      <hr class="myhr">
+
+        <div > <!-- product table -->
+           <div class="row margintop5">
+              <div  class="col-md-3">
+                <span class="bold">Product name </span> 
+              </div>
+               <div  class="col-md-3">
+                <span class="bold">Product code  </span> 
+              </div>
+               <div  class="col-md-2">
+                <span class="bold">Quantity </span> 
+              </div>
+               <div  class="col-md-2">
+                <span class="bold">Price </span> 
+              </div>
+               <div  class="col-md-2">
+                <span class="bold">Total </span> 
+              </div>
+        </div>
+
+        <div class="row margintop5 rowSideMargin" ng-repeat="product in order.products" ng-class-even="'OZ-evenRow'"> <!-- ng-repeat for product -->
+              <div  class="col-md-3">
+                
+                 <span class=" oz-contentsRight "> {{product.productname}} </span>
+<!--                     <span class="oz-productcode"> [ {{product.productcode}} ] </span> --> 
+              </div>
+                   <div  class="col-md-3">
+                
+                 <!-- <span class=" oz-contentsRight"> {{product.productname}} </span> -->
+                    <span class=""> {{product.productcode}}  </span> 
+              </div>
+
+              <div  class="col-md-2">
+                 <span class=" oz-contentsRight">{{product.qty}} {{product.uom}}</span>
+              </div>
+
+              <div  class="col-md-2">
+                 <span class=" oz-contentsRight">{{product.currency}}  {{product.orderprice/product.qty}}</span>
+              </div>
+
+              <div  class="col-md-2">
+                 <span class=" oz-contentsRight"> &#x20B9;  {{product.orderprice}}</span>
+              </div>
+       </div> <!-- ng-repeat for product -->
+
+
+
+                  <hr class="myhr">
+  
+
+
+
+          </div>  <!-- product table -->
+        
+    </div> <!-- ngrepeat outer box css-->
+       <hr class="myhr">
+
+
+
+</li>

@@ -1,0 +1,21 @@
+
+
+<div class = 'container'>
+    <div>
+        <textarea class = 'form-control' ng-model = ' newTagsToBeSent' style = 'width : 100%;margin : 9px;'></textarea>
+        <button class = 'btn btn-info' ng-click = 'insertProductTags()' style = "margin : 5px; float : right">Submit</button>
+    </div>
+
+    <!-- <table class = 'table '> --> <br> <input type = 'text' class = 'form-control' ng-model = 'filters' style = 'width : 100%;margin : 9px;'>
+    <table class = 'table table-hover'>
+        <tr>
+            <td style = 'width : 70%; font-weight : bold'> Tag Name </td>
+            <td style = 'width : 30%; font-weight : bold'>Action  </td>
+        </tr>
+
+        <tr ng-repeat = 'lists in allTagsContent | filter : filters'>
+            <td ng-bind = 'lists'></td>
+            <td><button class = 'btn-sm' ng-click = 'removeTagContent(lists)'>Delete</button>
+        </tr>
+    </table>
+</div>

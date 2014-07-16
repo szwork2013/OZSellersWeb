@@ -1,0 +1,28 @@
+<div style="min-height:700px;" id="oz-signin-view" class="container">
+    <center><h4>Search </h4></center>
+    <input type = "text" class = "form-control" id="searchText" general-search ng-model="searchText" placeholder = 'Provider Search'/>
+    <div style = "margin-top: 5%;margin-bottom: 0%;" ng-if = 'errors !== ""'> <span ng-bind = "errors" style = "margin-bottom : 10%;"></span> </div>
+
+     <br>
+
+     <div ng-repeat = "list in providers" ng-click="getAllBranches(list)" class="cursorPointerHyperlink" style = "margin-bottom : 10%;">
+         <img ng-src = "{{list.providerlogo.image}}" style="height:28px;width:28px;">
+         <span ng-bind = "list.providername"></span>
+         <br>
+     </div>
+
+<!--      <input class = "form-control"  />
+       -->
+      <div class="row">
+        <div class="col-md-12">
+            <p class="input-group">
+              <input type="text" class="form-control" ng-model = "suborderid.content"  placeholder = "Suborder Search" />
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="getSuborderDetails()"><i class="glyphicon glyphicon-search"></i></button>
+              </span>
+            </p>
+        </div>
+    </div>
+
+
+</div>
