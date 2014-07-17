@@ -18,6 +18,29 @@ angular.module('oz.ProviderApp')
    };
     $scope.init();    
 
+   $scope.orderConfigStatus=[];
+  $scope.orderConfigStatus=[
+    {
+      index:1,
+      order_status:"orderreceived"
+    },
+    {
+      index:2,
+      order_status:"accepted"
+    },{
+      index:7,
+      order_status:"ordercomplete"
+    },
+    {
+      index:null,
+      order_status:"cancelled"
+    },
+    {
+      index:null,
+      order_status:"rejected"
+    }] ;
+
+console.log($scope.orderConfigStatus);
 
    $rootScope.$watch('selectedBranchId', function (selectedBranchId) {
       $scope.init();  

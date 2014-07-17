@@ -32,15 +32,6 @@ return {
     var t_status;
     var t_orderid;
     $scope.today=Date();
-    // $scope.showAccept =false;
-    // $scope.showReject =false;
-    // $scope.showCancel =false;
-    // $scope.showProduction =false;
-    // $scope.showPacking =false;
-    // $scope.showShiptostore =false;
-    // $scope.showDeliverytocustomer =false;
-    // $scope.showPickfromstore =false;
-    // $scope.showDone =false;
 
 
 $scope.fromNow = function (time) {
@@ -213,8 +204,8 @@ $scope.getDate=function(dayorder){
     if(status=='factorytostore'){
        $scope.tab1=false;
        $scope.tab2=false;
-       $scope.tab3=true;
-       $scope.tab4=false;
+       $scope.tab3=false;
+       $scope.tab4=true;
      }
 
     if(status=='storepickup'){
@@ -240,7 +231,38 @@ $scope.getDate=function(dayorder){
 
   };
 
+
+//                   orderstart
+// accept            accepted
+// production        inproduction
+// packing           packing
+// Shiptostore       factorytostore
+// delivertohome     storepickup
+// showPickfromstore homedelivery
+
+// cancel            cancelled
+// reject            rejected
+            
+
+
+
+// $scope.showAction=[];
+// for (var i = $scope.orderConfigStatus.length - 1; i >= 0; i--) {
+//  $scope.showAction.unshift($scope.orderConfigStatus.indexOf($scope.orderConfigStatus[i]));
+// };
+
+// console.log($scope.showAction);
+
   $scope.displayAction = function (status) {
+
+
+// for (var i = $scope.orderConfigStatus.length - 1; i >= 0; i--) {
+//  if(status)
+
+
+
+// }
+
 
     if(status=='orderstart'){
         $scope.showAccept =true;

@@ -310,18 +310,18 @@
                <div ng-class="{active4 : tab2 == 1}"></div>
             </li>
 
-             <li class="tabtrackingLi"  >
+            <!--  <li class="tabtrackingLi"  >
               <a id="prodoCommentSearchTab" class="prodo-cursor" ng-click="tab1 = false;
             tab2 = false; tab3 = true;tab4 = false;" >
                <div id="circle" ng-class="{ activate : ( order.status== 'factorytostore' || order.status=='storepickup'  || order.status=='homedelivery' || order.status=='ordercomplete'  )     }" ></div>    <div id="line"></div>
                </a>
                <div ng-class="{active4 : tab3 == 1}"></div>
-            </li>
+            </li> -->
 
              <li class="tabtrackingLi"   >
               <a id="prodoCommentSearchTab" class="prodo-cursor" ng-click="tab1 = false;
             tab2 = false; tab3 = false;tab4 = true;" >
-               <div id="circle" ng-class="{activate : ( order.status=='storepickup'  || order.status=='homedelivery' ||  order.status=='ordercomplete'  )     }" ></div>   
+               <div id="circle" ng-class="{activate : ( order.status== 'factorytostore' || order.status=='storepickup'  || order.status=='homedelivery' ||  order.status=='ordercomplete'  )     }" ></div>   
                </a>
                <div ng-class="{active4 : tab4 == 1}"></div>
             </li>
@@ -341,11 +341,12 @@
                    <p>  <i class="oz-tickNotActive fa fa-check fa-lg" ng-class="{activatetick :(order.status=='packing' || order.status=='factorytostore' || order.status=='storepickup'  || order.status=='homedelivery' || order.status=='ordercomplete'  )   }"></i> Packing</p>
          </div>
 
-          <div  class="oz-paddingLeft" id="" ng-show="tab3 == true" >
+         <!--  <div  class="oz-paddingLeft" id="" ng-show="tab3 == true" >
                    <p>  <i class="oz-tickNotActive fa fa-check fa-lg" ng-class="{activatetick :( order.status=='factorytostore' || order.status=='storepickup'  || order.status=='homedelivery' || order.status=='ordercomplete'  )   }"></i> Factory to store</p>
-         </div>
+         </div> -->
 
           <div class="oz-paddingLeft" id="" ng-show="tab4 == true" >
+                    <p>  <i class="oz-tickNotActive fa fa-check fa-lg" ng-class="{activatetick :( order.status=='factorytostore' || order.status=='storepickup'  || order.status=='homedelivery' || order.status=='ordercomplete'  )   }"></i> Factory to store</p>
                     <p><i class="oz-tickNotActive fa fa-check fa-lg" ng-class="{activatetick : (  order.status=='storepickup'  || order.status=='homedelivery' || order.status=='ordercomplete'  )   }"></i> Store pickup</p>
                     <p><i class="oz-tickNotActive fa fa-check fa-lg" ng-class="{activatetick :  (  order.status=='homedelivery' || order.status=='ordercomplete'  )   }"></i> Home delivery</p>
                     <p><i class="oz-tickNotActive fa fa-check fa-lg" ng-class="{activatetick :  ( order.status=='ordercomplete'  )  }"></i> Order complete </p>
