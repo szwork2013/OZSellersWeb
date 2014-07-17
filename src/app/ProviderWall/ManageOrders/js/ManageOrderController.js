@@ -22,22 +22,37 @@ angular.module('oz.ProviderApp')
   $scope.orderConfigStatus=[
     {
       index:1,
-      order_status:"orderreceived"
+      order_status:"orderstart",
+      action:"accept"
     },
     {
       index:2,
-      order_status:"accepted"
+      order_status:"accepted",
+      action:"done"
     },{
       index:7,
-      order_status:"ordercomplete"
+      order_status:"ordercomplete",
+      action:null
     },
     {
       index:null,
-      order_status:"cancelled"
+      order_status:"cancelled",
+      action:null
     },
     {
       index:null,
-      order_status:"rejected"
+      order_status:"rejected",
+      action:null
+    },
+    {
+      index:8,
+      order_status:"storepickup",
+      action:"delivertohome"
+    },
+    {
+      index:9,
+      order_status:"homedelivery",
+      action:"delivertohome"
     }] ;
 
 console.log($scope.orderConfigStatus);

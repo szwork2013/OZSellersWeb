@@ -600,7 +600,11 @@ left: 35px;
   border-right: solid 5px transparent;
 
   }
-.oz-paddingLeft{padding-left: 120px;}
+.displaynone{display: none;}
+.capital {
+    text-transform: capitalize;
+}
+.oz-paddingLeft{padding-left: 140px;}
 .oz-actionDropdown{padding: 3px;width: 125px;height: 25px;font-size: 13px;}
 .oz-adress{  }
 .oz-productcode{font-size: 24px; word-wrap: break-word;}

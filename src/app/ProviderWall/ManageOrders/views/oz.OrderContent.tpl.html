@@ -247,20 +247,34 @@
 <div class="pull-right" ng-hide="order.status=='ordercomplete' || order.status=='cancelled' || order.status=='rejected'">
         
             <div class="btn-group paddingRight10"><!-- <span class="Valign">Action</span> -->
-              <a class=" dropdown-toggle " ng-click="displayAction(order.status)" type="button" data-toggle="dropdown">
+              <a class=" dropdown-toggle "  type="button" data-toggle="dropdown">
                  <span class="fa fa-ellipsis-v fa-3x prodo-cursor"></span>
               </a>
               <ul class="dropdownRightPosition dropdown-menu" style="right:4px" role="menu">
-                  <li class="" ng-show="showAccept==true">
+                               <!--ng-click -call showDisplay for previous menu where states not defined in ref dic  -->
+              
+
+                   <li class="" ng-repeat="config in orderConfigStatus" ng-show="config.action !==null && config.order_status==order.status "> 
+                    <a  ng-hide="order.status =='storepickup'  || order.status =='homedelivery'" href="#"   ng-click="changeStatus(config.action , order)"><span class="capital"> {{config.action}} </span></a>
+                    
+                      <a href="#" ng-show=" order.status =='storepickup'"  ng-click="changeStatus('pickfromstore' , order)"><span class="capital">Pick from store  </span></a>
+
+                    <a href="#"  ng-show=" order.status =='homedelivery'" ng-click="changeStatus('delivertohome' , order)"><span class="capital"> Delivery to customer </span></a>
+
+                  </li>
+
+                   <li class="" ng-show="order.status=='orderstart'"> 
+                     <a href="#"   ng-click="changeStatus('reject' , order)"><span class="capital"> Reject</span></a>
+                  </li>
+
+                  <li class="" ng-hide="order.status=='orderstart' || order.status=='done'">
+                    <a href="#"   ng-click="changeStatus('cancel' , order)"><span class="capital"> Cancel</span></a>
+                  </li>
+                  
+
+
+                  <!--   <li class="" ng-show="showAccept==true">
                     <a href="#" ng-click="changeStatus('accept' , order)">Accept</a>
-                  </li>
-
-                  <li class="" ng-show="showReject==true"> 
-                   <a href="#" ng-click="changeStatus('reject' , order)">Reject</a>
-                  </li>
-
-                  <li class="" ng-show="showCancel==true">
-                    <a href="#" ng-click="changeStatus('cancel' , order)">Cancel</a>
                   </li>
 
                   <li class="" ng-show="showProduction==true">
@@ -285,7 +299,7 @@
 
                   <li class="" ng-show="showDone==true">
                    <a href="#" ng-click="changeStatus('done' , order)">Done</a>
-                  </li>
+                  </li> -->
 
                 </ul>
                </div>
@@ -331,14 +345,14 @@
             <div class="tab-content trackingTabContent" >
       <br/>
          <div id=""  class="oz-paddingLeft" ng-show="tab1 == true" >
-                    <p><i class="oz-tickNotActive fa fa-check fa-lg" ng-class="{   activatetick : ( order.status=='orderstart' || order.status=='accepted' || order.status=='inproduction' || order.status=='packing' || order.status=='factorytostore' || order.status=='storepickup'  || order.status=='homedelivery' || order.status=='ordercomplete'  )   }"></i> Order start</p>
+                    <p ng-style="displayAction('orderstart')" class="displaynone"><i class="oz-tickNotActive fa fa-check fa-lg" ng-class="{   activatetick : ( order.status=='orderstart' || order.status=='accepted' || order.status=='inproduction' || order.status=='packing' || order.status=='factorytostore' || order.status=='storepickup'  || order.status=='homedelivery' || order.status=='ordercomplete'  )   }"></i> Order start</p>
 
-                    <p><i class="oz-tickNotActive fa fa-check fa-lg" ng-class="{activatetick :  ( order.status=='accepted' || order.status=='inproduction' || order.status=='packing' || order.status=='factorytostore' || order.status=='storepickup'  || order.status=='homedelivery' || order.status=='ordercomplete'  )   }"></i> Approved</p>
+                    <p ng-style="displayAction('accepted')" class="displaynone"><i class="oz-tickNotActive fa fa-check fa-lg" ng-class="{activatetick :  ( order.status=='accepted' || order.status=='inproduction' || order.status=='packing' || order.status=='factorytostore' || order.status=='storepickup'  || order.status=='homedelivery' || order.status=='ordercomplete'  )   }"></i> Approved</p>
          </div>
 
           <div class="oz-paddingLeft" id="" ng-show="tab2 == true" >
-                   <p>  <i class="oz-tickNotActive fa fa-check fa-lg" ng-class="{activatetick : (order.status=='inproduction' || order.status=='packing' || order.status=='factorytostore' || order.status=='storepickup'  || order.status=='homedelivery' || order.status=='ordercomplete'  )   }"></i> In production</p>
-                   <p>  <i class="oz-tickNotActive fa fa-check fa-lg" ng-class="{activatetick :(order.status=='packing' || order.status=='factorytostore' || order.status=='storepickup'  || order.status=='homedelivery' || order.status=='ordercomplete'  )   }"></i> Packing</p>
+                   <p ng-style="displayAction('inproduction')" class="displaynone">  <i class="oz-tickNotActive fa fa-check fa-lg" ng-class="{activatetick : (order.status=='inproduction' || order.status=='packing' || order.status=='factorytostore' || order.status=='storepickup'  || order.status=='homedelivery' || order.status=='ordercomplete'  )   }"></i> In production</p>
+                   <p ng-style="displayAction('packing')" class="displaynone">  <i class="oz-tickNotActive fa fa-check fa-lg" ng-class="{activatetick :(order.status=='packing' || order.status=='factorytostore' || order.status=='storepickup'  || order.status=='homedelivery' || order.status=='ordercomplete'  )   }"></i> Packing</p>
          </div>
 
          <!--  <div  class="oz-paddingLeft" id="" ng-show="tab3 == true" >
@@ -346,10 +360,10 @@
          </div> -->
 
           <div class="oz-paddingLeft" id="" ng-show="tab4 == true" >
-                    <p>  <i class="oz-tickNotActive fa fa-check fa-lg" ng-class="{activatetick :( order.status=='factorytostore' || order.status=='storepickup'  || order.status=='homedelivery' || order.status=='ordercomplete'  )   }"></i> Factory to store</p>
-                    <p><i class="oz-tickNotActive fa fa-check fa-lg" ng-class="{activatetick : (  order.status=='storepickup'  || order.status=='homedelivery' || order.status=='ordercomplete'  )   }"></i> Store pickup</p>
-                    <p><i class="oz-tickNotActive fa fa-check fa-lg" ng-class="{activatetick :  (  order.status=='homedelivery' || order.status=='ordercomplete'  )   }"></i> Home delivery</p>
-                    <p><i class="oz-tickNotActive fa fa-check fa-lg" ng-class="{activatetick :  ( order.status=='ordercomplete'  )  }"></i> Order complete </p>
+                    <p  ng-style="displayAction('factorytostore')" class="displaynone">  <i class="oz-tickNotActive fa fa-check fa-lg" ng-class="{activatetick :( order.status=='factorytostore' || order.status=='storepickup'  || order.status=='homedelivery' || order.status=='ordercomplete'  )   }"></i> Factory to store</p>
+                    <p  ng-style="displayAction('storepickup')"  ng-show="order.deliverytype=='pickup' "  class="displaynone"><i class="oz-tickNotActive fa fa-check fa-lg" ng-class="{activatetick : (  order.status=='storepickup'  || order.status=='homedelivery' || order.status=='ordercomplete'  )   }"></i> Store pickup</p>
+                    <p  ng-style="displayAction('homedelivery')"  ng-show="order.deliverytype=='home' " class="displaynone"><i class="oz-tickNotActive fa fa-check fa-lg" ng-class="{activatetick :  (  order.status=='homedelivery' || order.status=='ordercomplete'  )   }"></i> Home delivery</p>
+                    <p ng-style="displayAction('ordercomplete')" class="displaynone"><i class="oz-tickNotActive fa fa-check fa-lg" ng-class="{activatetick :  ( order.status=='ordercomplete'  )  }"></i> Order complete </p>
          </div>
          <div ng-show="tab1==1 || tab2==1 || tab3==1 || tab4==1" >
                 <i ng-click="tab1=0; tab2 =0; tab3=0; tab4 =0; " class="prodo-cursor ozUpArrow  glyphicon glyphicon-circle-arrow-up " ></i>
