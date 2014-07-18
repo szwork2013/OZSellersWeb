@@ -130,6 +130,18 @@ angular.module('oz.OrderZappApp')
         }
       }
     })
+    .state('pickupaddress', {
+      abstract: true,
+      templateUrl: 'ProviderWall/ManagePickupAddress/views/oz.seller.pickupaddress.tpl.html',
+      controller: 'ManagePickupAddressController'
+    })     
+    .state('pickupaddress.view', {
+      views: {
+        'manage-pickupaddress': { 
+          templateUrl: 'ProviderWall/ManagePickupAddress/views/oz.seller.pickupaddress.manage.tpl.html'
+        }
+      }
+    })
     .state('providerorders', {
       abstract: true,
       templateUrl: 'ProviderWall/ManageOrders/views/oz.providerwall.tpl.html',
