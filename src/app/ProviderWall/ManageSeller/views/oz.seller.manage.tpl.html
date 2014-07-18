@@ -69,7 +69,7 @@
 
 					<div id="oz-signup-input-group" class="input-group">
 						<h5>Order Process Configuration:</h5>
-						<p style="font-size:12px;" class="text-muted">**We offer two payment options Cash-on-deliver (COD) and Payment by Card. COD is optional, all buyers get to pay through card by default. Please select COD if you offer this payment option to buyers.</p> 
+						<p style="font-size:12px;" class="text-muted">**Please select type of processess.</p> 
 					 	<div style="margin:0px;" class="row">
 					 		<div ng-repeat="status in order_status_list" class="col-md-3">
 					 			<input type="checkbox" ng-model="status.require" ng-disabled="status.default">&nbsp;{{status.order_status}}
@@ -206,6 +206,16 @@
 						<div  id="oz-signup-input-group" class="input-group">
 							<input type="file" class="form-control" ng-file-select="onFileSelectUpdate($files)" >
 							<p class="text-muted"><small>** To edit existing logo please select choose file.</small></p>
+						</div>
+
+						<div id="oz-signup-input-group" class="input-group">
+							<h5>Order Process Configuration:</h5>
+							<p style="font-size:12px;" class="text-muted">**Please select type of processess.</p> 
+						 	<div style="margin:0px;" class="row">
+						 		<div ng-repeat="status in edit_order_status_list" class="col-md-5">
+						 			<input type="checkbox" ng-model="status.require" ng-disabled="status.default">&nbsp;{{status.order_status}}
+						 		</div>
+						 	</div>  			 	
 						</div>
 
 						<div id="oz-signup-input-group" class="input-group">

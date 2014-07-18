@@ -12,6 +12,7 @@ angular.module('oz.ProviderApp')
     $scope.providers_list = [];
     $scope.providers_category_list = [];
     $scope.order_status_list = [];
+    $scope.edit_order_status_list = [];
     $scope.sellercategory = {categoryid: '', categoryname: ''};
     var file;
     var fileUpdate;
@@ -190,6 +191,30 @@ angular.module('oz.ProviderApp')
     };
 
     $scope.openEditSeller = function(Seller){
+      if (Seller.orderprocess_configuration) {
+        var orderprocess = [];
+        var status_list = [];
+        orderprocess = angular.copy(Seller.orderprocess_configuration);
+        if (orderprocess.length !== 0) {
+          for (var i = 0; i < orderprocess.length; i++) {
+            status_list.push(orderprocess[i].order_status);
+          }
+          if (status_list.length !== 0 && $scope.order_status_list.length !== 0) {
+            for (var i = 0; i < $scope.order_status_list.length; i++) {
+              var result = status_list.indexOf($scope.order_status_list[i].order_status);
+              if (result !== -1) {
+                if ($scope.order_status_list[i].default && $scope.order_status_list[i].default == true) {
+                  $scope.edit_order_status_list.push({index:$scope.order_status_list[i].index, order_status:$scope.order_status_list[i].order_status, require:true, default:$scope.order_status_list[i].default});
+                } else {
+                  $scope.edit_order_status_list.push({index:$scope.order_status_list[i].index, order_status:$scope.order_status_list[i].order_status, require:true});
+                }
+              } else {
+                $scope.edit_order_status_list.push({index:$scope.order_status_list[i].index, order_status:$scope.order_status_list[i].order_status, require:false});
+              }
+            } 
+          }
+        }
+      }
       $scope.editseller = angular.copy(Seller);
       $('#editSellerModal').modal({ 
         keyboard: false,
@@ -200,6 +225,12 @@ angular.module('oz.ProviderApp')
 
     // function to send and stringify user registration data to Rest APIs
     $scope.jsonEditSellerData = function(){
+      var edit_order_status_list = [];
+      for (var i = 0; i < $scope.edit_order_status_list.length; ++i) {
+        if($scope.edit_order_status_list[i].require == true) {
+          edit_order_status_list.push({index:$scope.edit_order_status_list[i].index, order_status:$scope.edit_order_status_list[i].order_status });
+        }
+      }
       var sellerdata = 
       {
         providerdata:
@@ -213,7 +244,8 @@ angular.module('oz.ProviderApp')
             },
             'paymentmode': {
               'cod': $scope.editseller.paymentmode.cod
-            }
+            }, 
+            'orderprocess_configuration': edit_order_status_list
           }  
       };
       return JSON.stringify(sellerdata); 
