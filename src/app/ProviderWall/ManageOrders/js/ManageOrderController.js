@@ -5,7 +5,6 @@ angular.module('oz.ProviderApp')
     $scope.reason={};
    $scope.init=function(){
     $scope.orders=[];
-    $scope.orderConfigStatus=[];
     $scope.tabForOrders={};
     $scope.hideReceivedOrders = false;
     $scope.hideApproveOrders = false;
@@ -22,7 +21,7 @@ angular.module('oz.ProviderApp')
   // $scope.orderConfigStatus=[
   //   {
   //     index:1,
-  //     order_status:"orderstart",
+  //     order_status:"orderreceived",
   //     action:"accept"
   //   },
   //   {
@@ -56,12 +55,7 @@ angular.module('oz.ProviderApp')
   //   }] ;
 
 
-  $rootScope.$watch('provider', function (provider) {
-      $rootScope.provider=provider;
-      $scope.orderConfigStatus=[];
-      $scope.orderConfigStatus=provider.orderprocess_configuration;
-      console.log($scope.orderConfigStatus); 
-    });
+
 
    $rootScope.$watch('selectedBranchId', function (selectedBranchId) {
       $scope.init();  

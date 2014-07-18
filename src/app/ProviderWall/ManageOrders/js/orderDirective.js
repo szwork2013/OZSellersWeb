@@ -33,7 +33,6 @@ return {
     var t_orderid;
     $scope.today=Date();
 
-
 $scope.fromNow = function (time) {
   if (time != undefined) {
     return moment(time).calendar();
@@ -173,7 +172,7 @@ $scope.getDate=function(dayorder){
   };
 
   $scope.firstTreeTabOpen=function(status){
-    if(status=='orderstart'){
+    if(status=='orderreceived'){
        $scope.tab1=true;
        $scope.tab2=false;
        $scope.tab3=false;
@@ -245,7 +244,8 @@ for (var i = $scope.orderConfigStatus.length - 1; i >= 0; i--) {
 }
 };
 
-    // if(status=='orderstart'){
+
+    // if(status=='orderreceived'){
     //     $scope.showAccept =true;
     //     $scope.showReject =true;
     //     $scope.showCancel =false;
