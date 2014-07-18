@@ -255,11 +255,10 @@
             
 
                    <li class="" ng-repeat="config in orderConfigStatus" ng-show="config.action !==null && config.order_status==order.status ">   
-                    <a  ng-hide="order.status =='storepickup'  || order.status =='homedelivery'" href="#"   ng-click="changeStatus(config.action , order)"><span class="capital"> {{config.action}} </span></a>
+                   
+                    <a   href="#"   ng-click="changeStatus(config.action , order)"><span class="capital"> {{config.action}} </span></a>
                     
-                      <a href="#" ng-show=" order.status =='storepickup'"  ng-click="changeStatus('pickfromstore' , order)"><span class="capital">Pick from store  </span></a>
-
-                    <a href="#"  ng-show=" order.status =='homedelivery'" ng-click="changeStatus('delivertohome' , order)"><span class="capital"> Delivery to customer </span></a>
+                    
 
                   </li>
 
