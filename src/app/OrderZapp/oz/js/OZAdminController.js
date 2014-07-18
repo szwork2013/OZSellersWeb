@@ -47,6 +47,12 @@ angular.module('oz.UserApp')
 
     $scope.regexForNumbers = /[0-9]/;
 
+    OZWallService.getOrderProcessConfig();
+
+    $scope.orderProcessConfig = [];
+
+    $scope.order = {'index' : '', 'order_status' : '', 'require' : ''};
+
     var cleanUpEventGotAllCategories = $scope.$on("gotAllCategoriesContent",function(event,data){
 		    if(data.error)
 		    {
@@ -736,6 +742,103 @@ angular.module('oz.UserApp')
             $rootScope.OZNotify('Some issue with server! Please try after some time', 'error');
     });
 
+    $scope.addOrderStatus = function()
+    {
+      if($scope.order.index === '' || $scope.regexForNumbers.test($scope.order.index) === false)
+      {
+        $rootScope.OZNotify('Please enter valid index', 'error');
+      }
+      else if ($scope.order.order_status === '')
+      {
+        $rootScope.OZNotify('Please add valid order status', 'error');
+      }
+      else if($scope.order.require === '')
+      {
+        $rootScope.OZNotify('Please select valid require option', 'error');
+      }
+      else
+      {    console.log(JSON.stringify({'process' : $scope.order}));
+        OZWallService.addOrderProcessConfig({'process' : $scope.order});
+      }
+
+    };
+
+    var cleanUpEventOrderConfigurationAdded = $scope.$on("orderConfigAdded",function(event,data){
+            if(data.error)
+            {
+              if(data.error.code === 'AL001')
+              {
+                      $rootScope.showModal();
+              }
+              else
+              {
+                    $rootScope.OZNotify(data.error.message, 'error' );
+              }
+            }
+            if(data.success)
+            {      
+                      $rootScope.OZNotify(data.success.message, 'success'); 
+                      OZWallService.getOrderProcessConfig();
+            } 
+    });
+
+    var cleanUpEventOrderConfigurationNotAdded = $scope.$on("orderConfigNotAdde",function(event,data){
+            $rootScope.OZNotify('Some issue with server! Please try after some time', 'error');
+    });
+
+    var cleanUpEventGetOrderProcessConfig = $scope.$on("gotAllOrderProcessSuccessfully",function(event,data){
+            if(data.error)
+            {
+              if(data.error.code === 'AL001')
+              {
+                      $rootScope.showModal();
+              }
+              else
+              {
+                    $rootScope.OZNotify(data.error.message,'error');  $scope.showSpinners = 0;
+              }
+            }
+            if(data.success)
+            {      
+                       $scope.orderProcessConfig = [];
+                       $scope.orderProcessConfig = data.success.orderprocess; 
+            } 
+    });
+
+    var cleanUpEventNotGotOrderProcessConfig = $scope.$on("notGotOrderProcess",function(event,data){
+            $rootScope.OZNotify('Some issue with server! Please try after some time', 'error');
+    });
+
+    $scope.removeOrderProcess = function(index)
+    {
+      OZWallService.removeOrderConfigContent(index);
+    };
+
+    var cleanUpEventOrderProcessConfigurationRemove = $scope.$on('orderProcessConfigurationRemoved', function(event, data)
+    {
+         if(data.error)
+         {
+          if(data.error.code === 'AL001')
+          {
+            $rootScope.showModal();
+          }
+          else
+          {
+            $rootScope.OZNotify(data.error.message, 'error');
+          }
+         }
+         if(data.success)
+         {
+          $rootScope.OZNotify(data.success.message, 'success');
+          OZWallService.getOrderProcessConfig();
+         }
+    });
+
+    var cleanUpEventOrderProcessConfigurationRemoveError = $scope.$on('orderProcessNotRemoved', function(event, data)
+    {
+      $rootScope.OZNotify('Some issue with the server! Please try again after some time', 'error');
+    });
+
     $scope.clearThisCategory = function(index, categoryid)
     {
             for(var i = 0 ; i< $scope.allConfigContent.length ; i ++)
@@ -753,6 +856,8 @@ angular.module('oz.UserApp')
               }
             }
     };
+
+
 
 
 
@@ -782,6 +887,12 @@ angular.module('oz.UserApp')
         cleanUpEventCriteriaNotChangedSuccessfully();
         cleanUpEventCriteriaDeletedSuccessfully();
         cleanUpEventCriteriaNotDeletedSuccessfully();
+        cleanUpEventOrderConfigurationAdded();
+        cleanUpEventOrderConfigurationNotAdded();
+        cleanUpEventGetOrderProcessConfig();
+        cleanUpEventNotGotOrderProcessConfig();
+        cleanUpEventOrderProcessConfigurationRemove();
+        cleanUpEventOrderProcessConfigurationRemoveError();
 
     });
 

@@ -1,5 +1,5 @@
 angular.module('oz.ProviderApp')
-  .controller('ManageSellerController', ['$scope', '$state', '$http', '$timeout', '$sce', '$log', '$rootScope', 'ProviderServices','$upload','$stateParams', 'ManageSellerService', 'ManageBranchService', 'MyProviderList', 'ProviderCategoryList', function($scope, $state, $http, $timeout, $sce, $log, $rootScope,ProviderServices,$upload, $stateParams, ManageSellerService,ManageBranchService, MyProviderList, ProviderCategoryList) {
+  .controller('ManageSellerController', ['$scope', '$state', '$http', '$timeout', '$sce', '$log', '$rootScope', 'ProviderServices','$upload','$stateParams', 'ManageSellerService', 'ManageBranchService', 'MyProviderList', 'ProviderCategoryList', 'OrderStatusList', function($scope, $state, $http, $timeout, $sce, $log, $rootScope,ProviderServices,$upload, $stateParams, ManageSellerService,ManageBranchService, MyProviderList, ProviderCategoryList, OrderStatusList) {
   
     $log.debug("initialising manage seller controller");
     $scope.submitted = false;
@@ -11,6 +11,8 @@ angular.module('oz.ProviderApp')
     $scope.editseller = {};
     $scope.providers_list = [];
     $scope.providers_category_list = [];
+    $scope.order_status_list = [];
+    $scope.edit_order_status_list = [];
     $scope.sellercategory = {categoryid: '', categoryname: ''};
     var file;
     var fileUpdate;
@@ -47,6 +49,32 @@ angular.module('oz.ProviderApp')
           $scope.providers_category_list = [];
           $log.debug(ProviderCategoryList.error.message);
           $rootScope.OZNotify(ProviderCategoryList.error.message,'error');
+        }
+      }
+    });
+
+    $scope.$watch('$state.$current.locals.globals.OrderStatusList', function (OrderStatusList) {
+      console.log(OrderStatusList);
+      if (OrderStatusList.success !== undefined && OrderStatusList.success.orderprocess.length !== 0) {
+        var orderstatuslist = [];
+        orderstatuslist = angular.copy(OrderStatusList.success.orderprocess);
+        if ($scope.order_status_list.length == 0) {
+          for (var i = 0; i < orderstatuslist.length; ++i) {
+            if(orderstatuslist[i].require == true) {
+              $scope.order_status_list.push({index:orderstatuslist[i].index, order_status:orderstatuslist[i].order_status, require:orderstatuslist[i].require, default:true });
+            } else {
+              $scope.order_status_list.push({index:orderstatuslist[i].index, order_status:orderstatuslist[i].order_status, require:orderstatuslist[i].require});
+            }
+          }
+        }  
+      } else {
+        if(OrderStatusList.error.code=='AL001'){
+          $scope.order_status_list = [];
+          $rootScope.showModal();
+        } else {
+          $scope.order_status_list = [];
+          $log.debug(OrderStatusList.error.message);
+          $rootScope.OZNotify(OrderStatusList.error.message,'error');
         }
       }
     });
@@ -91,6 +119,12 @@ angular.module('oz.ProviderApp')
 
     // function to send and stringify user registration data to Rest APIs
     $scope.jsonAddSellerData = function(){
+      var order_status_list = [];
+      for (var i = 0; i < $scope.order_status_list.length; ++i) {
+        if($scope.order_status_list[i].require == true) {
+          order_status_list.push({index:$scope.order_status_list[i].index, order_status:$scope.order_status_list[i].order_status });
+        }
+      }
       var sellerdata = 
       {
         data:
@@ -105,7 +139,8 @@ angular.module('oz.ProviderApp')
             },
             'paymentmode': {
               'cod': $scope.addseller.cod
-            }
+            }, 
+            'orderprocess_configuration': order_status_list
           }  
       };
       return sellerdata; 
@@ -156,6 +191,30 @@ angular.module('oz.ProviderApp')
     };
 
     $scope.openEditSeller = function(Seller){
+      if (Seller.orderprocess_configuration) {
+        var orderprocess = [];
+        var status_list = [];
+        orderprocess = angular.copy(Seller.orderprocess_configuration);
+        if (orderprocess.length !== 0) {
+          for (var i = 0; i < orderprocess.length; i++) {
+            status_list.push(orderprocess[i].order_status);
+          }
+          if (status_list.length !== 0 && $scope.order_status_list.length !== 0) {
+            for (var i = 0; i < $scope.order_status_list.length; i++) {
+              var result = status_list.indexOf($scope.order_status_list[i].order_status);
+              if (result !== -1) {
+                if ($scope.order_status_list[i].default && $scope.order_status_list[i].default == true) {
+                  $scope.edit_order_status_list.push({index:$scope.order_status_list[i].index, order_status:$scope.order_status_list[i].order_status, require:true, default:$scope.order_status_list[i].default});
+                } else {
+                  $scope.edit_order_status_list.push({index:$scope.order_status_list[i].index, order_status:$scope.order_status_list[i].order_status, require:true});
+                }
+              } else {
+                $scope.edit_order_status_list.push({index:$scope.order_status_list[i].index, order_status:$scope.order_status_list[i].order_status, require:false});
+              }
+            } 
+          }
+        }
+      }
       $scope.editseller = angular.copy(Seller);
       $('#editSellerModal').modal({ 
         keyboard: false,
@@ -166,6 +225,12 @@ angular.module('oz.ProviderApp')
 
     // function to send and stringify user registration data to Rest APIs
     $scope.jsonEditSellerData = function(){
+      var edit_order_status_list = [];
+      for (var i = 0; i < $scope.edit_order_status_list.length; ++i) {
+        if($scope.edit_order_status_list[i].require == true) {
+          edit_order_status_list.push({index:$scope.edit_order_status_list[i].index, order_status:$scope.edit_order_status_list[i].order_status });
+        }
+      }
       var sellerdata = 
       {
         providerdata:
@@ -179,7 +244,8 @@ angular.module('oz.ProviderApp')
             },
             'paymentmode': {
               'cod': $scope.editseller.paymentmode.cod
-            }
+            }, 
+            'orderprocess_configuration': edit_order_status_list
           }  
       };
       return JSON.stringify(sellerdata); 

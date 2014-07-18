@@ -10,7 +10,12 @@ angular.module('oz.OrderZappApp')
     .state('home', {
       // url: '',
       abstract: true,
-      templateUrl: 'OrderZapp/home/views/home.tpl.html'
+      templateUrl: 'OrderZapp/home/views/home.tpl.html',
+      resolve: {
+        CheckIfSessionExist: function(UserSettingService, $rootScope) {
+          return UserSettingService.CheckIfUserLoggedin.checkUserSession().$promise;
+        }
+      }
     })    
     .state('home.start', {
       // url: '/signup',
@@ -82,7 +87,10 @@ angular.module('oz.OrderZappApp')
         },
         ProviderCategoryList: function(ManageSellerService, $rootScope) {
           return ManageSellerService.LevelOneCategory.GetSellerCategory().$promise;
-        } 
+        },
+        OrderStatusList: function(ManageSellerService, $rootScope) {
+          return ManageSellerService.Order_Status.GetOrderStatus().$promise;
+        }  
       }
     })     
     .state('seller.view', {
@@ -378,6 +386,11 @@ angular.module('oz.OrderZappApp')
     {
       templateUrl : 'OrderZapp/oz/views/oz.manage.zipcodes.tpl.html',
       controller : 'OZManageLocationController'
+    })
+    .state('oz.ozWall.ozOrderProcessCongiguration',
+    {
+      templateUrl : 'OrderZapp/oz/views/oz.orderProcess.tpl.html',
+      controller : 'OZAdminController',
     })
 
   }]);

@@ -3,7 +3,8 @@ angular.module('oz.UserApp')
     '$resource',
     function ($resource) {
       var UserSettings = {
-        MySettings: $resource('/api/user/:userid', {}, { GetMyUserSettings: { method: 'GET'} })
+        MySettings: $resource('/api/user/:userid', {}, { GetMyUserSettings: { method: 'GET'} }),
+        CheckIfUserLoggedin: $resource('/api/isloggedin', {}, { checkUserSession: { method: 'GET' } })
       }
       return UserSettings;
     }

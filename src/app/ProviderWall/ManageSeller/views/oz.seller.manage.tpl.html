@@ -68,6 +68,16 @@
 					</div>
 
 					<div id="oz-signup-input-group" class="input-group">
+						<h5>Order Process Configuration:</h5>
+						<p style="font-size:12px;" class="text-muted">**Please select type of processess.</p> 
+					 	<div style="margin:0px;" class="row">
+					 		<div ng-repeat="status in order_status_list" class="col-md-3">
+					 			<input type="checkbox" ng-model="status.require" ng-disabled="status.default">&nbsp;{{status.order_status}}
+					 		</div>
+					 	</div>  			 	
+					</div>
+
+					<div id="oz-signup-input-group" class="input-group">
 						<h5>Payment Mode:</h5>
 						<p style="font-size:12px;" class="text-muted">**We offer two payment options Cash-on-deliver (COD) and Payment by Card. COD is optional, all buyers get to pay through card by default. Please select COD if you offer this payment option to buyers.</p> 
 					 	<span>
@@ -90,7 +100,7 @@
 	<!-- view seller list start-->
 	<div ng-show="providers_list.length > 0 && !addprovider" style="margin:10px auto; padding: 40px;" class="row">
 		<div style="padding:10px; margin:5px auto; " class="col-md-12">
-			<p style="letter-spacing:1px; font-size:12px;" class="text-muted"><em>** Gray color line on the left side of your seller display indicates that your account is not activated yet. Please contact Order-Zapp support team to activate your account. Once your account is activated, line color changes to green and you will be able to add branch for this seller. </em></p>
+			<p style="letter-spacing:1px; font-size:12px;" class="text-muted"><em>** Red color line on the left side of your seller display indicates that your account is not activated yet. Please contact Order-Zapp support team to activate your account. Once your account is activated, line color changes to green and you will be able to add branch for this seller. </em></p>
 		</div>
 		<div ng-repeat="provider in providers_list track by $index" style="padding:10px; margin:5px auto; box-shadow: 0 1px 2px 1px rgba(248, 245, 245, 0.2), 0 2px 6px rgba(0,0,0,0.15);" class="col-md-12"  ng-class="{'seller-activated': provider.status !== 'init', 'seller-notactive': provider.status == 'init' }">
 			<div class="view-seller-container row">
@@ -110,6 +120,9 @@
 						</p>
 						<p><em>Service Tax #:</em>&nbsp;&nbsp;
 							<span ng-show="provider.tax.servicetaxno">{{provider.tax.servicetaxno}}</span> 
+						</p>
+						<p ng-show="provider.orderprocess_configuration"><em>Order Process Configuration:</em>&nbsp;&nbsp;
+							<span style="margin:2px;" ng-repeat="status in provider.orderprocess_configuration" class="label label-success">&nbsp;{{status.order_status}}&nbsp;</span>					
 						</p>
 						<p><em>Payment Mode:</em>&nbsp;&nbsp;
 							<span ng-show="provider.paymentmode.cod" class="label label-success"><i class="fa fa-check"></i>&nbsp;&nbsp;COD</span>
@@ -193,6 +206,16 @@
 						<div  id="oz-signup-input-group" class="input-group">
 							<input type="file" class="form-control" ng-file-select="onFileSelectUpdate($files)" >
 							<p class="text-muted"><small>** To edit existing logo please select choose file.</small></p>
+						</div>
+
+						<div id="oz-signup-input-group" class="input-group">
+							<h5>Order Process Configuration:</h5>
+							<p style="font-size:12px;" class="text-muted">**Please select type of processess.</p> 
+						 	<div style="margin:0px;" class="row">
+						 		<div ng-repeat="status in edit_order_status_list" class="col-md-5">
+						 			<input type="checkbox" ng-model="status.require" ng-disabled="status.default">&nbsp;{{status.order_status}}
+						 		</div>
+						 	</div>  			 	
 						</div>
 
 						<div id="oz-signup-input-group" class="input-group">
