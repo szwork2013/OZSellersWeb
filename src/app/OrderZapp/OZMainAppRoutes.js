@@ -387,5 +387,10 @@ angular.module('oz.OrderZappApp')
       templateUrl : 'OrderZapp/oz/views/oz.manage.zipcodes.tpl.html',
       controller : 'OZManageLocationController'
     })
+    .state('oz.ozWall.ozOrderProcessCongiguration',
+    {
+      templateUrl : 'OrderZapp/oz/views/oz.orderProcess.tpl.html',
+      controller : 'OZAdminController',
+    })
 
   }]);

@@ -39,6 +39,9 @@ angular.module('oz.UserApp').factory('OZWallService', [
     getStateContent : $resource('/api/location?key=state&value=:state', {}, { get : { method : 'GET', params : { state : '@state'}}}),
     getCityContent : $resource('/api/location?key=city&value=:city', {}, { get : { method : 'GET', params : { city : '@city'}}}),
     getAreaContent : $resource('/api/location?key=area&value=:area', {}, { get :{ method : 'GET', params : { area : '@area'}}}),
+    addOrderProcess : $resource('/api/orderstatus', {}, {post : {method : 'POST'}}),
+    getOrderProcess : $resource('/api/orderstatus', {}, {get : {method : 'GET'}}),
+    removeOrderProcess : $resource('/api/orderstatus/:index', {}, {remove : {method : 'DELETE', params : {index : '@index'}}}),
   };
 
   var controller = {};
@@ -422,6 +425,49 @@ angular.module('oz.UserApp').factory('OZWallService', [
       });
     };
 
+    controller.addOrderProcessConfig = function(content)
+    {
+      wallService.addOrderProcess.post(content, function(success)
+      {
+        $rootScope.$broadcast('orderConfigAdded', success);
+      },
+      function(error)
+      {
+        $rootScope.$broadcast('orderConfigNotAdde', error);
+      });
+    };
+     
+    controller.getOrderProcessConfig = function()
+    {
+      wallService.getOrderProcess.get(function(success)
+      {
+        $rootScope.$broadcast('gotAllOrderProcessSuccessfully', success);
+      },
+      function(error)
+      {
+        $rootScope.$broadcast('notGotOrderProcess', error);
+      });
+    };
+
+    // controller.removeOrderConfig = function(index)
+    // {
+    //   wallService.removeOrderConfig.delete(function(success)
+    //   {
+
+
+    //   })
+    // }
+    controller.removeOrderConfigContent = function(index)
+    {
+      wallService.removeOrderProcess.remove({index : index}, function(success)
+      {
+        $rootScope.$broadcast('orderProcessConfigurationRemoved', success);
+      },
+      function(error)
+      {
+        $rootScope.$broadcast('orderProcessNotRemoved', error);
+      })
+    };
   return controller;
   }]);
 
