@@ -5,6 +5,7 @@ angular.module('oz.ProviderApp')
     $scope.reason={};
    $scope.init=function(){
     $scope.orders=[];
+    $scope.orderConfigStatus=[];
     $scope.tabForOrders={};
     $scope.hideReceivedOrders = false;
     $scope.hideApproveOrders = false;
@@ -17,45 +18,50 @@ angular.module('oz.ProviderApp')
 
    };
     $scope.init();    
+   
+  // $scope.orderConfigStatus=[
+  //   {
+  //     index:1,
+  //     order_status:"orderstart",
+  //     action:"accept"
+  //   },
+  //   {
+  //     index:2,
+  //     order_status:"accepted",
+  //     action:"done"
+  //   },{
+  //     index:7,
+  //     order_status:"ordercomplete",
+  //     action:null
+  //   },
+  //   {
+  //     index:null,
+  //     order_status:"cancelled",
+  //     action:null
+  //   },
+  //   {
+  //     index:null,
+  //     order_status:"rejected",
+  //     action:null
+  //   },
+  //   {
+  //     index:8,
+  //     order_status:"storepickup",
+  //     action:"delivertohome"
+  //   },
+  //   {
+  //     index:9,
+  //     order_status:"homedelivery",
+  //     action:"delivertohome"
+  //   }] ;
 
-   $scope.orderConfigStatus=[];
-  $scope.orderConfigStatus=[
-    {
-      index:1,
-      order_status:"orderstart",
-      action:"accept"
-    },
-    {
-      index:2,
-      order_status:"accepted",
-      action:"done"
-    },{
-      index:7,
-      order_status:"ordercomplete",
-      action:null
-    },
-    {
-      index:null,
-      order_status:"cancelled",
-      action:null
-    },
-    {
-      index:null,
-      order_status:"rejected",
-      action:null
-    },
-    {
-      index:8,
-      order_status:"storepickup",
-      action:"delivertohome"
-    },
-    {
-      index:9,
-      order_status:"homedelivery",
-      action:"delivertohome"
-    }] ;
 
-console.log($scope.orderConfigStatus);
+  $rootScope.$watch('provider', function (provider) {
+      $rootScope.provider=provider;
+      $scope.orderConfigStatus=[];
+      $scope.orderConfigStatus=provider.orderprocess_configuration;
+      console.log($scope.orderConfigStatus); 
+    });
 
    $rootScope.$watch('selectedBranchId', function (selectedBranchId) {
       $scope.init();  
@@ -327,6 +333,8 @@ $scope.getReceived=function(){
         $scope.orders=[];
         $scope.orders=Orders;
      }
+
+    
 
  }]);
 

@@ -124,6 +124,7 @@ $scope.getProviders=function(){
 
    $scope.getProviderId=function(provider){
       $rootScope.selectedproviderid=provider.providerid;
+      $rootScope.provider=provider;
       $rootScope.$broadcast('change_in_providerid', $rootScope.selectedproviderid);
       $log.debug("pid "+ $rootScope.selectedproviderid);
       if($rootScope.selectedproviderid){
