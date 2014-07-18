@@ -122,7 +122,7 @@ $scope.callServiceChangeStatusCancelReject=function(status,order,reason){
 $scope.callServiceChangeStatus=function(status,order){
    var orderid=order.suborderid;
     
-    // if(status =='production' || status =='delivertohome' || status =='pickfromstore' || status =='done'){
+    // if(status =='production' || status =='indelivery' || status =='done'){
     //    var index = $scope.orders.indexOf(order);
     //         if (index != -1){
     //            $scope.orders.splice(index, 1);
@@ -207,19 +207,13 @@ $scope.getDate=function(dayorder){
        $scope.tab4=true;
      }
 
-    if(status=='storepickup'){
+    if(status=='indelivery'){
        $scope.tab1=false;
        $scope.tab2=false;
        $scope.tab3=false;
        $scope.tab4=true;
      }
 
-    if(status=='homedelivery'){
-       $scope.tab1=false;
-       $scope.tab2=false;
-       $scope.tab3=false;
-       $scope.tab4=true;
-     }
 
     if(status=='ordercomplete'){
        $scope.tab1=false;
@@ -243,128 +237,6 @@ for (var i = $scope.orderConfigStatus.length - 1; i >= 0; i--) {
  }
 }
 };
-
-
-    // if(status=='orderreceived'){
-    //     $scope.showAccept =true;
-    //     $scope.showReject =true;
-    //     $scope.showCancel =false;
-    //     $scope.showProduction =false;
-    //     $scope.showPacking =false;
-    //     $scope.showShiptostore =false;
-    //     $scope.showDeliverytocustomer =false;
-    //     $scope.showPickfromstore =false;
-    //     $scope.showDone =false;
-    //  }
-
-    // if(status=='accepted'){
-    //    $scope.showAccept =false;
-    //    $scope.showReject =false;
-    //    $scope.showCancel =true;
-    //    $scope.showProduction =true;
-    //    $scope.showPacking =false;
-    //    $scope.showShiptostore =false;
-    //    $scope.showDeliverytocustomer =false;
-    //    $scope.showPickfromstore =false;
-    //    $scope.showDone =false;
-    //  }
-
-    // if(status=='rejected'){
-    //    $scope.showAccept =false;
-    //    $scope.showReject =false;
-    //    $scope.showCancel =false;
-    //    $scope.showProduction =false;
-    //    $scope.showPacking =false;
-    //    $scope.showShiptostore =false;
-    //    $scope.showDeliverytocustomer =false;
-    //    $scope.showPickfromstore =false;
-    //    $scope.showDone =false;
-    //  }
-
-    // if(status=='cancelled'){
-    //    $scope.showAccept =false;
-    //    $scope.showReject =false;
-    //    $scope.showCancel =false;
-    //    $scope.showProduction =false;
-    //    $scope.showPacking =false;
-    //    $scope.showShiptostore =false;
-    //    $scope.showDeliverytocustomer =false;
-    //    $scope.showPickfromstore =false;
-    //    $scope.showDone =false;
-    //  }
-
-    // if(status=='inproduction'){
-    //    $scope.showAccept =false;
-    //    $scope.showReject =false;
-    //    $scope.showCancel =true;
-    //    $scope.showProduction =false;
-    //    $scope.showPacking =true;
-    //    $scope.showShiptostore =false;
-    //    $scope.showDeliverytocustomer =false;
-    //    $scope.showPickfromstore =false;
-    //    $scope.showDone =false;
-    //  }
-
-    // if(status=='packing'){
-    //    $scope.showAccept =false;
-    //    $scope.showReject =false;
-    //    $scope.showCancel =true;
-    //    $scope.showProduction =false;
-    //    $scope.showPacking =false;
-    //    $scope.showShiptostore =true;
-    //    $scope.showDeliverytocustomer =false;
-    //    $scope.showPickfromstore =false;
-    //    $scope.showDone =false;
-    //  }
-
-    // if(status=='factorytostore'){
-    //    $scope.showAccept =false;
-    //    $scope.showReject =false;
-    //    $scope.showCancel =true;
-    //    $scope.showProduction =false;
-    //    $scope.showPacking =false;
-    //    $scope.showShiptostore =false;
-    //    $scope.showDeliverytocustomer =true;
-    //    $scope.showPickfromstore =true;
-    //    $scope.showDone =false;
-    //  }
-
-    // if(status=='storepickup'){
-    //    $scope.showAccept =false;
-    //    $scope.showReject =false;
-    //    $scope.showCancel =true;
-    //    $scope.showProduction =false;
-    //    $scope.showPacking =false;
-    //    $scope.showShiptostore =false;
-    //    $scope.showDeliverytocustomer =false;
-    //    $scope.showPickfromstore =false;
-    //    $scope.showDone =true;
-    //  }
-
-    // if(status=='homedelivery'){
-    //    $scope.showAccept =false;
-    //    $scope.showReject =false;
-    //    $scope.showCancel =true;
-    //    $scope.showProduction =false;
-    //    $scope.showPacking =false;
-    //    $scope.showShiptostore =false;
-    //    $scope.showDeliverytocustomer =false;
-    //    $scope.showPickfromstore =false;
-    //    $scope.showDone =true;
-    //  }
-
-    // if(status=='ordercomplete'){
-    //    $scope.showAccept =false;
-    //    $scope.showReject =false;
-    //    $scope.showCancel =false;
-    //    $scope.showProduction =false;
-    //    $scope.showPacking =false;
-    //    $scope.showShiptostore =false;
-    //    $scope.showDeliverytocustomer =false;
-    //    $scope.showPickfromstore =false;
-    //    $scope.showDone =false;
-    //  }
-
 
 
   }
