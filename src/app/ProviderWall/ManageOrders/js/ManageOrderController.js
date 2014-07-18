@@ -56,7 +56,7 @@ angular.module('oz.ProviderApp')
 
 
 
-
+console.log($rootScope.orderConfigStatus);
    $rootScope.$watch('selectedBranchId', function (selectedBranchId) {
       $scope.init();  
       $rootScope.selectedBranchId=selectedBranchId;
