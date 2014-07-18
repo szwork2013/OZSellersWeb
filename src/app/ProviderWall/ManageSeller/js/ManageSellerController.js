@@ -6,7 +6,7 @@ angular.module('oz.ProviderApp')
     $scope.$state = $state;
     $scope.addprovider = false;
     $scope.form = {};
-    $scope.addseller = {cod: false};
+    $scope.addseller = {cod: false, online:true};
     $scope.addSellerLogo = false;
     $scope.editseller = {};
     $scope.providers_list = [];
@@ -138,7 +138,8 @@ angular.module('oz.ProviderApp')
               'servicetaxno': $scope.addseller.servicetaxno
             },
             'paymentmode': {
-              'cod': $scope.addseller.cod
+              'cod': $scope.addseller.cod,
+              'online': $scope.addseller.online
             }, 
             'orderprocess_configuration': order_status_list
           }  
@@ -194,6 +195,7 @@ angular.module('oz.ProviderApp')
       if (Seller.orderprocess_configuration) {
         var orderprocess = [];
         var status_list = [];
+        $scope.edit_order_status_list = [];
         orderprocess = angular.copy(Seller.orderprocess_configuration);
         if (orderprocess.length !== 0) {
           for (var i = 0; i < orderprocess.length; i++) {
@@ -211,7 +213,7 @@ angular.module('oz.ProviderApp')
               } else {
                 $scope.edit_order_status_list.push({index:$scope.order_status_list[i].index, order_status:$scope.order_status_list[i].order_status, require:false});
               }
-            } 
+            }
           }
         }
       }
@@ -243,7 +245,8 @@ angular.module('oz.ProviderApp')
               'servicetaxno': $scope.editseller.tax.servicetaxno
             },
             'paymentmode': {
-              'cod': $scope.editseller.paymentmode.cod
+              'cod': $scope.editseller.paymentmode.cod,
+              'online': true
             }, 
             'orderprocess_configuration': edit_order_status_list
           }  

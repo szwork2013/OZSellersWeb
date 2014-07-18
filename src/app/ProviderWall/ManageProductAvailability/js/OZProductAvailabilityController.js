@@ -89,8 +89,15 @@ angular.module('oz.ProviderApp')
 
     $scope.saveListContent = function(list)
     {
-    	  $scope.content = {'productnotavailable' : {'from' : list.productnotavailable.from, 'to' : list.productnotavailable.to}};
-          ProviderServicesList.assignProductAvailabilityContent(list.productid, $scope.content, list);
+    	   if(moment.utc(list.productnotavailable.to).diff(moment.utc(list.productnotavailable.from), 'days')<0)
+         {
+             $rootScope.OZNotify("The To date can't be lesser than From date", 'error');
+         }
+         else
+          {
+            $scope.content = {'productnotavailable' : {'from' : list.productnotavailable.from, 'to' : list.productnotavailable.to}};
+            ProviderServicesList.assignProductAvailabilityContent(list.productid, $scope.content, list);
+          }
     };
 
     var cleanUpEventAssignedPA = $scope.$on("assignedProductAvail",function(event,data, list){
@@ -148,6 +155,8 @@ angular.module('oz.ProviderApp')
     //               // $rootScope.OZNotify('')
     //          }
     // };
+
+    // campaignExpiryDate.diff(todays,'days')<0)
 
     $scope.verifyEndDate = function(content, list)
     {
