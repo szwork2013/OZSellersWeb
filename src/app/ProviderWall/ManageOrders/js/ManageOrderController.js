@@ -17,7 +17,8 @@ angular.module('oz.ProviderApp')
 
    };
     $scope.init();    
-
+   
+console.log($rootScope.orderConfigStatus);
 
    $rootScope.$watch('selectedBranchId', function (selectedBranchId) {
       $scope.init();  
@@ -289,6 +290,8 @@ $scope.getReceived=function(){
         $scope.orders=[];
         $scope.orders=Orders;
      }
+
+    
 
  }]);
 

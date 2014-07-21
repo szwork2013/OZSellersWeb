@@ -66,6 +66,7 @@
               <li ng-show="(usersession.currentUser.isAdmin == true && usersession.currentUser.usertype == 'provider')"><a href="" ui-sref="oz.ozWall">Admin</a></li>
               <li><a href="" ui-sref="seller.view">Manage Seller</a></li>
               <li><a ng-show="selectedproviderid" href="" ui-sref="sellerbranch.view">Manage Branch</a></li>
+              <li><a ng-show="selectedproviderid && selectedBranchId" href="" ui-sref="pickupaddress.view">Manage Pickup Address</a></li>
               <li><a ng-show="selectedproviderid && selectedBranchId" href="" ui-sref="manageusergroup.view">Manage User Group</a></li>
               <li><a ng-show="selectedproviderid && selectedBranchId" href="" ui-sref="manageproduct.view">Manage Product</a></li>
               <li><a ng-show="selectedproviderid && selectedBranchId" href="" ui-sref="manageprices.view">Manage Prices</a></li>
@@ -147,6 +148,7 @@
   <script src = 'ProviderWall/ManageUserGroup/js/OZUserGroupController.js'></script>
   <script src = "ProviderWall/ManageSeller/js/ManageSellerController.js" ></script>
   <script src = "ProviderWall/ManageBranch/js/ManageSellerBranchController.js" ></script>
+  <script src = "ProviderWall/ManagePickupAddress/js/ManagePickupAddressController.js" ></script>
   <script src = "ProviderWall/ManageSeller/js/ManageSellerService.js" ></script>
   <script src = "ProviderWall/ManageDeliveryCharges/js/ManageDeliveryChargesController.js" ></script>
   <script src = "ProviderWall/ManageDeliveryCharges/js/DeliveryChargesService.js" ></script>

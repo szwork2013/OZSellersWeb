@@ -130,6 +130,23 @@ angular.module('oz.OrderZappApp')
         }
       }
     })
+    .state('pickupaddress', {
+      abstract: true,
+      templateUrl: 'ProviderWall/ManagePickupAddress/views/oz.seller.pickupaddress.tpl.html',
+      controller: 'ManagePickupAddressController',
+      resolve: {
+        PickupAddressList: function(ManageSellerService, $rootScope) {
+          return ManageSellerService.Pickup_Address.GetPickupAddress({providerid:$rootScope.selectedproviderid}).$promise;
+        }
+      }
+    })     
+    .state('pickupaddress.view', {
+      views: {
+        'manage-pickupaddress': { 
+          templateUrl: 'ProviderWall/ManagePickupAddress/views/oz.seller.pickupaddress.manage.tpl.html'
+        }
+      }
+    })
     .state('providerorders', {
       abstract: true,
       templateUrl: 'ProviderWall/ManageOrders/views/oz.providerwall.tpl.html',
