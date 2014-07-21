@@ -8,7 +8,8 @@ angular.module('oz.ProviderApp')
 	      SelectedProvider: $resource('/api/productprovider/:providerid', {}, { GetSelectedProvider: { method: 'GET'} }),
 	      LevelOneCategory: $resource('/api/leveloneCategory', {}, { GetSellerCategory: { method: 'GET'} }),
 	      MyProviderBranch: $resource('/api/branch/:providerid', {}, { GetMyProviderBranch: { method: 'GET'} }),
-	      Order_Status: $resource('/api/orderstatus', {}, { GetOrderStatus: { method: 'GET'} })
+	      Order_Status: $resource('/api/orderstatus', {}, { GetOrderStatus: { method: 'GET'} }),
+	      Pickup_Address: $resource('/api/pickupaddress/:providerid', {}, { GetPickupAddress: { method: 'GET'} })
 	    }
 	    return Seller;
 	  }
@@ -24,7 +25,9 @@ angular.module('oz.ProviderApp')
       	Add_Branch: $resource('/api/branch/:providerid', {}, { add_Seller_Branch: { method: 'POST', params: { providerid: '@providerid' } } }),
     		Publish_Branch: $resource('/api/publishunpublish/branch/:providerid/:branchid?action=:data', {}, { publish_Seller_Branch: { method: 'GET', params: { providerid: '@providerid', branchid: '@branchid', data: '@data' } } }),
     		Edit_Branch: $resource('/api/branch/:providerid/:branchid', {}, { edit_Seller_Branch: { method: 'PUT', params: { providerid: '@providerid', branchid: '@branchid'} } }),
-    		Edit_Seller: $resource('/api/productprovider/:providerid', {}, { edit_Seller: { method: 'PUT', params: { providerid: '@providerid'} } }) 
+    		Edit_Seller: $resource('/api/productprovider/:providerid', {}, { edit_Seller: { method: 'PUT', params: { providerid: '@providerid'} } }),
+    		Add_Pickup_Address: $resource('/api/pickupaddress/:providerid', {}, { add_PickupAddress: { method: 'POST', params: { providerid: '@providerid'} } }),  
+    		Delete_Pickup_Address: $resource('/api/pickupaddress/:providerid/:addressid', {}, { delete_PickupAddress: { method: 'DELETE', params: { providerid: '@providerid', addressid: '@addressid'} } })
     	};
 	    var branch = {};
 
@@ -65,6 +68,26 @@ angular.module('oz.ProviderApp')
 	      }, function (error) {
 	        $log.debug(error);
 	        $rootScope.$broadcast('editSellerNotDone', error.status);
+	      });
+	    };
+
+	    branch.addPickupLocation = function (addressdata) {
+	      ManageBranchService.Add_Pickup_Address.add_PickupAddress({providerid: $rootScope.selectedproviderid}, addressdata, function (success) {
+	        $log.debug(success);
+	        $rootScope.$broadcast('addPickupAddressDone', success);
+	      }, function (error) {
+	        $log.debug(error);
+	        $rootScope.$broadcast('addPickupAddressNotDone', error.status);
+	      });
+	    };
+
+	    branch.deletePickupLocation = function (addressid) {
+	      ManageBranchService.Delete_Pickup_Address.delete_PickupAddress({providerid: $rootScope.selectedproviderid, addressid: addressid}, function (success) {
+	        $log.debug(success);
+	        $rootScope.$broadcast('deletePickupAddressDone', success);
+	      }, function (error) {
+	        $log.debug(error);
+	        $rootScope.$broadcast('deletePickupAddressNotDone', error.status);
 	      });
 	    };
 
