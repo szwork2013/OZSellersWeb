@@ -1,3 +1,90 @@
 <div style="border: 1px solid #EEE8E8; border-radius: 6px;" class="">
-	
+	<div ng-show="providers_pickup_address.length == 0" style="padding:40px; opacity: .8; margin:40px; margin-bottom: 1px; color: rgb(80, 74, 74);background-color:#F1F1F1; letter-spacing: 1px;" class="row">
+    <div class="col-md-12">
+      <div class="no-message">
+        <center>
+          <p style="font-size: 14px;">You have not added any pickup addresses to your seller account.</p>      
+          <p style="font-size: 12px;">To start managing please add atleast one pickup addresses. Your list of pickup addresses and other related information will be shown here. You can add multiple pickup locations.</p>
+        </center>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin:25px;" class="row">
+  	<div class="col-md-12">
+  		<form class="form-inline" name="form.addPickupAddress" role="form">
+  			<div style="letter-spacing:1px;" class="input-group">
+					<h4 style=" text-transform:uppercase; color: #8A847C;" id="oz-signin-heading">Add Pickup Address</h4>
+				</div>
+				<hr size=3 width="100%;" style="height:1px; margin-top: 0;" noshade>
+
+			  <div style="margin:10px;" class="form-group">
+			    <input type="text" class="form-control" ng-model="pickup.address1" placeholder="address line1">
+			  </div>
+			  <div style="margin:10px;" class="form-group">
+			    <input class="form-control" type="text" ng-model="pickup.address2" placeholder="address line2">
+			  </div>
+			  <div style="margin:10px;" class="form-group">
+			    <input type="text" class="form-control" ng-model="pickup.area" placeholder="area">
+			  </div>
+			  
+			  <div style="margin:10px;" class="form-group">
+			    <input type="text" class="form-control" ng-model="pickup.state" placeholder="state">
+			  </div>
+			  <div style="margin:10px;" class="form-group">
+			    <input type="text" class="form-control" ng-model="pickup.city" placeholder="city">
+			  </div>
+			  <div style="margin:10px;" class="form-group">
+			    <input type="text" class="form-control" ng-model="pickup.zipcode" placeholder="zipcode">
+			  </div>
+			  <div style="margin:10px;" class="form-group">
+			    <input type="text" class="form-control" ng-model="pickup.country" placeholder="country">
+			  </div>
+
+			  <div style="margin:10px;" class="form-group">
+			    <button style=" width:196px;" type="submit" class="btn btn-primary btn-sm" ng-click="addPickupAddress()">Add</button>
+			  </div>
+			  
+			</form>
+  	</div>
+  </div>
+  <br>
+  <br>
+  <div ng-show="providers_pickup_address.length !== 0" style="margin:25px;" class="row">
+  	<div class="col-md-12">
+  		<div style="letter-spacing:1px;">
+				<h4 style=" text-transform:uppercase; color: #8A847C;" id="oz-signin-heading">List of Pickup Addresses</h4>
+			</div>
+			<hr size=3 width="100%;" style="height:1px; margin-top: 0;" noshade>
+			<br>
+  		<table class="table table-hover">
+  			<thead>
+  				<tr>
+  					<th width="20">Address Line</th>
+  					<th width="15">Area</th>
+  					<th width="15">City</th>
+  					<th width="15">State</th>
+  					<th width="15">Country</th>
+  					<th width="10">Zipcode</th>
+  					<th width="10"></th>
+  				</tr>
+  			</thead>
+  			<tbody>
+  				<tr ng-repeat="address in providers_pickup_address">
+  					<td>{{address.address1 }},{{'' + address.address2}}</td>
+  					<td>{{address.area}}</td>
+  					<td>{{address.city}}</td>
+  					<td>{{address.state}}</td>
+  					<td>{{address.country}}</td>
+  					<td>{{address.zipcode}}</td>
+  					<td>
+	  					<a href="" ng-click="editPickupAddress(address.addressid)"><i class="fa fa-pencil"></i></a>
+	  					&nbsp;&nbsp;&nbsp;&nbsp;
+	  					<a href="" ng-click="deletePickupAddress(address.addressid)"><i class="fa fa-trash-o"></i></a>
+	  				</td>
+  				</tr>
+  			</tbody>
+  		</table>
+  	</div>
+  </div>
 </div>
