@@ -98,6 +98,9 @@ angular.module('oz.ProviderApp')
     $scope.cancelEnableEditAddress = function() {
       $scope.editAddress = false;
       $scope.CurrentAddressIndex = '';
+      $scope.editpickup = {};
+      $scope.form.editPickupAddress.$setPristine();
+      $scope.form.editPickupAddress.submitted = false;
     }
 
     // function to send and stringify user registration data to Rest APIs
@@ -135,12 +138,12 @@ angular.module('oz.ProviderApp')
   
     $scope.editPickupAddress = function(addressid){
       console.log($scope.jsonEditPickupAddressData());
-      // if ($scope.form.editPickupAddress.$valid) {
+      if ($scope.form.editPickupAddress.$valid) {
         ManageBranchService.updatePickupLocation($scope.jsonEditPickupAddressData(), addressid);
-      // } else {
-      //   console.log('incorrect data');
-      //   $scope.form.editPickupAddress.submitted = true;
-      // }
+      } else {
+        console.log('incorrect data');
+        $scope.form.editPickupAddress.submitted = true;
+      }
     }
 
     var cleanupEventEditPickupAddressDone = $scope.$on("updatePickupAddressDone", function(event, message){
@@ -195,5 +198,5 @@ angular.module('oz.ProviderApp')
       cleanupEventEditPickupAddressNotDone();
     });
 
- }]);
+}]);
 

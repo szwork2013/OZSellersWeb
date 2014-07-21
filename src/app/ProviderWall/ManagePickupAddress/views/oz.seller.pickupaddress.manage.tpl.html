@@ -26,7 +26,7 @@
                 <small style="color:red;" ng-show="((form.addPickupAddress.addressline1.$dirty && form.addPickupAddress.addressline1.$invalid) || (form.addPickupAddress.addressline1.$invalid && form.addPickupAddress.submitted))">*Please enter address line 1!</small>
                 <br>
                 <input type="text" name="addressline2" class="form-control" ng-model="pickup.address2" placeholder="address line2" required>
-                <small style="color:red;" ng-show="((form.addPickupAddress.addressline2.$dirty && form.addPickupAddress.addressline2.$invalid) || (form.addPickupAddress.addressline2.$invalid && form.addPickupAddress.submitted))">*Please enter address line 1!</small>
+                <small style="color:red;" ng-show="((form.addPickupAddress.addressline2.$dirty && form.addPickupAddress.addressline2.$invalid) || (form.addPickupAddress.addressline2.$invalid && form.addPickupAddress.submitted))">*Please enter address line 2!</small>
               </td>
               <td width="15%;">
                 <input type="text" name="area" class="form-control" ng-model="pickup.area" placeholder="area" required>
@@ -66,59 +66,68 @@
 			</div>
 			<hr size=3 width="100%;" style="height:1px; margin-top: 0;" noshade>
 			<br>
-  		<table class="table table-hover">
-  			<thead>
-  				<tr>
-  					<th width="20%;">Address Line</th>
-  					<th width="15%;">Area</th>
-  					<th width="15%;">City</th>
-  					<th width="15%;">State</th>
-  					<th width="15%;">Country</th>
-  					<th width="10%;">Zipcode</th>
-  					<th width="10%;"></th>
-  				</tr>
-  			</thead>
-  			<tbody>
-  				<tr ng-repeat="address in providers_pickup_address">
-  					<td ng-show="(CurrentAddressIndex !== $index)">{{address.address1 }},{{'' + address.address2}}</td>
-            <td ng-show="(editAddress && (CurrentAddressIndex == $index))">
-              <input type="text" name="editaddressline1" class="form-control" ng-model="editpickup.address1" placeholder="address line1" autofocus required>
-              <br>
-              <input type="text" name="editaddressline2" class="form-control" ng-model="editpickup.address2" placeholder="address line2" required>
-            </td>
-  					<td ng-show="(CurrentAddressIndex !== $index)">{{address.area}}</td>
-            <td ng-show="(editAddress && (CurrentAddressIndex == $index))">
-              <input type="text" name="editarea" class="form-control" ng-model="editpickup.area" placeholder="area" required>
-            </td>
-            <td ng-show="(CurrentAddressIndex !== $index)">{{address.city}}</td>
-            <td ng-show="(editAddress && (CurrentAddressIndex == $index))">
-              <input type="text" name="editcity" class="form-control" ng-model="editpickup.city" placeholder="city" required>
-            </td>
-            <td ng-show="(CurrentAddressIndex !== $index)">{{address.state}}</td>
-            <td ng-show="(editAddress && (CurrentAddressIndex == $index))">
-              <input type="text" name="editstate" class="form-control" ng-model="editpickup.state" placeholder="state" required>
-            </td>
-            <td ng-show="(CurrentAddressIndex !== $index)">{{address.country}}</td>
-            <td ng-show="(editAddress && (CurrentAddressIndex == $index))">
-              <input type="text" name="editcountry" class="form-control" ng-model="editpickup.country" placeholder="country" required>
-            </td>
-            <td ng-show="(CurrentAddressIndex !== $index)">{{address.zipcode}}</td>
-            <td ng-show="(editAddress && (CurrentAddressIndex == $index))">
-              <input type="text" name="editzipcode" class="form-control" ng-model="editpickup.zipcode" placeholder="zipcode" required>
-            </td>
-  					<td ng-show="(CurrentAddressIndex !== $index)">
-	  					<a href="" ng-click="enableEditAddress($index, address)"><i class="fa fa-pencil"></i></a>
-	  					&nbsp;&nbsp;&nbsp;&nbsp;
-	  					<a href="" ng-click="deletePickupAddress(address.addressid)"><i class="fa fa-trash-o"></i></a>
-	  				</td>
-            <td ng-show="(editAddress && (CurrentAddressIndex == $index))">
-              <a href="" ng-click="cancelEnableEditAddress()"><i class="fa fa-times"></i></a>
-              &nbsp;&nbsp;&nbsp;&nbsp;
-              <a href="" ng-click="editPickupAddress(address.addressid)"><i class="fa fa-save"></i></a>
-            </td>
-  				</tr>
-  			</tbody>
-  		</table>
+      <form class="css-form" name="form.editPickupAddress" role="form" novalidate>   
+    		<table class="table table-hover">
+    			<thead>
+    				<tr>
+    					<th width="20%;">Address Line</th>
+    					<th width="15%;">Area</th>
+    					<th width="15%;">City</th>
+    					<th width="15%;">State</th>
+    					<th width="15%;">Country</th>
+    					<th width="10%;">Zipcode</th>
+    					<th width="10%;"></th>
+    				</tr>
+    			</thead>
+    			<tbody>
+    				<tr ng-repeat="address in providers_pickup_address">
+    					<td ng-show="(CurrentAddressIndex !== $index)">{{address.address1 }},{{ address.address2}}</td>
+              <td ng-show="(editAddress && (CurrentAddressIndex == $index))">
+                <input type="text" name="editaddressline1" class="form-control" ng-model="editpickup.address1" placeholder="address line1" autofocus required>
+                <small style="color:red;" ng-show="((form.editPickupAddress.editaddressline1.$dirty && form.editPickupAddress.editaddressline1.$invalid) || (form.editPickupAddress.editaddressline1.$invalid && form.editPickupAddress.submitted))">*Please enter address line 1!</small>
+                <br>
+                <input type="text" name="editaddressline2" class="form-control" ng-model="editpickup.address2" placeholder="address line2" required>
+                <small style="color:red;" ng-show="((form.editPickupAddress.editaddressline2.$dirty && form.editPickupAddress.editaddressline2.$invalid) || (form.editPickupAddress.editaddressline2.$invalid && form.editPickupAddress.submitted))">*Please enter address line 2!</small>
+              </td>
+    					<td ng-show="(CurrentAddressIndex !== $index)">{{address.area}}</td>
+              <td ng-show="(editAddress && (CurrentAddressIndex == $index))">
+                <input type="text" name="editarea" class="form-control" ng-model="editpickup.area" placeholder="area" required>
+                <small style="color:red;" ng-show="((form.editPickupAddress.editarea.$dirty && form.editPickupAddress.editarea.$invalid) || (form.editPickupAddress.editarea.$invalid && form.editPickupAddress.submitted))">*Please enter area!</small>
+              </td>
+              <td ng-show="(CurrentAddressIndex !== $index)">{{address.city}}</td>
+              <td ng-show="(editAddress && (CurrentAddressIndex == $index))">
+                <input type="text" name="editcity" class="form-control" ng-model="editpickup.city" placeholder="city" required>
+                <small style="color:red;" ng-show="((form.editPickupAddress.editcity.$dirty && form.editPickupAddress.editcity.$invalid) || (form.editPickupAddress.editcity.$invalid && form.editPickupAddress.submitted))">*Please enter city!</small>
+              </td>
+              <td ng-show="(CurrentAddressIndex !== $index)">{{address.state}}</td>
+              <td ng-show="(editAddress && (CurrentAddressIndex == $index))">
+                <input type="text" name="editstate" class="form-control" ng-model="editpickup.state" placeholder="state" required>
+                <small style="color:red;" ng-show="((form.editPickupAddress.editstate.$dirty && form.editPickupAddress.editstate.$invalid) || (form.editPickupAddress.editstate.$invalid && form.editPickupAddress.submitted))">*Please enter state!</small>
+              </td>
+              <td ng-show="(CurrentAddressIndex !== $index)">{{address.country}}</td>
+              <td ng-show="(editAddress && (CurrentAddressIndex == $index))">
+                <input type="text" name="editcountry" class="form-control" ng-model="editpickup.country" placeholder="country" required>
+                <small style="color:red;" ng-show="((form.editPickupAddress.editcountry.$dirty && form.editPickupAddress.editcountry.$invalid) || (form.editPickupAddress.editcountry.$invalid && form.editPickupAddress.submitted))">*Please enter country!</small>
+              </td>
+              <td ng-show="(CurrentAddressIndex !== $index)">{{address.zipcode}}</td>
+              <td ng-show="(editAddress && (CurrentAddressIndex == $index))">
+                <input type="text" name="editzipcode" class="form-control" ng-pattern="/^[0-9]{6}$/" ng-model="editpickup.zipcode" placeholder="zipcode" required>
+                <small style="color:red;" ng-show="((form.editPickupAddress.editzipcode.$dirty && form.editPickupAddress.editzipcode.$invalid) || (form.editPickupAddress.editzipcode.$invalid && form.editPickupAddress.submitted))">*Please enter zipcode and must be a 6 digit number only!</small>
+              </td>
+    					<td ng-show="(CurrentAddressIndex !== $index)">
+  	  					<a href="" ng-click="enableEditAddress($index, address)"><i class="fa fa-pencil"></i></a>
+  	  					&nbsp;&nbsp;&nbsp;&nbsp;
+  	  					<a href="" ng-click="deletePickupAddress(address.addressid)"><i class="fa fa-trash-o"></i></a>
+  	  				</td>
+              <td ng-show="(editAddress && (CurrentAddressIndex == $index))">
+                <a href="" ng-click="cancelEnableEditAddress()"><i class="fa fa-times"></i></a>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="" ng-click="editPickupAddress(address.addressid)"><i class="fa fa-save"></i></a>
+              </td>
+    				</tr>
+    			</tbody>
+    		</table>
+      </form>  
   	</div>
   </div>
 </div>
