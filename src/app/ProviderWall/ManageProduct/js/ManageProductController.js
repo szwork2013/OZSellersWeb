@@ -146,24 +146,41 @@ $scope.clearProduct=function(){
 
 
    $scope.onFileSelect = function($files) {
+    console.log($files);
      for (var i = 0; i < $files.length; i++) {
+      if(($files.type == 'image/jpg') || ($files.type == 'image/png') || ($files.type == 'image/gif') || ($files.type == 'image/jpeg')){
        file = $files[i];
+      }
+      else{
+        var field= document.getElementById('addLogoImg');
+        field.value= field.defaultValue;
+       $rootScope.OZNotify("Please upload image only" ,'error');
+      }
      }
    };
    $scope.onFileSelectUpdate = function($files) {
      for (var i = 0; i < $files.length; i++) {
-       fileUpdate = $files[i];
+      if(($files.type == 'image/jpg') || ($files.type == 'image/png') || ($files.type == 'image/gif') || ($files.type == 'image/jpeg')){
+             fileUpdate = $files[i];
+             $scope.upload = $upload.upload({
+                url: '/api/productlogo/'+$scope.selectedproviderid+'/'+$scope.product.productid, 
+                file:fileUpdate, 
+              }).progress(function(evt) {
+                // console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
+              }).success(function(data, status, headers, config) {
+                 $scope.handleChangeLogo(data, status, headers, config);
+                // console.log(data);
+              });
+
+      }
+      else{
+        var field= document.getElementById('updateLogo');
+        field.value= field.defaultValue;
+       $rootScope.OZNotify("Please upload image only" ,'error');
+      }
      }
   
-     $scope.upload = $upload.upload({
-        url: '/api/productlogo/'+$scope.selectedproviderid+'/'+$scope.product.productid, 
-        file:fileUpdate, 
-      }).progress(function(evt) {
-        // console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
-      }).success(function(data, status, headers, config) {
-         $scope.handleChangeLogo(data, status, headers, config);
-        // console.log(data);
-      });
+    
    };
 
 
