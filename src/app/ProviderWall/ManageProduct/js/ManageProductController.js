@@ -1,20 +1,21 @@
 angular.module('oz.ProviderApp')
   .controller('ManageProductController', ['$scope', '$state', '$http', '$timeout', '$sce', '$log', '$rootScope', 'ProviderServices','$upload','$stateParams','userproducttags','filterFilter',function($scope, $state, $http, $timeout, $sce, $log, $rootScope,ProviderServices,$upload, $stateParams,userproducttags,filterFilter) {
-   $scope.tabForPrice={};
-   $scope.currentProdle='';
-  $scope.editorPrice={};
-  $scope.ProductCategory=[];
-  $scope.ProductCategoryLevel3=[];
-  $scope.ProductCategoryLevel3All=[];
-  $scope.filtered;
-  $scope.search={};
-  $scope.$state = $state;
-  $scope.editMode={
+    $scope.tabForPrice={};
+    $scope.currentProdle='';
+    $scope.editorPrice={};
+    $scope.ProductCategory=[];
+    $scope.ProductCategoryLevel3=[];
+    $scope.ProductCategoryLevel3All=[];
+    $scope.filtered;
+    $scope.category;
+    $scope.search={};
+   $scope.$state = $state;
+   $scope.editMode={
     editStatus:'',
     editorEnabled:false
-  };
-  $rootScope.selectedCategoryid="";
-  $scope.form={};
+    };
+    $rootScope.selectedCategoryid="";
+    $scope.form={};
       var file=[];
       var fileUpdate;
    $scope.init=function(){
@@ -96,15 +97,23 @@ $scope.clearProduct=function(){
 
 
      $scope.getCategories=function(providerid){
-          ProviderServices.get_categories.getCategories({providerid:providerid},
+
+       ProviderServices.get_categories.getCategories({providerid:providerid},
       	function (successData) {
         if (successData.success == undefined) {
+            $scope.ProductCategory=[];
+            $scope.ProductCategoryLevel3All=[];
+            $scope.selectedCategory='';
+            $scope.ProductCategoryLevel3=[];
+            $rootScope.selectedCategoryid=[];
+            $scope.category={};
+            $rootScope.selectedCategoryid="";
          // $rootScope.OZNotify(successData.error.message, 'error');  
           if(successData.error.code=='AL001'){
             $rootScope.showModal();
           }
         } else {
-         // console.log(successData.success);
+         console.log(successData.success);
          if(successData.success.ProductCategory[1].level=2){
              $scope.ProductCategory=successData.success.ProductCategory[1].category;
              $scope.ProductCategoryLevel3All=successData.success.ProductCategory[0].category;
@@ -134,36 +143,64 @@ $scope.clearProduct=function(){
           }
         };
         // console.log($scope.ProductCategoryLevel3);
-        $rootScope.selectedCategoryid=$scope.ProductCategoryLevel3[0].categoryid;
+           if($scope.ProductCategoryLevel3[0]){
+             $scope.category=$scope.ProductCategoryLevel3[0];
+             $rootScope.selectedCategoryid=$scope.ProductCategoryLevel3[0].categoryid;
+           }
+           else{
+                  $scope.ProductCategoryLevel3All=[];
+                  $scope.ProductCategoryLevel3=[];
+                  $scope.category;
+                  $rootScope.selectedCategoryid="";
+           }
        
       };
 
-  $scope.changeCategory=function(categoryid){
-    console.log(categoryid);
-    $rootScope.selectedCategoryid=categoryid;
-    $scope.getProductConfig(categoryid);
+
+  $scope.changeCategory=function(category){
+    console.log(category.categoryid);
+    $rootScope.selectedCategoryid=category.categoryid;
+    $scope.getProductConfig(category.categoryid);
   };
 
 
    $scope.onFileSelect = function($files) {
+    console.log($files);
      for (var i = 0; i < $files.length; i++) {
+      if(($files[i].type == 'image/jpg') || ($files[i].type == 'image/png') || ($files[i].type == 'image/gif') || ($files[i].type == 'image/jpeg')){
        file = $files[i];
+      }
+      else{
+        var field= document.getElementById('addLogoImg');
+        field.value= field.defaultValue;
+       $rootScope.OZNotify("Please upload image only" ,'error');
+      }
      }
    };
+
    $scope.onFileSelectUpdate = function($files) {
      for (var i = 0; i < $files.length; i++) {
-       fileUpdate = $files[i];
+      if(($files[i].type == 'image/jpg') || ($files[i].type == 'image/png') || ($files[i].type == 'image/gif') || ($files[i].type == 'image/jpeg')){
+             fileUpdate = $files[i];
+             $scope.upload = $upload.upload({
+                url: '/api/productlogo/'+$scope.selectedproviderid+'/'+$scope.product.productid, 
+                file:fileUpdate, 
+              }).progress(function(evt) {
+                // console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
+              }).success(function(data, status, headers, config) {
+                 $scope.handleChangeLogo(data, status, headers, config);
+                // console.log(data);
+              });
+
+      }
+      else{
+        var field= document.getElementById('updateLogo');
+        field.value= field.defaultValue;
+       $rootScope.OZNotify("Please upload image only" ,'error');
+      }
      }
   
-     $scope.upload = $upload.upload({
-        url: '/api/productlogo/'+$scope.selectedproviderid+'/'+$scope.product.productid, 
-        file:fileUpdate, 
-      }).progress(function(evt) {
-        // console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
-      }).success(function(data, status, headers, config) {
-         $scope.handleChangeLogo(data, status, headers, config);
-        // console.log(data);
-      });
+    
    };
 
 
@@ -194,14 +231,18 @@ $scope.handleChangeLogo=function(data, status, headers, config){
 
     $scope.enableEditor = function () {
      $scope.editMode.editorEnabled = true;
+    
      if($scope.editMode.editStatus=='add'){
-      $scope.getProductConfig($scope.ProductCategoryLevel3[0].categoryid);
+      $scope.getCategories($rootScope.selectedproviderid);
+      $scope.getLevel3Categories($scope.ProductCategory[0].categoryid);
+      // $scope.getProductConfig($scope.ProductCategoryLevel3[0].categoryid);
      }
      else{
       if($scope.product.category){
       $scope.getProductConfig($scope.product.category.id);
       }
      }
+     console.log("id= "+$rootScope.selectedCategoryid);
     // $rootScope.OZNotify("   Adding product data....", 'info');
   };
 
@@ -340,11 +381,13 @@ $scope.handleSaveProductResponse=function(data, status, headers, config){
          else{
           $scope.product= $scope.productlist[0];
           $scope.currentProdle=$scope.product.productid;
+          $scope.category=$scope.product.category;
+          $rootScope.selectedCategoryid=$scope.product.category.id;
          }
          
         }
        }, function (error) {
-         $rootScope.OZNotify("Server Error:" + error.status, 'error');
+         $rootScope.OZNotify("Server Error:" + error.status, 'error');  
        });
   }
 
@@ -419,10 +462,12 @@ $scope.getSelectedProduct = function (product1) {
 
 
  $scope.handleGetProductSuccess=function(successData){
-   // console.log(successData);
+   console.log(successData);
         $scope.ErrMsging=0;
         $scope.currentProdle=successData.success.proudctcatalog.productid;
         $scope.product = successData.success.proudctcatalog;
+        $scope.category=successData.success.proudctcatalog.category;
+        $rootScope.selectedCategoryid=successData.success.proudctcatalog.category.id;
         // $rootScope.currentProdleRoot=successData.success.product.prodle;
       
   };

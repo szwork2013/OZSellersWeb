@@ -1,8 +1,8 @@
 <div style="border: 1px solid #EEE8E8; border-radius:6px; padding:10px;" class="">
+
  <div ng-show="ErrMsging" id="ErrMsging" class="prodo-ErrMsging" ></div>
 
 <!-- corousel -->
-
 
 <div class="prodo-productListCorousel" ng-show="selectedBranchId">
 
@@ -107,7 +107,14 @@
 
 			               <td  class="prodo-width50 " ng-show="selectedBranchId ">
 			              		<span class="bold"> Sub Category </span>
-			              		 <select  class=" form-control prodo-width50" ng-change="changeCategory(selectedCategoryid)" ng-model="selectedCategoryid" ng-options="category.categoryid as category.categoryname for category in ProductCategoryLevel3" required ></select>
+			              		 <select ng-selected="category" class=" form-control prodo-width50" ng-change="changeCategory(category)" ng-model="category" ng-options="category as category.categoryname for category in ProductCategoryLevel3" name="subcategory" required ></select>
+
+
+                                 <div  ng-show="(form.productForm.subcategory.$dirty  && editMode.editorEnabled==true ) ||(form.productForm.submitted==true && form.productForm.subcategory.$invalid==true)" class="prodo-product-Invalid">
+								  <span ng-show="form.productForm.subcategory.$error.required">Please select sub category</span>
+								 </div>
+
+
 			              </td>
 
 
@@ -200,13 +207,15 @@
                                  <div  ng-show="(form.productForm.minweight.$dirty  && editMode.editorEnabled==true ) ||(form.productForm.submitted==true && form.productForm.minweight.$invalid==true)" class="prodo-product-Invalid">
                                   <span ng-show="form.productForm.minweight.$error.min"> Min weight cannot be less than 0</span>
 
+                                   
+
                                    <div ng-show="form.productForm.minweight.$error.ngMax">
 						            Min weight cannot be greater than Max weight
-						        </div>
+						           </div>
+						         
+						         <span ng-show=" form.productForm.minweight.$invalid "> Please enter valid number</span>
 
-                              <!--     <span ng-show="form.productForm.minweight.$error.max"> Min weight cannot be greater than Max weight</span> -->
-								<!--   <span ng-show="form.productForm.minweight.$error.required">Please enter product min weight that can be purchased</span> -->
-								 <!--  <span ng-show="form.productForm.minweight.$error.maxlength">Product min weight to purchase can not be more than 50 characters  </span> -->
+                   
 								  </div>
 
 
@@ -225,6 +234,8 @@
                                   <div ng-show="form.productForm.maxweight.$error.ngMin">
 						            Max weight cannot be less than Min weight
 						         </div>
+						          <span ng-show=" form.productForm.maxweight.$invalid"> Please enter valid number</span>
+
 								 <!--  <span ng-show="form.productForm.maxweight.$error.required">Please enter product max weight that can be purchased</span> -->
 								 <!--  <span ng-show="form.productForm.maxweight.$error.maxlength">Product max weight to purchase can not be more than 50 characters  </span> -->
 								  </div>
@@ -262,7 +273,7 @@
                  
 		          <tr ng-show="editMode.editStatus=='add'">
 		           <td colspan="4"><span class="bold">Attach product photo</span>
-		           	   <input type="file" class="form-control" ng-file-select="onFileSelect($files)" >
+		           	   <input type="file" class="form-control" id="addLogoImg" ng-file-select="onFileSelect($files)" >
 		           	   		  <!-- <button ng-click="upload.abort()">Cancel Upload</button> -->
 		            </td>
 		          </tr>
