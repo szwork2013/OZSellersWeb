@@ -73,7 +73,8 @@ angular.module('oz.ProviderApp')
             $scope.errorForInvalidPercentage = '';
             $scope.errorForInvalidStartDate = '';
             $scope.errorForInvalidEnddate = '';  
-            $scope.codeContent = {'discountcode':'', 'description' : '', 'percent' : '', 'startdate': '', 'expirydate' : ''};          
+            $scope.codeContent = {'discountcode':'', 'description' : '', 'percent' : '', 'startdate': '', 'expirydate' : ''};  
+            $scope.isCollapsed = !$scope.isCollapsed;        
     };
 
     $scope.regexForText = /^[a-zA-Z\s]*$/;

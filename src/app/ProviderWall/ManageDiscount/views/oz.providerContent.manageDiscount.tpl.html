@@ -147,12 +147,12 @@
               
                <tr>
                         <td></td>
-                        <td> <button class = 'btn btn-default'style='width:49%' ng-click = 'cancelAll(); isCollapsed = !isCollapsed'> Cancel </button><button class = 'btn btn-info' style = 'float : right;width : 49%' ng-click = 'submit();'> Create Discount Code </button> </td>
+                        <td> <button class = 'btn btn-default'style='width:49%' ng-click = 'cancelAll(); '> Cancel </button><button class = 'btn btn-info' style = 'float : right;width : 49%' ng-click = 'submit();'> Create Discount Code </button> </td>
                </tr>       
           </table>
    </div>
   <div style= 'border: 1px solid #ccc;' >
-      <table class = 'table table-hover'>
+      <table class = 'table table-hover' ng-if = 'containerOfDiscountCode.length !== 0'>
           <tr >
               <td  style = 'border-top : 0px;width : 10%;border-bottom: 1px solid #ccc;'><h4>Discount Code </h4></td>
               <td  style = 'border-top : 0px;width : 30%;border-bottom: 1px solid #ccc;'><h4>Description </h4></td>
