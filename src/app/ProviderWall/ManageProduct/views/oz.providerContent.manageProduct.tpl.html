@@ -1,8 +1,8 @@
 <div style="border: 1px solid #EEE8E8; border-radius:6px; padding:10px;" class="">
+{{selectedCategoryid}}
  <div ng-show="ErrMsging" id="ErrMsging" class="prodo-ErrMsging" ></div>
 
 <!-- corousel -->
-
 
 <div class="prodo-productListCorousel" ng-show="selectedBranchId">
 
@@ -107,7 +107,7 @@
 
 			               <td  class="prodo-width50 " ng-show="selectedBranchId ">
 			              		<span class="bold"> Sub Category </span>
-			              		 <select  class=" form-control prodo-width50" ng-change="changeCategory(selectedCategoryid)" ng-model="selectedCategoryid" ng-options="category.categoryid as category.categoryname for category in ProductCategoryLevel3" required ></select>
+			              		 <select  class=" form-control prodo-width50" ng-change="changeCategory(category)" ng-model="category" ng-options="category as category.categoryname for category in ProductCategoryLevel3" required ></select>
 			              </td>
 
 

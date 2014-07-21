@@ -123,7 +123,7 @@ $scope.changePrice=function(product){
 
 // ///////////////////////////////////holding //////////////////////////////////////
 
-
+    $scope.today=new Date();
     $scope.mytime = new Date();
 
     $scope.mytimes = new Date();
