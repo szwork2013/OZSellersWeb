@@ -582,7 +582,10 @@ top: 20px;
 left: 35px;
 }
 .tabtrackingLi{padding-left: 60px;}
-.oz-trackingUL{padding-left: 11%;padding-top: 10px;}
+.oz-trackingUL{
+  /*padding-left: 11%;*/ /*previous tracking tree for 4 tabs*/
+  padding-left: 21%;  /*new tracking tree for 3 tabs*/
+  padding-top: 10px;}
 .trackingTabContent{margin-left: 22%;margin-right: 26%;}
 .active4{ 
   position: absolute;
@@ -597,7 +600,11 @@ left: 35px;
   border-right: solid 5px transparent;
 
   }
-.oz-paddingLeft{padding-left: 120px;}
+.displaynone{display: none;}
+.capital {
+    text-transform: capitalize;
+}
+.oz-paddingLeft{padding-left: 140px;} 
 .oz-actionDropdown{padding: 3px;width: 125px;height: 25px;font-size: 13px;}
 .oz-adress{  }
 .oz-productcode{font-size: 24px; word-wrap: break-word;}
@@ -606,7 +613,7 @@ left: 35px;
 .activatetick{color:green;}
 .activatetickOrange{color:orange;}
 .listStyle{list-style-type: none; padding:0px;}
-.ozUpArrow{font-size: 20px;color: rgb(200, 138, 103); margin-right: 25px; margin-left: 100%;}
+.ozUpArrow{font-size: 20px;color: rgb(200, 138, 103); margin-right: 25px; margin-left: 80%;}
 .oz-datepickerTextWidth{width: 40%}
 .marginBotton10{margin-bottom: 10px;}
 .border-radius 

@@ -27,6 +27,7 @@ angular.module('oz.OrderZappApp',['ui.router', 'ui.bootstrap', 'ngAnimate','text
     $state.transitionTo('home.start');
     $rootScope.selectedproviderid = '';
     $rootScope.selectedBranchId = '';
+    $rootScope.orderConfigStatus=[]; 
     $rootScope.providers=[];
     $rootScope.branches=[]; 
     $rootScope.branch={};
@@ -63,6 +64,7 @@ $scope.getProviders=function(){
               if (successData.success == undefined) {
                 $rootScope.provider={};
                 $rootScope.providers=[];
+                $rootScope.orderConfigStatus=[]; 
                 $rootScope.selectedproviderid="";
                 if(successData.error.code=='AL001'){
                     $rootScope.showModal();
@@ -73,6 +75,7 @@ $scope.getProviders=function(){
                $rootScope.providers=successData.success.providers;
                if(successData.success.providers[0]){
                  $rootScope.provider=successData.success.providers[0];
+                 $rootScope.orderConfigStatus=$rootScope.provider.orderprocess_configuration;
                  $rootScope.selectedproviderid=successData.success.providers[0].providerid;
                  console.log($scope.provider);
                  $scope.getBranches($rootScope.selectedproviderid);
@@ -124,6 +127,8 @@ $scope.getProviders=function(){
 
    $scope.getProviderId=function(provider){
       $rootScope.selectedproviderid=provider.providerid;
+      $rootScope.provider=provider;
+      $rootScope.orderConfigStatus=provider.orderprocess_configuration;
       $rootScope.$broadcast('change_in_providerid', $rootScope.selectedproviderid);
       $log.debug("pid "+ $rootScope.selectedproviderid);
       if($rootScope.selectedproviderid){
@@ -132,6 +137,7 @@ $scope.getProviders=function(){
    };
 
     $scope.resetProviderData=function(){
+      $rootScope.orderConfigStatus=[]; 
       $rootScope.providers=[];
       $rootScope.branches=[]; 
       $rootScope.provider={};

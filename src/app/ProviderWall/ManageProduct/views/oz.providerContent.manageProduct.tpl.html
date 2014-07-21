@@ -154,11 +154,12 @@
 		         
 		              <td  colspan="2" ng-show="editMode.editStatus=='add'">
  				    	<span class="bold">	 Product Price </span><input ng-model="product.price.value"
-		              ng-maxlength="11"  id="prodo-product-features_textfield" class="form-control prodo-display-right prodo-validation rs" placeholder="Enter price in &#xf156; " type="number" required   name="pricevalue"  />  
+		              ng-maxlength="11" ng-min="0"  id="prodo-product-features_textfield" class="form-control prodo-display-right prodo-validation rs" placeholder="Enter price in &#xf156; " type="number" required   name="pricevalue"  />  
                       
                                  <div  ng-show="(form.productForm.pricevalue.$dirty  && editMode.editorEnabled==true ) ||(form.productForm.submitted==true && form.productForm.pricevalue.$invalid==true)" class="prodo-product-Invalid">
 								  <span ng-show="form.productForm.pricevalue.$error.required">Please enter valid product price </span>
 								  <span ng-show="form.productForm.pricevalue.$error.maxlength">Product price should be valid number  </span>
+								  <span ng-show="form.productForm.pricevalue.$error.ngMin">Product price can not be negative number  </span>
 								  </div>
 
 		              </td>
