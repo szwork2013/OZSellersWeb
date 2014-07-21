@@ -27,7 +27,8 @@ angular.module('oz.ProviderApp')
     		Edit_Branch: $resource('/api/branch/:providerid/:branchid', {}, { edit_Seller_Branch: { method: 'PUT', params: { providerid: '@providerid', branchid: '@branchid'} } }),
     		Edit_Seller: $resource('/api/productprovider/:providerid', {}, { edit_Seller: { method: 'PUT', params: { providerid: '@providerid'} } }),
     		Add_Pickup_Address: $resource('/api/pickupaddress/:providerid', {}, { add_PickupAddress: { method: 'POST', params: { providerid: '@providerid'} } }),  
-    		Delete_Pickup_Address: $resource('/api/pickupaddress/:providerid/:addressid', {}, { delete_PickupAddress: { method: 'DELETE', params: { providerid: '@providerid', addressid: '@addressid'} } })
+    		Delete_Pickup_Address: $resource('/api/pickupaddress/:providerid/:addressid', {}, { delete_PickupAddress: { method: 'DELETE', params: { providerid: '@providerid', addressid: '@addressid'} } }),
+    		Update_Pickup_Address: $resource('/api/pickupaddress/:providerid/:addressid', {}, { update_PickupAddress: { method: 'PUT', params: { providerid: '@providerid', addressid: '@addressid'} } })
     	};
 	    var branch = {};
 
@@ -88,6 +89,16 @@ angular.module('oz.ProviderApp')
 	      }, function (error) {
 	        $log.debug(error);
 	        $rootScope.$broadcast('deletePickupAddressNotDone', error.status);
+	      });
+	    };
+
+	    branch.updatePickupLocation = function (addressdata, addressid) {
+	      ManageBranchService.Update_Pickup_Address.update_PickupAddress({providerid: $rootScope.selectedproviderid, addressid: addressid}, addressdata, function (success) {
+	        $log.debug(success);
+	        $rootScope.$broadcast('updatePickupAddressDone', success);
+	      }, function (error) {
+	        $log.debug(error);
+	        $rootScope.$broadcast('updatePickupAddressNotDone', error.status);
 	      });
 	    };
 
