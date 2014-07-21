@@ -106,6 +106,8 @@ $scope.clearProduct=function(){
             $scope.selectedCategory='';
             $scope.ProductCategoryLevel3=[];
             $rootScope.selectedCategoryid=[];
+            $scope.category={};
+            $rootScope.selectedCategoryid="";
          // $rootScope.OZNotify(successData.error.message, 'error');  
           if(successData.error.code=='AL001'){
             $rootScope.showModal();
@@ -141,9 +143,19 @@ $scope.clearProduct=function(){
           }
         };
         // console.log($scope.ProductCategoryLevel3);
-        $rootScope.selectedCategoryid=$scope.ProductCategoryLevel3[0].categoryid;
-        $scope.category=$scope.ProductCategoryLevel3[0];
+           if($scope.ProductCategoryLevel3[0]){
+             $scope.category=$scope.ProductCategoryLevel3[0];
+             $rootScope.selectedCategoryid=$scope.ProductCategoryLevel3[0].categoryid;
+           }
+           else{
+                  $scope.ProductCategoryLevel3All=[];
+                  $scope.ProductCategoryLevel3=[];
+                  $scope.category;
+                  $rootScope.selectedCategoryid="";
+           }
+       
       };
+
 
   $scope.changeCategory=function(category){
     console.log(category.categoryid);
@@ -221,7 +233,8 @@ $scope.handleChangeLogo=function(data, status, headers, config){
      $scope.editMode.editorEnabled = true;
     
      if($scope.editMode.editStatus=='add'){
-      $scope.getCategories($rootScope.selectedproviderid);
+      // $scope.getCategories($rootScope.selectedproviderid);
+      $scope.getLevel3Categories($scope.ProductCategory[0].categoryid);
       $scope.getProductConfig($scope.ProductCategoryLevel3[0].categoryid);
      }
      else{
@@ -368,11 +381,13 @@ $scope.handleSaveProductResponse=function(data, status, headers, config){
          else{
           $scope.product= $scope.productlist[0];
           $scope.currentProdle=$scope.product.productid;
+          $scope.category=$scope.product.category;
+          $rootScope.selectedCategoryid=$scope.product.category.id;
          }
          
         }
        }, function (error) {
-         $rootScope.OZNotify("Server Error:" + error.status, 'error');
+         $rootScope.OZNotify("Server Error:" + error.status, 'error');  
        });
   }
 
