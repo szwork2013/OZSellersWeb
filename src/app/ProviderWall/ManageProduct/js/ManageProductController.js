@@ -233,9 +233,9 @@ $scope.handleChangeLogo=function(data, status, headers, config){
      $scope.editMode.editorEnabled = true;
     
      if($scope.editMode.editStatus=='add'){
-      // $scope.getCategories($rootScope.selectedproviderid);
+      $scope.getCategories($rootScope.selectedproviderid);
       $scope.getLevel3Categories($scope.ProductCategory[0].categoryid);
-      $scope.getProductConfig($scope.ProductCategoryLevel3[0].categoryid);
+      // $scope.getProductConfig($scope.ProductCategoryLevel3[0].categoryid);
      }
      else{
       if($scope.product.category){

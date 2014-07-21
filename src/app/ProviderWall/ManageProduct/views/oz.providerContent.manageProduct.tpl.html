@@ -207,13 +207,15 @@
                                  <div  ng-show="(form.productForm.minweight.$dirty  && editMode.editorEnabled==true ) ||(form.productForm.submitted==true && form.productForm.minweight.$invalid==true)" class="prodo-product-Invalid">
                                   <span ng-show="form.productForm.minweight.$error.min"> Min weight cannot be less than 0</span>
 
+                                   
+
                                    <div ng-show="form.productForm.minweight.$error.ngMax">
 						            Min weight cannot be greater than Max weight
-						        </div>
+						           </div>
+						         
+						         <span ng-show=" form.productForm.minweight.$invalid "> Please enter valid number</span>
 
-                              <!--     <span ng-show="form.productForm.minweight.$error.max"> Min weight cannot be greater than Max weight</span> -->
-								<!--   <span ng-show="form.productForm.minweight.$error.required">Please enter product min weight that can be purchased</span> -->
-								 <!--  <span ng-show="form.productForm.minweight.$error.maxlength">Product min weight to purchase can not be more than 50 characters  </span> -->
+                   
 								  </div>
 
 
@@ -232,6 +234,8 @@
                                   <div ng-show="form.productForm.maxweight.$error.ngMin">
 						            Max weight cannot be less than Min weight
 						         </div>
+						          <span ng-show=" form.productForm.maxweight.$invalid"> Please enter valid number</span>
+
 								 <!--  <span ng-show="form.productForm.maxweight.$error.required">Please enter product max weight that can be purchased</span> -->
 								 <!--  <span ng-show="form.productForm.maxweight.$error.maxlength">Product max weight to purchase can not be more than 50 characters  </span> -->
 								  </div>
