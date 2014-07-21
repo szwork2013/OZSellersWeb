@@ -185,8 +185,9 @@ angular.module('oz.ProviderApp')
               }
             }
           } else {
+            $scope.delivery_available = [];
             angular.forEach($scope.AreaUnderZipcode, function(area) {
-             $scope.delivery_available.push({value:'', coverage:{ area:area,city:'',zipcode:zipcode} });
+              $scope.delivery_available.push({value:'', coverage:{ area:area,city:'',zipcode:zipcode} });
             });
             console.log($scope.delivery_available);
           }
