@@ -4,10 +4,11 @@ angular.module('oz.ProviderApp')
     $log.debug("initialising manage pickup address controller");
     $scope.providers_pickup_address = [];
     $scope.pickup = {};
+    $scope.editpickup = {};
     $scope.$state = $state;
     $scope.form = {};
     $scope.submitted = false;
-
+    $scope.editAddress = false;
 
     $scope.$watch('$state.$current.locals.globals.PickupAddressList', function (PickupAddressList) {
       console.log(PickupAddressList);
@@ -88,6 +89,71 @@ angular.module('oz.ProviderApp')
     });
 
 
+    $scope.enableEditAddress = function(index, address) {
+      $scope.editpickup = angular.copy(address);
+      $scope.editAddress = true;
+      $scope.CurrentAddressIndex = index;
+    }
+
+    $scope.cancelEnableEditAddress = function() {
+      $scope.editAddress = false;
+      $scope.CurrentAddressIndex = '';
+    }
+
+    // function to send and stringify user registration data to Rest APIs
+    $scope.jsonEditPickupAddressData = function(){
+      var Pickupdata = 
+      {
+        location: {
+          'address1': $scope.editpickup.address1,
+          'address2': $scope.editpickup.address2,
+          'area': $scope.editpickup.area,
+          'city': $scope.editpickup.city,
+          'country': $scope.editpickup.country,
+          'state': $scope.editpickup.state,
+          'zipcode': $scope.editpickup.zipcode
+        }
+      }
+      return JSON.stringify(Pickupdata); 
+    } 
+
+    // function to handle server side responses
+    $scope.handleEditPickupAddressResponse = function(data){
+      if (data.success) {
+        $state.reload();
+        $scope.cancelEnableEditAddress();
+        $rootScope.OZNotify(data.success.message,'success'); 
+      } else {
+        if(data.error.code=='AL001'){
+          $rootScope.showModal();
+        } else {
+          console.log(data.error.message);
+          $rootScope.OZNotify(data.error.message,'error');
+        }
+      }
+    };
+  
+    $scope.editPickupAddress = function(addressid){
+      console.log($scope.jsonEditPickupAddressData());
+      // if ($scope.form.editPickupAddress.$valid) {
+        ManageBranchService.updatePickupLocation($scope.jsonEditPickupAddressData(), addressid);
+      // } else {
+      //   console.log('incorrect data');
+      //   $scope.form.editPickupAddress.submitted = true;
+      // }
+    }
+
+    var cleanupEventEditPickupAddressDone = $scope.$on("updatePickupAddressDone", function(event, message){
+      $log.debug(message);
+      $scope.handleEditPickupAddressResponse(message);      
+    });
+
+    var cleanupEventEditPickupAddressNotDone = $scope.$on("updatePickupAddressNotDone", function(event, message){
+      $log.debug(message);
+      $rootScope.OZNotify("It looks as though we have broken something on our server system. Our support team is notified and will take immediate action to fix it." + message, 'error');   
+    });
+
+
     // function to handle server side responses
     $scope.handleDeletePickupAddressResponse = function(data){
       if (data.success) {
@@ -125,6 +191,8 @@ angular.module('oz.ProviderApp')
       cleanupEventAddPickupAddressNotDone();
       cleanupEventDeletePickupAddressDone();
       cleanupEventDeletePickupAddressNotDone();
+      cleanupEventEditPickupAddressDone();
+      cleanupEventEditPickupAddressNotDone();
     });
 
  }]);

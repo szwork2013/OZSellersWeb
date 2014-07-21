@@ -74,7 +74,7 @@ $scope.getProviders=function(){
                $rootScope.providers=[];
                $rootScope.providers=successData.success.providers;
                if(successData.success.providers[0]){
-                 $rootScope.provider=successData.success.providers[0];
+                 $rootScope.provider=$rootScope.providers[0];
                  $rootScope.orderConfigStatus=$rootScope.provider.orderprocess_configuration;
                  $rootScope.selectedproviderid=successData.success.providers[0].providerid;
                  console.log($scope.provider);
