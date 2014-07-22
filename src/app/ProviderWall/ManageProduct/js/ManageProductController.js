@@ -249,6 +249,8 @@ $scope.handleChangeLogo=function(data, status, headers, config){
 
   $scope.disableEditor = function () {
      $('#Edit')[0].reset();
+     file=null;
+     fileUpdate=null;
     $scope.editMode.editorEnabled = false;
     $scope.form.productForm.submitted=false;
 
