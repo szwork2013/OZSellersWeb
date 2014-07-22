@@ -89,9 +89,12 @@
 
 					<div id="oz-signup-input-group" class="input-group">
 						<h5>Delivery Mode:</h5>
-						<p style="font-size:12px;" class="text-muted">**The store or outlet pickup option is offered by default. Please select Home delivery if you offer this option to buyers.</p> 
+						<p style="font-size:12px;" class="text-muted">**The store or outlet offers two types of delivery modes. Please select at least one mode, that you wish to offer to buyers.</p> 
 					 	<span>
 					 		Home&nbsp;<input type="checkbox" ng-model="addbranch.homedelivery">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					 	</span>
+					 	<span>
+					 		Pickup&nbsp;<input type="checkbox" ng-model="addbranch.pickup">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					 	</span>
 					 	<span ng-show="addbranch.homedelivery">
 					 		Delivery Charges in percent&nbsp;<input id="checkSlave" type="checkbox"  ng-model="addbranch.chargeinpercent">
@@ -154,7 +157,7 @@
 							<span ng-show="branch.delivery.isprovidepickup" class="label label-success"><i class="fa fa-check"></i>&nbsp;&nbsp;PICKUP</span>					
 							<span ng-show="branch.delivery.isdeliverychargeinpercent" class="label label-success"><i class="fa fa-check"></i>&nbsp;&nbsp;CHARGE IN PERCENT</span>
 						</p>
-						<p style="font-size:12px;" class="text-muted">**The store or outlet pickup option is offered by default.</p> 
+						<p style="font-size:12px;" class="text-muted">**The store or outlet delivery option is offered by seller.</p> 
 
 					</div>
 				</div>
@@ -243,9 +246,12 @@
 
 								<div id="oz-signup-input-group" class="input-group">
 									<h5>Delivery Mode:</h5> 
-									<p style="font-size:12px;" class="text-muted">**The store or outlet pickup option is offered by default. Please select Home delivery if you offer this option to buyers.</p> 
+									<p style="font-size:12px;" class="text-muted">**The store or outlet offers two types of delivery modes. Please select at least one mode, that you wish to offer to buyers.</p> 
 								 	<span>
 								 		Home&nbsp;<input type="checkbox" ng-model="editbranch.delivery.isprovidehomedelivery">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								 	</span>
+								 	<span>
+								 		Pickup&nbsp;<input type="checkbox" ng-model="editbranch.delivery.isprovidepickup">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								 	</span>
 								 	<span ng-show="editbranch.delivery.isprovidehomedelivery">
 								 		Delivery Charges in percent&nbsp;<input id="checkSlave" type="checkbox"  ng-model="editbranch.delivery.isdeliverychargeinpercent">
