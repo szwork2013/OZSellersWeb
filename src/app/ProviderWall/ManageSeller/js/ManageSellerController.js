@@ -103,8 +103,15 @@ angular.module('oz.ProviderApp')
     }
 
     $scope.onFileSelect = function($files) {
+      console.log($files);
       for (var i = 0; i < $files.length; i++) {
-        file = $files[i];
+        if(($files[i].type == 'image/jpg') || ($files[i].type == 'image/png') || ($files[i].type == 'image/gif') || ($files[i].type == 'image/jpeg')){
+         file = $files[i];
+        } else {
+          var field= document.getElementById('addProvider');
+          field.value= field.defaultValue;
+          $rootScope.OZNotify("Please upload image only" ,'error');
+        }
       }
       if (file != null) {
         $scope.addSellerLogo = false;
@@ -113,7 +120,13 @@ angular.module('oz.ProviderApp')
 
     $scope.onFileSelectUpdate = function($files) {
       for (var i = 0; i < $files.length; i++) {
-        fileUpdate = $files[i];
+        if(($files[i].type == 'image/jpg') || ($files[i].type == 'image/png') || ($files[i].type == 'image/gif') || ($files[i].type == 'image/jpeg')){
+          fileUpdate = $files[i];
+        } else {
+          var field= document.getElementById('updateProvider');
+          field.value= field.defaultValue;
+          $rootScope.OZNotify("Please upload image only" ,'error');
+        }
       }
     };  
 
