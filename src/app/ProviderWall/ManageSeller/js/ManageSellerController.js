@@ -28,9 +28,7 @@ angular.module('oz.ProviderApp')
         }
         if (!$rootScope.selectedproviderid) {
           $rootScope.selectedproviderid = $scope.providers_list[0].providerid;
-        } else {
-          $rootScope.selectedproviderid = $rootScope.selectedproviderid;
-        }
+        } 
       } else {
         $scope.providers_list = [];
         $rootScope.providers = [];

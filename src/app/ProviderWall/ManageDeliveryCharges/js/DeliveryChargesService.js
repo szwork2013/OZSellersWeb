@@ -5,6 +5,7 @@ angular.module('oz.ProviderApp')
 	  function ($resource) {
 	    var location = {
 	      LocationData: $resource('/api/location?key=:keydata&value=:data', {}, { GetAllLocationData: { method: 'GET'} }),
+	      Get_AllBranchArea_For_Delivery: $resource('/api/branchdeliverycharges/:branchid', {}, { all_brancharea_for_delivery: { method: 'GET' } })
 	    }
 	    return location;
 	  }
@@ -22,7 +23,7 @@ angular.module('oz.ProviderApp')
     		Get_Zipcode_For_City: $resource('/api/location?key=:keydata&value=:data', {}, { zipcode_for_city: { method: 'GET', params: { keydata: '@keydata', data: '@data' } } }),
     		Get_Area_For_Zipcode: $resource('/api/location?key=:keydata&value=:data', {}, { area_for_zipcode: { method: 'GET', params: { keydata: '@keydata', data: '@data' } } }),
     		Get_Area_For_Delivery: $resource('/api/branchdeliverycharges/:branchid?zipcode=:zipcode', {}, { area_for_delivery: { method: 'GET', params: { branchid: '@branchid', zipcode: '@zipcode' } } }),
-    		Add_Charges_For_Delivery: $resource('/api/managedeliverycharges/:branchid', {}, { manage_delivery_charges: { method: 'PUT', params: { branchid: '@branchid'} } }),
+    		Add_Charges_For_Delivery: $resource('/api/managedeliverycharges/:branchid', {}, { manage_delivery_charges: { method: 'PUT', params: { branchid: '@branchid'} } })
     	};
 	    var DeliveryChargeService = {};
 
