@@ -107,7 +107,7 @@
 
 			               <td  class="prodo-width50 " ng-show="selectedBranchId ">
 			              		<span class="bold"> Sub Category </span>
-			              		 <select ng-selected="category" class=" form-control prodo-width50" ng-change="changeCategory(category)" ng-model="category" ng-options="category as category.categoryname for category in ProductCategoryLevel3" name="subcategory" required ></select>
+			              		 <select  ng-selected="category" class=" form-control prodo-width50" ng-change="changeCategory(category)" ng-model="category" ng-options="category as category.categoryname for category in ProductCategoryLevel3" name="subcategory" required ></select>
 
 
                                  <div  ng-show="(form.productForm.subcategory.$dirty  && editMode.editorEnabled==true ) ||(form.productForm.submitted==true && form.productForm.subcategory.$invalid==true)" class="prodo-product-Invalid">

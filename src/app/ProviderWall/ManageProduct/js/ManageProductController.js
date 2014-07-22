@@ -249,6 +249,8 @@ $scope.handleChangeLogo=function(data, status, headers, config){
 
   $scope.disableEditor = function () {
      $('#Edit')[0].reset();
+     file=null;
+     fileUpdate=null;
     $scope.editMode.editorEnabled = false;
     $scope.form.productForm.submitted=false;
 
@@ -273,9 +275,10 @@ $scope.addProduct = function (editStatus) {
    if (editStatus == 'add') { 
 
     $scope.product.usertags=$scope.productusertags;
-    // console.log($scope.product);
+    console.log($scope.product);
+    console.log(file);
     if($scope.productusertags){
-    if(file){
+    if(file!==null || file !== undefined || file!=={}){
      $scope.upload = $upload.upload({
         url: '/api/productcatalog/'+$scope.selectedBranchId+'/'+$scope.selectedproviderid+'/'+$rootScope.selectedCategoryid, 
         data: {"data":$scope.product} ,
@@ -335,7 +338,8 @@ $scope.addProduct = function (editStatus) {
 
 $scope.handleSaveProductResponse=function(data, status, headers, config){
   if(data.success){
-
+     file=null;
+     fileUpdate=null;
       $scope.init();
       $scope.disableEditor();
       $rootScope.OZNotify(data.success.message, 'success');

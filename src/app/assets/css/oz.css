@@ -315,8 +315,9 @@ width: 90%;overflow-x: hidden;overflow-y: auto;left: 55px;position: relative;top
 .prodo-productListCorousel{ height:130px;width:auto;}
 .prodo-arrowbtnLeft{height: 109px; float: left; margin-top:5px;margin-right:40px; cursor:pointer; font-size:50px;color:gray; background-color:white;}
 .prodo-arrowbtnRight{height: 109px;float: right; margin-top:5px; cursor:pointer ; font-size:50px;color:gray; background-color:white;}
-.prodo-productThumbnailView{display:inline-block;width:100px; height: 110px; float: left; margin: 5px; border: solid 1px #ccc;overflow: hidden;}
-.prodo-productThumbnailView:hover{border-bottom: 5px solid gray;} 
+.prodo-productThumbnailView{background-color: rgba(240, 238, 231, 0.34);display:inline-block;width:100px; height: 110px; float: left; margin: 5px; border: solid 1px #ccc;overflow: hidden;}
+.prodo-productThumbnailView:hover{box-shadow: 5px 5px 5px 1px #888888;
+background-color: white;} 
 .prodo-AddProductBtn{color: darkslategrey ; margin:5px auto; display:block; text-align:center; font-weight:bold; font-size:12px;}
 .prodo-productThumbnailImg{margin:0px auto; display:block; width:95%; height: 69%;  }
 .prodo-ProductDetails{display:block}
@@ -543,7 +544,8 @@ background-color: white;
 .prodo-margin5{margin: 5px;}
 .prodo-fontWeight{font-weight: bold;}
 .prodo-descriptionDisplay{word-wrap: break-word;width: 98%; word-break: break-word;}
-.activeProduct{border-bottom: 5px solid rgb(23, 170, 197);}
+.activeProduct{border-bottom: 5px solid rgb(23, 170, 197);box-shadow: 5px 5px 5px 1px #888888;
+background-color: white;}
 .orange{border-top: 5px solid red;}
 .green{border-top: 5px solid green;}
 .orange1{border-top: 5px solid red;}
@@ -649,20 +651,20 @@ background-color: #fff;
      }
 
 .zoomCss {
-    -moz-transform: scale(0.5, 0.5); 
+    /*-moz-transform: scale(0.5, 0.5); 
     -webkit-transform: scale(0.5, 0.5); 
     -o-transform: scale(0.5, 0.5);
      -ms-transform: scale(0.5, 0.5);
-     transform: scale(0.5, 0.5); 
+     transform: scale(0.5, 0.5); */
 }
 
 .zoomCssControlClock
 {
-      -moz-transform: scale(0.40, 0.40); 
-      -webkit-transform: scale(0.40, 0.40); 
-      -o-transform: scale(0.40, 0.40);
-      -ms-transform: scale(0.40, 0.40);
-      transform: scale(0.40, 0.40); 
+transform: scale(.34);
+-ms-transform: scale(.34); 
+-webkit-transform: scale(.34); 
+-o-transform: scale(.34); 
+-moz-transform: scale(.34); 
 }
 
 .disableEditingMode[readonly]{
