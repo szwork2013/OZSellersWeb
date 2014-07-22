@@ -51,6 +51,11 @@ angular.module('oz.ProviderApp')
       }
     });
 
+    var cleanupEventChange_in_provideridDone = $scope.$on("change_in_providerid", function(event, data){
+      console.log(data);
+      $state.reload();     
+    });
+
     $scope.getCityForState = function(state) {
       if (state) {
         ManageDeliveryChargesService.GetCityList(state);

@@ -22,8 +22,10 @@ angular.module('oz.ProviderApp')
       console.log(MyProviderList);
       if (MyProviderList.success !== undefined && MyProviderList.success.providers.length !== 0) {
         $scope.providers_list = angular.copy(MyProviderList.success.providers); 
-        $rootScope.providers = angular.copy(MyProviderList.success.providers); 
-        $rootScope.provider =  $rootScope.providers[0];
+        if ($rootScope.providers.length == 0) {
+          $rootScope.providers = angular.copy(MyProviderList.success.providers); 
+          $rootScope.provider =  $rootScope.providers[0];
+        }
         if (!$rootScope.selectedproviderid) {
           $rootScope.selectedproviderid = $scope.providers_list[0].providerid;
         } else {

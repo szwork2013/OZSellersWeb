@@ -651,20 +651,20 @@ background-color: #fff;
      }
 
 .zoomCss {
-    -moz-transform: scale(0.5, 0.5); 
+    /*-moz-transform: scale(0.5, 0.5); 
     -webkit-transform: scale(0.5, 0.5); 
     -o-transform: scale(0.5, 0.5);
      -ms-transform: scale(0.5, 0.5);
-     transform: scale(0.5, 0.5); 
+     transform: scale(0.5, 0.5); */
 }
 
 .zoomCssControlClock
 {
-      -moz-transform: scale(0.40, 0.40); 
-      -webkit-transform: scale(0.40, 0.40); 
-      -o-transform: scale(0.40, 0.40);
-      -ms-transform: scale(0.40, 0.40);
-      transform: scale(0.40, 0.40); 
+transform: scale(.34);
+-ms-transform: scale(.34); 
+-webkit-transform: scale(.34); 
+-o-transform: scale(.34); 
+-moz-transform: scale(.34); 
 }
 
 .disableEditingMode[readonly]{
