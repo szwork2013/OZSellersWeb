@@ -137,6 +137,34 @@ angular.module('oz.OrderZappApp')
       resolve: {
         PickupAddressList: function(ManageSellerService, $rootScope) {
           return ManageSellerService.Pickup_Address.GetPickupAddress({providerid:$rootScope.selectedproviderid}).$promise;
+        },
+        StateDataList: function(GetLocationService, $rootScope) {
+          return GetLocationService.LocationData.GetAllLocationData({keydata: 'state', data:'IN'}).$promise;
+        },
+        CityDataList: function(GetLocationService, StateDataList, $rootScope) {
+          if (StateDataList.success && StateDataList.success.states.length !==0) {
+            var states = StateDataList.success.states;
+            var result = states.indexOf("Maharashtra");
+            if (result !== -1) {
+              console.log(result);
+              return GetLocationService.LocationData.GetAllLocationData({keydata: 'city', data:'Maharashtra'}).$promise;
+            } else {
+              return GetLocationService.LocationData.GetAllLocationData({keydata: 'city', data:StateData.success.states[0]}).$promise;
+            }
+          }
+        },
+        ZipcodeDataList: function(GetLocationService, CityDataList, $rootScope) {
+          if (CityDataList.success && CityDataList.success.city.length !==0) {
+            console.log(CityDataList);
+            var cities = CityDataList.success.city;
+            var result = cities.indexOf("Pune");
+            if (result !== -1) {
+              console.log(result);
+              return GetLocationService.LocationData.GetAllLocationData({keydata: 'zipcode', data:'Pune'}).$promise;
+            } else {
+              return GetLocationService.LocationData.GetAllLocationData({keydata: 'zipcode', data:CityData.success.city[0]}).$promise;
+            }
+          }
         }
       }
     })     
@@ -171,8 +199,7 @@ angular.module('oz.OrderZappApp')
             }
           } else {
             return ProviderServices.get_order_count.getOrderCount({providerid:$rootScope.selectedproviderid, branchid: $rootScope.selectedBranchId}).$promise;
-          }
-          
+          }          
         }
       }
     })     
