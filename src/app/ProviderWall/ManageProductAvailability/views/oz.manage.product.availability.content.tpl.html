@@ -20,6 +20,7 @@
         </td>
         <td style = 'width: 40%'>
           <h5>Product Non Availability</h5>
+          <div style = 'width : 50%;float:left;' ><h6>To</h6></div><div style = 'width : 50%; float :right' ><h6>From</h6></div>
         </td>
         <td style = 'width : 35%'>
           <h5>Action</h5>
@@ -47,7 +48,7 @@
             		 </div>
 
             		  <div  style = 'width : 49%; float : right; height : 40px'>
-            		      <input type="text" placeholder="Please select start date" ng-model="list.productnotavailable.to" class="form-control disableEditingMode" name="startDate"  datepicker-popup="{{format}}"  is-open="opened3" min="today"  datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close"  readonly="true">	
+            		      <input type="text" placeholder="Please select start date" ng-model="list.productnotavailable.to" class="form-control disableEditingMode" name="startDate"  datepicker-popup="{{format}}"  is-open="opened3" min="list.productnotavailable.from"  datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close"  readonly="true">	
                   </div>
 
                 <!--    <div >  -->

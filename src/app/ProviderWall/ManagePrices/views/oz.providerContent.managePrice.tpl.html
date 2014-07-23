@@ -140,14 +140,13 @@
           {{list.price.currency}} {{list.price.value}} / {{list.price.uom}}
         </td>
     
-        <td ng-hide = 'list.editing || list.holding_price.fromdate === null || list.holding_price.todate === null || list.holding_price === undefined' style = 'width: 50%' >
+        <td ng-hide = 'list.editing || list.holding_price === undefined' style = 'width: 50%' >
 
          <div style = 'width : 18%; float : left' ng-if = 'list.holding_price.value !== null'> {{list.holding_price.currency}} {{list.holding_price.value}} / {{list.holding_price.uom}}</div>&nbsp;
 
-          <div style = 'width : 39%; float : left' ng-if = 'list.holding_price.fromdate !== null'> From : <span ng-bind = 'list.holding_price.fromdate | date : "yyyy-MM-dd HH:mm:ss "'></span> </div>&nbsp;
-          <div style = 'width : 39%; float : right' ng-if = 'list.holding_price.todate !== null'> To: <span ng-bind = 'list.holding_price.todate | date : "yyyy-MM-dd HH:mm:ss "'></span></div>
+         
         </td>
-        <td ng-show = 'list.holding_price === undefined || list.holding_price.fromdate === null || list.holding_price.todate === null'>
+        <td ng-show = 'list.holding_price === undefined '>
         </td>
 
           <td ng-show = 'list.editing' style = 'width: 50%'>
@@ -156,46 +155,10 @@
 
         <div  ng-show="priceFormHolding.$dirty" class="prodo-product-Invalid">{{priceForm.price.$error}}
               <span ng-show="priceFormHolding.$error.required">Please enter valid product price</span>
-              <span ng-show="priceFormHolding.$error.min">Product price can not be less than 0 </span>
+              <span ng-show="priceFormHolding.$error.min">Product price can not be negative number </span>
          </div> 
-
-             <table>
-               <tr>
-                 <td colspan="2">
-                   <b> Enter Holding Price</b>   <input  placeholder="Enter Holding Price" ng-model="list.holding_price.value"   id="prodo-product-features_textfield" class="form-control prodo-validation" ng-maxlength="50" min="0" type="number"   required  />  
-                 </td>
-               </tr>
-               <tr>
-                 <td>
-                    <b> From</b> 
-                 </td>
-                 <td>
-                    <b> To</b> 
-                 </td>
-               </tr>
-
-               <tr>
-                 <td>
-                    <input type="text" placeholder="Please select start date" ng-model="list.holding_price.fromdate" class="form-control disableEditingMode" name="startDate"  datepicker-popup="{{format}}"  is-open="opened1" min="today"  datepicker-options="dateOptions" date-disabled="disabled(date, mode)" max="list.holding_price.todate" ng-required="true" close-text="Close" readonly="true"> 
-                 </td>
-                 <td>
-                     <input type="text" placeholder="Please select start date" ng-model="list.holding_price.todate" class="form-control disableEditingMode" name="startDate"  datepicker-popup="{{format}}"  is-open="opened3" min="list.holding_price.fromdate"  datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close"  readonly="true">  
-                 </td>
-               </tr>
-
-               <tr>
-                 <td clss="MyTimepicker">
-                      <timepicker  ng-model="list.holding_price.fromdate"  show-meridian="ismeridian" ng-change = 'verifyStartDate(list.holding_price.fromdate, list)' name="minweight" ></timepicker> 
-
-                 </td>
-                 <td clss="MyTimepicker">
-                    <timepicker ng-model="list.holding_price.todate"  show-meridian="ismeridian" ng-change = 'verifyEndDate(list.holding_price.todate, list)'></timepicker> 
-                 </td>
-               </tr>
-
-
-
-             </table>
+             <input  placeholder="Enter Holding Price" ng-model="list.holding_price.value"   id="prodo-product-features_textfield" class="form-control prodo-validation" ng-maxlength="50" min="0" type="number"   required  />  
+               
          </form>
               </div>          
 
@@ -207,11 +170,11 @@
                 <button ng-hide="list.holding_price" class = 'pull-right  btn btn-sm btn-default' ng-click = 'edit(list)' ><i class="fa fa-plus"></i>  &nbsp; Holding Price</button>
 
                <button class = 'btn btn-sm btn-primary' ng-click = 'activateHolpingPrice(list)'  ng-show = "list.holding_price   && list.holding_price.status !=='active' "> Activate</button>
-
-                 <em style="color:green"  ng-show = "list.holding_price   && list.holding_price.status =='active' "> Activated</em>
+                
+              <button  ng-show = "list.holding_price   && list.holding_price.status =='active' " class = 'btn btn-sm btn-primary' ng-click = 'deactivateHolpingPrice(list)'  ng-show = "list.holding_price   && list.holding_price.status !=='active' "> Deactiate</button>
 
           </td>
-            <td ng-show = 'list.editing'>
+            <td ng-show = 'list.editing' class="pull-right">
 
               <a  ng-click = 'addHoldingPrice(list)' class="btn btn-primary btn-sm"   ><i class="fa fa-floppy-o"></i>  &nbsp; Save</a>
               <a class="btn btn-default btn-sm"  ng-click = 'cancel(list)' > <i class="glyphicon glyphicon-remove"></i> &nbsp; Cancel </a>

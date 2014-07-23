@@ -70,6 +70,10 @@ angular.module('oz.ProviderApp')
    	{
             $scope.errorForEmptyName = 'Please enter valid group name';
    	}
+    else if($scope.contentOfGroup.groupdata.grpname.length > 50)
+    {
+            $scope.errorForEmptyName = 'Group name should be of less than 50 characters';
+    }
    	if($scope.contentOfGroup.groupdata.description === '')
    	{
    		    $scope.errorForEmptyDescription = 'Please enter valid description';
@@ -132,7 +136,9 @@ angular.module('oz.ProviderApp')
     $scope.edit = function(grps)
     {
     	    grps.editing = true;
-          $rootScope.OZNotify('This feature is not yet fully implemented! Please try after some days', 'success');
+        
+          // {"groupdata":{"grpname":"quality","description":"Testing"}}
+          // $rootScope.OZNotify('This feature is not yet fully implemented! Please try after some days', 'success');
     };
 
     $scope.stop = function(grps)
@@ -329,6 +335,49 @@ angular.module('oz.ProviderApp')
     var cleanUpEventGroupMemberNotRemovedSuccessfully = $scope.$on("memberRemoveUnsuccess",function(event,data){
             $rootScope.OZNotify('Some issue with server! Please try after some time', 'error');
     });
+   
+    var cleanUpEventGroupMemberRemovedSuccessfully = $scope.$on("groupContentModified",function(event,data, grps){
+      if(data.error)
+        {
+              if(data.error.code === 'AL001')
+                  {
+                        $rootScope.showModal();
+                  }
+                  else
+                  {
+                    $rootScope.OZNotify(data.error.message,'error');
+                  }
+        }
+        if(data.success)
+        {
+            $rootScope.OZNotify(data.success.message,'success');
+            ProviderServicesList.getAllGroupContent();
+            grps.editing = false;
+        } 
+    });
+
+    var cleanUpEventGroupMemberNotRemovedSuccessfully = $scope.$on("groupContentNotModified",function(event,data){
+            $rootScope.OZNotify('Some issue with server! Please try after some time', 'error');
+    });
+
+    $scope.editGroupContents = function(grps)
+    {
+        if(grps.grpname === '')
+          {
+            $rootScope.OZNotify('Please enter valid group name', 'error');
+          }
+          else if(grps.grpname.length>50)
+          {
+            $rootScope.OZNotify('Group name should be less than 50 characters', 'error');
+          }
+          else
+          {
+            var content = {};
+            content = {'groupdata' : {'grpname': grps.grpname, 'description' : grps.description}};
+            ProviderServicesList.changeGroupContent(grps.groupid, content, grps);
+          }
+    }
+
     $scope.$on('$destroy', function(event, message) 
     {
             cleanUpEventGroupContentAddedSuccessfully();

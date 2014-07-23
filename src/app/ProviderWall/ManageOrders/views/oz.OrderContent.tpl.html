@@ -69,7 +69,7 @@
 
           <div class=" margintop5"  ng-show="order.deliverytype=='pickup'"><!--  2nd line -->
 
-           <span class="bold">Pickup Address : </span> <span class="oz-adress"> {{branchAddress.address1}}  {{branchAddress.address2}}   {{branchAddress.area}}  {{branchAddress.city}}  {{branchAddress.state}}  {{branchAddress.country}}  {{branchAddress.zipcode}} </span>
+           <span class="bold">Pickup Address : </span> <span class="oz-adress"> {{order.pickup_address.address1}}  {{order.pickup_address.address2}}   {{order.pickup_address.area}}  {{order.pickup_address.city}}  {{order.pickup_address.state}}  {{order.pickup_address.country}}  {{order.pickup_address.zipcode}} </span>
           </div>
 <!-- Delivery////////////////////////////////// -->
 
@@ -183,7 +183,7 @@
               </div>
 
               <div  class="col-md-2">
-                 <span class=" oz-contentsRight breakword">{{product.currency}}  {{(product.orderprice/product.qty).toFixed(2)}}</span>
+                 <span class=" oz-contentsRight breakword">{{product.currency}}  {{product.baseprice.toFixed(2)}}</span>
               </div>
 
               <div  class="col-md-2">

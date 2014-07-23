@@ -47,8 +47,8 @@
       getGroupContent : $resource('/api/branch/group/:providerid/:branchid', {}, {get : {method : 'GET', params : {providerid : '@providerid', branchid : '@branchid'}}}),
       removeGroupMember : $resource('/api/branch/groupmember/:branchid/:groupid/:userid', {}, {delete : {method : 'DELETE', params : {branchid : '@branchid', groupid : '@groupid', userid : '@userid'}}}),
       getAllProductForAvailability : $resource('/api/allproduct/:branchid/:providerid', {}, {get : {method : 'GET' , params : {branchid : '@branchid', providerid : '@providerid'}}}),
-      assignProductAvailabilityContent : $resource('/api/productavailability/:providerid/:productid' , {}, { put : {method : 'PUT', params : {providerid : '@providerid', productid : '@productid'}}})
-
+      assignProductAvailabilityContent : $resource('/api/productavailability/:providerid/:productid' , {}, { put : {method : 'PUT', params : {providerid : '@providerid', productid : '@productid'}}}),
+      editGroupContent : $resource('/api/branch/group/:providerid/:branchid/:groupid', {}, {put : {method : 'PUT', params : {providerid : '@providerid', branchid : '@branchid', groupid : '@groupid'}}}),
     };
 
     var productService = {};
@@ -253,6 +253,18 @@
       function(error)
       {
         $rootScope.$broadcast('notAssignedProductAvail', error);
+      });
+    };
+
+    productService.changeGroupContent = function(groupid,content, grps)
+    {
+      services.editGroupContent.put({providerid : $rootScope.selectedproviderid,  branchid : $rootScope.selectedBranchId, groupid : groupid}, content, function(success)
+      {
+        $rootScope.$broadcast('groupContentModified', success, grps);
+      },
+      function(error)
+      {
+        $rootScope.$broadcast('groupContentNotModified', error);
       });
     };
 

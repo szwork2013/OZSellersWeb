@@ -39,9 +39,9 @@ angular.module('oz.UserApp').factory('OZWallService', [
     getStateContent : $resource('/api/location?key=state&value=:state', {}, { get : { method : 'GET', params : { state : '@state'}}}),
     getCityContent : $resource('/api/location?key=city&value=:city', {}, { get : { method : 'GET', params : { city : '@city'}}}),
     getAreaContent : $resource('/api/location?key=area&value=:area', {}, { get :{ method : 'GET', params : { area : '@area'}}}),
-    addOrderProcess : $resource('/api/orderstatus', {}, {post : {method : 'POST'}}),
-    getOrderProcess : $resource('/api/orderstatus', {}, {get : {method : 'GET'}}),
-    removeOrderProcess : $resource('/api/orderstatus/:index', {}, {remove : {method : 'DELETE', params : {index : '@index'}}}),
+    addOrderProcess : $resource('/api/orderprocessconfig', {}, {post : {method : 'POST'}}),
+    getOrderProcess : $resource('/api/orderprocessconfig', {}, {get : {method : 'GET'}}),
+    removeOrderProcess : $resource('/api/orderprocessconfig/:index', {}, {remove : {method : 'DELETE', params : {index : '@index'}}}),
   };
 
   var controller = {};
