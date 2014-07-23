@@ -37,7 +37,7 @@
 
                   <td>
                       <input type = 'text' class = 'form-control' ng-model = 'contentOfGroup.groupdata.grpname'>
-                      <div class="error-message" ng-if="errorForEmptyName!==''" ng-bind="errorForEmptyName"></div>
+                      <div class="error-message prodo-product-Invalid" ng-if="errorForEmptyName!==''" ng-bind="errorForEmptyName"></div>
                   </td>
               </tr>
 
@@ -47,8 +47,8 @@
                   </td>
 
                   <td>
-                      <textarea class = 'form-control' ng-model = 'contentOfGroup.groupdata.description'></textarea>
-                      <div class="error-message" ng-if="errorForEmptyDescription!==''" ng-bind="errorForEmptyDescription"></div>
+                      <textarea class = 'form-control' ng-model = 'contentOfGroup.groupdata.description' style = 'resize: none;'></textarea>
+                      <div class="error-message prodo-product-Invalid" ng-if="errorForEmptyDescription!==''" ng-bind="errorForEmptyDescription"></div>
                   </td>
               </tr>
               <tr>
@@ -88,7 +88,7 @@
                 </td>
                 <td ng-hide = 'grps.editing'>
 
-                    <button class = 'btn-primary btn-sm' ng-click = 'edit(grps)' style = 'width: 60px;height : 30px;float : right;margin-right : 5px'> Edit&nbsp; </button>
+               <!--      <button class = 'btn-primary btn-sm' ng-click = 'edit(grps)' style = 'width: 60px;height : 30px;float : right;margin-right : 5px'> Edit&nbsp; </button> -->
                    
                     <button class = 'btn-warning btn-sm'  ng-click = 'assignGroupId(grps.groupid)' style = 'width: 60px;height : 30px;float : right; margin-right : 5px' data-toggle = 'modal' data-target = '#romoveGrp'>Delete</button> 
 

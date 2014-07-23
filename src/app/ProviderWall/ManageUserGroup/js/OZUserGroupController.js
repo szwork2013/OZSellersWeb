@@ -70,6 +70,10 @@ angular.module('oz.ProviderApp')
    	{
             $scope.errorForEmptyName = 'Please enter valid group name';
    	}
+    else if($scope.contentOfGroup.groupdata.grpname.length > 50)
+    {
+            $scope.errorForEmptyName = 'Group name should be of less than 50 characters';
+    }
    	if($scope.contentOfGroup.groupdata.description === '')
    	{
    		    $scope.errorForEmptyDescription = 'Please enter valid description';
