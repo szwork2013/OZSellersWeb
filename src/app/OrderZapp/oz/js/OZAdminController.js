@@ -794,7 +794,8 @@ angular.module('oz.UserApp')
 
     var cleanUpEventGetOrderProcessConfig = $scope.$on("gotAllOrderProcessSuccessfully",function(event,data){
             if(data.error)
-            {
+            {  
+              $scope.orderProcessConfig = [];
               if(data.error.code === 'AL001')
               {
                       $rootScope.showModal();
@@ -821,7 +822,7 @@ angular.module('oz.UserApp')
     };
 
     var cleanUpEventOrderProcessConfigurationRemove = $scope.$on('orderProcessConfigurationRemoved', function(event, data)
-    {
+    {             
          if(data.error)
          {
           if(data.error.code === 'AL001')
