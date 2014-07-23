@@ -505,8 +505,7 @@
 	</div>
       <!-- display mode -->
 
-
-      <div ng-hide="branches.length>0" > 
+ <div ng-hide="branches.length>0" > 
      <div  class="OZ-PolicyNotAddedMsg row" >
        <div class="col-md-12">
        <div class="no-message">
@@ -519,8 +518,8 @@
       </div>
  </div>
 
-<div ng-hide="productlist.length>0 || editMode.editorEnabled==true" > 
-   <div  class="OZ-PolicyNotAddedMsg row" >
+<div ng-show="branches.length>0" > 
+   <div ng-hide="productlist.length>0 || editMode.editorEnabled==true"  class="OZ-PolicyNotAddedMsg row" >
        <div class="col-md-12">
        <div class="no-message">
         <center>
