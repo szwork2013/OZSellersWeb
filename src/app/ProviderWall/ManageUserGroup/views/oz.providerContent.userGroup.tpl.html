@@ -88,7 +88,7 @@
                 </td>
                 <td ng-hide = 'grps.editing'>
 
-               <!--      <button class = 'btn-primary btn-sm' ng-click = 'edit(grps)' style = 'width: 60px;height : 30px;float : right;margin-right : 5px'> Edit&nbsp; </button> -->
+                    <button class = 'btn-primary btn-sm' ng-click = 'edit(grps)' style = 'width: 60px;height : 30px;float : right;margin-right : 5px'> Edit&nbsp; </button>
                    
                     <button class = 'btn-warning btn-sm'  ng-click = 'assignGroupId(grps.groupid)' style = 'width: 60px;height : 30px;float : right; margin-right : 5px' data-toggle = 'modal' data-target = '#romoveGrp'>Delete</button> 
 
@@ -96,7 +96,7 @@
         
                 <td ng-show = 'grps.editing'>
                           
-                    <button class = 'btn-primary btn-sm' ng-click = 'edit(grps.groupid)' style = 'width: 60px;height : 30px;float : right;margin-right : 5px'> Save&nbsp; </button>
+                    <button class = 'btn-primary btn-sm' ng-click = 'editGroupContents(grps)' style = 'width: 60px;height : 30px;float : right;margin-right : 5px'> Save&nbsp; </button>
                    
                     <button class = 'btn-info btn-sm'  ng-click = 'stop(grps)' style = 'width: 60px;height : 30px;float : right; margin-right : 5px' >Cancel</button> 
                 </td>
