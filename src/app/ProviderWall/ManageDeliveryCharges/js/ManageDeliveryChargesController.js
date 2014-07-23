@@ -15,15 +15,23 @@ angular.module('oz.ProviderApp')
     $scope.showAreaUnderZipcode = false;
     $scope.showDeliveryAvailaibility = false;
     $scope.AllBranchAreaList = [];
+    $scope.submitted = false;
+    $scope.form = {};
+    $scope.deliveryChargeError = false;
 
     $scope.$watch('$state.$current.locals.globals.AllBranchDeliveryAreaList', function (AllBranchDeliveryAreaList) {
       console.log(AllBranchDeliveryAreaList);
       if (AllBranchDeliveryAreaList.success && AllBranchDeliveryAreaList.success.branchdeliverycharges.length !== 0) {
         $scope.AllBranchAreaList = angular.copy(AllBranchDeliveryAreaList.success.branchdeliverycharges);
       } else {
-        $scope.AllBranchAreaList = [];
-        $log.debug(AllBranchDeliveryAreaList.error.message);
-        $rootScope.OZNotify(AllBranchDeliveryAreaList.error.message, 'error');
+        if (AllBranchDeliveryAreaList.success.branchdeliverycharges.length == 0) {
+          $scope.AllBranchAreaList = [];
+          $log.debug(AllBranchDeliveryAreaList.success.message);
+        } else {
+          $scope.AllBranchAreaList = [];
+          $log.debug(AllBranchDeliveryAreaList.error.message);
+          $rootScope.OZNotify(AllBranchDeliveryAreaList.error.message, 'error');
+        }
       }
     });
 
@@ -236,9 +244,15 @@ angular.module('oz.ProviderApp')
           add_availability.push({value:$scope.delivery_available[i].value, coverage:{ area:$scope.delivery_available[i].coverage.area,city:city,zipcode:$scope.delivery_available[i].coverage.zipcode} });
         };
       }
-      if (add_availability.length > 0) {
-        var data = $scope.jsonAddDeliveryAvailabilityData(add_availability);
-        ManageDeliveryChargesService.AddDeliveryAvailability(data);
+      if ($scope.form.deliveryChargeForm.$valid) {
+        if (add_availability.length > 0) {
+          var data = $scope.jsonAddDeliveryAvailabilityData(add_availability);
+          $scope.deliveryChargeError = false;
+          ManageDeliveryChargesService.AddDeliveryAvailability(data);
+        }
+      } else {
+        $scope.deliveryChargeError = true;
+        $scope.form.deliveryChargeForm.submitted = true;
       }
     }
 
@@ -246,6 +260,7 @@ angular.module('oz.ProviderApp')
     $scope.handleAddDeliveryAvailabilityResponse = function(data){
       if (data.success) {
         console.log(data);
+        $scope.form.deliveryChargeForm.submitted = false;
         $rootScope.OZNotify(data.success.message,'success'); 
       } else {
         console.log(data.error.message);

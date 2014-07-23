@@ -14,7 +14,7 @@ angular.module('oz.ProviderApp')
     $scope.order_status_list = [];
     $scope.edit_order_status_list = [];
     $scope.sellercategory = {categoryid: '', categoryname: ''};
-    var file;
+    var file = {};
     var fileUpdate;
     $scope.currentSellerIndex;
 
@@ -100,6 +100,8 @@ angular.module('oz.ProviderApp')
       $scope.addSellerLogo = false;
       $scope.form.addSellerForm.$setPristine();
       $scope.addprovider = false;
+      var fileinput = document.getElementById('addProvider');
+      fileinput.value = '';
     }
 
     $scope.onFileSelect = function($files) {

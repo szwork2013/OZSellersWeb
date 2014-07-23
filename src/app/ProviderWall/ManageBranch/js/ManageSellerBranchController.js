@@ -87,6 +87,11 @@ angular.module('oz.ProviderApp')
     $scope.jsonAddBranchData = function(){
       var supportnos = $scope.addbranch.supportno;
       $scope.support_nos = supportnos.split(",");
+      if ($scope.addbranch.homedelivery !== true) {
+        if ($scope.addbranch.chargeinpercent == true) {
+          $scope.addbranch.chargeinpercent = false;
+        }
+      }
       var Branchdata = 
       {
         branch:
@@ -132,7 +137,6 @@ angular.module('oz.ProviderApp')
     };
   
     $scope.addSellerBranch = function(){
-      console.log($rootScope.selectedproviderid);
       if ($scope.form.addBranchForm.$valid) {
         ManageBranchService.addBranch($scope.jsonAddBranchData());
       } else {
@@ -199,6 +203,11 @@ angular.module('oz.ProviderApp')
     $scope.jsonEditBranchData = function(){
       var supportnos = $scope.editbranch.edit_supportnos;
       $scope.support_nos = supportnos.split(",");
+      if ($scope.editbranch.delivery.isprovidehomedelivery !== true) {
+        if ($scope.editbranch.delivery.isdeliverychargeinpercent == true) {
+          $scope.editbranch.delivery.isdeliverychargeinpercent = false;
+        }
+      }
       var Branchdata = 
       {
         branch:
