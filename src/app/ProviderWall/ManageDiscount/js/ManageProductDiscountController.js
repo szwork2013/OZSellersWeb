@@ -41,9 +41,9 @@ angular.module('oz.ProviderApp')
             {
                 $scope.errorForEmptyDescription = 'Please enter valid description for discount code';$scope.allValidContent = 1;
             }
-            if($scope.codeContent.percent === '' || $scope.regexForNumbers.test($scope.codeContent.percent) === false || $scope.codeContent.percent>100)
+            if($scope.codeContent.percent === '' || $scope.regexForNumbers.test($scope.codeContent.percent) === false || $scope.codeContent.percent>100 || $scope.codeContent.percent<1)
             {
-                $scope.errorForInvalidPercentage = 'Please enter valid percentage';$scope.allValidContent = 1;
+                $scope.errorForInvalidPercentage = 'Please enter valid percentage! Percent range should be between [1-100]';$scope.allValidContent = 1;
             }
             if($scope.codeContent.startdate === '' || $scope.codeContent.expirydate === '')
             {   
