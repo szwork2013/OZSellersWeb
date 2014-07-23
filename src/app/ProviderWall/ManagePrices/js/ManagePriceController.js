@@ -77,6 +77,9 @@ angular.module('oz.ProviderApp')
 
 // update price
 $scope.changePrice=function(product){
+  if($scope.priceForm.$dirty){
+
+
   if($scope.priceForm.$invalid){
     // $rootScope.ProdoAppMessage("Please add valid information", 'error');
     $scope.priceForm.submitted=true;
@@ -116,8 +119,13 @@ $scope.changePrice=function(product){
         // $log.debug(status);
        $rootScope.OZNotify(status, 'error'); 
      });
+   }
   }
+  else{
+     $rootScope.OZNotify("Product's price not changed...", 'success');
+     $scope.disableEditorPrice(); 
   }
+ };
 
 // update price
 
