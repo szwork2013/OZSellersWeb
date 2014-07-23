@@ -58,6 +58,10 @@ font-size: 12px;
 }
 
 
+.policyTab >li.active>a, .policyTab>li.active>a:hover, .policyTab>li.active>a:focus{
+color:#D67021;
+background-color: transparent;
+}
   #oz-navbar-text{
     letter-spacing: 1px;
     word-spacing: 1px;

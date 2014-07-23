@@ -255,6 +255,9 @@ angular.module('oz.OrderZappApp')
       abstract: true,
       templateUrl: 'ProviderWall/ManageDeliveryCharges/views/oz.deliverycharges.tpl.html',
       resolve: {
+        AllBranchDeliveryAreaList: function(GetLocationService, $rootScope) {
+          return GetLocationService.Get_AllBranchArea_For_Delivery.all_brancharea_for_delivery({branchid: $rootScope.selectedBranchId}).$promise;
+        },
         CountryData: function(GetLocationService, $rootScope) {
           return GetLocationService.LocationData.GetAllLocationData({keydata: 'country', data:'country'}).$promise;
         },
@@ -303,6 +306,12 @@ angular.module('oz.OrderZappApp')
           templateUrl:'ProviderWall/ManageDeliveryCharges/views/oz.deliverycharges.manage.tpl.html'
         }
       }
+    })
+    .state('managedeliverycharges.view.display', {
+      templateUrl:'ProviderWall/ManageDeliveryCharges/views/oz.deliverycharges.display.tpl.html'
+    })
+    .state('managedeliverycharges.view.manage', {
+      templateUrl:'ProviderWall/ManageDeliveryCharges/views/oz.deliverycharges.managearea.tpl.html'
     })
     .state('managepolicy', {
       abstract: true,

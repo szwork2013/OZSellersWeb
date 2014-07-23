@@ -1,5 +1,5 @@
 angular.module('oz.ProviderApp')
-  .controller('ManageDeliveryChargesController', ['$scope', '$state', '$http', '$timeout', '$sce', '$log', '$rootScope', 'ProviderServices','$upload','$stateParams', 'ManageDeliveryChargesService', 'CountryData', 'StateData', 'CityData', 'ZipcodeData', function($scope, $state, $http, $timeout, $sce, $log, $rootScope,ProviderServices,$upload, $stateParams, ManageDeliveryChargesService, CountryData, StateData, CityData, ZipcodeData) {
+  .controller('ManageDeliveryChargesController', ['$scope', '$state', '$http', '$timeout', '$sce', '$log', '$rootScope', 'ProviderServices','$upload','$stateParams', 'ManageDeliveryChargesService', 'AllBranchDeliveryAreaList', 'CountryData', 'StateData', 'CityData', 'ZipcodeData', function($scope, $state, $http, $timeout, $sce, $log, $rootScope,ProviderServices,$upload, $stateParams, ManageDeliveryChargesService, AllBranchDeliveryAreaList, CountryData, StateData, CityData, ZipcodeData) {
   
     $log.debug("initialising manage delivery charges controller");
 
@@ -14,6 +14,18 @@ angular.module('oz.ProviderApp')
     $scope.delivery_available = [];
     $scope.showAreaUnderZipcode = false;
     $scope.showDeliveryAvailaibility = false;
+    $scope.AllBranchAreaList = [];
+
+    $scope.$watch('$state.$current.locals.globals.AllBranchDeliveryAreaList', function (AllBranchDeliveryAreaList) {
+      console.log(AllBranchDeliveryAreaList);
+      if (AllBranchDeliveryAreaList.success && AllBranchDeliveryAreaList.success.branchdeliverycharges.length !== 0) {
+        $scope.AllBranchAreaList = angular.copy(AllBranchDeliveryAreaList.success.branchdeliverycharges);
+      } else {
+        $scope.AllBranchAreaList = [];
+        $log.debug(AllBranchDeliveryAreaList.error.message);
+        $rootScope.OZNotify(AllBranchDeliveryAreaList.error.message, 'error');
+      }
+    });
 
     $scope.$watch('$state.$current.locals.globals.CountryData', function (CountryData) {
       console.log(CountryData);
@@ -181,13 +193,13 @@ angular.module('oz.ProviderApp')
                   $scope.delivery.available.push($scope.deliveryAvailablityArea[i].coverage.area);
                 }
               } else {
-                $scope.edit_availability.push({value:'', coverage:{ area:sorted[i],city:$scope.deliveryAvailablityArea[result].coverage.city,zipcode:zipcode} });
+                $scope.edit_availability.push({value:0, coverage:{ area:sorted[i],city:$scope.deliveryAvailablityArea[result].coverage.city,zipcode:zipcode} });
               }
             }
           } else {
             $scope.delivery_available = [];
             angular.forEach($scope.AreaUnderZipcode, function(area) {
-              $scope.delivery_available.push({value:'', coverage:{ area:area,city:'',zipcode:zipcode} });
+              $scope.delivery_available.push({value:0, coverage:{ area:area,city:'',zipcode:zipcode} });
             });
             console.log($scope.delivery_available);
           }
