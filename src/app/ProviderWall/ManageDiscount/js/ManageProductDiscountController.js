@@ -237,16 +237,16 @@ angular.module('oz.ProviderApp')
             if(data.success)
             {    $scope.finalSelectedProducts = [];
                  $scope.finalSelectedProducts = data.success.products; 
-                 // for(var i = 0 ; i<$scope.finalSelectedProducts.length; i ++)
-                 // {
-                 //    for(var j = 0; j < $scope.productsList.length ; j ++)
-                 //    {
-                 //        if($scope.productsList[j].productid === $scope.finalSelectedProducts[i].productid)
-                 //        {
-                 //            $scope.productsList.splice(j,1);
-                 //        }
-                 //    }
-                 // }
+                 for(var i = 0 ; i<$scope.finalSelectedProducts.length; i ++)
+                 {
+                    for(var j = 0; j < $scope.productsList.length ; j ++)
+                    {
+                        if($scope.productsList[j].productid === $scope.finalSelectedProducts[i].productid)
+                        {
+                            $scope.productsList.splice(j,1);
+                        }
+                    }
+                 }
 
                  for(var i = 0 ;i<$scope.productsList.length;i++)
                  {
@@ -256,7 +256,7 @@ angular.module('oz.ProviderApp')
                  {
                     $scope.finalSelectedProducts[j].$$hashKey = undefined;
                  }
-                 $scope.productsList = _.filter($scope.productsList, function(obj){ return !_.findWhere($scope.finalSelectedProducts, obj); });
+                 // $scope.productsList = _.filter($scope.productsList, function(obj){ return !_.findWhere($scope.finalSelectedProducts, obj); });
                  // console.log('test-----'+JSON.stringify($scope.productsList));
             } 
     });
