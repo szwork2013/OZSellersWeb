@@ -70,7 +70,7 @@ angular.module('oz.ProviderApp')
         } else {
           $scope.cities = [];
         }
-        $rootScope.OZNotify(data.success.message,'success'); 
+        // $rootScope.OZNotify(data.success.message,'success'); 
       } else {
         console.log(data.error.message);
         $rootScope.OZNotify(data.error.message,'error');
@@ -100,7 +100,7 @@ angular.module('oz.ProviderApp')
         } else {
           $scope.zipcodes = [];
         }
-        $rootScope.OZNotify(data.success.message,'success'); 
+        // $rootScope.OZNotify(data.success.message,'success'); 
       } else {
         console.log(data.error.message);
         $rootScope.OZNotify(data.error.message,'error');
@@ -129,7 +129,7 @@ angular.module('oz.ProviderApp')
         if (data.success.area.length >= 0) {
           $scope.Areas = angular.copy(data.success.area);
         }
-        $rootScope.OZNotify(data.success.message,'success'); 
+        // $rootScope.OZNotify(data.success.message,'success'); 
       } else {
         console.log(data.error.message);
         $rootScope.OZNotify(data.error.message,'error');

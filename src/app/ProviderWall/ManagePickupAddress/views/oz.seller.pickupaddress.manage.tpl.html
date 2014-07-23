@@ -29,15 +29,15 @@
                 <small style="color:red;" ng-show="((form.addPickupAddress.addressline2.$dirty && form.addPickupAddress.addressline2.$invalid) || (form.addPickupAddress.addressline2.$invalid && form.addPickupAddress.submitted))">*Please enter address line 2!</small>
               </td>
               <td width="15%;">
-                <input type="text" name="country" class="form-control" ng-model="pickup.country" placeholder="country" required>
+                <input type="text" name="country" class="form-control" ng-model="pickup.country" placeholder="country" ng-pattern="/^[a-zA-Z]*$/" required>
                 <small style="color:red;" ng-show="((form.addPickupAddress.country.$dirty && form.addPickupAddress.country.$invalid) || (form.addPickupAddress.country.$invalid && form.addPickupAddress.submitted))">*Please enter country!</small>
               </td>
               <td width="15%;">
-                <input name="state" class="form-control" type="text" placeholder="state" required ng-model="pickup.state" typeahead="state for state in states | filter:$viewValue | limitTo:6" typeahead-on-select="getCityForState(pickup.state)" />
+                <input name="state" class="form-control" type="text" placeholder="state" ng-pattern="/^[a-zA-Z]*$/" required ng-model="pickup.state" typeahead="state for state in states | filter:$viewValue | limitTo:6" typeahead-on-select="getCityForState(pickup.state)" />
                 <small style="color:red;" ng-show="((form.addPickupAddress.state.$dirty && form.addPickupAddress.state.$invalid) || (form.addPickupAddress.state.$invalid && form.addPickupAddress.submitted))">*Please enter state!</small>
               </td>
               <td width="15%;">
-                <input name="city" class="form-control" type="text" placeholder="city" required ng-model="pickup.city" typeahead="city for city in cities | filter:$viewValue | limitTo:6" typeahead-on-select="getZipcodeForCity(pickup.city)" />
+                <input name="city" class="form-control" type="text" placeholder="city" ng-pattern="/^[a-zA-Z]*$/" required ng-model="pickup.city" typeahead="city for city in cities | filter:$viewValue | limitTo:6" typeahead-on-select="getZipcodeForCity(pickup.city)" />
                 <small style="color:red;" ng-show="((form.addPickupAddress.city.$dirty && form.addPickupAddress.city.$invalid) || (form.addPickupAddress.city.$invalid && form.addPickupAddress.submitted))">*Please enter city!</small>
               </td>
               <td width="15%;">
@@ -45,7 +45,7 @@
                 <small style="color:red;" ng-show="((form.addPickupAddress.zipcode.$dirty && form.addPickupAddress.zipcode.$invalid) || (form.addPickupAddress.zipcode.$invalid && form.addPickupAddress.submitted))">*Please enter zipcode and must be a 6 digit number only!</small>
               </td>
               <td width="15%;">
-                <input type="text" name="area" class="form-control" ng-model="pickup.area" placeholder="area" required typeahead="area for area in Areas | filter:$viewValue | limitTo:6">
+                <input type="text" name="area" class="form-control" placeholder="area" ng-pattern="/^[a-zA-Z]*$/" required ng-model="pickup.area"  typeahead="area for area in Areas | filter:$viewValue | limitTo:6">
                 <small style="color:red;" ng-show="((form.addPickupAddress.area.$dirty && form.addPickupAddress.area.$invalid) || (form.addPickupAddress.area.$invalid && form.addPickupAddress.submitted))">*Please enter area!</small>
               </td>              
               
@@ -92,22 +92,22 @@
               </td>
     					<td ng-show="(CurrentAddressIndex !== $index)">{{address.area}}</td>
               <td ng-show="(editAddress && (CurrentAddressIndex == $index))">
-                <input type="text" name="editarea" class="form-control" ng-model="editpickup.area" placeholder="area" required>
+                <input type="text" name="editarea" class="form-control" ng-model="editpickup.area" placeholder="area" ng-pattern="/^[a-zA-Z]*$/" required>
                 <small style="color:red;" ng-show="((form.editPickupAddress.editarea.$dirty && form.editPickupAddress.editarea.$invalid) || (form.editPickupAddress.editarea.$invalid && form.editPickupAddress.submitted))">*Please enter area!</small>
               </td>
               <td ng-show="(CurrentAddressIndex !== $index)">{{address.city}}</td>
               <td ng-show="(editAddress && (CurrentAddressIndex == $index))">
-                <input type="text" name="editcity" class="form-control" ng-model="editpickup.city" placeholder="city" required>
+                <input type="text" name="editcity" class="form-control" ng-model="editpickup.city" placeholder="city" ng-pattern="/^[a-zA-Z]*$/" required>
                 <small style="color:red;" ng-show="((form.editPickupAddress.editcity.$dirty && form.editPickupAddress.editcity.$invalid) || (form.editPickupAddress.editcity.$invalid && form.editPickupAddress.submitted))">*Please enter city!</small>
               </td>
               <td ng-show="(CurrentAddressIndex !== $index)">{{address.state}}</td>
               <td ng-show="(editAddress && (CurrentAddressIndex == $index))">
-                <input type="text" name="editstate" class="form-control" ng-model="editpickup.state" placeholder="state" required>
+                <input type="text" name="editstate" class="form-control" ng-model="editpickup.state" placeholder="state" ng-pattern="/^[a-zA-Z]*$/" required>
                 <small style="color:red;" ng-show="((form.editPickupAddress.editstate.$dirty && form.editPickupAddress.editstate.$invalid) || (form.editPickupAddress.editstate.$invalid && form.editPickupAddress.submitted))">*Please enter state!</small>
               </td>
               <td ng-show="(CurrentAddressIndex !== $index)">{{address.country}}</td>
               <td ng-show="(editAddress && (CurrentAddressIndex == $index))">
-                <input type="text" name="editcountry" class="form-control" ng-model="editpickup.country" placeholder="country" required>
+                <input type="text" name="editcountry" class="form-control" ng-model="editpickup.country" placeholder="country" ng-pattern="/^[a-zA-Z]*$/" required>
                 <small style="color:red;" ng-show="((form.editPickupAddress.editcountry.$dirty && form.editPickupAddress.editcountry.$invalid) || (form.editPickupAddress.editcountry.$invalid && form.editPickupAddress.submitted))">*Please enter country!</small>
               </td>
               <td ng-show="(CurrentAddressIndex !== $index)">{{address.zipcode}}</td>

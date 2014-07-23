@@ -171,60 +171,80 @@
 
 						<hr size=3 width="90%;" style="height:1px; margin-top: 0;" noshade>
 
-						<div id="oz-signup-input-group" class="input-group">
-							<p><em>Category:</em>&nbsp;&nbsp;
-								<span ng-show="editseller.category" class="label label-success">{{editseller.category.categoryname}}</span> 
-							</p>
-							<p class="text-muted"><small>** You cannot edit category you have once added.</small></p>
-						</div>
+						<dl>
+							<div id="oz-signup-input-group" class="input-group">
+								<p><em>Category:</em>&nbsp;&nbsp;
+									<span ng-show="editseller.category" class="label label-success">{{editseller.category.categoryname}}</span> 
+								</p>
+								<p class="text-muted"><small>** You cannot edit category you have once added.</small></p>
+							</div>
 
-						<div id="oz-signup-input-group" class="input-group">
-					  	<input type="text" name="editsellername" class="form-control" ng-model="editseller.providername" placeholder="name" required>
-					  	<small style="color:red;" ng-show="((form.editSellerForm.editsellername.$dirty && form.editSellerForm.editsellername.$invalid) || (form.editSellerForm.editsellername.$invalid && form.editSellerForm.submitted))">*Please enter seller name!</small>
-						</div>
+							<div id="oz-signup-input-group" class="input-group">
+						  	<dt>Seler Name</dt>
+						  	<dd>
+						  		<input type="text" name="editsellername" class="form-control" ng-model="editseller.providername" placeholder="name" required>
+						  		<small style="color:red;" ng-show="((form.editSellerForm.editsellername.$dirty && form.editSellerForm.editsellername.$invalid) || (form.editSellerForm.editsellername.$invalid && form.editSellerForm.submitted))">*Please enter seller name!</small>
+						  	</dd>
+							</div>
 
-						<div id="oz-signup-input-group" class="input-group">
-					  	<input type="text" name="editsellercode" class="form-control" ng-model="editseller.providercode" placeholder="code" required>
-					  	<small style="color:red;" ng-show="((form.editSellerForm.editsellercode.$dirty && form.editSellerForm.editsellercode.$invalid) || (form.editSellerForm.editsellercode.$invalid && form.editSellerForm.submitted))">*Please enter seller code!</small>
-					  </div>
+							<div id="oz-signup-input-group" class="input-group">
+						  	<dt>Seler Code</dt>
+						  	<dd>
+						  		<input type="text" name="editsellercode" class="form-control" ng-model="editseller.providercode" placeholder="code" required>
+						  		<small style="color:red;" ng-show="((form.editSellerForm.editsellercode.$dirty && form.editSellerForm.editsellercode.$invalid) || (form.editSellerForm.editsellercode.$invalid && form.editSellerForm.submitted))">*Please enter seller code!</small>
+						  	</dd>		
+						  </div>
 
-						<div id="oz-signup-input-group" class="input-group">
-					  	<textarea rows="5" name="editsellerdescription" type="text" class="form-control" ng-model="editseller.providerdescription" placeholder="description" required></textarea>
-					  	<small style="color:red;" ng-show="((form.editSellerForm.editsellerdescription.$dirty && form.editSellerForm.editsellerdescription.$invalid) || (form.editSellerForm.editsellerdescription.$invalid && form.editSellerForm.submitted))">*Please enter seller description!</small>
-						</div>
+							<div id="oz-signup-input-group" class="input-group">
+						  	<dt>Seler Description</dt>
+						  	<dd>
+						  		<textarea rows="5" name="editsellerdescription" type="text" class="form-control" ng-model="editseller.providerdescription" placeholder="description" required></textarea>
+						  		<small style="color:red;" ng-show="((form.editSellerForm.editsellerdescription.$dirty && form.editSellerForm.editsellerdescription.$invalid) || (form.editSellerForm.editsellerdescription.$invalid && form.editSellerForm.submitted))">*Please enter seller description!</small>
+						  	</dd>	
+							</div>
 
-						<div id="oz-signup-input-group" class="input-group">
-					  	<input name="edittino" type="text" class="form-control" ng-model="editseller.tax.tino" placeholder="VAT/TIN" required />
-					  	<small style="color:red;" ng-show="((form.editSellerForm.edittino.$dirty && form.editSellerForm.edittino.$invalid) || (form.editSellerForm.edittino.$invalid && form.editSellerForm.submitted))">*Please enter seller VAT/TIN!</small>
-						</div>
+							<div id="oz-signup-input-group" class="input-group">
+						  	<dt>VAT/TIN</dt>
+						  	<dd>
+						  		<input name="edittino" type="text" class="form-control" ng-model="editseller.tax.tino" placeholder="VAT/TIN" required />
+						  		<small style="color:red;" ng-show="((form.editSellerForm.edittino.$dirty && form.editSellerForm.edittino.$invalid) || (form.editSellerForm.edittino.$invalid && form.editSellerForm.submitted))">*Please enter seller VAT/TIN!</small>
+						  	</dd>	
+							</div>
 
-						<div id="oz-signup-input-group" class="input-group">
-					  	<input name="editservicetaxno" type="text" class="form-control" ng-model="editseller.tax.servicetaxno" placeholder="sevice tax no" required />
-					  	<small style="color:red;" ng-show="((form.editSellerForm.editservicetaxno.$dirty && form.editSellerForm.editservicetaxno.$invalid) || (form.editSellerForm.editservicetaxno.$invalid && form.editSellerForm.submitted))">*Please enter seller Service Tax no.!</small>
-						</div>
+							<div id="oz-signup-input-group" class="input-group">
+						  	<dt>Service Tax #</dt>
+						  	<dd>
+						  		<input name="editservicetaxno" type="text" class="form-control" ng-model="editseller.tax.servicetaxno" placeholder="sevice tax no" required />
+						  		<small style="color:red;" ng-show="((form.editSellerForm.editservicetaxno.$dirty && form.editSellerForm.editservicetaxno.$invalid) || (form.editSellerForm.editservicetaxno.$invalid && form.editSellerForm.submitted))">*Please enter seller Service Tax no.!</small>
+						  	</dd>	
+							</div>
 
-						<div  id="oz-signup-input-group" class="input-group">
-							<input type="file" id="updateProvider" class="form-control" ng-file-select="onFileSelectUpdate($files)" >
-							<p class="text-muted"><small>** To edit existing logo please select choose file.</small></p>
-						</div>
+							<div  id="oz-signup-input-group" class="input-group">
+								<dt>Logo</dt>
+						  	<dd>
+						  		<input type="file" id="updateProvider" class="form-control" ng-file-select="onFileSelectUpdate($files)" >
+									<p class="text-muted"><small>** To edit existing logo please select choose file.</small></p>
+								</dd>	
+							</div>
 
-						<div id="oz-signup-input-group" class="input-group">
-							<h5>Order Process Configuration:</h5>
-							<p style="font-size:12px;" class="text-muted">**Process configuration helps sellers define order business process of the seller  to be handled by OrderZapp. You can select optional tasks that are appropriate for your organization, if required. OrderZapp has a set of default minimum order tasks that is mandatory for all the sellers. </p> 
-						 	<div style="margin:0px;" class="row">
-						 		<div ng-repeat="status in edit_order_status_list" class="col-md-5">
-						 			<input type="checkbox" ng-model="status.require" ng-disabled="status.default">&nbsp;{{status.order_status}}
-						 		</div>
-						 	</div>  			 	
-						</div>
+							<div id="oz-signup-input-group" class="input-group">
+								<dt>Order Process Configuration:</dt>
+								<p style="font-size:12px;" class="text-muted">**Process configuration helps sellers define order business process of the seller  to be handled by OrderZapp. You can select optional tasks that are appropriate for your organization, if required. OrderZapp has a set of default minimum order tasks that is mandatory for all the sellers. </p> 
+							 	<div style="margin:0px;" class="row">
+							 		<div ng-repeat="status in edit_order_status_list" class="col-md-5">
+							 			<input type="checkbox" ng-model="status.require" ng-disabled="status.default">&nbsp;{{status.order_status}}
+							 		</div>
+							 	</div>  			 	
+							</div>
 
-						<div id="oz-signup-input-group" class="input-group">
-							<h5>Payment Mode:</h5>
-							<p style="font-size:12px;" class="text-muted">**We offer two payment options Cash-on-deliver (COD) and Payment by Card. COD is optional, all buyers get to pay through card by default. Please select COD if you offer this payment option to buyers.</p> 
-						 	<span>
-						 		COD&nbsp;<input type="checkbox" ng-model="editseller.paymentmode.cod">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						 	</span>			 	
-						</div>	
+							<div id="oz-signup-input-group" class="input-group">
+								<dt>Payment Mode:</dt>
+								<p style="font-size:12px;" class="text-muted">**We offer two payment options Cash-on-deliver (COD) and Payment by Card. COD is optional, all buyers get to pay through card by default. Please select COD if you offer this payment option to buyers.</p> 
+							 	<span>
+							 		COD&nbsp;<input type="checkbox" ng-model="editseller.paymentmode.cod">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							 	</span>			 	
+							</div>
+						</dl>		
 
 						<div id="oz-signup-input-group" class="input-group">
 							<button style="width: 49.2%;margin:.5px;background-color:transparent;border-color: #b3b3b3; color:black;font-weight:bold;border-radius:1px;" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i>&nbsp;&nbsp;Cancel</button>

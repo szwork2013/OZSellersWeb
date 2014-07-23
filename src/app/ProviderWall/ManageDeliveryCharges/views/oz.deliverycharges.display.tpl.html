@@ -1,5 +1,5 @@
 <div style="padding:10px;" class="container">
-	<div style="margin:0px;" class="row">
+	<div ng-show="AllBranchAreaList.length !== 0" style="margin:0px;" class="row">
 		<div style="margin:10px auto;" class="col-md-12">
 			<table class="table table-striped table-condensed">
 				<thead>
@@ -21,4 +21,14 @@
 			</table>
 		</div>
 	</div>
+	<div ng-show="AllBranchAreaList.length == 0" style="padding:40px; opacity: .8; margin:40px; margin-bottom: 1px; color: rgb(80, 74, 74);background-color:#F1F1F1; letter-spacing: 1px;" class="row">
+    <div class="col-md-12">
+      <div class="no-message">
+        <center>
+          <p style="font-size: 14px;">You have not added any delivery area coverage details to your branch.</p>      
+          <p style="font-size: 12px;">To start managing area availability please select area as per delivery available by your branch. Your list of available areas, delivery charges and other related information will be shown here.</p>
+        </center>
+      </div>
+    </div>
+  </div>
 </div>		

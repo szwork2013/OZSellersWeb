@@ -77,6 +77,9 @@ angular.module('oz.ProviderApp')
 
 // update price
 $scope.changePrice=function(product){
+  if($scope.priceForm.$dirty){
+
+
   if($scope.priceForm.$invalid){
     // $rootScope.ProdoAppMessage("Please add valid information", 'error');
     $scope.priceForm.submitted=true;
@@ -116,21 +119,18 @@ $scope.changePrice=function(product){
         // $log.debug(status);
        $rootScope.OZNotify(status, 'error'); 
      });
+   }
   }
+  else{
+     $rootScope.OZNotify("Product's price not changed...", 'success');
+     $scope.disableEditorPrice(); 
   }
+ };
 
 // update price
 
 // ///////////////////////////////////holding //////////////////////////////////////
 
-    $scope.today=new Date();
-    $scope.mytime = new Date();
-
-    $scope.mytimes = new Date();
-
-     $scope.ismeridian = false;
-
-     $scope.regexForText = /^[a-zA-Z\s]*$/;
 
      $scope.temp = {};
 
@@ -174,7 +174,7 @@ $scope.changePrice=function(product){
 
     $scope.addHoldingPrice = function(list){
        console.log(list);
-        $scope.content = {'pricedata' : {"newprice":list.holding_price.value,"uom":list.price.uom,'fromdate' : list.holding_price.fromdate, 'todate' : list.holding_price.todate}};
+        $scope.content = {'pricedata' : {"newprice":list.holding_price.value,"uom":list.price.uom}};
       console.log($scope.content);
 
        if($scope.priceForm.$invalid){
@@ -182,7 +182,7 @@ $scope.changePrice=function(product){
           }
          else{
           $scope.priceForm.$setPristine();
-
+          if(list.holding_price.value>0){
            $http({
               method: 'PUT', 
               url: '/api/saveprice/'+$rootScope.selectedBranchId +'/'+list.productid, 
@@ -208,6 +208,11 @@ $scope.changePrice=function(product){
               // $log.debug(status);
              $rootScope.OZNotify(status, 'error'); 
            });
+
+          }
+          else{
+             $rootScope.OZNotify("Price must be greater than 0", 'error'); 
+          }
         }
 
     };
@@ -247,25 +252,37 @@ $scope.changePrice=function(product){
            });
     };
 
-    $scope.verifyStartDate = function(content, list)
+ $scope.deactivateHolpingPrice = function(list)
     {
-             if(content === undefined || content === null || $scope.regexForText.test(content) === true)
-             {
-                  list.holding_price.fromdate = $scope.temp.holding_price.fromdate;
-                  $rootScope.OZNotify('Please enter valid time! Your from time is reset to previous value', 'error');
-             }
+      
+        $http({
+              method: 'PUT', 
+              url: '/api/deactivateprice/'+$rootScope.selectedBranchId +'/'+list.productid
+            }).success(function(data, status, headers, config) {
+              console.log(data);
+            if(data.success){
+             console.log(data)
+             // $scope.cancel(list);
+              $rootScope.OZNotify(data.success.message, 'success');
+              $scope.getAllProducts($rootScope.selectedBranchId,$rootScope.selectedproviderid);
+             
+            }
+            else{
+                if(data.error.code=='AL001'){
+                  $rootScope.showModal();
+                }
+               $rootScope.OZNotify(data.error.message, 'error');  
+                console.log(data.error.message);
+            }
+
+
+
+            }).error(function (data, status, headers, cfg) {
+              // $log.debug(status);
+             $rootScope.OZNotify(status, 'error'); 
+           });
     };
 
-
-
-    $scope.verifyEndDate = function(content, list)
-    {
-             if(content === undefined || content === null || $scope.regexForText.test(content) === true)
-             {
-                  list.holding_price.todate = $scope.temp.holding_price.todate;
-                  $rootScope.OZNotify('Please enter valid time! Your to time is reset to previous value', 'error');
-             }
-    }
 
 
 

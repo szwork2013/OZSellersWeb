@@ -51,12 +51,10 @@ angular.module('oz.UserApp')
         UserSessionService.authSuccess(data.success.user);
         $rootScope.OZNotify('Successful login !','success');
         $rootScope.signInStatus = 1;       
-      } else {    
-
+      } else { 
         if (data.error.code== 'AU005') {     // user does not exist
             $log.debug(data.error.code + " " + data.error.message);
-            $rootScope.OZNotify(data.error.message,'error');
-             
+            $rootScope.OZNotify(data.error.message,'error');             
         } else if (data.error.code=='AU002') {  // user password invalid
             $log.debug(data.error.code + " " + data.error.message);
            $rootScope.OZNotify(data.error.message,'error');
@@ -69,6 +67,7 @@ angular.module('oz.UserApp')
             $rootScope.OZNotify(data.error.message,'error');
         } else if (data.error.code=='AU003') {   // user has not verified
             $log.debug(data.error.code + " " + data.error.message);
+            $rootScope.OZNotify(data.error.message,'error');
         } else if (data.error.code=='AS001') {   // user has not subscribed to any plan
             $log.debug(data.error.code + " " + data.error.message);
              $rootScope.OZNotify(data.error.message,'error');

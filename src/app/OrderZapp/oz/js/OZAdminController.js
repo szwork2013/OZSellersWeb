@@ -386,12 +386,16 @@ angular.module('oz.UserApp')
             $rootScope.OZNotify('Some issue with server! Please try after some time', 'error');
     });
 
-    $scope.onFileSelect = function($files) 
-    {
-           for (var i = 0; i < $files.length; i++) 
-           {
-               file = $files[i];
-           }
+    $scope.onFileSelect = function($files)  {
+     for (var i = 0; i < $files.length; i++) {
+      if(($files[i].type == 'image/jpg') || ($files[i].type == 'image/png') || ($files[i].type == 'image/gif') || ($files[i].type == 'image/jpeg')){
+       file = $files[i];
+      }
+      else{
+         $rootScope.OZNotify("Please upload image only" ,'error');
+       }
+
+      }
     };
 
     $scope.sendSellerPariticpationAgreement = function()
@@ -788,7 +792,8 @@ angular.module('oz.UserApp')
 
     var cleanUpEventGetOrderProcessConfig = $scope.$on("gotAllOrderProcessSuccessfully",function(event,data){
             if(data.error)
-            {
+            {  
+              $scope.orderProcessConfig = [];
               if(data.error.code === 'AL001')
               {
                       $rootScope.showModal();
@@ -815,7 +820,7 @@ angular.module('oz.UserApp')
     };
 
     var cleanUpEventOrderProcessConfigurationRemove = $scope.$on('orderProcessConfigurationRemoved', function(event, data)
-    {
+    {             
          if(data.error)
          {
           if(data.error.code === 'AL001')

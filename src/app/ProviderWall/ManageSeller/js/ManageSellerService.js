@@ -8,7 +8,7 @@ angular.module('oz.ProviderApp')
 	      SelectedProvider: $resource('/api/productprovider/:providerid', {}, { GetSelectedProvider: { method: 'GET'} }),
 	      LevelOneCategory: $resource('/api/leveloneCategory', {}, { GetSellerCategory: { method: 'GET'} }),
 	      MyProviderBranch: $resource('/api/branch/:providerid', {}, { GetMyProviderBranch: { method: 'GET'} }),
-	      Order_Status: $resource('/api/orderstatus', {}, { GetOrderStatus: { method: 'GET'} }),
+	      Order_Status: $resource('/api/orderprocessconfig', {}, { GetOrderStatus: { method: 'GET'} }),
 	      Pickup_Address: $resource('/api/pickupaddress/:providerid', {}, { GetPickupAddress: { method: 'GET'} })
 	    }
 	    return Seller;

@@ -97,7 +97,7 @@
 
                   <td>
                       <input type = 'text' class = 'form-control' ng-model = 'codeContent.discountcode'>
-                      <div class="error-message" ng-if="errorForEmptyCode!==''" ng-bind="errorForEmptyCode"></div>
+                      <div class="error-message text-danger prodo-product-Invalid"  ng-if="errorForEmptyCode!==''" ng-bind="errorForEmptyCode"></div>
                   </td>
               </tr>
 
@@ -108,7 +108,7 @@
 
                   <td>
                       <textarea class = 'form-control' ng-model = 'codeContent.description'></textarea>
-                      <div class="error-message" ng-if="errorForEmptyDescription!==''" ng-bind="errorForEmptyDescription"></div>
+                      <div class="error-message text-danger prodo-product-Invalid" ng-if="errorForEmptyDescription!==''" ng-bind="errorForEmptyDescription"></div>
                   </td>
               </tr>
 
@@ -119,7 +119,7 @@
 
                  <td>
                      <input type= 'text' class= 'form-control' ng-model = 'codeContent.percent'>
-                     <div class="error-message" ng-if="errorForInvalidPercentage!==''" ng-bind="errorForInvalidPercentage"></div>
+                     <div class="error-message text-danger prodo-product-Invalid" ng-if="errorForInvalidPercentage!==''" ng-bind="errorForInvalidPercentage"></div>
                   </td>
               </tr>
 
@@ -132,7 +132,7 @@
                        <td> Start Date : </td>
                        <td>
                          <input type="text" placeholder="Plaese select start date" ng-model="codeContent.startdate" class="form-control disableEditingMode" name="startDate"  datepicker-popup="{{format}}"  is-open="opened1" min="today"  datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close"  readonly="true">  
-                         <div class="error-message" ng-if="errorForInvalidStartDate!==''" ng-bind="errorForInvalidStartDate"></div>    
+                         <div class="error-message text-danger prodo-product-Invalid" ng-if="errorForInvalidStartDate!==''" ng-bind="errorForInvalidStartDate"></div>    
                        </td>  
               </tr>
 
@@ -140,7 +140,7 @@
                   <td> End Date : </td>
                   <td>
                          <input type="text" placeholder="Please select end date" ng-model="codeContent.expirydate" class="form-control disableEditingMode" name="endDates" datepicker-popup="{{format}}"  is-open="opened4" min="codeContent.startdate"  datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close"  readonly="true">  
-                         <div class="error-message" ng-if="errorForInvalidEnddate!==''" ng-bind="errorForInvalidEnddate"></div>
+                         <div class="error-message text-danger prodo-product-Invalid" ng-if="errorForInvalidEnddate!==''" ng-bind="errorForInvalidEnddate"></div>
                            
                   </td>     
               </tr>
