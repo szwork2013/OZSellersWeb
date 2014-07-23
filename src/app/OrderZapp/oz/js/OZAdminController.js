@@ -392,9 +392,7 @@ angular.module('oz.UserApp')
        file = $files[i];
       }
       else{
-        var field= document.getElementById('addAgreementSeller');
-        field.value= '';
-        $rootScope.OZNotify("Please upload image only" ,'error');
+         $rootScope.OZNotify("Please upload image only" ,'error');
        }
 
       }
