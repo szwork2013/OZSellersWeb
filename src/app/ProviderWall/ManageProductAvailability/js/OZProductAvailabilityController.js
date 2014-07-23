@@ -23,6 +23,8 @@ angular.module('oz.ProviderApp')
 
      $scope.tempProductCatalog = [];
 
+     $scope.today = new Date();
+
     var cleanUpEventGotAllProducts = $scope.$on("gotAllProducts",function(event,data){
             if(data.error)
             {
