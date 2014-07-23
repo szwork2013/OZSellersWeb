@@ -100,6 +100,7 @@ angular.module('oz.ProviderApp')
       $scope.addSellerLogo = false;
       $scope.form.addSellerForm.$setPristine();
       $scope.addprovider = false;
+      file = null;
       var fileinput = document.getElementById('addProvider');
       fileinput.value = '';
     }
