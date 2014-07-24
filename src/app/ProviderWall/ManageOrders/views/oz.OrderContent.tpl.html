@@ -22,25 +22,30 @@
 <!-- Delivery////////////////////////////////// -->
 <div class="headingDiv"> 
 <span class="bold">Delivery Info</span>
+ <div  class="pull-right">
+        <span class="bold" ng-show="order.deliverydate"> Delivery On </span> <span ng-show="order.deliverydate" class=" oz-contentsRight">{{ getOrderDate(order.deliverydate ) }}</span>
+      </div> 
+
+
 </div>
 
 
   <div class="row margintop5 " ><!-- 2nd line -->
      
      
-     <div  class="col-md-4">
-        <span class="bold">Order Created : </span> <span class=" oz-contentsRight">{{order.createdate | date:'yyyy-MM-dd ' }}</span>
+     <div  class="col-md-6">
+        <span class="bold">Order Created : </span> <span class=" oz-contentsRight">{{ getOrderDate(order.createdate )  }}</span>
       </div>
 
 
 
-      <div  class="col-md-4">
-        <span class="bold">Preferred Delivery : </span> <span class=" oz-contentsRight">{{order.preferred_delivery_date | date:'yyyy-MM-dd ' }}</span>
+      <div  class="col-md-6">
+        <span class="bold">Preferred Delivery : </span> <span class=" oz-contentsRight">{{ getOrderDate(order.preferred_delivery_date ) }}</span>
       </div>
      
-      <div  class="col-md-4">
-        <span class="bold" ng-show="order.deliverydate"> Delivery On: </span> <span ng-show="order.deliverydate" class=" oz-contentsRight">{{order.deliverydate | date:'yyyy-MM-dd ' }}</span>
-      </div>
+     <!--  <div  class="col-md-4">
+        <span class="bold" ng-show="order.deliverydate"> Delivery On </span> <span ng-show="order.deliverydate" class=" oz-contentsRight">{{order.deliverydate | date:'yyyy-MM-dd ' }}</span>
+      </div> -->
     
      </div><!--  2nd line -->
 
@@ -389,7 +394,7 @@
      
 
 </div> <!-- ngrepeat outer box css-->
-         <hr class="myhr">
+         <hr class="myhr" style="border-color:#A89797">
 
 
 

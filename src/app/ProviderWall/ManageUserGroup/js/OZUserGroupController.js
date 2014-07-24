@@ -19,7 +19,7 @@ angular.module('oz.ProviderApp')
     });
 
   // ProviderServicesList.getAllGroupContent();
-
+ 
    $scope.allGrpContents = [];
 
    $scope.groupId = '';
@@ -38,7 +38,7 @@ angular.module('oz.ProviderApp')
 
    $scope.form = {};
 
-   $scope.regexForEmail = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+   $scope.regexForEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
    
    $scope.regexForPhno = /^([0-9]{10,15})$/;
 
@@ -235,7 +235,8 @@ angular.module('oz.ProviderApp')
                   }  
                   if(allDataValidated === 0)
                   {         
-                          $scope.object = {"invites":{"grpname": $scope.grpname,"members":$scope.userinvites}}
+                          $scope.object = {"invites":{"grpname": $scope.grpname,"members":$scope.userinvites}};
+                          console.log(JSON.stringify($scope.object));
                           ProviderServicesList.addMembersToGroup($scope.object,$scope.idOfSelectedGroup);
                   }
                  if(allDataValidated !== 0)
