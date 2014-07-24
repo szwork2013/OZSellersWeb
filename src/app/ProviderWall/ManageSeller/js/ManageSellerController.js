@@ -17,6 +17,7 @@ angular.module('oz.ProviderApp')
     var file = {};
     var fileUpdate;
     $scope.currentSellerIndex;
+    $scope.process_configuration_error = '';
 
     $scope.$watch('$state.$current.locals.globals.MyProviderList', function (MyProviderList) {
       console.log(MyProviderList);
@@ -58,6 +59,7 @@ angular.module('oz.ProviderApp')
       if (OrderStatusList.success !== undefined && OrderStatusList.success.orderprocess.length !== 0) {
         var orderstatuslist = [];
         orderstatuslist = angular.copy(OrderStatusList.success.orderprocess);
+        $scope.process_configuration_error = '';
         if ($scope.order_status_list.length == 0) {
           for (var i = 0; i < orderstatuslist.length; ++i) {
             if(orderstatuslist[i].require == true) {
@@ -73,6 +75,7 @@ angular.module('oz.ProviderApp')
           $rootScope.showModal();
         } else {
           $scope.order_status_list = [];
+          $scope.process_configuration_error = 'Order process configuration is required for adding seller account. It might be that due to some server or database error, you are not able to see order process configuration options. So please, contact OrderZapp support team for further help. '
           $log.debug(OrderStatusList.error.message);
           $rootScope.OZNotify(OrderStatusList.error.message,'error');
         }

@@ -4,6 +4,10 @@ html,body{
 	height:100%;
 }
 
+textarea {
+  resize: none;
+}
+
 #oz-main-view {
 	min-height:100%;
 	padding-bottom: 50px;

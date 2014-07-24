@@ -9,16 +9,12 @@ angular.module('oz.UserApp')
     $scope.user_settings_data = {};
     $scope.user_data = {};
     $scope.user_edit = false;
+
     $scope.$watch('$state.$current.locals.globals.MyUserData', function (MyUserData) {
       console.log(MyUserData);
       if (MyUserData.success !== undefined && MyUserData.success.user !== undefined) {
         $scope.user_settings_data = angular.copy(MyUserData.success.user); 
         $scope.user_data = angular.copy(MyUserData.success.user); 
-        if (MyUserData.success.user.location == undefined || MyUserData.success.user.location == null) {
-          $scope.user_edit = true;
-        } else {
-          $scope.user_edit = false;
-        }
       } else {
         if(MyUserData.error.code=='AL001'){
           $rootScope.showModal();
