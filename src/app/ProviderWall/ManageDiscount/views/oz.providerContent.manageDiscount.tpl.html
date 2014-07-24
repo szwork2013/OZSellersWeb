@@ -181,7 +181,7 @@
              </td>
              <td > 
                      <!-- <input type= 'text' class="form-control" ng-show = 'list.editing' ng-model = 'list.expirydate'> -->
-                    <input type="text" ng-model = 'list.expirydate' ng-show = 'list.editing' class="form-control disableEditingMode" name="startDate"  datepicker-popup="{{format}}"  is-open="opened77" min="today"  datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close"  readonly="true" ng-show = 'list.editing'> 
+                    <input type="text" ng-model = 'list.expirydate' ng-show = 'list.editing' class="form-control disableEditingMode" name="startDate"  datepicker-popup="{{format}}"  is-open="opened77" min="list.startdate"  datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close"  readonly="true" ng-show = 'list.editing'> 
              </td>
              <td> 
                   <button class = 'btn-primary btn-sm' ng-click = 'updateDiscountDetails(list)' ng-show = 'list.editing' style = 'float : right; margin-left : 5px; width : 60px; height : 30px;float : right'>Save</button>

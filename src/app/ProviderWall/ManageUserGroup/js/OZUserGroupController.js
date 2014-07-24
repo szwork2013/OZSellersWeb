@@ -19,7 +19,7 @@ angular.module('oz.ProviderApp')
     });
 
   // ProviderServicesList.getAllGroupContent();
-
+ 
    $scope.allGrpContents = [];
 
    $scope.groupId = '';
@@ -235,7 +235,8 @@ angular.module('oz.ProviderApp')
                   }  
                   if(allDataValidated === 0)
                   {         
-                          $scope.object = {"invites":{"grpname": $scope.grpname,"members":$scope.userinvites}}
+                          $scope.object = {"invites":{"grpname": $scope.grpname,"members":$scope.userinvites}};
+                          console.log(JSON.stringify($scope.object));
                           ProviderServicesList.addMembersToGroup($scope.object,$scope.idOfSelectedGroup);
                   }
                  if(allDataValidated !== 0)
