@@ -412,7 +412,7 @@ angular.module('oz.ProviderApp')
         {
             $rootScope.OZNotify('Please enter valid description before proceeding', 'error');
         }
-        else if($scope.newCodeContents.percent === '' || $scope.regexForNumbers.test($scope.newCodeContents.percent) === false)
+        else if($scope.newCodeContents.percent === '' || $scope.regexForNumbers.test($scope.newCodeContents.percent) === false || $scope.newCodeContents.percent > 100 || $scope.newCodeContents.percent<1)
         {
             $rootScope.OZNotify('Please enter valid percentage before proceeding' , 'error');
         }
