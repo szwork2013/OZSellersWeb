@@ -141,12 +141,12 @@
                  <tr ng-repeat="userinvite in userinvites">
 
                       <td width="45%">
-                              <input class="form-control" ng-model="userinvite.email" type="text" name="name" placeholder="Please enter email id  [ example@gmail.com]" >
+                              <input class="form-control" ng-model="userinvite.email" type="text" name="name" placeholder="eg: example@gmail.com" >
                                <p ng-show="array[$index].email === 1" class="text-danger"><small>Please check this email id</small></p>
                       </td>
 
                       <td width="45%">
-                              <input class="form-control" ng-model="userinvite.mobileno" name="text" type="text" placeholder="Please enter mobile no [9XXXXXXXXX]" >
+                              <input class="form-control" ng-model="userinvite.mobileno" name="text" type="text" placeholder="eg:9XXXXXXXXX" >
                                <p ng-show="array[$index].mobileno === 1" class="text-danger"><small>Please check this mobile number</small></p>
                       </td>
 
