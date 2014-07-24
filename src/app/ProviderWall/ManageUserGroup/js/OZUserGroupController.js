@@ -38,7 +38,7 @@ angular.module('oz.ProviderApp')
 
    $scope.form = {};
 
-   $scope.regexForEmail = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+   $scope.regexForEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
    
    $scope.regexForPhno = /^([0-9]{10,15})$/;
 
