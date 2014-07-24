@@ -51,7 +51,7 @@
             </div>
             <div class="modal-body">
             <div class="row" style="padding:10px; padding-left:20px;">
-              <input type="radio" ng-model="deliveryOption" value="pref" > Accept Preferred Delivery Date -   {{order.preferred_delivery_date | datetime1   }}
+              <input type="radio" ng-model="deliveryOption" value="pref" > Accept Preferred Delivery Date - {{ getOrderDate(order.preferred_delivery_date )   }}
             </div> 
              <div class="row" style="padding:10px; padding-left:20px;">
                <input type="radio" ng-model="deliveryOption" value="custom" >Select New Delivery Date
