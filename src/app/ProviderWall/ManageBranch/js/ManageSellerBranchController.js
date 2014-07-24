@@ -13,6 +13,7 @@ angular.module('oz.ProviderApp')
     $scope.showBranchDetail = false;
     $scope.editbranch = {};
     $scope.currentBranchIndex;
+    $scope.contact_regex = /^([0-9]{10,13})(,([0-9]{10,13}))*$/;
 
     $scope.$watch('$state.$current.locals.globals.MyProviderBranchList', function (MyProviderBranchList) {
       console.log(MyProviderBranchList);
@@ -201,39 +202,44 @@ angular.module('oz.ProviderApp')
 
     // function to send and stringify user registration data to Rest APIs
     $scope.jsonEditBranchData = function(){
-      var supportnos = $scope.editbranch.edit_supportnos;
-      $scope.support_nos = supportnos.split(",");
-      if ($scope.editbranch.delivery.isprovidehomedelivery !== true) {
-        if ($scope.editbranch.delivery.isdeliverychargeinpercent == true) {
-          $scope.editbranch.delivery.isdeliverychargeinpercent = false;
+      var result = $scope.contact_regex.test($scope.editbranch.edit_supportnos);
+      if (result) {
+        var supportnos = $scope.editbranch.edit_supportnos;
+        $scope.support_nos = supportnos.split(",");
+        if ($scope.editbranch.delivery.isprovidehomedelivery !== true) {
+          if ($scope.editbranch.delivery.isdeliverychargeinpercent == true) {
+            $scope.editbranch.delivery.isdeliverychargeinpercent = false;
+          }
         }
+        var Branchdata = 
+        {
+          branch:
+            {
+              'branchname' : $scope.editbranch.branchname,
+              'branchcode' : $scope.editbranch.branchcode,
+              'location':{
+                'address1': $scope.editbranch.location.address1,
+                'address2': $scope.editbranch.location.address2,
+                'area': $scope.editbranch.location.area,
+                'city': $scope.editbranch.location.city,
+                'country': $scope.editbranch.location.country,
+                'state': $scope.editbranch.location.state,
+                'zipcode': $scope.editbranch.location.zipcode
+              },
+              'delivery':{
+                'isprovidehomedelivery': $scope.editbranch.delivery.isprovidehomedelivery,
+                'isprovidepickup': $scope.editbranch.delivery.isprovidepickup,
+                'isdeliverychargeinpercent': $scope.editbranch.delivery.isdeliverychargeinpercent
+              },
+              'contact_supports': $scope.support_nos,
+              'branchdescription' : $scope.editbranch.branchdescription,
+              'note' : $scope.editbranch.note
+            }  
+        };
+        return JSON.stringify(Branchdata); 
+      } else {
+        return false;
       }
-      var Branchdata = 
-      {
-        branch:
-          {
-            'branchname' : $scope.editbranch.branchname,
-            'branchcode' : $scope.editbranch.branchcode,
-            'location':{
-              'address1': $scope.editbranch.location.address1,
-              'address2': $scope.editbranch.location.address2,
-              'area': $scope.editbranch.location.area,
-              'city': $scope.editbranch.location.city,
-              'country': $scope.editbranch.location.country,
-              'state': $scope.editbranch.location.state,
-              'zipcode': $scope.editbranch.location.zipcode
-            },
-            'delivery':{
-              'isprovidehomedelivery': $scope.editbranch.delivery.isprovidehomedelivery,
-              'isprovidepickup': $scope.editbranch.delivery.isprovidepickup,
-              'isdeliverychargeinpercent': $scope.editbranch.delivery.isdeliverychargeinpercent
-            },
-            'contact_supports': $scope.support_nos,
-            'branchdescription' : $scope.editbranch.branchdescription,
-            'note' : $scope.editbranch.note
-          }  
-      };
-      return JSON.stringify(Branchdata); 
     } 
 
     // function to handle server side responses
@@ -254,9 +260,17 @@ angular.module('oz.ProviderApp')
   
     $scope.editSellerBranch = function(branchid){
       if ($scope.form.editBranchForm.$valid) {
-        ManageBranchService.editBranch($scope.jsonEditBranchData(), branchid);
+        console.log($scope.jsonEditBranchData());
+        if ($scope.jsonEditBranchData()) {
+          ManageBranchService.editBranch($scope.jsonEditBranchData(), branchid);
+        } else {
+          $scope.form.editBranchForm.editcontact.$invalid = true;
+          $scope.form.editBranchForm.submitted = true;
+        }
       } else {
         console.log('incorrect data');
+        $scope.form.editBranchForm.editcontact.$invalid = true;
+        console.log($scope.jsonEditBranchData());
         $scope.form.editBranchForm.submitted = true;
       }
     }

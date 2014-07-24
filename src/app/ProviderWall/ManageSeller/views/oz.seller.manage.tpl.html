@@ -1,8 +1,12 @@
 <div style="border: 1px solid #EEE8E8; border-radius: 6px;" class="">
 	<div  ng-show ="!addprovider"  style="margin:10px auto; padding: 40px; padding-bottom:0px;" class="row">
-		<div class="col-md-12">
-			<button class="btn btn-sm btn-primary pull-right" ng-click="add_provider()"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add</button>
+		<div class="col-md-10">
 			<p style="font-size:14px; letter-spacing:1px; word-space:1px;" class="text-justify">To add seller to your account, please click on <strong>'Add Seller'</strong> button.</p>
+		</div>
+		<div class="col-md-2">
+			<center>
+				<button style="background-color:#24677C; border-color:#24677C; width:90%;" class="  btn btn-sm btn-primary" ng-click="add_provider()"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add Seller</button>
+			</center>
 		</div>
 	</div>
 
@@ -11,7 +15,7 @@
       <div class="no-message">
         <center>
           <p style="font-size: 14px;">You have not added any seller to your account.</p>      
-          <p style="font-size: 12px;">To start managing please add atleast one seller and one branch. Your list of sellers and other related information will be shown here.</p>
+          <p style="font-size: 12px;">To start managing please add atleast one seller and a branch. Your list of sellers and other related information will be shown here.</p>
         </center>
       </div>
     </div>
@@ -32,54 +36,57 @@
 
 					<div id="oz-signup-input-group" class="input-group">
 				  	<input type="text" name="sellername" class="form-control" ng-model="addseller.name" placeholder="name" required>
-				  	<small style="color:red;" ng-show="((form.addSellerForm.sellername.$dirty && form.addSellerForm.sellername.$invalid) || (form.addSellerForm.sellername.$invalid && form.addSellerForm.submitted))">*Please enter seller name!</small>
+				  	<small style="color:red;" ng-show="((form.addSellerForm.sellername.$dirty && form.addSellerForm.sellername.$invalid) || (form.addSellerForm.sellername.$invalid && form.addSellerForm.submitted))">*Please enter seller name.</small>
 					</div>
 
 					<div id="oz-signup-input-group" class="input-group">
 				  	<input type="text" name="sellercode" class="form-control" ng-model="addseller.code" placeholder="code" required>
-				  	<small style="color:red;" ng-show="((form.addSellerForm.sellercode.$dirty && form.addSellerForm.sellercode.$invalid) || (form.addSellerForm.sellercode.$invalid && form.addSellerForm.submitted))">*Please enter seller code!</small>
+				  	<small style="color:red;" ng-show="((form.addSellerForm.sellercode.$dirty && form.addSellerForm.sellercode.$invalid) || (form.addSellerForm.sellercode.$invalid && form.addSellerForm.submitted))">*Please enter seller code.</small>
 				  </div>
 
 					<div id="oz-signup-input-group" class="input-group">
 				  	<select type="text" name="category" class="form-control" ng-model="sellercategory.categoryname" palceholder='category' ng-options="sellercategory as sellercategory.categoryname for sellercategory in providers_category_list" required>
 				  	<option value="" selected>please select your category</option>
         		</select>
-        		<small style="color:red;" ng-show="((form.addSellerForm.category.$dirty && form.addSellerForm.category.$invalid) || (form.addSellerForm.category.$invalid && form.addSellerForm.submitted))">*Please choose category from option list!</small>
+        		<small style="color:red;" ng-show="((form.addSellerForm.category.$dirty && form.addSellerForm.category.$invalid) || (form.addSellerForm.category.$invalid && form.addSellerForm.submitted))">*Please choose category from option list.</small>
 					</div>
 
 					<div id="oz-signup-input-group" class="input-group">
 				  	<input name="tino" type="text" class="form-control" ng-model="addseller.tino" placeholder="VAT/TIN" required />
-				  	<small style="color:red;" ng-show="((form.addSellerForm.tino.$dirty && form.addSellerForm.tino.$invalid) || (form.addSellerForm.tino.$invalid && form.addSellerForm.submitted))">*Please enter seller VAT/TIN!</small>
+				  	<small style="color:red;" ng-show="((form.addSellerForm.tino.$dirty && form.addSellerForm.tino.$invalid) || (form.addSellerForm.tino.$invalid && form.addSellerForm.submitted))">*Please enter seller VAT/TIN.</small>
 					</div>
 
 					<div id="oz-signup-input-group" class="input-group">
 				  	<input name="servicetaxno" type="text" class="form-control" ng-model="addseller.servicetaxno" placeholder="service tax no" required />
-				  	<small style="color:red;" ng-show="((form.addSellerForm.servicetaxno.$dirty && form.addSellerForm.servicetaxno.$invalid) || (form.addSellerForm.servicetaxno.$invalid && form.addSellerForm.submitted))">*Please enter seller Service Tax no.!</small>
+				  	<small style="color:red;" ng-show="((form.addSellerForm.servicetaxno.$dirty && form.addSellerForm.servicetaxno.$invalid) || (form.addSellerForm.servicetaxno.$invalid && form.addSellerForm.submitted))">*Please enter seller Service Tax no.</small>
 					</div>
 
 					<div id="oz-signup-input-group" class="input-group">
 				  	<textarea rows="5" name="sellerdescription" type="text" class="form-control" ng-model="addseller.description" placeholder="description" required></textarea>
-				  	<small style="color:red;" ng-show="((form.addSellerForm.sellerdescription.$dirty && form.addSellerForm.sellerdescription.$invalid) || (form.addSellerForm.sellerdescription.$invalid && form.addSellerForm.submitted))">*Please enter seller description!</small>
+				  	<small style="color:red;" ng-show="((form.addSellerForm.sellerdescription.$dirty && form.addSellerForm.sellerdescription.$invalid) || (form.addSellerForm.sellerdescription.$invalid && form.addSellerForm.submitted))">*Please enter seller description.</small>
 					</div>
 
 					<div  id="oz-signup-input-group" class="input-group">
 						<input type="file" id="addProvider" class="form-control" ng-file-select="onFileSelect($files)" >
-						<small style="color:red;" ng-show="addSellerLogo">*Please choose your provider logo!</small>
+						<small style="color:red;" ng-show="addSellerLogo">*Please choose your provider logo.</small>
 					</div>
 
 					<div id="oz-signup-input-group" class="input-group">
-						<h5>Order Process Configuration:</h5>
-						<p style="font-size:12px;" class="text-muted">**Process configuration helps sellers define order business process of the seller  to be handled by OrderZapp. You can select optional tasks that are appropriate for your organization, if required. OrderZapp has a set of default minimum order tasks that is mandatory for all the sellers.</p> 
+						<h5>Order Process Configuration*:</h5>
+						<p style="font-size:12px;" class="text-muted">* Process configuration helps sellers define order business process of the seller  to be handled by OrderZapp. You can select optional tasks that are appropriate for your organization, if required. OrderZapp has a set of default minimum order tasks that is mandatory for all the sellers.</p> 
 					 	<div style="margin:0px;" class="row">
-					 		<div ng-repeat="status in order_status_list" class="col-md-3">
+					 		<div ng-show="order_status_list.length != 0" ng-repeat="status in order_status_list" class="col-md-3">
 					 			<input type="checkbox" ng-model="status.require" ng-disabled="status.default">&nbsp;{{status.order_status}}
+					 		</div>
+					 		<div ng-show="order_status_list.length == 0" class="col-md-3">
+					 			<small style="color:red;">{{process_configuration_error}}</small><p></p>
 					 		</div>
 					 	</div>  			 	
 					</div>
 
 					<div id="oz-signup-input-group" class="input-group">
-						<h5>Payment Mode:</h5>
-						<p style="font-size:12px;" class="text-muted">**We offer two payment options Cash-on-deliver (COD) and Payment by Card. COD is optional, all buyers get to pay through card by default. Please select COD if you offer this payment option to buyers.</p> 
+						<h5>Payment Mode*:</h5>
+						<p style="font-size:12px;" class="text-muted">* We offer two payment options Cash-on-deliver (COD) and Payment by Card. COD is optional, all buyers get to pay through card by default. Please select COD if you offer this payment option to buyers.</p> 
 					 	<span>
 					 		COD&nbsp;<input type="checkbox" ng-model="addseller.cod">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					 	</span>			 	
@@ -121,14 +128,14 @@
 						<p><em>Service Tax #:</em>&nbsp;&nbsp;
 							<span ng-show="provider.tax.servicetaxno">{{provider.tax.servicetaxno}}</span> 
 						</p>
-						<p ng-show="provider.orderprocess_configuration"><em>Order Process Configuration:</em>&nbsp;&nbsp;
-							<span style="margin:2px;" ng-repeat="status in provider.orderprocess_configuration" class="label label-success">&nbsp;{{status.order_status}}&nbsp;</span>					
+						<p ng-show="provider.orderprocess_configuration"><em>Order Process Configuration:</em>
+							<span style="margin:2px; background-color: #4495AD;" ng-repeat="status in provider.orderprocess_configuration" class="label label-info">&nbsp;{{status.order_status}}&nbsp;</span>					
 						</p>
-						<p><em>Payment Mode:</em>&nbsp;&nbsp;
-							<span ng-show="provider.paymentmode.cod" class="label label-success"><i class="fa fa-check"></i>&nbsp;&nbsp;COD</span>
-							<span ng-show="provider.paymentmode.online" class="label label-success"><i class="fa fa-check"></i>&nbsp;&nbsp;Online Payment</span>					
+						<p><em>Payment Mode*:</em>&nbsp;&nbsp;
+							<span style="background-color: #D55417;" ng-show="provider.paymentmode.cod" class="label label-warning"><i class="fa fa-check"></i>&nbsp;&nbsp;COD</span>
+							<span style="background-color: #D55417;" ng-show="provider.paymentmode.online" class="label label-warning"><i class="fa fa-check"></i>&nbsp;&nbsp;Online Payment</span>					
 						</p>
-						<p style="font-size:12px;" class="text-muted">**We offer two payment options Cash-on-deliver (COD) and Payment by Card. COD is optional, all buyers get to pay through card by default.</p> 
+						<p style="font-size:12px;" class="text-muted">* We offer two payment options Cash-on-deliver (COD) and Payment by Card. COD is optional, all buyers get to pay through card by default.</p> 
 
 					</div>
 				</div>
@@ -183,7 +190,7 @@
 						  	<dt>Seler Name</dt>
 						  	<dd>
 						  		<input type="text" name="editsellername" class="form-control" ng-model="editseller.providername" placeholder="name" required>
-						  		<small style="color:red;" ng-show="((form.editSellerForm.editsellername.$dirty && form.editSellerForm.editsellername.$invalid) || (form.editSellerForm.editsellername.$invalid && form.editSellerForm.submitted))">*Please enter seller name!</small>
+						  		<small style="color:red;" ng-show="((form.editSellerForm.editsellername.$dirty && form.editSellerForm.editsellername.$invalid) || (form.editSellerForm.editsellername.$invalid && form.editSellerForm.submitted))">*Please enter seller name.</small>
 						  	</dd>
 							</div>
 
@@ -191,7 +198,7 @@
 						  	<dt>Seler Code</dt>
 						  	<dd>
 						  		<input type="text" name="editsellercode" class="form-control" ng-model="editseller.providercode" placeholder="code" required>
-						  		<small style="color:red;" ng-show="((form.editSellerForm.editsellercode.$dirty && form.editSellerForm.editsellercode.$invalid) || (form.editSellerForm.editsellercode.$invalid && form.editSellerForm.submitted))">*Please enter seller code!</small>
+						  		<small style="color:red;" ng-show="((form.editSellerForm.editsellercode.$dirty && form.editSellerForm.editsellercode.$invalid) || (form.editSellerForm.editsellercode.$invalid && form.editSellerForm.submitted))">*Please enter seller code.</small>
 						  	</dd>		
 						  </div>
 
@@ -199,7 +206,7 @@
 						  	<dt>Seler Description</dt>
 						  	<dd>
 						  		<textarea rows="5" name="editsellerdescription" type="text" class="form-control" ng-model="editseller.providerdescription" placeholder="description" required></textarea>
-						  		<small style="color:red;" ng-show="((form.editSellerForm.editsellerdescription.$dirty && form.editSellerForm.editsellerdescription.$invalid) || (form.editSellerForm.editsellerdescription.$invalid && form.editSellerForm.submitted))">*Please enter seller description!</small>
+						  		<small style="color:red;" ng-show="((form.editSellerForm.editsellerdescription.$dirty && form.editSellerForm.editsellerdescription.$invalid) || (form.editSellerForm.editsellerdescription.$invalid && form.editSellerForm.submitted))">*Please enter seller description.</small>
 						  	</dd>	
 							</div>
 
@@ -207,7 +214,7 @@
 						  	<dt>VAT/TIN</dt>
 						  	<dd>
 						  		<input name="edittino" type="text" class="form-control" ng-model="editseller.tax.tino" placeholder="VAT/TIN" required />
-						  		<small style="color:red;" ng-show="((form.editSellerForm.edittino.$dirty && form.editSellerForm.edittino.$invalid) || (form.editSellerForm.edittino.$invalid && form.editSellerForm.submitted))">*Please enter seller VAT/TIN!</small>
+						  		<small style="color:red;" ng-show="((form.editSellerForm.edittino.$dirty && form.editSellerForm.edittino.$invalid) || (form.editSellerForm.edittino.$invalid && form.editSellerForm.submitted))">*Please enter seller VAT/TIN.</small>
 						  	</dd>	
 							</div>
 
@@ -215,7 +222,7 @@
 						  	<dt>Service Tax #</dt>
 						  	<dd>
 						  		<input name="editservicetaxno" type="text" class="form-control" ng-model="editseller.tax.servicetaxno" placeholder="sevice tax no" required />
-						  		<small style="color:red;" ng-show="((form.editSellerForm.editservicetaxno.$dirty && form.editSellerForm.editservicetaxno.$invalid) || (form.editSellerForm.editservicetaxno.$invalid && form.editSellerForm.submitted))">*Please enter seller Service Tax no.!</small>
+						  		<small style="color:red;" ng-show="((form.editSellerForm.editservicetaxno.$dirty && form.editSellerForm.editservicetaxno.$invalid) || (form.editSellerForm.editservicetaxno.$invalid && form.editSellerForm.submitted))">*Please enter seller Service Tax no.</small>
 						  	</dd>	
 							</div>
 
