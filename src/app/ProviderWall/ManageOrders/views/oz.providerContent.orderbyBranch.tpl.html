@@ -42,20 +42,48 @@
 
 
                <!-- Modal -->
-      <div class="modal" id="calenderModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal" id="calenderModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-              <h4 class="modal-title" id="myModalLabel">Select delivery date</h4>
+              <h4 class="modal-title" id="myModalLabel">Select Delivery Date</h4>
             </div>
             <div class="modal-body">
+            <div class="row" style="padding:10px; padding-left:20px;">
+              <input type="radio" ng-model="deliveryOption" value="pref" > Accept Preferred Delivery Date -   {{order.preferred_delivery_date | datetime1   }}
+            </div> 
+             <div class="row" style="padding:10px; padding-left:20px;">
+               <input type="radio" ng-model="deliveryOption" value="custom" >Select New Delivery Date
+            </div> 
 
-            <div class="input-group  ">
+
+
+            <div ng-show="deliveryOption=='custom'" style="margin:10px;">
+            <div class="row">
+              <div class="col-md-6">
+               <span class="bold">Date </span>
+              </div>
+              <div class="col-md-6">
+                 <span class="bold">Time </span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+               <div class="input-group" style="margin-top:35px;">
                 <span class="input-group-addon"> <i class="fa fa-calendar"></i></span>
-                 <input id="delivery_date"  type="text" placeholder="Select delivery date" ng-model="delivery_date" class="form-control  oz-datepickerTextWidth"  datepicker-popup="{{format}}"  is-open="opened1" min="todaysDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" required close-text="Close" ng-change="onDateSelected(delivery_date)" >
+
+                 <input id="delivery_date"  type="text" placeholder="Select delivery date" ng-model="delivery_date" class="form-control  oz-datepickerTextWidth"  datepicker-popup="{{format}}"  is-open="opened1" min="todaysDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" required close-text="Close">
                
             </div>
+              </div>
+              <div class="col-md-6">
+                  <timepicker ng-model="delivery_date" show-meridian="ismeridian" style = 'width:100px'></timepicker> 
+              </div>
+            </div>
+            </div>
+
+            <a class="btn btn-default margin-left450 "  ng-click="onDateSelected(delivery_date,deliveryOption,order.preferred_delivery_date)">Accept </a>
            </div>
           </div>
         </div>

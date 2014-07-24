@@ -312,11 +312,13 @@ text-overflow: ellipsis;
 .oz-BackButton{padding: 10px;
 background-color: rgb(173, 220, 213);
 color: black;}
+.padding5{padding: 5px;}
 .prodo-CategoryUl{margin-bottom: -20px;word-wrap: break-word;
 width: 90%;overflow-x: hidden;overflow-y: auto;left: 55px;position: relative;top: -20px;}
 .veg{color: green}
 .nonveg{color:rgb(165, 12, 12)}
 .displaynone{display: none;}
+.margin-left450{margin-left: 450px;}
 .tab-content{ border-bottom: 0px solid white;margin-top: 1px;}
 .collapsed2:hover:after{content: " Click here to follow";border: solid 1px #ccc;padding:5px;}
 .prodo-ErrMsging{font-family: Helvetica ;font-size:18px; padding :10px; margin-top:20px; margin-bottom:20px;}

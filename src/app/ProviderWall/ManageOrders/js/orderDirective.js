@@ -32,17 +32,19 @@ return {
     var t_status;
     var t_orderid;
     $scope.today=Date();
+    $scope.deliveryOption='pref';
+    $scope.ismeridian = false;
 
 $scope.fromNow = function (time) {
   if (time != undefined) {
-    return moment(time).calendar();
+    return moment(time).subtract('hours', 5.5).calendar();
   }
 };
 
 
  $scope.changeStatus=function(status,order){
     var orderid=order.suborderid
-
+    $scope.order=order;
   // console.log(status + " "+ orderid);
   if(status=='accept'){
        t_status=status;
@@ -65,11 +67,18 @@ $scope.fromNow = function (time) {
 
 
 
-$scope.onDateSelected=function(delivery_date){
+$scope.onDateSelected=function(delivery_date,deliveryOption,preferred_delivery_date){
+ var date;
+     if(deliveryOption=='custom'){
+      date=delivery_date;
+     }else if(deliveryOption=='pref'){
+      date=preferred_delivery_date;
+     }
+
     $('#calenderModal').modal('hide');
     $scope.delivery_date="";
-    // console.log("date = "+ delivery_date);
-    $scope.callServiceChangeStatusApprove(t_status,t_order,delivery_date);
+    console.log("date = "+ date);
+    $scope.callServiceChangeStatusApprove(t_status,t_order,date);
 
 };
 
@@ -142,10 +151,12 @@ $scope.callServiceChangeStatus=function(status,order){
 };
 
 
-// $scope.getOrderDate=function(deliverydatetime){
-//   var d= new Date(deliverydatetime);
-//   return moment(d).format("YYYY-MM-DD");
-// };
+$scope.getOrderDate=function(deliverydatetime){
+  var format = 'DD-MM-YYYY, h:mm:ss a';
+    return moment(deliverydatetime).subtract('hours', 5.5).format(format);
+
+  
+};
 
 $scope.getDate=function(dayorder){
   if($scope.orders[0].deliverydatetime){
@@ -260,3 +271,16 @@ angular.module('oz.ProviderApp').directive('altSrc', function() {
   }
 });
 
+angular.module('oz.ProviderApp').filter('datetime1', function($filter)
+{
+ return function(input)
+ {
+  if(input == null){ return ""; } 
+ 
+  var _date = $filter('date')(new Date(input),
+                              'yyyy-MM-dd @ HH:mm:ss');
+ 
+  return _date.toUpperCase();
+
+ };
+});
