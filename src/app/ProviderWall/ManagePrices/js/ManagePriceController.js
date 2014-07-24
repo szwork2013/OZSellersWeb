@@ -86,7 +86,7 @@ $scope.changePrice=function(product){
   }
  else{
   $scope.priceForm.$setPristine();
-  // console.log( product);
+  console.log( product);
   $scope.productPrices=[];
   for (var i = product.length - 1; i >= 0; i--) {
     $scope.productPrices.push ({
