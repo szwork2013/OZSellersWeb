@@ -74,12 +74,15 @@ $scope.onDateSelected=function(delivery_date,deliveryOption,preferred_delivery_d
      }else if(deliveryOption=='pref'){
       date=preferred_delivery_date;
      }
-
+  if(date==null || date==undefined || date == ''){
+      $rootScope.OZNotify("Please Select Delivery Date", 'error');  
+  }
+  else{
     $('#calenderModal').modal('hide');
     $scope.delivery_date="";
     console.log("date = "+ date);
     $scope.callServiceChangeStatusApprove(t_status,t_order,date);
-
+  }
 };
 
 $scope.callServiceChangeStatusApprove=function(status,order,date){
