@@ -29,7 +29,7 @@ angular.module('oz.UserApp')
 
      $scope.currentPage = 0;
 
-     $scope.pageSize = 3;
+     $scope.pageSize = 7;
 
      $scope.showTabs = 0; 
 
