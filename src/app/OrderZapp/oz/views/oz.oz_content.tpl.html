@@ -165,13 +165,17 @@
     <tabset>
         <tab heading = 'Orders' class = 'cursorPointerHyperlink' ng-init = 'showOrderContents()' ng-click = 'trigger();showOrderContents()'  ui-sref = "oz.ozWall.ozOrderViewContent">
           <div>
-               <div ng-repeat="branches in branchContent" ui-sref = "oz.ozWall.ozOrderViewContent" ng-click= "showOrderContent(branches.branchid);" ng-if = 'branchContent.length>0' style = 'border: 1px solid #ccc; width : 110px; margin : 5px ; float : left; cursor : pointer'> 
+               <div ng-repeat="branches in branchContent" ui-sref = "oz.ozWall.ozOrderViewContent" ng-click= "showOrderContent(branches.branchid);trigger()" ng-if = 'branchContent.length>0' style = 'border: 1px solid #ccc; width : 110px; margin : 5px ; float : left; cursor : pointer'> 
                          <div ng-bind = 'branches.branchname'></div>
                          <img  ng-src="{{providerlogo}}" src="../assets/images/if_no_org_images_available.jpg"  style = "height : 50px;height:50px;">
                 </div>
           </div>
 
+
           <div style = 'min-height : 100px'  ng-if = 'branchContent.length>0'></div>
+         <div ng-if = "showSpinnerLogo === 1" style = "margin : 2%"> <h4>Loading</h4>&nbsp;<img src = '../assets/images/spinner.gif' style = "width: 14%;height: 20px;">
+         </div>
+
               <tabset style = 'margin-top : 14px;'>
                   <tab heading = 'Orderwise' class = 'cursorPointerHyperlink' ng-click = "showOrderContents()" ui-sref = "oz.ozWall.ozOrderViewContent" active = 'active.init'></tab>
                   <tab heading = 'Productwise' class = 'cursorPointerHyperlink' ng-click = "showProductContent()"  ui-sref = "oz.ozWall.ozProductContent" ></tab>
@@ -220,7 +224,7 @@
       </div>
 </div>
 
-<!-- <div ng-if = "showSOrderView === 1 && controlWallView === 0"> 
+<div ng-if = "showSOrderView === 1 && controlWallView === 0"> 
     <div class = "mainOrderContainer" >
       <div class = "highlighrOrderContainer">
            <div class = "subOrderContainer">
@@ -299,4 +303,3 @@
       </div>
       <button class = 'btn btn-info' style = 'float:right' ng-click = 'resetToMain()'>Go Back</button>
   </div>
- -->
