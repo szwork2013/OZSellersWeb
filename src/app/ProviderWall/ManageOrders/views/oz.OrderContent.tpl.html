@@ -203,10 +203,10 @@
         <div class="row margintop5">
               <div  class="col-md-3"> 
               <div ng-show="order.orderinstructions">
-                  <a href="" ng-click="instruction=1">
+                  <a href="" ng-init="instruction=false" ng-click="instruction = instruction === false ? true: false;">
                      Order Instructions  <i class="fa fa-hand-o-right"></i>
                   </a>
-                   <div class="OZ-cakeMessage" ng-show="instruction==1">{{order.orderinstructions}} <i ng-click="instruction=0 " class="pull-right prodo-cursor   glyphicon glyphicon-circle-arrow-up " ></i></div>
+                   <div class="OZ-cakeMessage" ng-show="instruction==1">{{order.orderinstructions}} </div>
 
               </div>
               </div>

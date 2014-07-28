@@ -49,11 +49,11 @@
               </div>
 
               <div  class="col-md-2">
-                 <span class=" oz-contentsRight">{{product.currency}}  {{product.orderprice/product.qty}}</span>
+                 <span class=" oz-contentsRight">{{product.currency}}  {{(product.orderprice/product.qty).toFixed(2)}}</span>
               </div>
 
               <div  class="col-md-2">
-                 <span class=" oz-contentsRight"> &#x20B9;  {{product.orderprice}}</span>
+                 <span class=" oz-contentsRight"> &#x20B9;  {{product.orderprice.toFixed(2)}}</span>
               </div>
        </div> <!-- ng-repeat for product -->
 

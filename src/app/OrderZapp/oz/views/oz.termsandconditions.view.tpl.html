@@ -15,7 +15,7 @@
         <div ng-bind-html = "templates.tc"></div>
     </div>
    <botton class = 'btn btn-info' ng-click = "updateCurrentTemplate(templates.tc)">Edit</botton>
-   <botton class = 'btn btn-info' ng-click = "updateCurrentTemplateContent('tc')">Save</botton>
+   <botton class = 'btn btn-info' ng-click = "updateCurrentTemplateContent('tc')" ng-if = 'showTextAngular === 1'>Save</botton>
 
 </div>
 

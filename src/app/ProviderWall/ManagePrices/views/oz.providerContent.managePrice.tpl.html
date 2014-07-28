@@ -97,21 +97,14 @@
     		</td><!-- class="prodo-product-Invalid" prodo-validation-->
     		<td class="ozWidth30" ng-show="editorPrice.editorEnabled==1">
     			 <input  ng-model="product.newprice"   id="prodo-product-features_textfield" class="form-control prodo-validation" ng-maxlength="50" min="0" type="number"   required  />  
-    			
-    			    
-
     		</td>
     	</tr>
-     
-
     </table>
-
  </form>
 
 
 
 </div>
-
  </div> 
 <!-- //////////////////////////  holding price //////////////////////////////////////////////////-->
   <div id="Remove" ng-show="tabForPrice.hp == true" >
@@ -130,9 +123,10 @@
         <td style = 'width: 40%'>
           <b>Product Holding Price</b>
         </td>
-        <td style = 'width : 35%'>
-          <b>Status</b>
+        <td colspan="2">
+          <!-- <b>Status</b> -->
         </td>
+
       </tr>
       <tr ng-repeat = 'list in products | filter : searchPro'>
         <td ng-bind = 'list.productname'></td>
@@ -140,16 +134,16 @@
           {{list.price.currency}} {{list.price.value}} / {{list.price.uom}}
         </td>
     
-        <td ng-hide = 'list.editing || list.holding_price === undefined' style = 'width: 50%' >
+        <td ng-hide = 'list.editing || list.holding_price === undefined' >
 
-         <div style = 'width : 18%; float : left' ng-if = 'list.holding_price.value !== null'> {{list.holding_price.currency}} {{list.holding_price.value}} / {{list.holding_price.uom}}</div>&nbsp;
+         <div style = ' float : left' ng-if = 'list.holding_price.value !== null'> {{list.holding_price.currency}} {{list.holding_price.value}} / {{list.holding_price.uom}}</div>&nbsp;
 
          
         </td>
         <td ng-show = 'list.holding_price === undefined '>
         </td>
 
-          <td ng-show = 'list.editing' style = 'width: 50%'>
+          <td ng-show = 'list.editing' >
             <div > 
        <form name="priceFormHolding">
 
@@ -164,20 +158,25 @@
 
 
           </td>
-          <td ng-hide = 'list.editing'>
-              <button ng-show="list.holding_price" class = 'pull-right  btn btn-sm btn-default' ng-click = 'edit(list)' ><i class="fa fa-pencil"></i>  &nbsp; Holding Price</button>
-
-                <button ng-hide="list.holding_price" class = 'pull-right  btn btn-sm btn-default' ng-click = 'edit(list)' ><i class="fa fa-plus"></i>  &nbsp; Holding Price</button>
-
-               <button class = 'btn btn-sm btn-primary' ng-click = 'activateHolpingPrice(list)'  ng-show = "list.holding_price   && list.holding_price.status !=='active' "> Activate</button>
+           <td ng-hide = 'list.editing'>
+              <button class = 'btn  btn-primary' ng-click = 'activateHolpingPrice(list)'  ng-show = "list.holding_price   && list.holding_price.status !=='active' "> Apply Holding Price</button>
                 
-              <button  ng-show = "list.holding_price   && list.holding_price.status =='active' " class = 'btn btn-sm btn-primary' ng-click = 'deactivateHolpingPrice(list)'  ng-show = "list.holding_price   && list.holding_price.status !=='active' "> Deactiate</button>
+              <button  ng-show = "list.holding_price   && list.holding_price.status =='active' " class='btn  btn-primary' ng-click = 'deactivateHolpingPrice(list)'  ng-show = "list.holding_price   && list.holding_price.status !=='active' "> Apply Last Original Price</button>
 
           </td>
-            <td ng-show = 'list.editing' class="pull-right">
+          <td ng-hide = 'list.editing'>
+              
+              <button ng-show="list.holding_price" class = 'pull-right  btn btn-default' ng-click = 'edit(list)' ><i class="fa fa-pencil"></i>  &nbsp; Holding Price</button>
 
-              <a  ng-click = 'addHoldingPrice(list)' class="btn btn-primary btn-sm"   ><i class="fa fa-floppy-o"></i>  &nbsp; Save</a>
-              <a class="btn btn-default btn-sm"  ng-click = 'cancel(list)' > <i class="glyphicon glyphicon-remove"></i> &nbsp; Cancel </a>
+              <button ng-hide="list.holding_price" class = 'pull-right  btn  btn-default' ng-click = 'edit(list)' ><i class="fa fa-plus"></i>  &nbsp; Holding Price</button>
+           </td>
+         
+            <td ng-show = 'list.editing' class="pull-right" colspan="2">
+
+              <a  ng-click = 'addHoldingPrice(list)' class="btn btn-primary "   ><i class="fa fa-floppy-o"></i>  &nbsp; Save</a>
+
+     
+              <a class="btn btn-default "  ng-click = 'cancel(list)' > <i class="glyphicon glyphicon-remove"></i> &nbsp; Cancel </a>
 
 
           </td>

@@ -36,32 +36,42 @@
           <img style="width:40px;" src="assets/images/orderzapp.png">&nbsp;sellers
    			</a>
 
-        <ul id="oz-navbar-ul" ng-cloak class="nav navbar-nav navbar-right" ng-show="usersession.isLoggedIn">
-          <li>
-            <a style="padding:2px;" href="" ui-sref="providerorders.view.orderbyBranch"><i class="fa fa-home"></i>&nbsp;Home</a>
+        <ul id="oz-navbar-ul" ng-cloak class="oz-navbar-li nav navbar-nav navbar-right" ng-show="usersession.isLoggedIn">
+          <li class="active">
+            <a showtab="" style="padding:2px;" href="" ui-sref="providerorders.view.orderbyBranch" ><i class="fa fa-home"></i>&nbsp;Orders Hub</a>
           </li>
-          <li ng-show="selectedproviderid">
+          <li ng-show="selectedproviderid && providers.length > 1">
             <form style="margin:0px auto;" ng-cloak class="navbar-form" role="search">
               <div class="form-group">
                 <div ng-show="providers">
-                  <span class="oz-headerLabel" > Seller  </span>
-                  <select  class="oz-headerSelectBox form-control" ng-model="provider" ng-options="provider as provider.providername for provider in providers" ng-change="getProviderId(provider)"></select>
+                  <span> Seller  </span>
+                  <select ng-show="providers.length > 1" class="oz-headerSelectBox form-control" ng-model="provider" ng-options="provider as provider.providername for provider in providers" ng-change="getProviderId(provider)"></select>
                 </div>
               </div>             
             </form>
           </li>
-          <li>
+          <li ng-show="selectedproviderid && providers.length == 1">
+            <div style="margin-left: 20px; padding:3px;" ng-show="providers">
+              <span> Seller:&nbsp;&nbsp;</span><span style="color: #599FD6;">{{providers[0].providername}}</span>
+            </div>
+          </li>
+          <li ng-show="branches.length > 1">
             <form style="margin:0px auto;" ng-cloak class="navbar-form" role="search">
               <div class="form-group">
                 <div ng-show="branches.length>0">
-                  <span class="oz-headerLabel" >  Branch  </span>  <select  class=" oz-headerSelectBox  form-control"  ng-change="getBranchId(branch)" ng-model="branch" ng-options="branch as branch.branchname for branch in branches" >
+                  <span >  Branch  </span>  <select  class=" oz-headerSelectBox  form-control"  ng-change="getBranchId(branch)" ng-model="branch" ng-options="branch as branch.branchname for branch in branches" >
                    </select>
                 </div>
               </div>             
             </form>
           </li>
+          <li ng-show="branches.length == 1">
+            <div style="margin-left: 20px; padding:3px;">
+              <span > Branch:&nbsp;&nbsp;</span><span style="color: #599FD6;">{{branches[0].branchname}}  </span>
+            </div>
+          </li>
           <li class="dropdown">
-            <a style="padding:2px;" href="#" class="dropdown-toggle" data-toggle="dropdown">{{usersession.currentUser.username}}<span class="caret"></span></a>
+            <a showtab="" style="padding:2px;" href="#" class="dropdown-toggle" data-toggle="dropdown">{{usersession.currentUser.username}}<span class="caret"></span></a>
             <ul style="font-size: 12px;" class="dropdown-menu" role="menu">
               <li ng-show="(usersession.currentUser.isAdmin == true && usersession.currentUser.usertype == 'provider')"><a href="" ui-sref="oz.ozWall">Admin</a></li>
               <li><a href="" ui-sref="seller.view">Manage Seller</a></li>
