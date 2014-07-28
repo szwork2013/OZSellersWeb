@@ -173,7 +173,7 @@
 
           <div style = 'min-height : 100px'  ng-if = 'branchContent.length>0'></div>
               <tabset style = 'margin-top : 14px;'>
-                  <tab heading = 'Orderwise' class = 'cursorPointerHyperlink' ng-click = "showOrderContents()" ui-sref = "oz.ozWall.ozOrderViewContent" ></tab>
+                  <tab heading = 'Orderwise' class = 'cursorPointerHyperlink' ng-click = "showOrderContents()" ui-sref = "oz.ozWall.ozOrderViewContent" active = 'active.init'></tab>
                   <tab heading = 'Productwise' class = 'cursorPointerHyperlink' ng-click = "showProductContent()"  ui-sref = "oz.ozWall.ozProductContent" ></tab>
               </tabset>
 
@@ -181,7 +181,7 @@
 
         <tab heading = 'Configuration' class = 'cursorPointerHyperlink' ng-click = 'triggerConfigurationWizard()' ui-sref = "oz.ozWall.ozManageProductConfigurations">
           <tabset>
-                <tab heading = 'Product' class = 'cursorPointerHyperlink' ui-sref = "oz.ozWall.ozManageProductConfigurations" ></tab>
+                <tab heading = 'Product' class = 'cursorPointerHyperlink' ui-sref = "oz.ozWall.ozManageProductConfigurations" active = 'active.category'></tab>
                 <tab heading = 'Order Process' class = 'cursorPointerHyperlink' ui-sref = "oz.ozWall.ozOrderProcessCongiguration"> </tab>
                 <tab heading = 'Category' class = 'cursorPointerHyperlink' ui-sref = "oz.ozWall.ozManageCategoriesTab" ></tab>
                 <tab heading="Tags" ui-sref = "oz.ozWall.ozManageUserdefinedTags" class = "cursorPointerHyperlink" ></tab>
@@ -192,7 +192,7 @@
         <tab heading = 'Agreements'   class = 'cursorPointerHyperlink'  ng-click = 'triggerPoliciesWizard();clearContentT();getAllProviders()' ui-sref = "oz.ozWall.ozProviderAcceptance" >
           <tabset >
 
-                     <tab heading="New Seller Acceptance" ui-sref = "oz.ozWall.ozProviderAcceptance" class = "cursorPointerHyperlink" ng-click = 'getAllProviders()'></tab>
+                     <tab heading="New Seller Acceptance" ui-sref = "oz.ozWall.ozProviderAcceptance" class = "cursorPointerHyperlink" ng-click = 'getAllProviders()' active = 'active.policies'></tab>
 
                       <tab heading="Manage Seller Participation" ui-sref = "oz.ozWall.ozManageSellerParticipation" class = "cursorPointerHyperlink" ></tab>
 

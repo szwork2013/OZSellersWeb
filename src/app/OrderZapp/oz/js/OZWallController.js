@@ -45,7 +45,7 @@ angular.module('oz.UserApp')
 
      $scope.customers = 110;
 
-  
+     $scope.active = {'init' : true, 'category' : false, 'policies' : false, 'analytics' : false};
 
     $scope.orderContentObject = {}; $scope.hideLoadMore = 0;
 
@@ -60,23 +60,25 @@ angular.module('oz.UserApp')
     $scope.trigger = function()
     {
       $scope.active.init = true;
-      $scope.showConfigurationWizard = false;
-      $scope.showPoliciesWizard = false;
+      $scope.active.category = false;
+       $scope.active.policies = false;
+       $scope.active.analytics = false;
     };
 
     $scope.triggerConfigurationWizard = function()
     {
-           $scope.showConfigurationWizard = true;
-           $scope.showPoliciesWizard = false;
-           $scope.active.init = false;
+            $scope.active.init = false;
+            $scope.active.category = true;
+            $scope.active.analytics = false;
+            $scope.active.policies = false;
     };
 
     $scope.triggerPoliciesWizard = function()
     {
-           $scope.showPoliciesWizard = true;
-           $scope.showConfigurationWizard = false;
-           $scope.active.init = false;
-
+       $scope.active.init = false;
+       $scope.active.category = false;
+       $scope.active.policies = true;
+       $scope.active.analytics = false;
     };
   
     $scope.providerlogo = '';
