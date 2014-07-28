@@ -41,7 +41,7 @@ angular.module('oz.ProviderApp')
             {      
                       //$rootScope.OZNotify(data.success.message, 'success'); 
                       $scope.tempProductCatalog = [];
-                      $scope.allProductsContent = data.success.proudctcatalog;
+                      $scope.allProductsContent = angular.copy(data.success.proudctcatalog);
                       $scope.tempProductCatalog = angular.copy(data.success.proudctcatalog);
                       //console.log(JSON.stringify( $scope.allProductsContent));
                       //ProviderServicesList.getAllProductForAvailability();
@@ -82,9 +82,9 @@ angular.module('oz.ProviderApp')
               list.productnotavailable.to = null;
          }
       $scope.allProductsContent = [];
-      $scope.allProductsContent = $scope.tempProductCatalog;
+      // $scope.allProductsContent = $scope.tempProductCatalog;
       list.editing = false;
-      ProviderServicesList.getAllProductForAvailability();
+      $scope.allProductsContent = angular.copy($scope.tempProductCatalog);
       
                      
     };

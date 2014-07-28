@@ -66,6 +66,7 @@ angular.module('oz.UserApp')
     $scope.handleEditUserSettingsResponse = function(data){
       if (data.success) {
         console.log(data.success);
+        $scope.cancelEditUser();
         $state.reload();
         $rootScope.OZNotify(data.success.message,'success');
       } else {

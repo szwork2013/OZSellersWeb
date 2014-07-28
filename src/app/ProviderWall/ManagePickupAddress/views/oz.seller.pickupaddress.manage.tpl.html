@@ -21,36 +21,39 @@
         <table class="table table-hover">
           <tbody>
             <tr>
-              <td width="20%;">
+              <td width="25%;">
                 <input type="text" name="addressline1" class="form-control" ng-model="pickup.address1" placeholder="address line1" autofocus required>
                 <small style="color:red;" ng-show="((form.addPickupAddress.addressline1.$dirty && form.addPickupAddress.addressline1.$invalid) || (form.addPickupAddress.addressline1.$invalid && form.addPickupAddress.submitted))">*Please enter address line 1.</small>
-                <br>
+              </td>
+              <td width="25%;">
                 <input type="text" name="addressline2" class="form-control" ng-model="pickup.address2" placeholder="address line2" required>
                 <small style="color:red;" ng-show="((form.addPickupAddress.addressline2.$dirty && form.addPickupAddress.addressline2.$invalid) || (form.addPickupAddress.addressline2.$invalid && form.addPickupAddress.submitted))">*Please enter address line 2.</small>
               </td>
-              <td width="15%;">
+              <td width="25%;">
                 <input type="text" name="country" class="form-control" ng-model="pickup.country" placeholder="country" ng-pattern="/^[a-zA-Z]*$/" required>
-                <small style="color:red;" ng-show="((form.addPickupAddress.country.$dirty && form.addPickupAddress.country.$invalid) || (form.addPickupAddress.country.$invalid && form.addPickupAddress.submitted))">*Please enter country.</small>
+                <small style="color:red;" ng-show="((form.addPickupAddress.country.$dirty && form.addPickupAddress.country.$invalid) || (form.addPickupAddress.country.$invalid && form.addPickupAddress.submitted))">*Please enter valid country.</small>
               </td>
-              <td width="15%;">
+              <td width="25%;">
                 <input name="state" class="form-control" type="text" placeholder="state" ng-pattern="/^[a-zA-Z]*$/" required ng-model="pickup.state" typeahead="state for state in states | filter:$viewValue | limitTo:6" typeahead-on-select="getCityForState(pickup.state)" />
-                <small style="color:red;" ng-show="((form.addPickupAddress.state.$dirty && form.addPickupAddress.state.$invalid) || (form.addPickupAddress.state.$invalid && form.addPickupAddress.submitted))">*Please enter state.</small>
+                <small style="color:red;" ng-show="((form.addPickupAddress.state.$dirty && form.addPickupAddress.state.$invalid) || (form.addPickupAddress.state.$invalid && form.addPickupAddress.submitted))">*Please enter valid state.</small>
               </td>
-              <td width="15%;">
+            </tr>
+            <tr>  
+              <td width="25%;">
                 <input name="city" class="form-control" type="text" placeholder="city" ng-pattern="/^[a-zA-Z]*$/" required ng-model="pickup.city" typeahead="city for city in cities | filter:$viewValue | limitTo:6" typeahead-on-select="getZipcodeForCity(pickup.city)" />
-                <small style="color:red;" ng-show="((form.addPickupAddress.city.$dirty && form.addPickupAddress.city.$invalid) || (form.addPickupAddress.city.$invalid && form.addPickupAddress.submitted))">*Please enter city.</small>
+                <small style="color:red;" ng-show="((form.addPickupAddress.city.$dirty && form.addPickupAddress.city.$invalid) || (form.addPickupAddress.city.$invalid && form.addPickupAddress.submitted))">*Please enter valid city.</small>
               </td>
-              <td width="15%;">
+              <td width="25%;">
                 <input name="zipcode" class="form-control" type="text" ng-pattern="/^[0-9]{6}$/" ng-model="pickup.zipcode" placeholder="zipcode" required typeahead="zipcode for zipcode in zipcodes | filter:$viewValue | limitTo:6" typeahead-on-select="getAreaForZipcode(pickup.zipcode)"/>
                 <small style="color:red;" ng-show="((form.addPickupAddress.zipcode.$dirty && form.addPickupAddress.zipcode.$invalid) || (form.addPickupAddress.zipcode.$invalid && form.addPickupAddress.submitted))">*Please enter zipcode and must be a 6 digit number only.</small>
               </td>
-              <td width="15%;">
-                <input type="text" name="area" class="form-control" placeholder="area" ng-pattern="/^[a-zA-Z]*$/" required ng-model="pickup.area"  typeahead="area for area in Areas | filter:$viewValue | limitTo:6">
-                <small style="color:red;" ng-show="((form.addPickupAddress.area.$dirty && form.addPickupAddress.area.$invalid) || (form.addPickupAddress.area.$invalid && form.addPickupAddress.submitted))">*Please enter area.</small>
+              <td width="25%;">
+                <input type="text" name="area" class="form-control" placeholder="area" required ng-model="pickup.area"  typeahead="area for area in Areas | filter:$viewValue | limitTo:6">
+                <small style="color:red;" ng-show="((form.addPickupAddress.area.$dirty && form.addPickupAddress.area.$invalid) || (form.addPickupAddress.area.$invalid && form.addPickupAddress.submitted))">*Please enter valid area.</small>
               </td>              
               
-              <td width="5%;">
-                <button type="submit" class="btn btn-primary btn-sm" ng-click="addPickupAddress()">Add</button>
+              <td width="25%;">
+                <button style="width:100%;background-color:#24677C; border-color:#24677C;" class="btn btn-primary btn-sm" ng-click="addPickupAddress()"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add</button>
               </td>
             </tr>
           </tbody>

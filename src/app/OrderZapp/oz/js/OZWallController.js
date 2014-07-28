@@ -10,7 +10,7 @@ angular.module('oz.UserApp')
      $scope.currentBranch = {'branchname':''};
 
      $scope.type = "order";
-
+  
      $scope.showOrderResult = 0 ;
 
      $scope.viewOrderContent = 0;
@@ -45,7 +45,7 @@ angular.module('oz.UserApp')
 
      $scope.customers = 110;
 
-  
+     $scope.active = {'init' : true, 'category' : false, 'policies' : false, 'analytics' : false};
 
     $scope.orderContentObject = {}; $scope.hideLoadMore = 0;
 
@@ -57,26 +57,30 @@ angular.module('oz.UserApp')
 
     $scope.providers = {'list' : []};
 
+    $scope.showSpinnerLogo = 0;
+
     $scope.trigger = function()
     {
       $scope.active.init = true;
-      $scope.showConfigurationWizard = false;
-      $scope.showPoliciesWizard = false;
+      $scope.active.category = false;
+       $scope.active.policies = false;
+       $scope.active.analytics = false;
     };
 
     $scope.triggerConfigurationWizard = function()
     {
-           $scope.showConfigurationWizard = true;
-           $scope.showPoliciesWizard = false;
-           $scope.active.init = false;
+            $scope.active.init = false;
+            $scope.active.category = true;
+            $scope.active.analytics = false;
+            $scope.active.policies = false;
     };
 
     $scope.triggerPoliciesWizard = function()
     {
-           $scope.showPoliciesWizard = true;
-           $scope.showConfigurationWizard = false;
-           $scope.active.init = false;
-
+       $scope.active.init = false;
+       $scope.active.category = false;
+       $scope.active.policies = true;
+       $scope.active.analytics = false;
     };
   
     $scope.providerlogo = '';
@@ -131,7 +135,6 @@ angular.module('oz.UserApp')
           $scope.orderContentObject = content; 
           $scope.showSOrderView = 1;
           $scope.controlWallView = 0;
-
           // console.log('content from suborder search '+ content);
       });
  
@@ -143,9 +146,7 @@ angular.module('oz.UserApp')
          $scope.currentBranchId = branchid;
          $scope.showOrderContents(); 
          $scope.showTabs = 0;
-         // $scope.showSOrderView = 0;
-         // $scope.controlWallView = 1;
-         $scope.orderViewStatus = true;             $scope.productViewStatus = false;
+         $scope.orderViewStatus = true;$scope.productViewStatus = false;
      };
 
      $scope.showProductContent = function()
@@ -174,7 +175,7 @@ angular.module('oz.UserApp')
            }
            else
            {
-            OZWallService.getAllBranchOrders($scope.currentBranchId,$scope.type);
+            OZWallService.getAllBranchOrders($scope.currentBranchId,$scope.type); $scope.showSpinnerLogo = 1;
           }
             $scope.showRadioButtonss = 1;
            $scope.viewOrderContent = 0;
@@ -186,7 +187,7 @@ angular.module('oz.UserApp')
     var cleanUpEventGetAllBranchSpecificorders = $scope.$on("gotAllBranchSpecificOrders",function(event,data){
            $scope.hideLoadMore = 0;
             if(data.error)
-            {//test
+            {//test 
                   if(data.error.code === 'AL001')
                   {
                         $rootScope.showModal();
@@ -200,11 +201,14 @@ angular.module('oz.UserApp')
                   }
                   $scope.products = {};
                   $scope.orders = {};
+                  $scope.showSpinnerLogo = 0;
             }
             if(data.success)
             {   
                 //$scope.orders = {};
                 //$rootScope.hideSpinner();
+                 $scope.showSOrderView = 0;
+                 $scope.controlWallView = 1;
                 $scope.showSpinners = 0;
                 if(data.success.orders !== undefined)
                 { 
@@ -230,6 +234,7 @@ angular.module('oz.UserApp')
                    }
                  } 
                 $scope.showTabs = 1;
+                $scope.showSpinnerLogo = 0;
               } 
     });
 
