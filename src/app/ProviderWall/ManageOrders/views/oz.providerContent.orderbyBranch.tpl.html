@@ -159,7 +159,7 @@
       </li>
 
        <li class="tabPolicyLi" ng-class="{active3 : tabForOrders.past == 1}"  >
-        <a id="prodoCommentSearchTab" class="prodo-cursor" ng-click=" tabForOrders.recieved = false;getPastOrders(); tabForOrders.approval = false;
+        <a id="prodoCommentSearchTab" class="prodo-cursor" ng-click="getPastOrders(); tabForOrders.recieved = false; tabForOrders.approval = false;
       tabForOrders.processing = false; tabForOrders.delivery = false;  tabForOrders.past=true; tabForOrders.product=false;" >
       <div class="row" >
             <div class="col-md-12">
@@ -197,14 +197,14 @@
 <div class="tab-content" style="margin-left:10px; margine:10px;">
 <br/>
 
- <div id="Remove" ng-show="tabForOrders.recieved == true" >
- 	<div  ng-show="orders">
+ <div id="Remove" ng-show="tabForOrders.recieved == true " >
+ 	<div  ng-show="orders && hideReceivedOrders==false">
  	 <ul class="listStyle">
         <div oz-orders template-url="../ProviderWall/ManageOrders/views/oz.OrderByDate.tpl.html" id=""  >
         </div>
       </ul>
  	</div>
-   <div ng-show="hideReceivedOrders" style="padding:40px; opacity: .8;margin-top: 2px;margin-bottom: 1px; color: rgb(80, 74, 74);background-color:#F1F1F1; letter-spacing: 1px;" class="row">
+   <div ng-show="hideReceivedOrders==true" style="padding:40px; opacity: .8;margin-top: 2px;margin-bottom: 1px; color: rgb(80, 74, 74);background-color:#F1F1F1; letter-spacing: 1px;" class="row">
     <div class="col-md-12">
       <div class="no-message">
         <center>
@@ -216,14 +216,14 @@
   </div>
  </div>
 
- <div id="Remove" ng-show="tabForOrders.approval == true" >
-  <div  ng-show="orders">
+ <div id="Remove" ng-show="tabForOrders.approval == true " >
+  <div  ng-show="orders && hideApproveOrders==false">
    <ul class="listStyle">
         <div oz-orders template-url="../ProviderWall/ManageOrders/views/oz.OrderByDate.tpl.html" id=""  >
         </div>
       </ul>
   </div>
-   <div ng-show="hideApproveOrders" style="padding:40px; opacity: .8;margin-top: 2px;margin-bottom: 1px; color: rgb(80, 74, 74);background-color:#F1F1F1; letter-spacing: 1px;" class="row">
+   <div ng-show="hideApproveOrders==true" style="padding:40px; opacity: .8;margin-top: 2px;margin-bottom: 1px; color: rgb(80, 74, 74);background-color:#F1F1F1; letter-spacing: 1px;" class="row">
     <div class="col-md-12">
       <div class="no-message">
         <center>
@@ -237,15 +237,15 @@
 
 
 
-  <div id="Remove" ng-show="tabForOrders.processing == true" >
-	<div ng-show="orders" >
+  <div id="Remove" ng-show="tabForOrders.processing == true " >
+	<div ng-show="orders && hideProcessingOrders==false" >
  	 <ul class="listStyle">
         <div oz-orders template-url="../ProviderWall/ManageOrders/views/oz.Order.tpl.html" id=""  >
         </div>
       </ul>
  	</div>
 
-  <div ng-show="hideProcessingOrders" style="padding:40px; opacity: .8;margin-top: 2px;margin-bottom: 1px; color: rgb(80, 74, 74);background-color:#F1F1F1; letter-spacing: 1px;" class="row">
+  <div ng-show="hideProcessingOrders==true" style="padding:40px; opacity: .8;margin-top: 2px;margin-bottom: 1px; color: rgb(80, 74, 74);background-color:#F1F1F1; letter-spacing: 1px;" class="row">
     <div class="col-md-12">
       <div class="no-message">
         <center>
@@ -259,15 +259,15 @@
 
 
 
-  <div id="Remove" ng-show="tabForOrders.delivery == true" >
-  	<div ng-show="orders" >
+  <div id="Remove" ng-show="tabForOrders.delivery == true " >
+  	<div ng-show="orders && hideDeliveryOrders==false" >
  	 <ul class="listStyle">
         <div oz-orders template-url="../ProviderWall/ManageOrders/views/oz.Order.tpl.html" id=""  >
         </div>
       </ul>
  	</div>
 
-    <div ng-show="hideDeliveryOrders" style="padding:40px; opacity: .8;margin-top: 2px;margin-bottom: 1px; color: rgb(80, 74, 74);background-color:#F1F1F1; letter-spacing: 1px;" class="row">
+    <div ng-show="hideDeliveryOrders==true" style="padding:40px; opacity: .8;margin-top: 2px;margin-bottom: 1px; color: rgb(80, 74, 74);background-color:#F1F1F1; letter-spacing: 1px;" class="row">
       <div class="col-md-12">
         <div class="no-message">
           <center>
@@ -280,15 +280,15 @@
 
  </div>
 
-   <div id="Remove" ng-show="tabForOrders.past == true" >
-  	<div ng-show="orders" >
+   <div id="Remove" ng-show="tabForOrders.past == true " >
+  	<div ng-show="orders && hidePastOrders==false" >
  	 <ul class="listStyle">
         <div oz-orders template-url="../ProviderWall/ManageOrders/views/oz.Order.tpl.html" id=""  >
         </div>
       </ul>
  	</div>
 
-    <div ng-show="hidePastOrders" style="padding:40px; opacity: .8;margin-top: 2px;margin-bottom: 1px; color: rgb(80, 74, 74);background-color:#F1F1F1; letter-spacing: 1px;" class="row">
+    <div ng-show="hidePastOrders==true" style="padding:40px; opacity: .8;margin-top: 2px;margin-bottom: 1px; color: rgb(80, 74, 74);background-color:#F1F1F1; letter-spacing: 1px;" class="row">
       <div class="col-md-12">
         <div class="no-message">
           <center>
@@ -300,15 +300,15 @@
     </div>
  </div>
 
-   <div id="Remove" ng-show="tabForOrders.product == true" >
-  	<div ng-show="orders" >
+   <div id="Remove" ng-show="tabForOrders.product == true " >
+  	<div ng-show="orders  && hideProductOrders==false" >
  	 <ul class="listStyle">
         <div oz-orders template-url="../ProviderWall/ManageOrders/views/oz.productOrder.tpl.html" id=""  >
         </div>
       </ul>
  	</div>
 
-  <div ng-show="hideProductOrders" style="padding:40px; opacity: .8;margin-top: 2px;margin-bottom: 1px; color: rgb(80, 74, 74);background-color:#F1F1F1; letter-spacing: 1px;" class="row">
+  <div ng-show="hideProductOrders==true" style="padding:40px; opacity: .8;margin-top: 2px;margin-bottom: 1px; color: rgb(80, 74, 74);background-color:#F1F1F1; letter-spacing: 1px;" class="row">
       <div class="col-md-12">
         <div class="no-message">
           <center>
