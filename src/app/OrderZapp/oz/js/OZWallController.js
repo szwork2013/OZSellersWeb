@@ -10,7 +10,7 @@ angular.module('oz.UserApp')
      $scope.currentBranch = {'branchname':''};
 
      $scope.type = "order";
-
+  
      $scope.showOrderResult = 0 ;
 
      $scope.viewOrderContent = 0;
