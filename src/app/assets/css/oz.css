@@ -15,8 +15,7 @@ textarea {
 
 /*change the navbar style*/
 .oz-navbar {
-  background: -webkit-linear-gradient(#FFFFFF,#F7F7F7);
-  background: -moz-linear-gradient(#FFFFFF,#F7F7F7);
+  background: rgb(58, 53, 53);
   border-color: #ffffff;
   }
   .navbar{
@@ -42,7 +41,7 @@ textarea {
   }
 
   .navbar-inverse .navbar-nav>li>a {
-color: #7C7B7E;
+color: #BDBFC4;
 text-transform: uppercase;
 letter-spacing: 1px;
 font-size: 12px;
@@ -55,12 +54,19 @@ color: #464449;
 }
 
 .navbar-inverse .navbar-nav>li>a:hover {
-color: #464449;
+color: #fff;
 text-transform: uppercase;
 letter-spacing: 1px;
 font-size: 12px;
 }
 
+.navbar-inverse .navbar-nav>li.active>a, .navbar-inverse .navbar-nav>li.active>a:hover {
+color: #fff;
+text-transform: uppercase;
+letter-spacing: 1px;
+font-size: 12px;
+background: transparent;
+}
 
 .policyTab >li.active>a, .policyTab>li.active>a:hover, .policyTab>li.active>a:focus{
 color:#D67021;
@@ -82,7 +88,7 @@ background-color: transparent;
     letter-spacing: 1px;
     font-size: 13px;
     text-transform: uppercase;
-    color: #B3B3B3;
+    color: #BDBFC4;
     font-weight: bold;
 
   }

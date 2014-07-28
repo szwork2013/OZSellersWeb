@@ -151,7 +151,7 @@
 					<div class="col-md-8">
 						<p ng-show="branch.branchdescription && branch.branchdescription != null"><em>Description:</em>&nbsp;&nbsp; {{branch.branchdescription}}</p>
 						<p><em>Contact:</em>&nbsp;&nbsp; {{branch.contact_supports.toString()}}</p>
-						<p><em>Address:</em>&nbsp;&nbsp; {{branch.location.address1}},{{' ' + branch.location.address1}},{{' ' + branch.location.city}}, {{branch.location.state}}, {{branch.location.country}}, pincode- {{branch.location.zipcode}}</p>
+						<p><em>Address:</em>&nbsp;&nbsp; {{branch.location.address1}},{{' ' + branch.location.address2}},{{' ' + branch.location.city}}, {{branch.location.state}}, {{branch.location.country}}, pincode- {{branch.location.zipcode}}</p>
 						<p><em>Delivery Type:</em>&nbsp;&nbsp;
 							<span ng-show="branch.delivery.isprovidehomedelivery" class="label label-success"><i class="fa fa-check"></i>&nbsp;&nbsp;HOME</span>
 							<span ng-show="branch.delivery.isprovidepickup" class="label label-success"><i class="fa fa-check"></i>&nbsp;&nbsp;PICKUP</span>					

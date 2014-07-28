@@ -14,7 +14,7 @@ angular.module('oz.ProviderApp')
     $scope.order_status_list = [];
     $scope.edit_order_status_list = [];
     $scope.sellercategory = {categoryid: '', categoryname: ''};
-    var file = {};
+    var file;
     var fileUpdate;
     $scope.currentSellerIndex;
     $scope.process_configuration_error = '';
