@@ -7,6 +7,7 @@ angular.module('oz.ProviderApp')
    $scope.init=function(){
     $scope.tabForPrice={};
    	$scope.productPricelist=[];
+    $scope.tempProductPricelist=[];
     $scope.editorPrice={};
     $scope.$state=$state;
     $scope.tabForPrice.np = true;
@@ -25,12 +26,16 @@ angular.module('oz.ProviderApp')
 
     $scope.enableEditorPrice = function () {
      $scope.editorPrice.editorEnabled = true;
+     $scope.tempProductPricelist = angular.copy( $scope.productPricelist);
     };
 
     $scope.disableEditorPrice = function () {
      $scope.editorPrice.editorEnabled = false;
+     $scope.productPricelist = $scope.tempProductPricelist ;
+     $scope.tempProductPricelist=[];
      // $scope.priceForm.submitted=false;
-     $scope.getAllProducts($rootScope.selectedBranchId,$rootScope.selectedproviderid);
+
+     // $scope.getAllProducts($rootScope.selectedBranchId,$rootScope.selectedproviderid);
    };
 
 
@@ -86,7 +91,7 @@ $scope.changePrice=function(product){
   }
  else{
   $scope.priceForm.$setPristine();
-  // console.log( product);
+  console.log( product);
   $scope.productPrices=[];
   for (var i = product.length - 1; i >= 0; i--) {
     $scope.productPrices.push ({
@@ -104,6 +109,7 @@ $scope.changePrice=function(product){
       if(data.success){
        // console.log(data);
        $scope.disableEditorPrice();
+       $scope.getAllProducts($rootScope.selectedBranchId,$rootScope.selectedproviderid);
        $rootScope.OZNotify(data.success.message, 'success'); 
       }
       else{
@@ -138,7 +144,8 @@ $scope.changePrice=function(product){
 
     $scope.edit = function(list)
     {
-      if(list.holding_price !== undefined && list.holding_price.fromdate === null)
+       $scope.tempProductCatalog = angular.copy( $scope.products);
+       if(list.holding_price !== undefined && list.holding_price.fromdate === null)
       {
         list.holding_price.fromdate = new Date();
       }
@@ -167,7 +174,8 @@ $scope.changePrice=function(product){
       $scope.products = [];
       $scope.products = $scope.tempProductCatalog;
       list.editing = false;
-      $scope.getAllProducts($rootScope.selectedBranchId,$rootScope.selectedproviderid);
+      $scope.tempProductCatalog=[];
+      // $scope.getAllProducts($rootScope.selectedBranchId,$rootScope.selectedproviderid);
       
                      
     };
@@ -193,6 +201,7 @@ $scope.changePrice=function(product){
             if(data.success){
              
              $scope.cancel(list);
+             $scope.getAllProducts($rootScope.selectedBranchId,$rootScope.selectedproviderid);
              $rootScope.OZNotify(data.success.message, 'success'); 
             }
             else{

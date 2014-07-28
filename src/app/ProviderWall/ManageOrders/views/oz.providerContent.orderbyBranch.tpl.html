@@ -9,12 +9,12 @@
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-              <h4 class="modal-title" id="myModalLabel">Why you are not able to complete order ?</h4>
+              <h4 class="modal-title" id="myModalLabel">Reason for Rejection</h4>
             </div>
             <div class="modal-body" style="height:200px;">
            <form  id="Edit" class="css-form"  name="form.orderReason"   >  
           
-              <p style="font-size:12px;" class="text-muted">** Please enter reason for your order cancellation / rejection. Field is reqired and must not exceed 160 characters!!</p>
+              <p style="font-size:12px;" class="text-muted">** Please enter reason for your order cancellation / rejection. Reqired field [max 160 characters]</p>
             
             <textarea  type="text" 
                   ng-maxlength="160" name="reason" id="prodo-product-featuresDescription_textfield" class="form-control prodo-validation"  ng-model="reason.text"  col="40" required ></textarea>
@@ -42,20 +42,48 @@
 
 
                <!-- Modal -->
-      <div class="modal" id="calenderModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal" id="calenderModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-              <h4 class="modal-title" id="myModalLabel">Select delivery date</h4>
+              <h4 class="modal-title" id="myModalLabel"> Select Delivery Date</h4>
             </div>
             <div class="modal-body">
+            <div class="row" style="padding:10px; padding-left:20px;">
+              <input type="radio" ng-model="deliveryOption" value="pref" > Accept Preferred Delivery Date - {{ getOrderDate(order.preferred_delivery_date )   }}
+            </div> 
+             <div class="row" style="padding:10px; padding-left:20px;">
+               <input type="radio" ng-model="deliveryOption" value="custom" > Select New Delivery Date
+            </div> 
 
-            <div class="input-group  ">
+
+
+            <div ng-show="deliveryOption=='custom'" style="margin:10px;">
+            <div class="row">
+              <div class="col-md-6">
+               <span class="bold">Date </span>
+              </div>
+              <div class="col-md-6">
+                 <span class="bold">Time </span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+               <div class="input-group" style="margin-top:35px;">
                 <span class="input-group-addon"> <i class="fa fa-calendar"></i></span>
-                 <input id="delivery_date"  type="text" placeholder="Select delivery date" ng-model="delivery_date" class="form-control  oz-datepickerTextWidth"  datepicker-popup="{{format}}"  is-open="opened1" min="todaysDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" required close-text="Close" ng-change="onDateSelected(delivery_date)" >
+
+                 <input id="delivery_date"  type="text" placeholder="Select delivery date" ng-model="delivery_date" class="form-control  oz-datepickerTextWidth"  datepicker-popup="{{format}}"  is-open="opened1" min="todaysDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" required close-text="Close">
                
             </div>
+              </div>
+              <div class="col-md-6">
+                  <timepicker ng-model="delivery_date" show-meridian="ismeridian" style = 'width:100px'></timepicker> 
+              </div>
+            </div>
+            </div>
+            <a type="button" class="btn btn-default margin-left450" data-dismiss="modal"> <i class="glyphicon glyphicon-remove"></i>  &nbsp; Cancel</a>
+            <a class="btn btn-primary  "  ng-click="onDateSelected(delivery_date,deliveryOption,order.preferred_delivery_date)">Accept </a>
            </div>
           </div>
         </div>
@@ -73,10 +101,10 @@
         <a  class="prodo-cursor" id="prodoCommentTab" ng-click="getReceived(); tabForOrders.recieved = true; tabForOrders.approval = false;tabForOrders.processing = false; tabForOrders.delivery = false; tabForOrders.past=false; tabForOrders.product=false;">
         
         <div class="row" >
-          <div class="col-md-8">
-             Order Received
-          </div>
-          <div class="col-md-4">
+          <div class="col-md-12">
+              Received
+        <!--   </div>
+          <div class="col-md-3"> -->
             <span class="badge bgGreen "  ng-show="receivedOrdersCount" >{{receivedOrdersCount}}</span>
             <span class="badge bgGreen " ng-hide="receivedOrdersCount">0</span>
           </div>
@@ -88,10 +116,10 @@
       <li class="tabPolicyLi" ng-class="{active3 : tabForOrders.approval == 1}" >
         <a  class="prodo-cursor" id="prodoCommentTab" ng-click="getApproved();tabForOrders.recieved = false;tabForOrders.approval = true;tabForOrders.processing = false; tabForOrders.delivery = false; tabForOrders.past=false; tabForOrders.product=false;">
           <div class="row" >
-            <div class="col-md-8">
-               Order Approvals
-            </div>
-            <div class="col-md-4">
+            <div class="col-md-12">
+                Approvals
+        <!--     </div>
+            <div class="col-md-4"> -->
               <span class="badge bgGreen"  ng-show="TotalOrdersCount" >{{TotalOrdersCount}}</span>
               <span class="badge bgGreen" ng-hide="TotalOrdersCount">0</span>
             </div>
@@ -102,11 +130,11 @@
       <li class="tabPolicyLi" ng-class="{active3 : tabForOrders.processing == 1}"  >
         <a id="prodoCommentSearchTab" class="prodo-cursor" ng-click=" getProcessing();tabForOrders.recieved = false; tabForOrders.approval = false; tabForOrders.processing = true; tabForOrders.delivery = false;  tabForOrders.past=false; tabForOrders.product=false;" >
         <div class="row" >
-            <div class="col-md-8">
-               Order Processing
-            </div>
-            <div class="col-md-4">
-              <span class="badge bgOrange  pull-right"  ng-show="processingOrdersCount">{{processingOrdersCount}}</span>
+            <div class="col-md-12">
+                Processing
+          <!--   </div>
+            <div class="col-md-4"> -->
+              <span class="badge bgOrange "  ng-show="processingOrdersCount">{{processingOrdersCount}}</span>
              <span class="badge bgOrange" ng-hide="processingOrdersCount">0</span>
             </div>
          </div>
@@ -118,10 +146,10 @@
        <li class="tabPolicyLi" ng-class="{active3 : tabForOrders.delivery == 1}"  >
         <a id="prodoCommentSearchTab" class="prodo-cursor" ng-click=" getDelivery();tabForOrders.recieved = false; tabForOrders.approval = false;tabForOrders.processing = false; tabForOrders.delivery = true;  tabForOrders.past=false; tabForOrders.product=false;" >
       	   <div class="row" >
-            <div class="col-md-8">
-               Order Delivery
-            </div>
-            <div class="col-md-4">
+            <div class="col-md-12">
+                Delivery
+<!--             </div>
+            <div class="col-md-4"> -->
               <span class="badge bgBlue" ng-show="deliveryOrdersCount">{{deliveryOrdersCount}}</span>
               <span class="badge bgBlue" ng-hide="deliveryOrdersCount">0</span>
             </div>
@@ -134,10 +162,10 @@
         <a id="prodoCommentSearchTab" class="prodo-cursor" ng-click=" tabForOrders.recieved = false;getPastOrders(); tabForOrders.approval = false;
       tabForOrders.processing = false; tabForOrders.delivery = false;  tabForOrders.past=true; tabForOrders.product=false;" >
       <div class="row" >
-            <div class="col-md-8">
-              Past Orders
-            </div>
-            <div class="col-md-4">
+            <div class="col-md-12">
+              Past 
+  <!--           </div>
+            <div class="col-md-4"> -->
               <span class="badge bgGray" ng-show="pastOrdersCount">{{pastOrdersCount}}</span>
               <span class="badge bgGray" ng-hide="pastOrdersCount">0</span>
             </div>
@@ -151,12 +179,12 @@
         <a id="prodoCommentSearchTab" class="prodo-cursor" ng-click="tabForOrders.recieved = false; getProductOrders(); tabForOrders.approval = false;
       tabForOrders.processing = false; tabForOrders.delivery = false;  tabForOrders.past=false; tabForOrders.product=true;" >
        <div class="row" >
-            <div class="col-md-8">
-               Product Orders 
+            <div class="col-md-12">
+               Product  
             </div>
-            <div class="col-md-4">
+           <!--  <div class="col-md-4">
               
-            </div>
+            </div> -->
          </div>
 
       	

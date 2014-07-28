@@ -19,7 +19,7 @@ angular.module('oz.ProviderApp')
     });
 
   // ProviderServicesList.getAllGroupContent();
-
+ 
    $scope.allGrpContents = [];
 
    $scope.groupId = '';
@@ -60,6 +60,8 @@ angular.module('oz.ProviderApp')
 
    $scope.openAddGroup = function(){
     $scope.isCollapsed = !$scope.isCollapsed;
+    $scope.errorForEmptyDescription = '';
+    $scope.errorForEmptyName = '';$scope.contentOfGroup.groupdata.grpname = '';$scope.contentOfGroup.groupdata.description = '';
    }
 
    $scope.addGroupContent = function()
@@ -102,13 +104,15 @@ angular.module('oz.ProviderApp')
                 $rootScope.OZNotify('Group Added Successfully', 'success');
                 $scope.openAddGroup();
                 ProviderServicesList.getAllGroupContent();
+                $scope.contentOfGroup.groupdata.grpname = '';
+                $scope.contentOfGroup.groupdata.description = '';
             } 
     });
                                                                             
     var cleanUpEventGroupContentNotAddedSuccessfully = $scope.$on("groupNotAddedSuccessfully",function(event,data){
             $rootScope.OZNotify('Some issue with server! Please try after some time', 'error');
     });
-
+    var tempGroupContent = [];
     var cleanUpEventGotGroupsSuccessfully = $scope.$on("gotAllContent",function(event,data, list){
             if(data.error)
             {
@@ -124,8 +128,9 @@ angular.module('oz.ProviderApp')
             if(data.success)
             {    
                 $scope.allGrpContents = []; 
-
-                 $scope.allGrpContents = data.success.usergrp;
+                 $scope.allGrpContents = angular.copy(data.success.usergrp);
+                 tempGroupContent = [];
+                 tempGroupContent = angular.copy(data.success.usergrp);
             } 
     });
                                                                             
@@ -144,6 +149,7 @@ angular.module('oz.ProviderApp')
     $scope.stop = function(grps)
     {
       grps.editing = false;
+      $scope.allGrpContents = angular.copy(tempGroupContent);
     }
 
     $scope.assignGroupId = function(ids)
@@ -235,7 +241,8 @@ angular.module('oz.ProviderApp')
                   }  
                   if(allDataValidated === 0)
                   {         
-                          $scope.object = {"invites":{"grpname": $scope.grpname,"members":$scope.userinvites}}
+                          $scope.object = {"invites":{"grpname": $scope.grpname,"members":$scope.userinvites}};
+                          console.log(JSON.stringify($scope.object));
                           ProviderServicesList.addMembersToGroup($scope.object,$scope.idOfSelectedGroup);
                   }
                  if(allDataValidated !== 0)

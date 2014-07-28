@@ -10,14 +10,16 @@ angular.module('oz.UserApp')
      $scope.currentBranch = {'branchname':''};
 
      $scope.type = "order";
-
+  
      $scope.showOrderResult = 0 ;
 
      $scope.viewOrderContent = 0;
 
      $scope.viewProductContent = 0;
 
-     $scope.controlWallView = 0;
+     $scope.controlWallView = 1;    
+
+     $scope.showSorderView = 0;
 
      $scope.currentBranchId = '';
     
@@ -43,7 +45,7 @@ angular.module('oz.UserApp')
 
      $scope.customers = 110;
 
-     $scope.showSorderView = 0;
+     $scope.active = {'init' : true, 'category' : false, 'policies' : false, 'analytics' : false};
 
     $scope.orderContentObject = {}; $scope.hideLoadMore = 0;
 
@@ -58,11 +60,34 @@ angular.module('oz.UserApp')
     $scope.trigger = function()
     {
       $scope.active.init = true;
+      $scope.active.category = false;
+       $scope.active.policies = false;
+       $scope.active.analytics = false;
+    };
+
+    $scope.triggerConfigurationWizard = function()
+    {
+            $scope.active.init = false;
+            $scope.active.category = true;
+            $scope.active.analytics = false;
+            $scope.active.policies = false;
+    };
+
+    $scope.triggerPoliciesWizard = function()
+    {
+       $scope.active.init = false;
+       $scope.active.category = false;
+       $scope.active.policies = true;
+       $scope.active.analytics = false;
     };
   
     $scope.providerlogo = '';
       
      $scope.showSpinners = 0;
+
+     $scope.orderViewStatus = true;
+
+     $scope.productViewStatus = false;
 
      $scope.getOrderContent = function()
      { 
@@ -82,6 +107,8 @@ angular.module('oz.UserApp')
               $scope.showSpinners = 0;           
               $scope.showTabs = 0;
               $rootScope.adminProviderId = providerid;
+              $scope.active.init = true;
+              // $state.transitionTo('');
       });
 
      $scope.clearTemplatecontent = function()
@@ -106,6 +133,7 @@ angular.module('oz.UserApp')
           $scope.orderContentObject = content; 
           $scope.showSOrderView = 1;
           $scope.controlWallView = 0;
+
           // console.log('content from suborder search '+ content);
       });
  
@@ -117,8 +145,9 @@ angular.module('oz.UserApp')
          $scope.currentBranchId = branchid;
          $scope.showOrderContents(); 
          $scope.showTabs = 0;
-         $scope.showSOrderView = 0;
-         $scope.controlWallView = 1;
+         // $scope.showSOrderView = 0;
+         // $scope.controlWallView = 1;
+         $scope.orderViewStatus = true;             $scope.productViewStatus = false;
      };
 
      $scope.showProductContent = function()
@@ -126,15 +155,15 @@ angular.module('oz.UserApp')
            $scope.type = "product";
            if($scope.currentBranchId === '')
            {
-            $rootScope.OZNotify('Please search provider from sidebar and then proceed ! ', 'error');
+            // $rootScope.OZNotify('Please search provider from sidebar and then proceed ! ', 'error');
+            $rootScope.OZNotify('Please search provider from sidebar to view product details ! ', 'error');
            }
            else
            {
             OZWallService.getAllBranchOrders($scope.currentBranchId,$scope.type);
           }
-            $scope.showRadioButtonss = 1;
-           $scope.viewOrderContent = 0;
-           $scope.viewProductContent = 0;
+           $scope.orderViewStatus = false;         
+           $scope.productViewStatus = true;
      };
 
      $scope.showOrderContents = function()
@@ -142,7 +171,8 @@ angular.module('oz.UserApp')
            $scope.type = "order";
            if($scope.currentBranchId === '')
            {
-            $rootScope.OZNotify('Please search provider from sidebar and then proceed ! ', 'error');
+            // $rootScope.OZNotify('Please search provider from sidebar and then proceed ! ', 'error');
+              $rootScope.OZNotify('Please search provider from sidebar to view order details ! ', 'error');
            }
            else
            {
@@ -151,6 +181,8 @@ angular.module('oz.UserApp')
             $scope.showRadioButtonss = 1;
            $scope.viewOrderContent = 0;
            $scope.viewProductContent = 0;
+           $scope.orderViewStatus = true;   
+           $scope.productViewStatus = false;
      };
 
     var cleanUpEventGetAllBranchSpecificorders = $scope.$on("gotAllBranchSpecificOrders",function(event,data){
@@ -168,6 +200,8 @@ angular.module('oz.UserApp')
                       $scope.showSpinners = 0; 
                       $scope.showTabs = 1;
                   }
+                  $scope.products = {};
+                  $scope.orders = {};
             }
             if(data.success)
             {   
@@ -500,7 +534,11 @@ angular.module('oz.UserApp')
     //   $rootScope.OZNotify('success','success');
     //   console.log(JSON.stringify(userCounter.success));
     // }
-
+    $scope.resetToMain = function()
+    {
+          $scope.showSOrderView = 0;
+          $scope.controlWallView = 1;
+    };
 
 
  }]);
