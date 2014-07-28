@@ -13,6 +13,8 @@ angular.module('oz.ProviderApp')
     $scope.cities = [];
     $scope.zipcodes = [];
     $scope.Areas = [];
+    var char_regex = /^[a-zA-Z]*$/;
+    var zipcode_regex = /^[0-9]{6}$/;
 
     $scope.$watch('$state.$current.locals.globals.PickupAddressList', function (PickupAddressList) {
       console.log(PickupAddressList);
@@ -154,6 +156,7 @@ angular.module('oz.ProviderApp')
 
     // function to send and stringify user registration data to Rest APIs
     $scope.jsonAddPickupAddressData = function(){
+      // if (char_regex.test($scope.pickup.state) && char_regex.test($scope.pickup.city) && zipcode_regex.test($scope.pickup.zipcode) && char_regex.test($scope.pickup.area))  {};
       var Pickupdata = 
       {
         location: {
