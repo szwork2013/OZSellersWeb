@@ -22,25 +22,30 @@
 <!-- Delivery////////////////////////////////// -->
 <div class="headingDiv"> 
 <span class="bold">Delivery Info</span>
+ <div  class="pull-right">
+        <span class="bold" ng-show="order.deliverydate"> Delivery On </span> <span ng-show="order.deliverydate" class=" oz-contentsRight">{{ getOrderDate(order.deliverydate ) }}</span>
+      </div> 
+
+
 </div>
 
 
   <div class="row margintop5 " ><!-- 2nd line -->
      
      
-     <div  class="col-md-4">
-        <span class="bold">Order Created : </span> <span class=" oz-contentsRight">{{order.createdate | date:'yyyy-MM-dd ' }}</span>
+     <div  class="col-md-6">
+        <span class="bold">Order Created : </span> <span class=" oz-contentsRight">{{ getOrderDate(order.createdate )  }}</span>
       </div>
 
 
 
-      <div  class="col-md-4">
-        <span class="bold">Preferred Delivery : </span> <span class=" oz-contentsRight">{{order.preferred_delivery_date | date:'yyyy-MM-dd ' }}</span>
+      <div  class="col-md-6">
+        <span class="bold">Preferred Delivery : </span> <span class=" oz-contentsRight">{{ getOrderDate(order.preferred_delivery_date ) }}</span>
       </div>
      
-      <div  class="col-md-4">
-        <span class="bold" ng-show="order.deliverydate"> Delivery On: </span> <span ng-show="order.deliverydate" class=" oz-contentsRight">{{order.deliverydate | date:'yyyy-MM-dd ' }}</span>
-      </div>
+     <!--  <div  class="col-md-4">
+        <span class="bold" ng-show="order.deliverydate"> Delivery On </span> <span ng-show="order.deliverydate" class=" oz-contentsRight">{{order.deliverydate | date:'yyyy-MM-dd ' }}</span>
+      </div> -->
     
      </div><!--  2nd line -->
 
@@ -198,10 +203,10 @@
         <div class="row margintop5">
               <div  class="col-md-3"> 
               <div ng-show="order.orderinstructions">
-                  <a href="" ng-click="instruction=1">
+                  <a href="" ng-init="instruction=false" ng-click="instruction = instruction === false ? true: false;">
                      Order Instructions  <i class="fa fa-hand-o-right"></i>
                   </a>
-                   <div class="OZ-cakeMessage" ng-show="instruction==1">{{order.orderinstructions}} <i ng-click="instruction=0 " class="pull-right prodo-cursor   glyphicon glyphicon-circle-arrow-up " ></i></div>
+                   <div class="OZ-cakeMessage" ng-show="instruction==1">{{order.orderinstructions}} </div>
 
               </div>
               </div>
@@ -389,7 +394,7 @@
      
 
 </div> <!-- ngrepeat outer box css-->
-         <hr class="myhr">
+         <hr class="myhr" style="border-color:#A89797">
 
 
 
