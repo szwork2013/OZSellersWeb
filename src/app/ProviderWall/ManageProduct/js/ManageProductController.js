@@ -22,6 +22,7 @@ angular.module('oz.ProviderApp')
     $scope.ProductConfigs=[];
     $scope.chckedIndexs=[];
    	$scope.productlist=[];
+     $scope.tempProduct={};
       $scope.product={
       	"productname":"",
       	"price":{"value":"","currency":"\u20b9","uom":""},
@@ -57,7 +58,7 @@ $scope.clearProduct=function(){
         "usertags":[]
       };
     $scope.chckedIndexs=[];
-
+    $scope.tempProduct={};
 }
 
 
@@ -206,17 +207,13 @@ $scope.clearProduct=function(){
 
 $scope.handleChangeLogo=function(data, status, headers, config){
   if(data.success){
-        // $('#Edit')[0].reset();
-
-    // $scope.currentProdle=$scope.product.productid;
-      $scope.init();
-      // $scope.disableEditor();
       if($rootScope.selectedBranchId && $rootScope.selectedproviderid){
+        // $scope.init();
+        $scope.currentProdle=$scope.product.productid;
         $scope.getAllProducts($rootScope.selectedBranchId, $rootScope.selectedproviderid);
+        $scope.enableEditor(); 
       }
-      $scope.enableEditor(); 
       $rootScope.OZNotify("Product logo updated successfully...", 'success');
-
   }
    else {
         if(data.error.code=='AL001'){
@@ -230,6 +227,7 @@ $scope.handleChangeLogo=function(data, status, headers, config){
 
 
     $scope.enableEditor = function () {
+     $scope.tempProduct = angular.copy( $scope.product);
      $scope.editMode.editorEnabled = true;
     
      if($scope.editMode.editStatus=='add'){
@@ -248,12 +246,15 @@ $scope.handleChangeLogo=function(data, status, headers, config){
 
 
   $scope.disableEditor = function () {
-     $('#Edit')[0].reset();
+   $scope.product=  $scope.tempProduct ;
+      var field= document.getElementById('addLogoImg');
+      field.value= field.defaultValue;
+      var field= document.getElementById('updateLogo');
+      field.value= field.defaultValue;
      file=null;
      fileUpdate=null;
     $scope.editMode.editorEnabled = false;
     $scope.form.productForm.submitted=false;
-
   };
 
 
