@@ -6,7 +6,7 @@
         <button class = 'btn btn-info' ng-click = 'insertProductTags()' style = "margin : 5px; float : right">Submit</button>
     </div>
 
-    <!-- <table class = 'table '> --> <br> <input type = 'text' class = 'form-control' ng-model = 'filters' style = 'width : 100%;margin : 9px;'>
+    <!-- <table class = 'table '> --> <br> <input type = 'text' class = 'form-control' ng-model = 'filters' style = 'width : 100%;margin : 9px;' placeholder = 'Search' ng-if = 'allTagsContent.length !== 0'>
     <table class = 'table table-hover'>
         <tr>
             <td style = 'width : 70%; font-weight : bold'> Tag Name </td>

@@ -388,7 +388,7 @@ angular.module('oz.UserApp')
 
     $scope.onFileSelect = function($files)  {
      for (var i = 0; i < $files.length; i++) {
-      if(($files[i].type == 'image/jpg') || ($files[i].type == 'image/png') || ($files[i].type == 'image/gif') || ($files[i].type == 'image/jpeg')){
+      if(($files[i].type == 'image/jpg') || ($files[i].type == 'image/png') || ($files[i].type == 'image/gif') || ($files[i].type == 'image/jpeg') || ($files[i].type == 'application/pdf')){
        file = $files[i];
       }
       else{
@@ -807,6 +807,19 @@ angular.module('oz.UserApp')
             {      
                        $scope.orderProcessConfig = [];
                        $scope.orderProcessConfig = data.success.orderprocess; 
+                       $scope.temp = [];
+                       for(var i = 0 ; i <$scope.orderProcessConfig.length;i++)
+                       {
+                        for(var j = i+1; j < $scope.orderProcessConfig.length; j++)
+                        {
+                          if($scope.orderProcessConfig[i].index > $scope.orderProcessConfig[j].index)
+                          {
+                            var dummy = $scope.orderProcessConfig[i];
+                            $scope.orderProcessConfig[i] = $scope.orderProcessConfig[j];
+                            $scope.orderProcessConfig[j] = dummy;
+                          }
+                        }
+                       }
             } 
     });
 
@@ -814,10 +827,17 @@ angular.module('oz.UserApp')
             $rootScope.OZNotify('Some issue with server! Please try after some time', 'error');
     });
 
-    $scope.removeOrderProcess = function(index)
+    $scope.OrderProcessConfigurationIndex = '';
+
+    $scope.removeOrderProcess = function()
     {
-      OZWallService.removeOrderConfigContent(index);
+      OZWallService.removeOrderConfigContent($scope.OrderProcessConfigurationIndex);
     };
+
+    $scope.assignOrderProcessConfigid = function(index)
+    {
+           $scope.OrderProcessConfigurationIndex = index;
+    }
 
     var cleanUpEventOrderProcessConfigurationRemove = $scope.$on('orderProcessConfigurationRemoved', function(event, data)
     {             
@@ -844,22 +864,31 @@ angular.module('oz.UserApp')
       $rootScope.OZNotify('Some issue with the server! Please try again after some time', 'error');
     });
 
-    $scope.clearThisCategory = function(index, categoryid)
+    $scope.indexOfCategoryToBeRemoved = '';
+    $scope.categoryidOfCategoryToBeRemove = '';
+
+    $scope.clearThisCategory = function()
     {
             for(var i = 0 ; i< $scope.allConfigContent.length ; i ++)
             {
-              if(categoryid === $scope.allConfigContent[i].categoryid)
+              if($scope.categoryidOfCategoryToBeRemove === $scope.allConfigContent[i].categoryid)
               {
                       $scope.changeOfCriterias = [];
                       $scope.changeOfCriterias = $scope.allConfigContent[i];
-                      $scope.changeOfCriterias.configuration.splice(index, 1);
+                      $scope.changeOfCriterias.configuration.splice($scope.indexOfCategoryToBeRemoved, 1);
                       
                       $scope.putContentToCriterias = {'productconfig' : { 'configuration' : $scope.changeOfCriterias.configuration}};
                        
-                      OZWallService.changeProductCriteria($scope.putContentToCriterias, categoryid);
+                      OZWallService.changeProductCriteria($scope.putContentToCriterias, $scope.categoryidOfCategoryToBeRemove);
                       status = 1;
               }
             }
+    };
+
+    $scope.assignCategoryDeleteCriteria = function(index, categoryid)
+    {
+        $scope.indexOfCategoryToBeRemoved = index;
+        $scope.categoryidOfCategoryToBeRemove = categoryid;
     };
 
 
