@@ -144,6 +144,7 @@ angular.module('oz.ProviderApp')
     $scope.stop = function(grps)
     {
       grps.editing = false;
+       ProviderServicesList.getAllGroupContent();
     }
 
     $scope.assignGroupId = function(ids)

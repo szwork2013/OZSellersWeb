@@ -1,5 +1,5 @@
 angular.module('oz.UserApp')
-  .controller('OZWallSearchController', ['$scope', '$state', '$http', '$timeout', '$sce', '$log', 'UserSessionService',  'OZWallService', '$rootScope', function($scope, $state, $http, $timeout, $sce, $log, UserSessionService, OZWallService, $rootScope) {
+  .controller('OZWallSearchController', ['$scope', '$state', '$http', '$timeout', '$sce', '$log', 'UserSessionService',  'OZWallService', '$rootScope', 'getInitialCount',function($scope, $state, $http, $timeout, $sce, $log, UserSessionService, OZWallService, $rootScope, getInitialCount) {
    
    $scope.searchText = '';
 
@@ -84,6 +84,38 @@ angular.module('oz.UserApp')
       cleanUpEventNotGotSuborder();
 
     });
+
+    $scope.count = 20;
+
+     $scope.count1 = 0;
+
+     $scope.customers = 0;
+
+     $scope.orders = 0;
+
+     $scope.startC = function()
+     {
+          //setInterval(function(){$scope.count = $scope.count + 1; console.log($scope.count);},3000);
+          $scope.count = $scope.count + 1;
+     };
+
+     if(getInitialCount.error)
+     {
+            if(getInitialCount.error.code === 'AL001')
+                  {
+                        $rootScope.showModal();
+                  }
+                  else
+                  {
+                        $rootScope.OZNotify(getInitialCount.error.message, 'error');
+                  }
+     }
+
+     if(getInitialCount.success)
+     {
+        $scope.customers = getInitialCount.success.count.users;
+        $scope.orders = getInitialCount.success.count.orders;
+     }
 
 
 }]);
