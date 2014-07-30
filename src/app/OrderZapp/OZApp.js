@@ -71,7 +71,7 @@ $scope.getProviders=function(){
                   }
                $rootScope.OZNotify(successData.error.message, 'error');  
              } else {
-               $rootScope.providers=[];
+               // $rootScope.providers=[];
                $rootScope.providers=successData.success.providers;
                if(successData.success.providers[0]){
                  $rootScope.provider=$rootScope.providers[0];
@@ -149,7 +149,7 @@ $scope.getProviders=function(){
 
    $scope.getBranches=function(providerid){
      $rootScope.selectedBranchId;
-     $rootScope.branches = [];
+     // $rootScope.branches = [];
      // $scope.selectedBranchId;
      ProviderServices.get_branches.getBranches({providerid:providerid},
       function (successData) {

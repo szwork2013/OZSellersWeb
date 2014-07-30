@@ -1,5 +1,4 @@
-<div>
-
+<div ng-show="orderConfigStatus">
 
 <div ng-show="selectedBranchId ">
 
@@ -327,3 +326,13 @@
 </div>
 
 </div>
+<div ng-hide="orderConfigStatus" style="padding:40px; opacity: .8;margin-top: 2px;margin-bottom: 1px; color: rgb(80, 74, 74);background-color:#F1F1F1; letter-spacing: 1px;" class="row">
+      <div class="col-md-12">
+        <div class="no-message">
+          <center>
+            <p style="font-size: 14px;">Order configurations not found</p>      
+            <p style="font-size: 12px;"> This provider does not have Order Configurations, Please add it from manage providers or contact your admin.</p>
+          </center>
+        </div>
+      </div>
+ </div>
