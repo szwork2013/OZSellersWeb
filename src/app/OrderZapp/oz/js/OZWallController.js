@@ -249,12 +249,15 @@ angular.module('oz.UserApp')
     };
 
    $scope.jsonTemplateContent = function(type) {
+      var formatTextInitial = '<!DOCTYPE html><html><meta name="viewport" content="width=device-width, initial-scale=1"><div style = "text-align:justify">'+ $scope.template.content + '</div></html>';
+
+   
       var currentTemplate = 
         {
           'templatedata':
           {
             'type' : type,
-            'template' : $scope.template.content,
+            'template' : formatTextInitial,
           }
        
         };
@@ -262,11 +265,13 @@ angular.module('oz.UserApp')
   };
 
      $scope.jsonTemplateContentChange = function() {
+      var formatText = '<!DOCTYPE html><html><meta name="viewport" content="width=device-width, initial-scale=1"><div style = "text-align:justify">'+ $scope.template.content + '</div></html>';
+
       var currentTemplate = 
         {
           'templatedata':
           {
-            'template' : $scope.template.content,
+            'template' : formatText,
           }
        
         };
