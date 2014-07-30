@@ -110,7 +110,7 @@ angular.module('oz.UserApp')
     {
       var userData = 
         {
-         'mobileno' : $scope.forgotpassword.mobileno 
+         'mobileno' : '91'+$scope.forgotpassword.mobileno 
         }
       return JSON.stringify(userData); 
     }
@@ -125,16 +125,20 @@ angular.module('oz.UserApp')
       } else {
         if (data.error.code== 'AV001') {     // enter valid data
             $log.debug(data.error.code + " " + data.error.message);
-            $scope.showAlert('alert-danger', data.error.message);
+            // $scope.showAlert('alert-danger', data.error.message);
+            $rootScope.OZNotify(data.error.message, 'error');
         } else if (data.error.code=='AV004') {  // enter prodonus registered emailid
             $log.debug(data.error.code + " " + data.error.message);
-            $scope.showAlert('alert-danger', data.error.message);
+            // $scope.showAlert('alert-danger', data.error.message);
+            $rootScope.OZNotify(data.error.message, 'error');
         } else if (data.error.code== 'AT001') {    // user has not done any payment
             $log.debug(data.error.code + " " + data.error.message);
-            $scope.showAlert('alert-danger', data.error.message);
+            // $scope.showAlert('alert-danger', data.error.message);
+            $rootScope.OZNotify(data.error.message, 'error');
         } else {
             $log.debug(data.error.message);
-            $scope.showAlert('alert-danger', data.error.message);
+            // $scope.showAlert('alert-danger', data.error.message);
+            $rootScope.OZNotify(data.error.message, 'error');
         }
       }
     };  
