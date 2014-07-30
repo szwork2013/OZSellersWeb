@@ -6,12 +6,12 @@ angular.module('oz.ProviderApp')
    $scope.init=function(){
     $scope.orders=[];
     $scope.tabForOrders={};
-    $scope.hideReceivedOrders = false;
-    $scope.hideApproveOrders = false;
-    $scope.hideProcessingOrders = false;
-    $scope.hideDeliveryOrders = false;
-    $scope.hidePastOrders = false;
-    $scope.hideProductOrders = false;
+    // $scope.hideReceivedOrders ;
+    // $scope.hideApproveOrders;
+    // $scope.hideProcessingOrders;
+    // $scope.hideDeliveryOrders;
+    // $scope.hidePastOrders ;
+    // $scope.hideProductOrders;
     // $rootScope.TotalOrdersCount=0;
     $scope.tabForOrders.recieved = true;
 
@@ -199,7 +199,7 @@ $scope.getReceived=function(){
              $scope.orders=successData.success.suborders;
              $scope.hidePastOrders=false;
              // $scope.pastOrdersCount=$scope.orders.length;
-              // console.log($scope.orders);
+              $log.debug($scope.orders);
         } else {
            $scope.orders=[];
              $scope.hidePastOrders=true;
