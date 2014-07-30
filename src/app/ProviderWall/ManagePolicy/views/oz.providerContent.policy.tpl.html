@@ -97,7 +97,7 @@
     <div ng-hide="(opEditor==1 || opEditorEdit==1 || opAddEditor==1 )" >
         <div ng-bind-html = "ordering_policy"  class="oz-policyContent"></div>
         <br/>
-        <button class = "btn btn-info pull-right" ng-click = "opEditorEdit=1;">Edit</button>
+        <button class = "btn btn-info pull-right" ng-click = "onOp();">Edit</button>
         <br/><br/><br/>
     </div>
   </div>
@@ -152,7 +152,7 @@
     <div ng-hide="(rpEditor==1 || rpEditorEdit==1 || rpAddEditor==1 )" >
         <div ng-bind-html = "refunds_policy" class="oz-policyContent"></div>
         <br/>
-        <button class = 'btn btn-info pull-right' ng-click = "rpEditorEdit=1;">Edit</button>
+        <button class = 'btn btn-info pull-right' ng-click = "onRp();">Edit</button>
         <br/><br/><br/>
     </div>
 
@@ -205,7 +205,7 @@
     <div  ng-hide="(ppEditor==1 || ppEditorEdit==1 || ppAddEditor==1 )" >
         <div ng-bind-html = "price_policy" class="oz-policyContent"></div>
         <br/>
-        <button class = 'btn btn-info pull-right' ng-click = "ppEditorEdit=1;">Edit</button>
+        <button class = 'btn btn-info pull-right' ng-click = "onPp();">Edit</button>
         <br/><br/><br/>
     </div>
  
@@ -257,7 +257,7 @@
     <div  ng-hide="(dpEditor==1 || dpEditorEdit==1 || dpAddEditor==1 )" >
         <div ng-bind-html = "delivery_policy" class="oz-policyContent"></div>
         <br/>
-        <button class = 'btn btn-info pull-right' ng-click = "dpEditorEdit=1;">Edit</button>
+        <button class = 'btn btn-info pull-right' ng-click = "onDp();">Edit</button>
         <br/><br/><br/>
     </div>
 
@@ -310,7 +310,7 @@
     <div  ng-hide="(cpEditor==1 || cpEditorEdit==1 || cpAddEditor==1 )" >
         <div ng-bind-html = "cancellation_policy" class="oz-policyContent"></div>
         <br/>
-        <button class = 'btn btn-info pull-right' ng-click = "cpEditorEdit=1;">Edit</button>
+        <button class = 'btn btn-info pull-right' ng-click = "onCp();">Edit</button>
         <br/><br/><br/>
     </div>
   </div>
