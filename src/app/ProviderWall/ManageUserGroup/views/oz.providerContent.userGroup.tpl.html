@@ -73,7 +73,7 @@
             <tr ng-repeat = 'grps in allGrpContents' ng-if = 'allGrpContents.length !== 0'>
                 <td ng-bind = 'grps.grpname' ng-hide = 'grps.editing'></td>
                 <td ng-show = 'grps.editing'><input type = 'text' class = 'form-control' ng-model = 'grps.grpname'></td>
-                <td ng-hide = 'grps.editing'><div ng-bind = 'grps.description' style = 'overflow: scroll;width: 200px;height: 200px;word-wrap: break-word;'></div></td>
+                <td ng-hide = 'grps.editing'><div ng-bind = 'grps.description' style = 'width: 200px;min-height : 10px;word-wrap: break-word;'></div></td>
                 <td ng-show = 'grps.editing'><input type = 'text' class = 'form-control' ng-model = 'grps.description'></td>
                 <td>
                     <table class = 'table table-hover' ng-if = 'grps.grpmembers.length>0'>
