@@ -331,7 +331,8 @@ width: 90%;overflow-x: hidden;overflow-y: auto;left: 55px;position: relative;top
 .prodo-productListCorousel{ height:130px;width:auto;}
 .prodo-arrowbtnLeft{height: 109px; float: left; margin-top:5px;margin-right:40px; cursor:pointer; font-size:50px;color:gray; background-color:white;}
 .prodo-arrowbtnRight{height: 109px;float: right; margin-top:5px; cursor:pointer ; font-size:50px;color:gray; background-color:white;}
-.prodo-productThumbnailView{background-color: rgba(240, 238, 231, 0.34);display:inline-block;width:100px; height: 110px; float: left; margin: 5px; border: solid 1px #ccc;overflow: hidden;}
+.prodo-productThumbnailView{background-color: rgba(240, 238, 231, 0.34);display:inline-block;width:10%; height: 110px; float: left; margin: 5px; border: solid 1px #ccc;overflow: hidden;}
+.prodo-productThumbnailViewButton{display:inline-block;width:5%; height: 110px; float: left; }
 .prodo-productThumbnailView:hover{box-shadow: 5px 5px 5px 1px #888888;
 background-color: white;} 
 .prodo-AddProductBtn{color: darkslategrey ; margin:5px auto; display:block; text-align:center; font-weight:bold; font-size:12px;}
