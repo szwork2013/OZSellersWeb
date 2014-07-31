@@ -54,7 +54,18 @@
 					<div id="oz-signup-input-group" class="input-group">
 				  	<input type="text" name="sellercode" class="form-control" ng-model="addseller.code" placeholder="code" required>
 				  	<small style="color:red;" ng-show="((form.addSellerForm.sellercode.$dirty && form.addSellerForm.sellercode.$invalid) || (form.addSellerForm.sellercode.$invalid && form.addSellerForm.submitted))">*Please enter seller code.</small>
-				  </div>
+				   </div>
+
+				    <div id="oz-signup-input-group" class="input-group">
+				  	<input type="text" name="providerbrandname" class="form-control" ng-model="addseller.providerbrandname" placeholder="provider brandname" required>
+				  	<small style="color:red;" ng-show="((form.addSellerForm.providerbrandname.$dirty && form.addSellerForm.providerbrandname.$invalid) || (form.addSellerForm.providerbrandname.$invalid && form.addSellerForm.submitted))">*Please enter seller brand name.</small>
+					</div>
+
+					<div id="oz-signup-input-group" class="input-group">
+				  	<input type="email" name="provideremail" class="form-control" ng-model="addseller.provideremail" placeholder="email id" required>
+				  	<small style="color:red;" ng-show="((form.addSellerForm.provideremail.$dirty && form.addSellerForm.provideremail.$invalid) || (form.addSellerForm.provideremail.$invalid && form.addSellerForm.submitted))">*Please enter valid seller email id.</small>
+					</div>
+
 
 					<div id="oz-signup-input-group" class="input-group">
 				  	<select type="text" name="category" class="form-control" ng-model="sellercategory.categoryname" palceholder='category' ng-options="sellercategory as sellercategory.categoryname for sellercategory in providers_category_list" required>
@@ -72,7 +83,7 @@
 				  	<input name="servicetaxno" type="text" class="form-control" ng-model="addseller.servicetaxno" placeholder="service tax no"  />
 				  	<small style="color:red;" ng-show="((form.addSellerForm.servicetaxno.$dirty && form.addSellerForm.servicetaxno.$invalid) || (form.addSellerForm.servicetaxno.$invalid && form.addSellerForm.submitted))">*Please enter seller Service Tax no.</small>
 					</div>
-
+ 
 					<div id="oz-signup-input-group" class="input-group">
 				  	<textarea rows="5" name="sellerdescription" type="text" class="form-control" ng-model="addseller.description" placeholder="description" required></textarea>
 				  	<small style="color:red;" ng-show="((form.addSellerForm.sellerdescription.$dirty && form.addSellerForm.sellerdescription.$invalid) || (form.addSellerForm.sellerdescription.$invalid && form.addSellerForm.submitted))">*Please enter seller description.</small>
@@ -130,6 +141,11 @@
 					<p style="text-transform:uppercase; font-size:18px; ">{{provider.providername}}</p>
 					<p>{{provider.providercode}}</p>
 					<div ng-show="$index == currentSellerIndex" class="">
+					
+						<p ng-show="provider.providerbrandname"><em>Brand Name:</em>&nbsp;&nbsp; {{provider.providerbrandname}}</p>
+					
+						<p ng-show="provider.provideremail "><em>Email Id:</em>&nbsp;&nbsp; {{provider.provideremail}}</p>
+
 						<p ng-show="provider.providerdescription && provider.providerdescription != null"><em>Description:</em>&nbsp;&nbsp; {{provider.providerdescription}}</p>
 						<p><em>Category:</em>&nbsp;&nbsp;
 							<span ng-show="provider.category" class="label label-success">{{provider.category.categoryname}}</span> 
@@ -212,7 +228,24 @@
 						  		<input type="text" name="editsellercode" class="form-control" ng-model="editseller.providercode" placeholder="code" required>
 						  		<small style="color:red;" ng-show="((form.editSellerForm.editsellercode.$dirty && form.editSellerForm.editsellercode.$invalid) || (form.editSellerForm.editsellercode.$invalid && form.editSellerForm.submitted))">*Please enter seller code.</small>
 						  	</dd>		
-						  </div>
+						    </div>
+
+						    <div id="oz-signup-input-group" class="input-group">
+						  	<dt>Seller Brand Name</dt>
+						  	<dd>
+						  		<input type="text" name="providerbrandname" class="form-control" ng-model="editseller.providerbrandname" placeholder="brand name" required>
+						  		<small style="color:red;" ng-show="((form.editSellerForm.providerbrandname.$dirty && form.editSellerForm.providerbrandname.$invalid) || (form.editSellerForm.providerbrandname.$invalid && form.editSellerForm.submitted))">*Please enter seller brand name.</small>
+						  	</dd>		
+						    </div>
+
+						    <div id="oz-signup-input-group" class="input-group">
+						  	<dt>Seller Email Id</dt>
+						  	<dd>
+						  		<input type="text" name="provideremail" class="form-control" ng-model="editseller.provideremail" placeholder="email" required>
+						  		<small style="color:red;" ng-show="((form.editSellerForm.provideremail.$dirty && form.editSellerForm.provideremail.$invalid) || (form.editSellerForm.provideremail.$invalid && form.editSellerForm.submitted))">*Please enter seller email id.</small>
+						  	</dd>		
+						    </div>
+
 
 							<div id="oz-signup-input-group" class="input-group">
 						  	<dt>Seller Description</dt>
