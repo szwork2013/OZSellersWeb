@@ -37,7 +37,8 @@ return {
 
 $scope.fromNow = function (time) {
   if (time != undefined) {
-    return moment(time).subtract('hours', 5.5).calendar();
+    return moment(time).calendar();
+    // return moment(time).subtract('hours', 5.5).calendar();
   }
 };
 
@@ -156,7 +157,8 @@ $scope.callServiceChangeStatus=function(status,order){
 
 $scope.getOrderDate=function(deliverydatetime){
   var format = 'DD-MM-YYYY, h:mm:ss a';
-    return moment(deliverydatetime).subtract('hours', 5.5).format(format);
+    return moment(deliverydatetime).format(format);
+    // return moment(deliverydatetime).subtract('hours', 5.5).format(format);
 
   
 };
