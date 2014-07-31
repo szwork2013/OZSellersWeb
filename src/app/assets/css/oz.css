@@ -463,8 +463,15 @@ input.rs {
     font-weight: normal;
     text-decoration: inherit;
 }
-.oz-headerSelectBox{width: 200px;
-height: 25px;
+.oz-headerSelectBox{
+/*width: 200px;*/
+/*height: 25px;*/
+/*width: 70%;
+height: 80%;*/
+width:12.500em;
+height:1.783em;
+/*min-width: 175px;
+max-width: 20%;*/
 padding: 2px;
 /* background-color: #000000; */
 color: rgb(56, 43, 43);
