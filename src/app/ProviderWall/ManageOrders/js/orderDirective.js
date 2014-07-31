@@ -44,6 +44,7 @@ $scope.fromNow = function (time) {
 
 
  $scope.changeStatus=function(status,order){
+    $scope.search='';
     var orderid=order.suborderid
     $scope.order=order;
   // console.log(status + " "+ orderid);
@@ -253,6 +254,7 @@ for (var i = $scope.orderConfigStatus.length - 1; i >= 0; i--) {
  }
 }
 };
+
 
 
   }
