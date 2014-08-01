@@ -20,7 +20,7 @@ textarea {
   }
   .navbar{
     min-height: 10px; 
-    max-height: 40px;
+    /*max-height: 40px; */  /*css changed for 150 responsive*/
     margin-bottom: 0px;
   }
 
@@ -72,6 +72,12 @@ background: transparent;
 color:#D67021;
 background-color: transparent;
 }
+
+.orderTab >li.active>a, .orderTab>li.active>a:hover, .orderTab>li.active>a:focus{
+color:#D67021;
+background-color: transparent;
+}
+
   #oz-navbar-text{
     letter-spacing: 1px;
     word-spacing: 1px;
@@ -429,6 +435,19 @@ margin-right: 5px;}
 
 
 
+.orderTab>li>a {
+  color:rgb(199, 205, 220);
+}
+
+.orderTab>li>a:hover, .orderTab>li>a:focus {
+  color:rgb(101, 102, 104);
+  background-color: transparent;
+}
+
+ .orderTab >li.active3 >a {
+  color:#D67021;
+}
+
 .policyTab>li>a {
   color:rgb(115, 120, 133);
 }
@@ -441,6 +460,8 @@ margin-right: 5px;}
  .policyTab >li.active3 >a {
   color:#D67021;
 }
+
+
 .prodo-cursor{cursor: pointer; cursor: hand;}
 .tab-content{ border-bottom: 0px solid white;margin-top: 1px;}
 .oz-policyContent{border:1px solid rgb(248, 242, 242)}
@@ -466,9 +487,8 @@ input.rs {
 .oz-headerSelectBox{
 /*width: 200px;*/
 /*height: 25px;*/
-/*width: 70%;
-height: 80%;*/
-width:12.500em;
+
+width:12.500em;/*css changed for 150 responsive*/
 height:1.783em;
 /*min-width: 175px;
 max-width: 20%;*/
@@ -546,6 +566,23 @@ background-color: white;
 }
 .borderless td {
     border-top: none;
+}
+.oz-fixedPosition{
+  position: fixed;
+  left: 11%;
+  top: 9.2%;
+  width: 62%;
+  visibility: visible;
+  z-index: 104;
+  background-color: rgb(58, 53, 53);
+  zoom: document;
+}
+.oz-fixedHeader{
+  position: fixed;
+  top: 0%;
+  width: 100%;
+  visibility: visible;
+  z-index: 104;
 }
 .marginLeft15{margin-left: 15px;}
 .font14{font-size: 14px;}

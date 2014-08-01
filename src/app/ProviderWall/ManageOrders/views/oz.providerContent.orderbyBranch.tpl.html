@@ -93,7 +93,7 @@
       
 
 <div id="tabs">
-    <ul id="tabPrice" class=" policyTab nav nav-pills" ng-init="search=''; tabForOrders.recieved = true; tabForOrders.approval = false;
+    <ul id="tabPrice" class="oz-fixedPosition orderTab nav nav-pills" ng-init="search=''; tabForOrders.recieved = true; tabForOrders.approval = false;
       tabForOrders.processing = false; tabForOrders.delivery = false; tabForOrders.past=false; tabForOrders.product=false;" style="font-size:12px;" >
       
       <li class="tabPolicyLi" ng-class="{active3 : tabForOrders.recieved == 1}" >
@@ -194,8 +194,8 @@
 </div>
 
 <div class="tab-content" style="margin-left:10px; margine:10px;">
-<br/>
-   <input type="text"  ng-model="search" class="form-control pull-right" placeholder="Order Search..." ng-show="orders.length>0" /><br/><br/><br/>
+<br/><br/>
+   <input type="text"  ng-model="search" class="form-control pull-right" placeholder="Order Search..." ng-show="orders.length>0" /><br/><br/>
 
 
  <div id="Remove" ng-show="tabForOrders.recieved == true " >

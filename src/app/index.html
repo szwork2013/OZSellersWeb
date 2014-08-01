@@ -30,7 +30,7 @@
 	
 	</head>
 	<body id="body" ng-controller="OZMainController">
-		<div class="oz-navbar navbar navbar-inverse navbar-static-top" role="navigation">
+		<div class="oz-fixedHeader oz-navbar navbar navbar-inverse navbar-static-top" role="navigation">
   		<div id="oz-navbar-container" class="">
    			<a id="oz-navbar-brand" class="navbar-brand" href="#">
           <img style="width:2.500em;" src="assets/images/orderzapp.png">&nbsp;sellers
@@ -93,8 +93,8 @@
    		</div>
 		</div>
 
-		<div oz-alert-message></div> 
-		<div id="oz-main-view" class="" >        
+		<div oz-alert-message></div> <br/>
+		<div id="oz-main-view" class="" style="margin-top: 15px;">        
       <div ui-view></div>
     </div>
 
