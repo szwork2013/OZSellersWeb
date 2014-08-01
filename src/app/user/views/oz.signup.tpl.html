@@ -22,6 +22,10 @@
 	  	<input type="text" name="username" class="form-control" ng-model="user.username" placeholder="Username" required />
 		</div>
 
+		<div id="oz-signup-input-group" class="input-group">
+	  	<input type="text" name="firstname" class="form-control" ng-model="user.firstname" placeholder="Firstname" required />
+		</div>
+
     <div id="oz-signup-input-group" class="input-group">
 				<p id="oz-general-terms">By clicking Sign Up, you agree to our<a href="" style="color: rgb(97, 139, 8);" ng-click="showStaticTemplates('pp')" id="oz-general-terms-link" class="link"> Privacy</a>&nbsp;and&nbsp;<a href="" style="color: rgb(97, 139, 8);" ng-click="showStaticTemplates('tc')" id="oz-general-terms-link" class="link">Terms</a>.</p>
 		</div>
@@ -72,6 +76,7 @@
       <li ng-show="(signupForm.password.$dirty && signupForm.password.$error.required)|| (signupForm.password.$error.required && signupForm.submitted)">Password is required!</li>
       <li ng-show="(signupForm.password.$dirty && (signupForm.password.$error.minlength ||signupForm.password.$error.maxlength ))|| (signupForm.password.$invalid && signupForm.submitted)">Password must be between 3 and 15 characters!</li>
       <li ng-show="(signupForm.username.$dirty && signupForm.username.$error.required)|| (signupForm.username.$invalid && signupForm.submitted)">Username is required!</li>
+      <li ng-show="(signupForm.firstname.$dirty && signupForm.firstname.$error.required)|| (signupForm.firstname.$invalid && signupForm.submitted)">Firstname is required!</li>
     </ul>
   </div> 
 

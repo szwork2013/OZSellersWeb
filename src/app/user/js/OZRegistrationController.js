@@ -16,6 +16,7 @@ angular.module('oz.UserApp')
         'password' :  '',
         'username' : '',
         'usertype' : '',
+        'firstname' : ''
       };
 
     // function to clear form data on submit
@@ -24,6 +25,7 @@ angular.module('oz.UserApp')
       $scope.signupForm.submitted = false;
       $scope.user.mobileno = '';
       $scope.user.username = '';
+      $scope.user.firstname = '';
       $scope.user.email = '';
       $scope.user.password = '';
     }
@@ -38,6 +40,7 @@ angular.module('oz.UserApp')
             'email' : $scope.user.email,
             'password' : $scope.user.password,
             'username' : $scope.user.username,
+            'firstname': $scope.user.firstname,
             'usertype' : 'provider'
           }  
       };
