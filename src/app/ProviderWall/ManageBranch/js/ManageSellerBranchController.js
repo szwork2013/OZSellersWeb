@@ -23,7 +23,7 @@ angular.module('oz.ProviderApp')
     $scope.$watch('$state.$current.locals.globals.MyProviderBranchList', function (MyProviderBranchList) {
       console.log(MyProviderBranchList);
       if (MyProviderBranchList.success !== undefined && MyProviderBranchList.success.branches.length !== 0) {
-        $scope.providers_branch_list = angular.copy(MyProviderBranchList.success.branches); console.log('-----'+JSON.stringify($scope.providers_branch_list));
+        $scope.providers_branch_list = angular.copy(MyProviderBranchList.success.branches); 
         $rootScope.branches = angular.copy(MyProviderBranchList.success.branches);
         $rootScope.branch = $rootScope.branches[0];
         if (!$rootScope.selectedBranchId) {
