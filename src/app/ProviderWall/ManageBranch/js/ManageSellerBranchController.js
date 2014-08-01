@@ -284,73 +284,76 @@ angular.module('oz.ProviderApp')
     $scope.openEditBranch = function(branch){
       $scope.editbranch = {};
       $scope.editbranch = angular.copy(branch);
-      var splittingoperationfromtime = $scope.editbranch.branch_availability.from.split(':');
-      var splittingoperationtotime = $scope.editbranch.branch_availability.to.split(':');
-      $scope.edit.branchFromHours = splittingoperationfromtime[0];
-      $scope.edit.branchFromMinutes = splittingoperationfromtime[1];
-      $scope.edit.branchToHours = splittingoperationtotime[0];
-      $scope.edit.branchToMinutes = splittingoperationtotime[1];
-      // if(Number($scope.edit.branchFromHours) === 12)
-      // {
-      //   $scope.edit.branchFromMeridian = 'PM';
-      // }
-      // else if(Number($scope.edit.branchFromHours)>12)
-      // {
-      //   $scope.edit.branchFromHours = Number($scope.edit.branchFromHours) - 12;
-      //   $scope.edit.branchFromMeridian = 'PM';
-      // }
-      // else if(Number($scope.edit.branchFromHours) < 12)
-      // {
-      //   $scope.edit.branchFromMeridian = 'AM';
-      // }
-      // if(Number($scope.edit.branchToHours) === 12)
-      // {
-      //     $scope.edit.branch2Meridian = 'PM';
-      // }
-      // if(Number($scope.edit.branchToHours) > 12)
-      // {
-      //   $scope.edit.branchToHours = Number($scope.edit.branchToHours) - 12;
-      //   $scope.edit.branch2Meridian = 'PM';
-      // }
-      // else if(Number($scope.edit.branchToHours) < 12)
-      // {
-      //   $scope.edit.branch2Meridian = 'AM';
-      // }
-      if(Number($scope.edit.branchFromHours) === 12)
+      if($scope.editbranch.branch_availability !== undefined)
       {
-        $scope.edit.branchFromMeridian = 'PM';
-      }
-      else if(Number($scope.edit.branchFromHours) > 12 && $scope.edit.branchFromHours !== '00')
-      {
-         $scope.edit.branchFromHours = Number($scope.edit.branchFromHours) - 12;
-         $scope.edit.branchFromMeridian = 'PM';
-      }
-      else if($scope.edit.branchFromHours === '00')
-      {
-         $scope.edit.branchFromMeridian = 'AM';
-      }
-      else if(Number($scope.edit.branchFromHours) < 12)
-      {
-        $scope.edit.branchFromMeridian = 'AM';
-      }
+              var splittingoperationfromtime = $scope.editbranch.branch_availability.from.split(':');
+              var splittingoperationtotime = $scope.editbranch.branch_availability.to.split(':');
+              $scope.edit.branchFromHours = splittingoperationfromtime[0];
+              $scope.edit.branchFromMinutes = splittingoperationfromtime[1];
+              $scope.edit.branchToHours = splittingoperationtotime[0];
+              $scope.edit.branchToMinutes = splittingoperationtotime[1];
+              // if(Number($scope.edit.branchFromHours) === 12)
+              // {
+              //   $scope.edit.branchFromMeridian = 'PM';
+              // }
+              // else if(Number($scope.edit.branchFromHours)>12)
+              // {
+              //   $scope.edit.branchFromHours = Number($scope.edit.branchFromHours) - 12;
+              //   $scope.edit.branchFromMeridian = 'PM';
+              // }
+              // else if(Number($scope.edit.branchFromHours) < 12)
+              // {
+              //   $scope.edit.branchFromMeridian = 'AM';
+              // }
+              // if(Number($scope.edit.branchToHours) === 12)
+              // {
+              //     $scope.edit.branch2Meridian = 'PM';
+              // }
+              // if(Number($scope.edit.branchToHours) > 12)
+              // {
+              //   $scope.edit.branchToHours = Number($scope.edit.branchToHours) - 12;
+              //   $scope.edit.branch2Meridian = 'PM';
+              // }
+              // else if(Number($scope.edit.branchToHours) < 12)
+              // {
+              //   $scope.edit.branch2Meridian = 'AM';
+              // }
+              if(Number($scope.edit.branchFromHours) === 12)
+              {
+                $scope.edit.branchFromMeridian = 'PM';
+              }
+              else if(Number($scope.edit.branchFromHours) > 12 && $scope.edit.branchFromHours !== '00')
+              {
+                 $scope.edit.branchFromHours = Number($scope.edit.branchFromHours) - 12;
+                 $scope.edit.branchFromMeridian = 'PM';
+              }
+              else if($scope.edit.branchFromHours === '00')
+              {
+                 $scope.edit.branchFromMeridian = 'AM';
+              }
+              else if(Number($scope.edit.branchFromHours) < 12)
+              {
+                $scope.edit.branchFromMeridian = 'AM';
+              }
 
-      if(Number($scope.edit.branchToHours) === 12)
-      {
-        $scope.edit.branch2Meridian = 'PM';
-      }
-      else if(Number($scope.edit.branchToHours) > 12 && $scope.edit.branchToHours !== '00')
-      {
-              $scope.edit.branchToHours = Number($scope.edit.branchToHours) - 12;
-              $scope.edit.branch2Meridian = 'PM';
-      }
-      else if($scope.edit.branchToHours === '00')
-      {
-        $scope.edit.branch2Meridian = 'AM';
-      }
-      else if(Number($scope.edit.branchToHours) < 12)
-      {
-        $scope.edit.branch2Meridian = 'AM';
-      }
+              if(Number($scope.edit.branchToHours) === 12)
+              {
+                $scope.edit.branch2Meridian = 'PM';
+              }
+              else if(Number($scope.edit.branchToHours) > 12 && $scope.edit.branchToHours !== '00')
+              {
+                      $scope.edit.branchToHours = Number($scope.edit.branchToHours) - 12;
+                      $scope.edit.branch2Meridian = 'PM';
+              }
+              else if($scope.edit.branchToHours === '00')
+              {
+                $scope.edit.branch2Meridian = 'AM';
+              }
+              else if(Number($scope.edit.branchToHours) < 12)
+              {
+                $scope.edit.branch2Meridian = 'AM';
+              }
+            }
 
       var branch_supportnos = angular.copy($scope.editbranch.contact_supports);
       $scope.editbranch.edit_supportnos = branch_supportnos.toString();
