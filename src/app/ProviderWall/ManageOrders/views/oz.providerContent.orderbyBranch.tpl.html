@@ -93,11 +93,11 @@
       
 
 <div id="tabs">
-    <ul id="tabPrice" class=" policyTab nav nav-pills" ng-init="tabForOrders.recieved = true; tabForOrders.approval = false;
-      tabForOrders.processing = false; tabForOrders.delivery = false; tabForOrders.past=false; tabForOrders.product=false;" style="font-size:12px;">
+    <ul id="tabPrice" class="oz-fixedPosition orderTab nav nav-pills" ng-init="search=''; tabForOrders.recieved = true; tabForOrders.approval = false;
+      tabForOrders.processing = false; tabForOrders.delivery = false; tabForOrders.past=false; tabForOrders.product=false;" style="font-size:12px;" >
       
       <li class="tabPolicyLi" ng-class="{active3 : tabForOrders.recieved == 1}" >
-        <a  class="prodo-cursor" id="prodoCommentTab" ng-click="getReceived(); tabForOrders.recieved = true; tabForOrders.approval = false;tabForOrders.processing = false; tabForOrders.delivery = false; tabForOrders.past=false; tabForOrders.product=false;">
+        <a  class="prodo-cursor" id="prodoCommentTab" ng-click="search=''; getReceived(); tabForOrders.recieved = true; tabForOrders.approval = false;tabForOrders.processing = false; tabForOrders.delivery = false; tabForOrders.past=false; tabForOrders.product=false;">
         
         <div class="row" >
           <div class="col-md-12">
@@ -113,7 +113,7 @@
       </li>
 
       <li class="tabPolicyLi" ng-class="{active3 : tabForOrders.approval == 1}" >
-        <a  class="prodo-cursor" id="prodoCommentTab" ng-click="getApproved();tabForOrders.recieved = false;tabForOrders.approval = true;tabForOrders.processing = false; tabForOrders.delivery = false; tabForOrders.past=false; tabForOrders.product=false;">
+        <a  class="prodo-cursor" id="prodoCommentTab" ng-click="search=''; getApproved();tabForOrders.recieved = false;tabForOrders.approval = true;tabForOrders.processing = false; tabForOrders.delivery = false; tabForOrders.past=false; tabForOrders.product=false;">
           <div class="row" >
             <div class="col-md-12">
                 Approvals
@@ -127,7 +127,7 @@
       </li>
 
       <li class="tabPolicyLi" ng-class="{active3 : tabForOrders.processing == 1}"  >
-        <a id="prodoCommentSearchTab" class="prodo-cursor" ng-click=" getProcessing();tabForOrders.recieved = false; tabForOrders.approval = false; tabForOrders.processing = true; tabForOrders.delivery = false;  tabForOrders.past=false; tabForOrders.product=false;" >
+        <a id="prodoCommentSearchTab" class="prodo-cursor" ng-click="search=''; getProcessing();tabForOrders.recieved = false; tabForOrders.approval = false; tabForOrders.processing = true; tabForOrders.delivery = false;  tabForOrders.past=false; tabForOrders.product=false;" >
         <div class="row" >
             <div class="col-md-12">
                 Processing
@@ -143,7 +143,7 @@
       </li>
 
        <li class="tabPolicyLi" ng-class="{active3 : tabForOrders.delivery == 1}"  >
-        <a id="prodoCommentSearchTab" class="prodo-cursor" ng-click=" getDelivery();tabForOrders.recieved = false; tabForOrders.approval = false;tabForOrders.processing = false; tabForOrders.delivery = true;  tabForOrders.past=false; tabForOrders.product=false;" >
+        <a id="prodoCommentSearchTab" class="prodo-cursor" ng-click="search=''; getDelivery();tabForOrders.recieved = false; tabForOrders.approval = false;tabForOrders.processing = false; tabForOrders.delivery = true;  tabForOrders.past=false; tabForOrders.product=false;" >
       	   <div class="row" >
             <div class="col-md-12">
                 Delivery
@@ -158,7 +158,7 @@
       </li>
 
        <li class="tabPolicyLi" ng-class="{active3 : tabForOrders.past == 1}"  >
-        <a id="prodoCommentSearchTab" class="prodo-cursor" ng-click="getPastOrders(); tabForOrders.recieved = false; tabForOrders.approval = false;
+        <a id="prodoCommentSearchTab" class="prodo-cursor" ng-click="search=''; getPastOrders(); tabForOrders.recieved = false; tabForOrders.approval = false;
       tabForOrders.processing = false; tabForOrders.delivery = false;  tabForOrders.past=true; tabForOrders.product=false;" >
       <div class="row" >
             <div class="col-md-12">
@@ -175,7 +175,7 @@
       </li>
 
        <li class="tabPolicyLi" ng-class="{active3 : tabForOrders.product == 1}"  >
-        <a id="prodoCommentSearchTab" class="prodo-cursor" ng-click="tabForOrders.recieved = false; getProductOrders(); tabForOrders.approval = false;
+        <a id="prodoCommentSearchTab" class="prodo-cursor" ng-click="search=''; tabForOrders.recieved = false; getProductOrders(); tabForOrders.approval = false;
       tabForOrders.processing = false; tabForOrders.delivery = false;  tabForOrders.past=false; tabForOrders.product=true;" >
        <div class="row" >
             <div class="col-md-12">
@@ -194,7 +194,9 @@
 </div>
 
 <div class="tab-content" style="margin-left:10px; margine:10px;">
-<br/>
+<br/><br/>
+   <input type="text"  ng-model="search" class="form-control pull-right" placeholder="Order Search..." ng-show="orders.length>0" /><br/><br/>
+
 
  <div id="Remove" ng-show="tabForOrders.recieved == true " >
  	<div  ng-show="orders && hideReceivedOrders==false">
