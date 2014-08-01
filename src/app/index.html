@@ -45,14 +45,14 @@
               <div class="form-group">
                 <div ng-show="providers">
                   <span> Seller  </span>
-                  <select ng-show="providers.length > 1" class="oz-headerSelectBox form-control" ng-model="provider" ng-options="provider as provider.providername for provider in providers" ng-change="getProviderId(provider)"></select>
+                  <select ng-show="providers.length > 1" class="oz-headerSelectBox form-control" ng-model="provider" ng-options="provider as provider.providerbrandname  for provider in providers" ng-change="getProviderId(provider)"></select>
                 </div>
               </div>             
             </form>
           </li>
           <li ng-show="selectedproviderid && providers.length == 1">
             <div style="margin-left: 20px; padding:3px;" ng-show="providers">
-              <span> Seller:&nbsp;&nbsp;</span><span style="color: #599FD6;">{{providers[0].providername}}</span>
+              <span> Seller:&nbsp;&nbsp;</span><span style="color: #599FD6;">{{providers[0]. providerbrandname }}</span>
             </div>
           </li>
           <li ng-show="branches.length > 1">
