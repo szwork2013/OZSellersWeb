@@ -82,6 +82,11 @@ angular.module('oz.ProviderApp')
       }
     });
 
+    $scope.$watch('selectedBranchId', function(selectedBranchId)
+    {
+      $state.reload(); 
+    });
+
     $scope.getCityForState = function(state) {
       if (state) {
         ManageDeliveryChargesService.GetCityList(state);
