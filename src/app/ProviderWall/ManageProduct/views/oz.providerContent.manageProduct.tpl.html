@@ -485,7 +485,7 @@
           <tr  class="prodo-productTableFont" >
           	<td  >  <span class="prodo-fontWeight">Category : &nbsp;</span><span  class="prodo-descriptionDisplay">  {{product.category.ancestors[0].categoryname}}  >  {{product.category.ancestors[1].categoryname}}  >  {{product.category.categoryname}}  </span></td>
 
-           <td  >  <span class="prodo-fontWeight">Lead Time : &nbsp;</span><span  class="prodo-descriptionDisplay">  {{product.leadtime.value}}  {{product.leadtime.option}} </span></td>
+           <td  ng-show="product.leadtime">  <span class="prodo-fontWeight">Lead Time : &nbsp;</span><span  class="prodo-descriptionDisplay">  {{product.leadtime.value}}  {{product.leadtime.option}} </span></td>
           </tr>
 
 		 <tr>
