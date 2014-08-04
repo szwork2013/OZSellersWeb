@@ -82,10 +82,19 @@ angular.module('oz.ProviderApp')
       }
     });
 
-    $scope.$watch('selectedBranchId', function(selectedBranchId)
-    {
-      $state.reload(); 
+    var cleanupEventChange_in_provideridDone = $scope.$on("change_in_providerid", function(event, data){
+      console.log(data);
+      $state.reload();     
     });
+
+    var cleanupEventChange_in_provideridDone = $scope.$on("change_in_branchid", function(event, data){
+      console.log(data);
+      $state.reload();     
+    });
+
+    $scope.viewAvailableAreaList = function() {
+      $state.reload();    
+    }
 
     $scope.getCityForState = function(state) {
       if (state) {
