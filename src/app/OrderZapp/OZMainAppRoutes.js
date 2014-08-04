@@ -175,6 +175,18 @@ angular.module('oz.OrderZappApp')
         }
       }
     })
+    .state('deliverytime', {
+      abstract: true,
+      templateUrl: 'ProviderWall/ManageDeliveryTime/views/oz.deliverytime.tpl.html',
+      controller: 'ManageDeliveryTimeController'
+    })     
+    .state('deliverytime.view', {
+      views: {
+        'manage-deliverytime': { 
+          templateUrl: 'ProviderWall/ManageDeliveryTime/views/oz.manage.deliverytime.tpl.html'
+        }
+      }
+    })
     .state('providerorders', {
       abstract: true,
       templateUrl: 'ProviderWall/ManageOrders/views/oz.providerwall.tpl.html',
