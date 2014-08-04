@@ -21,6 +21,7 @@ angular.module('oz.ProviderApp')
    // ------------------------op-----------------------------------
      $scope.new_ordering_policy;
      $scope.ordering_policy;
+     $scope.tempOrdering_policy
      $scope.opEditor=0;
      $scope.opAddEditor=0;
      $scope.addPolicyOP=function(ordering_policy){
@@ -108,11 +109,17 @@ angular.module('oz.ProviderApp')
 
      };
      
+     $scope.onOp=function(){
+      $scope.opEditorEdit=1;
+      $scope.tempOrdering_policy = angular.copy($scope.ordering_policy); 
+     };
+
      $scope.cancelOP=function(){
+         $scope.ordering_policy= $scope.tempOrdering_policy ;
          $scope.opAddEditor=0;
          $scope.opEditor=0;
          $scope.opEditorEdit=0;
-         $scope.getOP();
+         // $scope.getOP();
 
      };
 
@@ -120,6 +127,7 @@ angular.module('oz.ProviderApp')
 
      $scope.new_refunds_policy;
      $scope.refunds_policy;
+     $scope.tempRefunds_policy;
      $scope.rpEditor=0;
      $scope.rpAddEditor=0;
      $scope.addPolicyRP=function(refunds_policy){
@@ -207,6 +215,11 @@ angular.module('oz.ProviderApp')
 
      };
 
+     $scope.onRp=function(){
+      $scope.rpEditorEdit=1;
+      $scope.tempRefunds_policy = angular.copy($scope.refunds_policy); 
+     };
+
       $scope.cancelRP=function(){
          $scope.rpAddEditor=0;
          $scope.rpEditor=0;
@@ -221,6 +234,7 @@ angular.module('oz.ProviderApp')
 
      $scope.new_price_policy;
      $scope.price_policy;
+     $scope.tempPrice_policy;
      $scope.ppEditor=0;
      $scope.ppAddEditor=0;
      $scope.addPolicyPP=function(price_policy){
@@ -304,6 +318,11 @@ angular.module('oz.ProviderApp')
 
      };
 
+     $scope.onPp=function(){
+      $scope.ppEditorEdit=1;
+      $scope.tempPrice_policy = angular.copy($scope.price_policy); 
+     };
+
       $scope.cancelPP=function(){
          $scope.ppAddEditor=0;
          $scope.ppEditor=0;
@@ -320,6 +339,7 @@ angular.module('oz.ProviderApp')
 
      $scope.new_delivery_policy;
      $scope.delivery_policy;
+     $scope.tempDelivery_policy;
      $scope.dpEditor=0;
      $scope.dpAddEditor=0;
      $scope.addPolicyDP=function(delivery_policy){
@@ -403,6 +423,11 @@ angular.module('oz.ProviderApp')
 
      };
 
+    $scope.onDp=function(){
+      $scope.dpEditorEdit=1;
+      $scope.tempDelivery_policy = angular.copy($scope.delivery_policy); 
+     };
+
       $scope.cancelDP=function(){
          $scope.dpAddEditor=0;
          $scope.dpEditor=0;
@@ -417,6 +442,7 @@ angular.module('oz.ProviderApp')
 
      $scope.new_cancellation_policy;
      $scope.cancellation_policy;
+     $scope.tempCancellation_policy;
      $scope.cpEditor=0;
      $scope.cpAddEditor=0;
      $scope.addPolicyCP=function(cancellation_policy){
@@ -499,6 +525,11 @@ angular.module('oz.ProviderApp')
         // console.log($scope.cancellation_policy);
        }
 
+     };
+
+    $scope.onCp=function(){
+      $scope.cpEditorEdit=1;
+      $scope.tempCancellation_policy = angular.copy($scope.cancellation_policy); 
      };
 
      $scope.cancelCP=function(){

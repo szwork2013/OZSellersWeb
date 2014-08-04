@@ -2,26 +2,7 @@
 
  <div ng-show="ErrMsging" id="ErrMsging" class="prodo-ErrMsging" ></div>
 
-<!-- corousel -->
-
-<div class="prodo-productListCorousel" ng-show="selectedBranchId">
-
- <input type="text" ng-model="search.prod" class="form-control pull-right" placeholder="Product Search..." ng-show="productlist.length>0" ng-change="currentPage=0"/><br/>
-<br/>
- <hr class="myhr">
-
-    <button class="arrowBtn prodo-arrowbtnLeft" ng-show="filtered.length > pageSize " ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1" >
-      <
-     
-    </button>
-    <a ng-click=" preAddProduct();   " class="prodo-cursor" >
-      <div class="prodo-productThumbnailView" >
-        <p class="prodo-AddProductBtn " >Add Product</p>
-        <div class="prodo-productThumbnailImg fa fa-plus fa-4x img-rounded"  align="center" ></div>
-      </div>
-    </a>
-
-          <!-- Modal -->
+  <!-- Modal -->
       <div class="modal fade" id="changeProductModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -64,7 +45,27 @@
       </div>
       <!-- /.modal -->
 
+<div ng-show="selectedBranchId" >
+       <input type="text"  ng-model="search.prod" class="form-control pull-right" placeholder="Product Search..." ng-show="productlist.length>0" ng-change="currentPage=0"/><br/>
+<br/>
+</div>
+<!-- corousel -->
 
+<div class="prodo-productListCorousel" ng-show="selectedBranchId">
+
+
+ <hr class="myhr">
+ <div class="prodo-productThumbnailViewButton" >
+    <button class="arrowBtn prodo-arrowbtnLeft" ng-show="filtered.length > pageSize " ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1" >
+      <
+ </div>    
+    </button>
+    <a ng-click=" preAddProduct();   " class="prodo-cursor" >
+      <div class="prodo-productThumbnailView" >
+        <p class="prodo-AddProductBtn " >Add Product</p>
+        <div class="prodo-productThumbnailImg fa fa-plus fa-4x img-rounded"  align="center" ></div>
+      </div>
+    </a>
 
 
     <div ng-show="filtered.length>0"  ng-repeat="product1 in filtered | startFrom:currentPage*pageSize | limitTo:pageSize " > <div class="prodo-productThumbnailView"   ng-class="{activeProduct : (product1.productid==product.productid) , orange : (product1.status=='unpublish') , orange1 : (product1.status=='init') , green : (product1.status=='publish')  }" >
@@ -74,9 +75,12 @@
       </a>
     </div>
     </div>
+
+   <div class="prodo-productThumbnailViewButton" >
     <button class="arrowBtn prodo-arrowbtnRight"  ng-show="filtered.length > pageSize " ng-disabled="currentPage >= filtered.length/pageSize - 1" ng-click="currentPage=currentPage+1" >
       >
     </button>
+   </div>
   </div>
 
 
@@ -340,7 +344,7 @@
 
                        <span class="bold"> Configurations : </span>
                          <p>	<em>
-                       No configurations for this category , Please contact  your admin to add configurations
+                       No configurations defined for category - {{category.categoryname}}. Please contact  your admin to add {{category.categoryname}} related product configurations 
 						</em></p>
                        </td>
                    </tr>
@@ -349,7 +353,8 @@
 		            <tr>
 		            <td colspan="4">
 		           	  <a   ng-click="addProduct(editMode.editStatus); " class="btn btn-primary   pull-right prodo-margin5"   ><i class="fa fa-floppy-o"></i>  &nbsp; Save</a>
-		              <a class="btn btn-default   pull-right prodo-margin5"  ng-click="init(); disableEditor(); getAllProducts(selectedBranchId, selectedproviderid);" > <i class="glyphicon glyphicon-remove"></i> &nbsp; Cancel </a>
+		              <!-- <a class="btn btn-default   pull-right prodo-margin5"  ng-click="init(); disableEditor(); getAllProducts(selectedBranchId, selectedproviderid);" > <i class="glyphicon glyphicon-remove"></i> &nbsp; Cancel </a> -->
+		                <a class="btn btn-default   pull-right prodo-margin5"  ng-click=" disableEditor(); " > <i class="glyphicon glyphicon-remove"></i> &nbsp; Cancel </a>
 		            </td>
 		          </tr>
 		        

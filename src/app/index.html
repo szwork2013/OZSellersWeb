@@ -30,10 +30,10 @@
 	
 	</head>
 	<body id="body" ng-controller="OZMainController">
-		<div class="oz-navbar navbar navbar-inverse navbar-static-top" role="navigation">
+		<div class="oz-fixedHeader oz-navbar navbar navbar-inverse navbar-static-top" role="navigation">
   		<div id="oz-navbar-container" class="">
    			<a id="oz-navbar-brand" class="navbar-brand" href="#">
-          <img style="width:40px;" src="assets/images/orderzapp.png">&nbsp;sellers
+          <img style="width:2.500em;" src="assets/images/orderzapp.png">&nbsp;sellers
    			</a>
 
         <ul id="oz-navbar-ul" ng-cloak class="oz-navbar-li nav navbar-nav navbar-right" ng-show="usersession.isLoggedIn">
@@ -45,14 +45,14 @@
               <div class="form-group">
                 <div ng-show="providers">
                   <span> Seller  </span>
-                  <select ng-show="providers.length > 1" class="oz-headerSelectBox form-control" ng-model="provider" ng-options="provider as provider.providername for provider in providers" ng-change="getProviderId(provider)"></select>
+                  <select ng-show="providers.length > 1" class="oz-headerSelectBox form-control" ng-model="provider" ng-options="provider as provider.providerbrandname  for provider in providers" ng-change="getProviderId(provider)"></select>
                 </div>
               </div>             
             </form>
           </li>
           <li ng-show="selectedproviderid && providers.length == 1">
             <div style="margin-left: 20px; padding:3px;" ng-show="providers">
-              <span> Seller:&nbsp;&nbsp;</span><span style="color: #599FD6;">{{providers[0].providername}}</span>
+              <span> Seller:&nbsp;&nbsp;</span><span style="color: #599FD6;">{{providers[0]. providerbrandname }}</span>
             </div>
           </li>
           <li ng-show="branches.length > 1">
@@ -67,7 +67,7 @@
           </li>
           <li ng-show="branches.length == 1">
             <div style="margin-left: 20px; padding:3px;">
-              <span > Branch:&nbsp;&nbsp;</span><span style="color: #599FD6;">{{branches[0].branchname}}  </span>
+              <span > Branch:&nbsp;&nbsp;</span><span style="color: #599FD6; padding-right: 25px;">{{branches[0].branchname}}  </span>
             </div>
           </li>
           <li class="dropdown">
@@ -93,8 +93,8 @@
    		</div>
 		</div>
 
-		<div oz-alert-message></div> 
-		<div id="oz-main-view" class="" >        
+		<div oz-alert-message></div> <br/>
+		<div id="oz-main-view" class="" style="margin-top: 15px;">        
       <div ui-view></div>
     </div>
 

@@ -29,7 +29,7 @@ angular.module('oz.UserApp')
 
      $scope.currentPage = 0;
 
-     $scope.pageSize = 3;
+     $scope.pageSize = 7;
 
      $scope.showTabs = 0; 
 
@@ -56,6 +56,8 @@ angular.module('oz.UserApp')
     OZWallService.getAllProvidersList();
 
     $scope.providers = {'list' : []};
+
+    $scope.showSpinnerLogo = 0;
 
     $scope.trigger = function()
     {
@@ -133,7 +135,6 @@ angular.module('oz.UserApp')
           $scope.orderContentObject = content; 
           $scope.showSOrderView = 1;
           $scope.controlWallView = 0;
-
           // console.log('content from suborder search '+ content);
       });
  
@@ -145,9 +146,7 @@ angular.module('oz.UserApp')
          $scope.currentBranchId = branchid;
          $scope.showOrderContents(); 
          $scope.showTabs = 0;
-         // $scope.showSOrderView = 0;
-         // $scope.controlWallView = 1;
-         $scope.orderViewStatus = true;             $scope.productViewStatus = false;
+         $scope.orderViewStatus = true;$scope.productViewStatus = false;
      };
 
      $scope.showProductContent = function()
@@ -176,7 +175,7 @@ angular.module('oz.UserApp')
            }
            else
            {
-            OZWallService.getAllBranchOrders($scope.currentBranchId,$scope.type);
+            OZWallService.getAllBranchOrders($scope.currentBranchId,$scope.type); $scope.showSpinnerLogo = 1;
           }
             $scope.showRadioButtonss = 1;
            $scope.viewOrderContent = 0;
@@ -188,7 +187,7 @@ angular.module('oz.UserApp')
     var cleanUpEventGetAllBranchSpecificorders = $scope.$on("gotAllBranchSpecificOrders",function(event,data){
            $scope.hideLoadMore = 0;
             if(data.error)
-            {//test
+            {//test 
                   if(data.error.code === 'AL001')
                   {
                         $rootScope.showModal();
@@ -202,11 +201,14 @@ angular.module('oz.UserApp')
                   }
                   $scope.products = {};
                   $scope.orders = {};
+                  $scope.showSpinnerLogo = 0;
             }
             if(data.success)
             {   
                 //$scope.orders = {};
                 //$rootScope.hideSpinner();
+                 $scope.showSOrderView = 0;
+                 $scope.controlWallView = 1;
                 $scope.showSpinners = 0;
                 if(data.success.orders !== undefined)
                 { 
@@ -232,6 +234,7 @@ angular.module('oz.UserApp')
                    }
                  } 
                 $scope.showTabs = 1;
+                $scope.showSpinnerLogo = 0;
               } 
     });
 
@@ -246,12 +249,15 @@ angular.module('oz.UserApp')
     };
 
    $scope.jsonTemplateContent = function(type) {
+      var formatTextInitial = '<!DOCTYPE html><html><meta name="viewport" content="width=device-width, initial-scale=1"><div style = "text-align:justify">'+ $scope.template.content + '</div></html>';
+
+   
       var currentTemplate = 
         {
           'templatedata':
           {
             'type' : type,
-            'template' : $scope.template.content,
+            'template' : formatTextInitial,
           }
        
         };
@@ -259,11 +265,13 @@ angular.module('oz.UserApp')
   };
 
      $scope.jsonTemplateContentChange = function() {
+      var formatText = '<!DOCTYPE html><html><meta name="viewport" content="width=device-width, initial-scale=1"><div style = "text-align:justify">'+ $scope.template.content + '</div></html>';
+
       var currentTemplate = 
         {
           'templatedata':
           {
-            'template' : $scope.template.content,
+            'template' : formatText,
           }
        
         };

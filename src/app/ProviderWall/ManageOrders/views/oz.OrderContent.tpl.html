@@ -4,20 +4,28 @@
 <div class="headingOrderDiv"> 
  <span class="bold">Order No: </span> <span class="oz-contentsRight">{{order.suborderid}}</span>
 
-      <span  class=" label label-info  font14 pull-right "  ng-class="{ 
+      <span ng-hide="order.status =='cancelled' || order.status =='rejected' " class=" label label-info  font14 pull-right "  ng-class="{ 
                      bgGreen1: (order.status =='orderreceived' ) ,
                      bgGreen: (order.status == 'accepted') ,
                      bgOrange: (order.status =='inproduction' ) ,
                      bgOrange1: (order.status == 'packing'),
                      bgOrange2: (order.status =='factorytostore' ) ,
                      bgBlue: (order.status == 'indelivery') ,
-                     bgGray: (order.status == 'ordercomplete') ,
+                     bgGray: (order.status == 'ordercomplete')
+                    }">{{order.status}}</span>
+
+                    <span ng-show="order.status =='cancelled' || order.status =='rejected' " class=" label label-info  font14 pull-right "  ng-class="{ 
                      bgRed: (order.status =='cancelled' ) ,
                      bgRed1: (order.status == 'rejected')
-                    }">{{order.status}}</span>
+                    }"><a style="color:white;" href="" ng-init="showReason=false" ng-click="showReason = showReason === false ? true: false;">{{order.status}} <i class="fa fa-arrow-down"></i></a></span>
+
  </div>
  <!-- order /////////////////////////////////// -->
 
+
+<div class="headingDiv" style="background-color: rgb(255, 148, 148);" ng-show="showReason==true"> 
+  <span ng-bind="order.reasontocancelreject"></span>
+</div>
 
 <!-- Delivery////////////////////////////////// -->
 <div class="headingDiv"> 

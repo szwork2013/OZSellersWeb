@@ -4,8 +4,8 @@
   * Author: Bhagyashri Jangam
   * 
   */-->
-<li  ng-repeat="order in orders">
-    <div class="list-group-item orderbox"> <!-- ngrepeat outer box css-->
+<li  ng-repeat="order in orders |  filter:  search ">
+    <div class="list-group-item orderbox" > <!-- ngrepeat outer box css-->
          
       <div class=" margintop5 productsDate highlighrOrderContainer"  ><!--  2nd line -->
        <em class="oz-adress" ng-class="{TextGray : order.deliverydate < today }"> {{ fromNow(order.deliverydate)  }}</em>  
@@ -32,7 +32,7 @@
               </div>
         </div>
 
-        <div class="row margintop5 rowSideMargin" ng-repeat="product in order.products" ng-class-even="'OZ-evenRow'"> <!-- ng-repeat for product -->
+        <div class="row margintop5 rowSideMargin" ng-repeat="product in order.products   |  filter:  search "  ng-class-even="'OZ-evenRow'"> <!-- ng-repeat for product -->
               <div  class="col-md-3">
                 
                  <span class=" oz-contentsRight "> {{product.productname}} </span>
