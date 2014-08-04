@@ -53,22 +53,22 @@
 				  </div>
 
 				  <div id="oz-signup-input-group" class="input-group">
-				  	<input type="text" name="area" class="form-control" ng-model="addbranch.area" placeholder="area" ng-pattern="/^[a-zA-Z]*$/" required>
+				  	<input type="text" name="area" class="form-control" ng-model="addbranch.area" placeholder="area" required>
 				  	<small style="color:red;" ng-show="((form.addBranchForm.area.$dirty && form.addBranchForm.area.$invalid) || (form.addBranchForm.area.$invalid && form.addBranchForm.submitted))">*Please enter branch area.</small>
 				  </div>
 
 				  <div id="oz-signup-input-group" class="input-group">
-				  	<input type="text" name="city" class="form-control" ng-model="addbranch.city" placeholder="city" ng-pattern="/^[a-zA-Z]*$/" required>
+				  	<input type="text" name="city" class="form-control" ng-model="addbranch.city" placeholder="city" ng-pattern="/^[^0-9]*$/" required>
 				  	<small style="color:red;" ng-show="((form.addBranchForm.city.$dirty && form.addBranchForm.city.$invalid) || (form.addBranchForm.city.$invalid && form.addBranchForm.submitted))">*Please enter branch city.</small>
 				  </div>
 
 				  <div id="oz-signup-input-group" class="input-group">
-				  	<input type="text" name="country" class="form-control" ng-model="addbranch.country" placeholder="country" ng-pattern="/^[a-zA-Z]*$/" required>
+				  	<input type="text" name="country" class="form-control" ng-model="addbranch.country" placeholder="country" ng-pattern="/^[^0-9]*$/" required>
 				  	<small style="color:red;" ng-show="((form.addBranchForm.country.$dirty && form.addBranchForm.country.$invalid) || (form.addBranchForm.country.$invalid && form.addBranchForm.submitted))">*Please enter branch country.</small>
 				  </div>
 
 				  <div id="oz-signup-input-group" class="input-group">
-				  	<input type="text" name="state" class="form-control" ng-model="addbranch.state" placeholder="state" ng-pattern="/^[a-zA-Z]*$/" required>
+				  	<input type="text" name="state" class="form-control" ng-model="addbranch.state" placeholder="state" ng-pattern="/^[^0-9]*$/" required>
 				  	<small style="color:red;" ng-show="((form.addBranchForm.state.$dirty && form.addBranchForm.state.$invalid) || (form.addBranchForm.state.$invalid && form.addBranchForm.submitted))">*Please enter branch state.</small>
 				  </div>
 
@@ -129,7 +129,7 @@
 			<p style="letter-spacing:1px; font-size:14px;" class="text-muted"><em>** Publishing your branch will also publish products (if any) by default. </em></p>
 		</div>
 
-		<div ng-repeat="branch in providers_branch_list" style="padding:10px; margin:5px auto; box-shadow: 0 1px 2px 1px rgba(248, 245, 245, 0.2), 0 2px 6px rgba(0,0,0,0.15);" class="col-md-12">
+		<div ng-repeat="branch in providers_branch_list" style="padding:10px; margin:5px auto; box-shadow: 0 1px 2px 1px rgba(248, 245, 245, 0.2), 0 2px 6px rgba(0,0,0,0.15);" class="col-md-12" ng-class="{'seller-activated': branch.status !== 'init', 'seller-notactive': branch.status == 'init' }">
 			<div class="view-branch-container">
 				<div class="row">
 					<div class="col-md-2">
@@ -230,7 +230,7 @@
 								  	<!-- <dl> -->
 										  <dt>Area</dt>
 										  <dd>
-										  	<input type="text" name="editarea" class="form-control" ng-model="editbranch.location.area" placeholder="area" ng-pattern="/^[a-zA-Z]*$/" required>
+										  	<input type="text" name="editarea" class="form-control" ng-model="editbranch.location.area" placeholder="area" required>
 								  			<small style="color:red;" ng-show="((form.editBranchForm.editarea.$dirty && form.editBranchForm.editarea.$invalid) || (form.editBranchForm.editarea.$invalid && form.editBranchForm.submitted))">*Please enter branch area.</small>
 								  		</dd>
 								  	<!-- </dl>		 -->
@@ -240,7 +240,7 @@
 								  	<!-- <dl> -->
 										  <dt>City</dt>
 										  <dd>
-										  	<input type="text" name="editcity" class="form-control" ng-model="editbranch.location.city" placeholder="city" ng-pattern="/^[a-zA-Z]*$/" required>
+										  	<input type="text" name="editcity" class="form-control" ng-model="editbranch.location.city" placeholder="city" ng-pattern="/^[^0-9]*$/" required>
 								  			<small style="color:red;" ng-show="((form.editBranchForm.editcity.$dirty && form.editBranchForm.editcity.$invalid) || (form.editBranchForm.editcity.$invalid && form.editBranchForm.submitted))">*Please enter branch city.</small>
 								  		</dd>
 								  	<!-- </dl>		 -->
@@ -250,7 +250,7 @@
 								  	<!-- <dl> -->
 										  <dt>Country</dt>
 										  <dd>
-										  	<input type="text" name="editcountry" class="form-control" ng-model="editbranch.location.country" placeholder="country" ng-pattern="/^[a-zA-Z]*$/" required>
+										  	<input type="text" name="editcountry" class="form-control" ng-model="editbranch.location.country" placeholder="country" ng-pattern="/^[^0-9]*$/" required>
 								  			<small style="color:red;" ng-show="((form.editBranchForm.editcountry.$dirty && form.editBranchForm.editcountry.$invalid) || (form.editBranchForm.editcountry.$invalid && form.editBranchForm.submitted))">*Please enter branch country.</small>
 								  		</dd>
 								  	<!-- </dl>		 -->
@@ -260,7 +260,7 @@
 								  	<!-- <dl> -->
 										  <dt>State</dt>
 										  <dd>
-										  	<input type="text" name="editstate" class="form-control" ng-model="editbranch.location.state" placeholder="state" ng-pattern="/^[a-zA-Z]*$/" required>
+										  	<input type="text" name="editstate" class="form-control" ng-model="editbranch.location.state" placeholder="state" ng-pattern="/^[^0-9]*$/" required>
 								  			<small style="color:red;" ng-show="((form.editBranchForm.editstate.$dirty && form.editBranchForm.editstate.$invalid) || (form.editBranchForm.editstate.$invalid && form.editBranchForm.submitted))">*Please enter branch state.</small>
 								  		</dd>
 								  	<!-- </dl>		 -->

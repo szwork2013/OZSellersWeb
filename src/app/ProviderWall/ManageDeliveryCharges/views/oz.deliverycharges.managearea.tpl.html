@@ -1,5 +1,12 @@
 <div style="padding:10px;" class="container">
 	<div style="margin:0px;" class="row">
+		<div class="col-md-12">
+			<p style="font-size:12px; font-weight:bold; letter-spacing:1px;" class="text-muted">
+			* Selecting zipcode will let you view details about delivery availability at a particular branch and you can manage your available delivery areas and its charges from here.
+			</p>
+		</div>
+	</div>
+	<div style="margin:0px;" class="row">
 		<div class="col-md-3">
 
 			<div id="oz-signup-input-group" class="input-group">
@@ -30,21 +37,20 @@
 		<div class="col-md-3">	
 
 			<div id="oz-signup-input-group" class="input-group">
-				<p class="text-muted">Please Select Zipcode</p>
+				<p class="text-muted">Please Select Zipcode*</p>
 	 			<input name="zipcode" class="form-control" type="text" placeholder="zipcode" required ng-model="zipcode" typeahead="zipcode for zipcode in zipcodes | filter:$viewValue | limitTo:6" typeahead-on-select="getAreaForZipcode(zipcode)" />
 			</div>			
 
 		</div>		
 	</div>
-	<div style="margin:0px;" class="row">
-		<div class="col-md-12">
-			<p style="font-size:12px; font-weight:bold; letter-spacing:1px;" class="text-muted">
-			** Selecting zipcode will let you view details about delivery availability at a particular branch and you can manage your available delivery areas and its charges from here.
-			</p>
-		</div>
-	</div>
+
+	<!-- Delivery Charge add view start -->
+	
 	<div ng-show="AreaUnderZipcode.length > 0 && showAreaUnderZipcode" style="margin:0px;" class="row">
 		<div style="margin:10px auto;" class="col-md-12">
+			<div style="padding:10px; margin:5px auto; " class="col-md-12">
+				<p style="letter-spacing:1px; font-size:13px;" class="text-info"><em>** While adding delivery charges for available areas please enter amount in rupees and those who have selected <strong>charge in percentage</strong> option while creating branches must enter amount in percentage. </em></p>
+			</div>
 			<form class="css-form" name="form.deliveryChargeForm" novalidate>
 				<p><small style="color:red;" ng-show="(deliveryChargeError && form.deliveryChargeForm.submitted)">*Please enter delivery charge in digits only.</small></p>
 				<table class="table table-striped table-condensed">
@@ -53,7 +59,7 @@
 							<td width="10%">Serial #</td>
 							<td width="40%">Area</td>
 							<td width="25%">Availability</td>
-							<td width="25%">Delivery Charge(<i class="fa fa-inr"></i>)</td>
+							<td width="25%">Delivery Charge(<i class="fa fa-inr"></i> or %)</td>
 						</tr>
 					</thead>
 					<tbody>
@@ -76,6 +82,11 @@
 			</div>
 		</div>
 	</div>
+	<!-- Delivery Charge add view end -->
+
+
+
+	<!-- Delivery Charge display view start -->
 	<div ng-show="deliveryAvailablityArea.length > 0 && showDeliveryAvailaibility" style="margin:0px;" class="row">
 		<div style="margin:10px auto;" class="col-md-12">
 			<table class="table table-striped table-condensed">
@@ -84,7 +95,7 @@
 						<td width="10%">Serial #</td>
 						<td width="40%">Area</td>
 						<td width="25%">Availability</td>
-						<td width="25%">Delivery Charge(<i class="fa fa-inr"></i>)</td>
+						<td width="25%">Delivery Charge(<i class="fa fa-inr"></i> or %)</td>
 					</tr>
 				</thead>
 				<tbody>
@@ -104,6 +115,12 @@
 			</div>
 		</div>
 	</div>
+	<!-- Delivery Charge display view end -->
+
+
+
+	<!-- Delivery Charge edit view start -->
+
 	<div ng-show="edit_availability.length > 0 && editDeliveryAvailaibility" style="margin:0px;" class="row">
 		<div style="margin:10px auto;" class="col-md-12">
 			<table class="table table-striped table-condensed">
@@ -112,7 +129,7 @@
 						<td width="10%">Serial #</td>
 						<td width="40%">Area</td>
 						<td width="25%">Availability</td>
-						<td width="25%">Delivery Charge(<i class="fa fa-inr"></i>)</td>
+						<td width="25%">Delivery Charge(<i class="fa fa-inr"></i> or %)</td>
 					</tr>
 				</thead>
 				<tbody>
@@ -134,5 +151,6 @@
 				</div>
 			</div>
 		</div>
-	</div>		
+	</div>	
+	<!-- Delivery Charge edit view end -->	
 </div>
