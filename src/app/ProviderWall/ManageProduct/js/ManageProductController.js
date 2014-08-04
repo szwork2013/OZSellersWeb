@@ -25,6 +25,7 @@ angular.module('oz.ProviderApp')
      $scope.tempProduct={};
       $scope.product={
       	"productname":"",
+        "leadtime":{"value":"1","option":""}, 
       	"price":{"value":"","currency":"\u20b9","uom":""},
       	"productdescription":"",
       	"productcode":"",
@@ -32,14 +33,13 @@ angular.module('oz.ProviderApp')
         "usertags":[]
       };
    	  $scope.foodtypes=['veg','non-veg','both'];
-
-  
+      $scope.leadOptions=['minutes','hours','days','weeks','months'];
       $scope.$state = $state;
       // $scope.product.usertags=[];
       $scope.product.foodtype=$scope.foodtypes[0]; 
       $scope.measures=['kg','gm','no','lb','lt'];
       $scope.product.price.uom=$scope.measures[0];
-
+      $scope.product.leadtime.option=$scope.leadOptions[0];
       $scope.editMode.editorEnabled=false;
       $scope.productusertags=[];
       $scope.product.usertags=[]
@@ -51,6 +51,7 @@ angular.module('oz.ProviderApp')
 $scope.clearProduct=function(){
    $scope.product={
         "productname":"",
+        "leadtime":{"value":"1","option":"hours"}, 
         "price":{"value":"","currency":"\u20b9","uom":""},
         "productdescription":"",
         "productcode":"",
@@ -259,6 +260,11 @@ $scope.handleChangeLogo=function(data, status, headers, config){
 
 
 $scope.addProduct = function (editStatus) {
+
+    // $scope.product.to1=moment($scope.product.to).format('hh:mm');
+    // $scope.product.from2=moment($scope.product.from).format('hh:mm');
+console.log($scope.product);
+
   if($scope.form.productForm.$invalid){
       // $rootScope.ProdoAppMessage("Please add valid information", 'error');
       $scope.form.productForm.submitted=true;

@@ -197,6 +197,31 @@
 					 		 </div>
 		             </td>
 
+		               <tr ng-show="editMode.editStatus=='add'">
+			           
+			            <td  colspan="2" > <span class="bold"> Lead Time </span>
+			             <input ng-model="product.leadtime.value"
+		                id="prodo-product-features_textfield" class="form-control prodo-display-right prodo-validation"  type="number" min="0" required name="leadtime"  />  
+
+		                    <div  ng-show="(form.productForm.leadtime.$dirty  && editMode.editorEnabled==true ) ||(form.productForm.submitted==true && form.productForm.leadtime.$invalid==true)" class="prodo-product-Invalid">
+                                  <span ng-show="form.productForm.leadtime.$error.min">  Lead Time cannot be less than 0</span>
+						          <span ng-show=" form.productForm.leadtime.$invalid"> Please enter valid Lead Time</span>
+
+					         </div>
+
+                        </td>
+
+                        <td colspan="2"><span class="bold"> Lead Time Option</span>
+                            <select  class=" form-control" ng-model="product.leadtime.option" ng-options="option for option in leadOptions" name="option" required ></select>
+
+                              <div  ng-show="(form.productForm.optionuom.$dirty  && editMode.editorEnabled==true ) ||(form.productForm.submitted==true && form.productForm.option.$invalid==true)" class="prodo-product-Invalid">
+						         <span ng-show="form.productForm.option.$error.required">Please select Lead Time </span>
+						 
+					         </div>
+			               
+			            </td>
+			          </tr>
+
 		           </tr>
 
 
@@ -222,7 +247,7 @@
                    
 								  </div>
 
-
+ 
 
 
 
@@ -249,6 +274,11 @@
 		              </td>
 
 		           </tr>
+                  
+                   
+
+
+		           <tr>
 
                    <tr  tooltip="To add user tags press enter. " tooltip-placement="right">
 			            <td  colspan="4"><span class="bold"> User Tags   </span>
@@ -450,7 +480,15 @@
              
           </tr>
           
-          <tr>
+         
+            
+          <tr  class="prodo-productTableFont" >
+          	<td  >  <span class="prodo-fontWeight">Category : &nbsp;</span><span  class="prodo-descriptionDisplay">  {{product.category.ancestors[0].categoryname}}  >  {{product.category.ancestors[1].categoryname}}  >  {{product.category.categoryname}}  </span></td>
+
+           <td  >  <span class="prodo-fontWeight">Lead Time : &nbsp;</span><span  class="prodo-descriptionDisplay">  {{product.leadtime.value}}  {{product.leadtime.option}} </span></td>
+          </tr>
+
+		 <tr>
             <td colspan="2" ng-show="product.usertags" > <span class="prodo-fontWeight"> User Tags:    &nbsp; </span>
              <ul class="prodo-CategoryUl" >
               <li ng-repeat="usertags in product.usertags track by $index" class="OZ-categoryTags" >  <span ng-bind="usertags" > </span>
@@ -458,10 +496,6 @@
             </ul>
            </td>
          </tr>
-            
-          <tr  class="prodo-productTableFont" >
-          	<td    colspan="2" >  <span class="prodo-fontWeight">Category : &nbsp;</span><span  class="prodo-descriptionDisplay">  {{product.category.ancestors[0].categoryname}}  >  {{product.category.ancestors[1].categoryname}}  >  {{product.category.categoryname}}  </span></td>
-          </tr>
 
           <tr  class="prodo-productTableFont" >
           	<td    colspan="2" >  <span class="prodo-fontWeight">Description : &nbsp;</span><span ng-bind="product.productdescription" class="prodo-descriptionDisplay"> </span></td>
