@@ -1,16 +1,24 @@
 angular.module('oz.ProviderApp')
   .controller('ManageProductController', ['$scope', '$state', '$http', '$timeout', '$sce', '$log', '$rootScope', 'ProviderServices','$upload','$stateParams','userproducttags','filterFilter',function($scope, $state, $http, $timeout, $sce, $log, $rootScope,ProviderServices,$upload, $stateParams,userproducttags,filterFilter) {
+   
+    $scope.outer={}; 
+  
     $scope.tabForPrice={};
     $scope.currentProdle='';
     $scope.editorPrice={};
     $scope.allCategories=[];
+    $scope.ProductParentCategory=[];
     $scope.ProductCategory=[];
     $scope.ProductCategoryLevel3=[];
     $scope.ProductCategoryLevel2=[];
     $scope.ProductCategoryLevel3All=[];
+    $scope.selectedCategory={};
+    $scope.selectedParentCategory={};
+    $scope.category={};
+    $rootScope.selectedCategoryid="";
+
     $scope.filtered;
-    $scope.category;
-    $scope.search={};
+   $scope.search={};
    $scope.$state = $state;
    $scope.editMode={
     editStatus:'',
@@ -44,7 +52,8 @@ angular.module('oz.ProviderApp')
       $scope.product.leadtime.option=$scope.leadOptions[0];
       $scope.editMode.editorEnabled=false;
       $scope.productusertags=[];
-      $scope.product.usertags=[]
+      $scope.product.usertags=[];
+
    }
 
    $scope.usertagsList=[];
@@ -61,7 +70,7 @@ $scope.clearProduct=function(){
         "usertags":[]
       };
     $scope.chckedIndexs=[];
-    $scope.tempProduct={};
+    // $scope.tempProduct={}; /.
 }
 
 
@@ -103,17 +112,19 @@ $scope.clearProduct=function(){
       $scope.cleanConfigs=function(){
           $scope.ProductCategory=[];
           $scope.ProductCategoryLevel3All=[];
-          $scope.selectedCategory='';
-          $scope.selectedParentCategory='';
+          $scope.selectedCategory={};
+          $scope.selectedParentCategory={};
           $scope.ProductCategoryLevel3=[];
           $scope.ProductCategoryLevel2=[];
           $scope.ProductParentCategory=[];
-          $rootScope.selectedCategoryid=[];
           $scope.category={};
           $rootScope.selectedCategoryid="";
+
+          $scope.outer={};
       }
 
      $scope.getCategoriesFromDB=function(providerid){
+
       $scope.cleanConfigs();
        $scope.allCategories=[];
        ProviderServices.get_categories.getCategories({providerid:providerid},
@@ -126,27 +137,9 @@ $scope.clearProduct=function(){
         } else {
          console.log(successData.success);
          $scope.allCategories=successData.success.ProductCategory;
+         
 
-         }
-       }, function (error) {
-         $rootScope.OZNotify("Server Error:" + error.status, 'error');
-       });
-     };
-
-      $scope.getCategories=function(providerid){
-          $scope.ProductCategory=[];
-          $scope.ProductCategoryLevel3All=[];
-          $scope.selectedCategory='';
-          $scope.selectedParentCategory='';
-          $scope.ProductCategoryLevel3=[];
-          $scope.ProductCategoryLevel2=[];
-          $scope.ProductParentCategory=[];
-          $rootScope.selectedCategoryid=[];
-          $scope.category={};
-          $rootScope.selectedCategoryid="";
-
-  
-         if($scope.allCategories[0]){
+           if($scope.allCategories[0]){
            $scope.ProductParentCategory=$scope.allCategories[0].category;
            console.log($scope.ProductParentCategory);
          }
@@ -158,12 +151,21 @@ $scope.clearProduct=function(){
            $scope.ProductCategoryLevel3All=$scope.allCategories[2].category;
            console.log($scope.ProductCategoryLevel3All);
          }
-         
+
+
+         }
+       }, function (error) {
+         $rootScope.OZNotify("Server Error:" + error.status, 'error');
+       });
+     };
+
+      $scope.getCategories=function(providerid){
+
          if($scope.ProductParentCategory[0]){
-          $scope.selectedParentCategory=$scope.ProductParentCategory[0].categoryid;
-          $scope.getLevel2Categories($scope.selectedParentCategory);
+          $scope.outer.selectedParentCategory=$scope.ProductParentCategory[0];
+          $scope.getLevel2Categories($scope.outer.selectedParentCategory.categoryid);
          }else{
-          $scope.selectedParentCategory='';
+          $scope.outer.selectedParentCategory='';
          }
 
        
@@ -178,11 +180,11 @@ $scope.clearProduct=function(){
           }
         };
            if($scope.ProductCategoryLevel2[0]){
-             $scope.selectedCategory=$scope.ProductCategoryLevel2[0].categoryid;
-             $scope.getLevel3Categories($scope.selectedCategory);
+             $scope.outer.selectedCategory=$scope.ProductCategoryLevel2[0];
+             $scope.getLevel3Categories($scope.outer.selectedCategory.categoryid);
            }
            else{
-                  $scope.selectedCategory='';
+                  $scope.outer.selectedCategory={};
            }
       };
 
@@ -195,36 +197,16 @@ $scope.clearProduct=function(){
               }
             };
            if($scope.ProductCategoryLevel3[0]){
-             $scope.category=$scope.ProductCategoryLevel3[0];
+             $scope.outer.category=$scope.ProductCategoryLevel3[0];
              $rootScope.selectedCategoryid=$scope.ProductCategoryLevel3[0].categoryid;
            }
            else{
-                  $scope.category={};
+                  $scope.outer.category={};
                   $rootScope.selectedCategoryid="";
                   $scope.ProductConfigs=[];
            }
       };
 
-   $scope.$watch('selectedParentCategory', function (selectedParentCategory) {
-      $scope.search.prod="";
-      if($rootScope.selectedproviderid){
-         $scope.getCategories($rootScope.selectedproviderid);
-      }
-    });
-
-    $scope.$watch('selectedproviderid', function (selectedproviderid) {
-      $scope.search.prod="";
-      if($rootScope.selectedproviderid){
-         $scope.getCategories($rootScope.selectedproviderid);
-      }
-    });
-    
-   $scope.$watch('selectedproviderid', function (selectedproviderid) {
-      $scope.search.prod="";
-      if($rootScope.selectedproviderid){
-         $scope.getCategories($rootScope.selectedproviderid);
-      }
-    });
 
   $scope.changeCategory=function(category){
     console.log(category.categoryid);
@@ -310,6 +292,11 @@ $scope.handleChangeLogo=function(data, status, headers, config){
 
 
   $scope.disableEditor = function () {
+
+          $scope.selectedCategory={};
+          $scope.selectedParentCategory={};
+          $scope.category={};
+          $rootScope.selectedCategoryid="";
 
    $scope.product=  $scope.tempProduct ;
    console.log($scope.product);
