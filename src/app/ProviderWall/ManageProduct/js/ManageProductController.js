@@ -135,21 +135,21 @@ $scope.clearProduct=function(){
             $rootScope.showModal();
           }
         } else {
-         console.log(successData.success);
+         // console.log(successData.success);
          $scope.allCategories=successData.success.ProductCategory;
          
 
            if($scope.allCategories[0]){
            $scope.ProductParentCategory=$scope.allCategories[0].category;
-           console.log($scope.ProductParentCategory);
+           // console.log($scope.ProductParentCategory);
          }
           if($scope.allCategories[1]){
            $scope.ProductCategory=$scope.allCategories[1].category;
-           console.log($scope.ProductCategory);
+           // console.log($scope.ProductCategory);
          }
           if($scope.allCategories[2]){
            $scope.ProductCategoryLevel3All=$scope.allCategories[2].category;
-           console.log($scope.ProductCategoryLevel3All);
+           // console.log($scope.ProductCategoryLevel3All);
          }
 
 
@@ -209,14 +209,14 @@ $scope.clearProduct=function(){
 
 
   $scope.changeCategory=function(category){
-    console.log(category.categoryid);
+    // console.log(category.categoryid);
     $rootScope.selectedCategoryid=category.categoryid;
     $scope.getProductConfig(category.categoryid);
   };
 
 
    $scope.onFileSelect = function($files) {
-    console.log($files);
+    // console.log($files);
      for (var i = 0; i < $files.length; i++) {
       if(($files[i].type == 'image/jpg') || ($files[i].type == 'image/png') || ($files[i].type == 'image/gif') || ($files[i].type == 'image/jpeg')){
        file = $files[i];
@@ -299,7 +299,7 @@ $scope.handleChangeLogo=function(data, status, headers, config){
           $rootScope.selectedCategoryid="";
 
    $scope.product=  $scope.tempProduct ;
-   console.log($scope.product);
+   // console.log($scope.product);
       var field= document.getElementById('addLogoImg');
       field.value= field.defaultValue;
       var field= document.getElementById('updateLogo');
@@ -312,7 +312,7 @@ $scope.handleChangeLogo=function(data, status, headers, config){
 
 
 $scope.addProduct = function (editStatus) {
- console.log($scope.product);
+ // console.log($scope.product);
 
   if($scope.form.productForm.$invalid){
       // $rootScope.OZNotify("Please add valid information", 'error');
@@ -331,8 +331,8 @@ $scope.addProduct = function (editStatus) {
    if (editStatus == 'add') { 
 
     $scope.product.usertags=$scope.productusertags;
-    console.log($scope.product);
-    console.log(file);
+    // console.log($scope.product);
+    // console.log(file);
     if($scope.productusertags){
     if(file!==null || file !== undefined || file!=={}){
 
@@ -531,7 +531,7 @@ $scope.getSelectedProduct = function (product1) {
 
 
  $scope.handleGetProductSuccess=function(successData){
-   console.log(successData);
+   // console.log(successData);
         $scope.ErrMsging=0;
         $scope.currentProdle=successData.success.proudctcatalog.productid;
         $scope.product = successData.success.proudctcatalog;
