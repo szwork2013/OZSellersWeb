@@ -7,13 +7,15 @@ angular.module('oz.UserApp')
 
     $scope.ContentOfAllCategories = [];
  
-    $scope.levelOneIds = ''; $scope.levelTwoIds = ''; $scope.levelThreeIds = '';
+    $scope.levelOneIds = ''; $scope.levelTwoIds = ''; $scope.levelThreeIds = ''; $scope.levelFourIds = '';
 
     $scope.arrayOfCategoryI = [];
 
     $scope.arrayOfCategoryII = [];
 
     $scope.arrayOfCategoryIII = [];
+
+    $scope.arrayOfCategoryIV = [];
 
     $scope.category = [];
 
@@ -53,6 +55,8 @@ angular.module('oz.UserApp')
 
     $scope.order = {'index' : '', 'order_status' : '', 'require' : ''};
 
+    $scope.categoryLevelIV = [];
+
     var cleanUpEventGotAllCategories = $scope.$on("gotAllCategoriesContent",function(event,data){
 		    if(data.error)
 		    {
@@ -82,6 +86,11 @@ angular.module('oz.UserApp')
                     	{
                     		$scope.arrayOfCategoryIII = $scope.ContentOfAllCategories[i].category;
                     	}
+                      if($scope.ContentOfAllCategories[i].level === 4 && $scope.ContentOfAllCategories[i].category !== undefined)
+                      {
+                        $scope.arrayOfCategoryIV = $scope.ContentOfAllCategories[i].category;
+                      }
+           
                     }
 		          $scope.category = $scope.arrayOfCategoryI;
 		    } 
@@ -131,6 +140,26 @@ angular.module('oz.UserApp')
     		$scope.category = $scope.arrayOfCategoryIII;
     	}
     };
+    $scope.fetchLevelFourContent = function()
+    {
+      if($scope.levelThreeIds.categoryid === '')
+      {
+        $rootScope.OZNotify('Please select category from level three', 'error');
+      }
+      else if ($scope.levelThreeIds.categoryid !== '')
+      {    $scope.tempArray = [];
+        for(var i = 0; i<$scope.arrayOfCategoryIV.length ; i++)
+        {
+          if($scope.levelThreeIds.categoryid === $scope.arrayOfCategoryIV[i].parent)
+          {
+            $scope.tempArray.push($scope.arrayOfCategoryIV[i]);
+          }
+        }
+        $scope.arrayOfCategoryIV = $scope.tempArray;
+        $scope.category = $scope.arrayOfCategoryIV;
+      }
+    };
+
 
     $scope.addToLavelFirst = function()
     {
@@ -156,6 +185,13 @@ angular.module('oz.UserApp')
     	$scope.content = {'subcategory' : {'categoryname' : $scope.levelThreeIds}};
     	console.log(JSON.stringify($scope.content)+'----'+ $scope.levelTwoIds.categoryid);
     	OZWallService.addToLowerCategories($scope.levelTwoIds.categoryid, $scope.content);
+    }
+
+    $scope.addToLevelFour = function()
+    {
+      $scope.content = {'subcategory' : {'categoryname' : $scope.levelFourIds}};
+      console.log(JSON.stringify($scope.content)+'----'+ $scope.levelThreeIds.categoryid);
+      OZWallService.addToLowerCategories($scope.levelThreeIds.categoryid, $scope.content);
     }
 
      var cleanUpEventAddToCategoryFirsts = $scope.$on("addedToFirstCategory",function(event,data){
@@ -538,6 +574,19 @@ angular.module('oz.UserApp')
             }
            } 
     };
+
+    $scope.getLevelFourContent = function()
+    {
+           $scope.categoryLevelIV = [];
+           for(var i = 0 ; i < $scope.arrayOfCategoryIV.length ; i++)
+           {
+            if($scope.categoryIdContentThree.categoryid === $scope.arrayOfCategoryIV[i].parent)
+            {
+              $scope.categoryLevelIV.push($scope.arrayOfCategoryIV[i])
+
+            }
+           } 
+    };
     $scope.clear = function()
     {
       $scope.contentOfCategories = {'categoryid' : '', 'configurationname' : '', 'configurationprice' : '', 'uom' : '',  'configurationtype' : ''};
@@ -547,7 +596,7 @@ angular.module('oz.UserApp')
     {
           if($scope.categoryIdContents.categoryid === undefined || $scope.categoryIdContents.categoryid === '')
           {
-            $rootScope.OZNotify('Please select atleast one level three category', 'error');
+            $rootScope.OZNotify('Please select atleast one level four category', 'error');
           }
           else if($scope.contentOfCategories.configurationtype === '')
           {
@@ -618,7 +667,7 @@ angular.module('oz.UserApp')
                     $scope.contentOfCategories = {'categoryid' : '', 'configurationname' : '', 'configurationprice' : '', 'uom' : '',  'configurationtype' : '', description : ''};
                      OZWallService.getProductCriteria();
                      $scope.categoryIdContent = {};
-                     $scope.categoryIdContents = {};
+                     $scope.categoryIdContents = {}; $scope.categoryIdContentThree = {};
 
             } 
     });
@@ -711,6 +760,7 @@ angular.module('oz.UserApp')
                         $scope.categoryIdContent = {};
                      $scope.categoryIdContents = {};
                       $scope.contentOfCategories = {'categoryid' : '', 'configurationname' : '', 'configurationprice' : '', 'uom' : '',  'configurationtype' : ''};
+                      $scope.categoryIdContentThree = {};
                 
             } 
     });
