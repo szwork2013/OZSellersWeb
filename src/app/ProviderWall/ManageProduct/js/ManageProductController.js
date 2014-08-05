@@ -3,8 +3,10 @@ angular.module('oz.ProviderApp')
     $scope.tabForPrice={};
     $scope.currentProdle='';
     $scope.editorPrice={};
+    $scope.allCategories=[];
     $scope.ProductCategory=[];
     $scope.ProductCategoryLevel3=[];
+    $scope.ProductCategoryLevel2=[];
     $scope.ProductCategoryLevel3All=[];
     $scope.filtered;
     $scope.category;
@@ -98,66 +100,131 @@ $scope.clearProduct=function(){
   });
 
 
-     $scope.getCategories=function(providerid){
+      $scope.cleanConfigs=function(){
+          $scope.ProductCategory=[];
+          $scope.ProductCategoryLevel3All=[];
+          $scope.selectedCategory='';
+          $scope.selectedParentCategory='';
+          $scope.ProductCategoryLevel3=[];
+          $scope.ProductCategoryLevel2=[];
+          $scope.ProductParentCategory=[];
+          $rootScope.selectedCategoryid=[];
+          $scope.category={};
+          $rootScope.selectedCategoryid="";
+      }
 
+     $scope.getCategoriesFromDB=function(providerid){
+      $scope.cleanConfigs();
+       $scope.allCategories=[];
        ProviderServices.get_categories.getCategories({providerid:providerid},
       	function (successData) {
         if (successData.success == undefined) {
-            $scope.ProductCategory=[];
-            $scope.ProductCategoryLevel3All=[];
-            $scope.selectedCategory='';
-            $scope.ProductCategoryLevel3=[];
-            $rootScope.selectedCategoryid=[];
-            $scope.category={};
-            $rootScope.selectedCategoryid="";
-         // $rootScope.OZNotify(successData.error.message, 'error');  
+            $scope.cleanConfigs();
           if(successData.error.code=='AL001'){
             $rootScope.showModal();
           }
         } else {
          console.log(successData.success);
-         if(successData.success.ProductCategory[1].level=2){
-             $scope.ProductCategory=successData.success.ProductCategory[1].category;
-             $scope.ProductCategoryLevel3All=successData.success.ProductCategory[0].category;
-         }else{
-           $scope.ProductCategory=successData.success.ProductCategory[0].category;
-           $scope.ProductCategoryLevel3All=successData.success.ProductCategory[1].category;
-         }
-         if($scope.ProductCategory.length>0){
-          $scope.selectedCategory=$scope.ProductCategory[0].categoryid
-          $scope.getLevel3Categories($scope.ProductCategory[0].categoryid);
-          
-         }
+         $scope.allCategories=successData.success.ProductCategory;
 
-        }
+         }
        }, function (error) {
          $rootScope.OZNotify("Server Error:" + error.status, 'error');
        });
      };
 
-        $scope.getLevel3Categories=function(category){
-           $scope.ProductCategoryLevel3=[];
-        // console.log(category);
-        // console.log($scope.ProductCategoryLevel3All);
-        for (var i = $scope.ProductCategoryLevel3All.length - 1; i >= 0; i--) {
-          if(category==$scope.ProductCategoryLevel3All[i].parent){
-            $scope.ProductCategoryLevel3.push($scope.ProductCategoryLevel3All[i]);
+      $scope.getCategories=function(providerid){
+          $scope.ProductCategory=[];
+          $scope.ProductCategoryLevel3All=[];
+          $scope.selectedCategory='';
+          $scope.selectedParentCategory='';
+          $scope.ProductCategoryLevel3=[];
+          $scope.ProductCategoryLevel2=[];
+          $scope.ProductParentCategory=[];
+          $rootScope.selectedCategoryid=[];
+          $scope.category={};
+          $rootScope.selectedCategoryid="";
+
+  
+         if($scope.allCategories[0]){
+           $scope.ProductParentCategory=$scope.allCategories[0].category;
+           console.log($scope.ProductParentCategory);
+         }
+          if($scope.allCategories[1]){
+           $scope.ProductCategory=$scope.allCategories[1].category;
+           console.log($scope.ProductCategory);
+         }
+          if($scope.allCategories[2]){
+           $scope.ProductCategoryLevel3All=$scope.allCategories[2].category;
+           console.log($scope.ProductCategoryLevel3All);
+         }
+         
+         if($scope.ProductParentCategory[0]){
+          $scope.selectedParentCategory=$scope.ProductParentCategory[0].categoryid;
+          $scope.getLevel2Categories($scope.selectedParentCategory);
+         }else{
+          $scope.selectedParentCategory='';
+         }
+
+       
+     };
+
+
+    $scope.getLevel2Categories=function(category){
+      $scope.ProductCategoryLevel2=[];
+        for (var i = $scope.ProductCategory.length - 1; i >= 0; i--) {
+          if(category==$scope.ProductCategory[i].parent){
+            $scope.ProductCategoryLevel2.push($scope.ProductCategory[i]);
           }
         };
-        // console.log($scope.ProductCategoryLevel3);
+           if($scope.ProductCategoryLevel2[0]){
+             $scope.selectedCategory=$scope.ProductCategoryLevel2[0].categoryid;
+             $scope.getLevel3Categories($scope.selectedCategory);
+           }
+           else{
+                  $scope.selectedCategory='';
+           }
+      };
+
+
+        $scope.getLevel3Categories=function(category){
+           $scope.ProductCategoryLevel3=[];
+            for (var i = $scope.ProductCategoryLevel3All.length - 1; i >= 0; i--) {
+              if(category==$scope.ProductCategoryLevel3All[i].parent){
+                $scope.ProductCategoryLevel3.push($scope.ProductCategoryLevel3All[i]);
+              }
+            };
            if($scope.ProductCategoryLevel3[0]){
              $scope.category=$scope.ProductCategoryLevel3[0];
              $rootScope.selectedCategoryid=$scope.ProductCategoryLevel3[0].categoryid;
            }
            else{
-                  $scope.ProductCategoryLevel3All=[];
-                  $scope.ProductCategoryLevel3=[];
-                  $scope.category;
+                  $scope.category={};
                   $rootScope.selectedCategoryid="";
+                  $scope.ProductConfigs=[];
            }
-       
       };
 
+   $scope.$watch('selectedParentCategory', function (selectedParentCategory) {
+      $scope.search.prod="";
+      if($rootScope.selectedproviderid){
+         $scope.getCategories($rootScope.selectedproviderid);
+      }
+    });
+
+    $scope.$watch('selectedproviderid', function (selectedproviderid) {
+      $scope.search.prod="";
+      if($rootScope.selectedproviderid){
+         $scope.getCategories($rootScope.selectedproviderid);
+      }
+    });
+    
+   $scope.$watch('selectedproviderid', function (selectedproviderid) {
+      $scope.search.prod="";
+      if($rootScope.selectedproviderid){
+         $scope.getCategories($rootScope.selectedproviderid);
+      }
+    });
 
   $scope.changeCategory=function(category){
     console.log(category.categoryid);
@@ -226,28 +293,26 @@ $scope.handleChangeLogo=function(data, status, headers, config){
 
 };
 
-
     $scope.enableEditor = function () {
      $scope.tempProduct = angular.copy( $scope.product);
      $scope.editMode.editorEnabled = true;
-    
      if($scope.editMode.editStatus=='add'){
       $scope.getCategories($rootScope.selectedproviderid);
-      $scope.getLevel3Categories($scope.ProductCategory[0].categoryid);
-      // $scope.getProductConfig($scope.ProductCategoryLevel3[0].categoryid);
      }
      else{
       if($scope.product.category){
       $scope.getProductConfig($scope.product.category.id);
       }
      }
-     console.log("id= "+$rootScope.selectedCategoryid);
+     // console.log("id= "+$rootScope.selectedCategoryid);
     // $rootScope.OZNotify("   Adding product data....", 'info');
   };
 
 
   $scope.disableEditor = function () {
+
    $scope.product=  $scope.tempProduct ;
+   console.log($scope.product);
       var field= document.getElementById('addLogoImg');
       field.value= field.defaultValue;
       var field= document.getElementById('updateLogo');
@@ -260,13 +325,10 @@ $scope.handleChangeLogo=function(data, status, headers, config){
 
 
 $scope.addProduct = function (editStatus) {
-
-    // $scope.product.to1=moment($scope.product.to).format('hh:mm');
-    // $scope.product.from2=moment($scope.product.from).format('hh:mm');
-console.log($scope.product);
+ console.log($scope.product);
 
   if($scope.form.productForm.$invalid){
-      // $rootScope.ProdoAppMessage("Please add valid information", 'error');
+      // $rootScope.OZNotify("Please add valid information", 'error');
       $scope.form.productForm.submitted=true;
     }
   else{
@@ -286,6 +348,8 @@ console.log($scope.product);
     console.log(file);
     if($scope.productusertags){
     if(file!==null || file !== undefined || file!=={}){
+
+     if($rootScope.selectedCategoryid){
      $scope.upload = $upload.upload({
         url: '/api/productcatalog/'+$scope.selectedBranchId+'/'+$scope.selectedproviderid+'/'+$rootScope.selectedCategoryid, 
         data: {"data":$scope.product} ,
@@ -297,13 +361,19 @@ console.log($scope.product);
          $scope.handleSaveProductResponse(data, status, headers, config);
         // console.log(data);
       });
+     }
+     else{
+           $rootScope.OZNotify("Please Select Level 4 Category", 'error');
+    }
+    
+
     }
      else{
-           $rootScope.ProdoAppMessage("Please upload product image", 'error');
+           $rootScope.OZNotify("Please upload product image", 'error');
     }
   }
     else{
-           $rootScope.ProdoAppMessage("Please add user tags", 'error');
+           $rootScope.OZNotify("Please add user tags", 'error');
     }
 
   }
@@ -334,7 +404,7 @@ console.log($scope.product);
      });
 
    }else{
-           $rootScope.ProdoAppMessage("Please add user tags", 'error');
+           $rootScope.OZNotify("Please add user tags", 'error');
     }
 
   }
@@ -384,6 +454,7 @@ $scope.handleSaveProductResponse=function(data, status, headers, config){
          // $rootScope.OZNotify(successData.error.message, 'error');  
         } else {
          $log.debug(successData.success.proudctcatalog);
+         $scope.getCategoriesFromDB($rootScope.selectedproviderid);
          $scope.productlist=successData.success.proudctcatalog;
          $scope.filtered=$scope.productlist;
          if($scope.currentProdle!==''){

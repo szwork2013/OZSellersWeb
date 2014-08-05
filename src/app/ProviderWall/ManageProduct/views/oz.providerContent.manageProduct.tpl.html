@@ -104,14 +104,24 @@
 			            </td>
 			          </tr>
 			    <tr ng-show="editMode.editStatus=='add'"> 
-			              <td  class="prodo-width50 " ng-show="selectedBranchId && ProductCategory.length>0">
-			              		<span class="bold">Category  </span>
-			              		<select  class=" form-control prodo-width50" ng-model="selectedCategory" ng-change="getLevel3Categories(selectedCategory);" ng-options="category.categoryid as category.categoryname for category in ProductCategory" required  ></select>
+			          
+			            <td  style="width:33%" ng-show="selectedBranchId && ProductCategory.length>0">
+			              		<span class="bold">Level 2 Category  </span>
+			              		<p style="margin-top: 10px;"><em ng-hide="ProductParentCategory">No Level 2 Categories </em></p>
+			              		<select ng-show="ProductParentCategory"  class=" form-control prodo-width50 prodo-validation" ng-model="selectedParentCategory" ng-change="getLevel2Categories(selectedParentCategory);" ng-options="category.categoryid as category.categoryname for category in ProductParentCategory" required  name="selectedParentCategory"></select>
 			              </td>
 
-			               <td  class="prodo-width50 " ng-show="selectedBranchId ">
-			              		<span class="bold"> Sub Category </span>
-			              		 <select  ng-selected="category" class=" form-control prodo-width50" ng-change="changeCategory(category)" ng-model="category" ng-options="category as category.categoryname for category in ProductCategoryLevel3" name="subcategory" required ></select>
+			              <td style="width:33%" ng-show="selectedBranchId && ProductCategory.length>0">
+			              		<span class="bold">Level 3 Category  </span>
+			              		<p style="margin-top: 10px;"><em ng-hide="ProductCategoryLevel2">No Level 3 Categories </em></p>
+			              		<select  ng-show="ProductCategoryLevel2" class=" form-control prodo-width50 prodo-validation" ng-model="selectedCategory" ng-change="getLevel3Categories(selectedCategory);" ng-options="category.categoryid as category.categoryname for category in ProductCategoryLevel2" required  name="selectedCategory"></select>
+			              </td>
+
+			               <td style="width:33%" ng-show="selectedBranchId && ProductCategory.length>0">
+			              		<span class="bold"> Level 4 Category </span>
+
+			              		<p style="margin-top: 10px;"><em ng-hide="ProductCategoryLevel3">No Level 4 Categories </em></p>
+			              		 <select ng-show="ProductCategoryLevel3" ng-selected="category" class=" form-control prodo-width50 prodo-validation" ng-change="changeCategory(category)" ng-model="category" ng-options="category as category.categoryname for category in ProductCategoryLevel3" name="subcategory" required ></select>
 
 
                                  <div  ng-show="(form.productForm.subcategory.$dirty  && editMode.editorEnabled==true ) ||(form.productForm.submitted==true && form.productForm.subcategory.$invalid==true)" class="prodo-product-Invalid">
@@ -370,13 +380,21 @@
                  </tr>
 
                    <tr ng-hide=" (ProductConfigs.configuration.length>0  ) || ( chckedIndexs.length>0 )">
-                       <td  colspan="4">
-
-                       <span class="bold"> Configurations : </span>
-                         <p>	<em>
-                       No configurations defined for category - {{category.categoryname}}. Please contact  your admin to add {{category.categoryname}} related product configurations 
-						</em></p>
+                       <td  colspan="4" ng-show="category.categoryname">
+	                       <span class="bold"> Configurations : </span>
+	                         <p>	<em>
+	                       No configurations defined for category - {{category.categoryname}}. Please contact  your admin to add {{category.categoryname}} related product configurations. 
+							</em></p>
                        </td>
+
+                        <td  colspan="4" ng-hide="category.categoryname">
+	                       <span class="bold"> Configurations : </span>
+	                         <p>	<em>
+	                       No configurations. Please contact your admin.
+							</em></p>
+                       </td>
+
+
                    </tr>
 
 
@@ -483,7 +501,7 @@
          
             
           <tr  class="prodo-productTableFont" >
-          	<td  >  <span class="prodo-fontWeight">Category : &nbsp;</span><span  class="prodo-descriptionDisplay">  {{product.category.ancestors[0].categoryname}}  >  {{product.category.ancestors[1].categoryname}}  >  {{product.category.categoryname}}  </span></td>
+          	<td  >  <span class="prodo-fontWeight">Category : &nbsp;</span><span  class="prodo-descriptionDisplay">  {{product.category.ancestors[0].categoryname}}  >  {{product.category.ancestors[1].categoryname}}  >  {{product.category.ancestors[2].categoryname}} >  {{product.category.categoryname}}  </span></td>
 
            <td  ng-show="product.leadtime">  <span class="prodo-fontWeight">Lead Time : &nbsp;</span><span  class="prodo-descriptionDisplay">  {{product.leadtime.value}}  {{product.leadtime.option}} </span></td>
           </tr>
