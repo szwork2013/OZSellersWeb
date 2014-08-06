@@ -1,15 +1,61 @@
-<div style="border: 1px solid #EEE8E8; border-radius: 6px;" class="">
+<div style="border: 1px solid #EEE8E8; border-radius: 6px;" class="" >
 
-	<table class = 'table table-hover'>
-	    <tr>
-	    	<th style = 'width : 30%'>Product Name</th>
-	    	<th style = 'width : 30%'>Delivery Lead Time</th>
-	    	<th style = 'width : 30%'>Action</th>
-	    </tr>
-	    <tr>
-	    	<td>test</td>
-	    	<td>test</td>
-	    	<td><button class = 'btn btn-info' style = 'width : 100px'>Edit</button></td>
-	    </tr>
-	</table>
+	<div  ng-repeat = 'list in contentOfAllProducts' style = 'margin : 20px;border : 1px solid #ccc; border-radius : 5px;'>
+      <div>
+		  <div style = 'width : 50%; float:left'> 
+		     	 <h5 style = 'font-size :17px '>Category Name : <span ng-bind = 'list.category.categoryname'></span>
+		         </h5>
+	      </div>
+
+	      <div style = 'width : 50%;float:right; padding : 5px;'>
+	      	Check to assign common lead time to all products from this category : <input type = 'checkbox' ng-click = 'showGlobalTextLead(list)' id = '{{list.category.categoryid}}'/>
+	      	<div>
+					      	<input type = 'text' class = 'form-control' style = 'width : 15%;display : inline' ng-show = 'list.editing' ng-model = 'list.new.leadtime.value'>
+					      	<select class = 'form-control' style = 'width : 15%;  margin-left : 5px;display : inline' ng-show = 'list.editing' ng-model = 'list.new.leadtime.option'>
+									<option >minutes</option>
+									<option>hours</option>
+									<option>days</option>
+									<option>weeks</option>
+							</select>
+							<button class = 'btn btn-small btn-info' style = 'width : 15%;display : inline' ng-click = 'hideGlobalTextLead(list)' ng-show = 'list.editing'>Cancel</button>
+							<button class = 'btn btn-info btn-small' style = 'width : 15%;display : inline; margin-left : 5px; ' ng-show = 'list.editing' ng-click = 'applyLeadTimesAll(list)'>Save</button>
+			</div>
+	      </div>
+      </div>
+
+          <div>
+              <div>
+					<table class = 'table table-hover'>
+					    <tr>
+					    	<th style = 'width : 30%'>Product Name</th>
+					    	<th style = 'width : 30%'>Delivery Lead Time</th>
+					    	<th style = 'width : 30%'>Action</th>
+					    </tr>
+					    <tr  ng-repeat = 'products in list.productleadtime'>
+					    	<td ng-bind = 'products.productname' ></td>
+					    	<td ng-hide = 'products.editing'><span ng-bind = 'products.leadtime.value'></span>&nbsp;<span ng-bind = 'products.leadtime.option'></span></td>
+					    	<td ng-show = 'products.editing'>
+							    	<input type = 'text' class = 'form-control' style = 'width : 100px ; float: left' ng-model = 'products.leadtime.value'> 
+							    	&nbsp;&nbsp;
+							    	<select class = 'form-control' style = 'width : 100px; float : left; margin-left : 5px;' ng-model = 'products.leadtime.option'>
+							    					<option >minutes</option>
+							    					<option>hours</option>
+							    					<option>days</option>
+							    					<option>weeks</option>
+							    	</select>
+					    	</td>
+
+					    	
+					    	<td ng-hide = 'products.editing'>
+					    	<button class = 'btn btn-info' style = 'width : 100px' ng-click = 'enableTheEditorFunction(products)'>Edit</button></td>
+
+					    	<td ng-show = 'products.editing'>
+					    	    <button class = 'btn btn-info' style = 'width : 100px' ng-click = 'cancel(products)' style = 'float : left'>Cancel</button>
+					    	     <button class = 'btn btn-info' style = 'width : 100px' ng-click = 'changeLeadTimes(products)' style = 'float : left'>Save</button>
+					    	</td>
+					    </tr>
+					</table>
+			   </div>		
+		  </div>	 		
+	</div>
 </div>
