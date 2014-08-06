@@ -159,6 +159,8 @@ $scope.clearProduct=function(){
        });
      };
 
+$scope.getCategoriesFromDB($rootScope.selectedproviderid);
+
       $scope.getCategories=function(providerid){
 
          if($scope.ProductParentCategory[0]){
@@ -441,7 +443,6 @@ $scope.handleSaveProductResponse=function(data, status, headers, config){
          // $rootScope.OZNotify(successData.error.message, 'error');  
         } else {
          $log.debug(successData.success.proudctcatalog);
-         $scope.getCategoriesFromDB($rootScope.selectedproviderid);
          $scope.productlist=successData.success.proudctcatalog;
          $scope.filtered=$scope.productlist;
          if($scope.currentProdle!==''){
