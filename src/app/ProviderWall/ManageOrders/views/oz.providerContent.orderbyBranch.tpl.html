@@ -50,7 +50,7 @@
             </div>
             <div class="modal-body">
           
-            <div ng-show="orderPrefDate < todaysDate" class="row" style="padding:10px; padding-left:20px;" tooltip="This option is not available because you can not deliver order on past date" tooltip-placement="top">
+            <div ng-show="orderPrefDate < todaysDate" class="row" style="padding:10px; padding-left:20px;" tooltip="This option is disabled as today's date is more than customers preferred delivery date." tooltip-placement="top">
               <input type="radio" ng-model="deliveryOption" value="pref" disabled >
               <span style="color:gray"> Accept Preferred Delivery Date - {{ getOrderDate(order.preferred_delivery_date )   }}</span>
             </div> 
