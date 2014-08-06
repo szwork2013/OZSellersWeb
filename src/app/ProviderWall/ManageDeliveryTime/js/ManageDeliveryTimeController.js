@@ -1,30 +1,33 @@
 angular.module('oz.ProviderApp')
   .controller('ManageDeliveryTimeController', ['$scope', '$state', '$http', '$timeout', '$sce', '$log', '$rootScope', 'ProviderLeadtimeService','$upload','$stateParams', function($scope, $state, $http, $timeout, $sce, $log, $rootScope,ProviderLeadtimeService,$upload, $stateParams) {
-  ProviderLeadtimeService.getAllCategories();
-
+  
+  $scope.$watch('selectedBranchId', function (selectedBranchId) {
+      ProviderLeadtimeService.getAllCategories();
+  });
+    
   $scope.contentOfAllProducts = [];
 
   var tempContentOfAllProducts = [];
 
-
-
   var regexForNumbers = /^\d+$/;;
     
-    $scope.enableTheEditorFunction = function(products)
-    {
+  $scope.enableTheEditorFunction = function(products)
+  {
           products.editing = true;
-    };
+  };
 
-    $scope.cancel = function(products)
-    {
+  $scope.cancel = function(products)
+  {
     	products.editing = false;
     	$scope.contentOfAllProducts = angular.copy(tempContentOfAllProducts);
-    }
+  };
 
-    var cleanUpEventGotAllProducts = $scope.$on('gotAllProductsSuccessfully', function(event, data)
-    {             
-         if(data.error)
-         {
+  var cleanUpEventGotAllProducts = $scope.$on('gotAllProductsSuccessfully', function(event, data)
+  {     
+      $scope.contentOfAllProducts = [];
+      $scope.tempContentOfAllProducts = [];        
+      if(data.error)
+      {
           if(data.error.code === 'AL001')
           {
             $rootScope.showModal();
@@ -33,23 +36,25 @@ angular.module('oz.ProviderApp')
           {
             $rootScope.OZNotify(data.error.message, 'error');
           }
-         }
-         if(data.success)
-         {
+       }
+       if(data.success)
+       {
          	     $scope.contentOfAllProducts = [];
          	     tempContentOfAllProducts = [];
                  $scope.contentOfAllProducts = angular.copy(data.success.productleadtime);
                  tempContentOfAllProducts = angular.copy(data.success.productleadtime);
-         }
-    });
+       }
+   });
 
-    var cleanUpEventGetAllProductFail = $scope.$on('notGotProducts', function(event, data)
-    {
+  var cleanUpEventGetAllProductFail = $scope.$on('notGotProducts', function(event, data)
+  {
       $rootScope.OZNotify('Some issue with the server! Please try again after some time', 'error');
-    });
+       $scope.contentOfAllProducts = [];
+       $scope.tempContentOfAllProducts = []; 
+  });
 
-    $scope.changeLeadTimes = function(products)
-    {
+  $scope.changeLeadTimes = function(products)
+  {
           if(products.leadtime.value === undefined || products.leadtime.value === '' || regexForNumbers.test(products.leadtime.value) === false)
           {
             $rootScope.OZNotify('Please enter valid lead time! The time must be in numeric form', 'error');
@@ -63,10 +68,10 @@ angular.module('oz.ProviderApp')
            var content = {"productleadtimedata":[{"productid":products.productid,"leadtime":{"value": products.leadtime.value,"option": products.leadtime.option}}]};
            ProviderLeadtimeService.changeProductLeadTime(content);
          }
-    };
+  };
 
-    var cleanUpEventChangeProductLeadtime = $scope.$on('changedproductLeadTime', function(event, data)
-    {             
+  var cleanUpEventChangeProductLeadtime = $scope.$on('changedproductLeadTime', function(event, data)
+  {             
          if(data.error)
          {
           if(data.error.code === 'AL001')
@@ -83,15 +88,15 @@ angular.module('oz.ProviderApp')
             $rootScope.OZNotify(data.success.message, 'success');
               ProviderLeadtimeService.getAllCategories();
          }
-    });
+  });
 
-    var cleanUpEventNotChangeProductLeadtime = $scope.$on('notChangedLeadTime', function(event, data)
-    {
+  var cleanUpEventNotChangeProductLeadtime = $scope.$on('notChangedLeadTime', function(event, data)
+  {
       $rootScope.OZNotify('Some issue with the server! Please try again after some time', 'error');
-    });
+  });
 
-    $scope.showGlobalTextLead = function(list)
-    {
+  $scope.showGlobalTextLead = function(list)
+  {
   
       // console.log('test');
       list.new = {};
@@ -107,16 +112,17 @@ angular.module('oz.ProviderApp')
       {
                 list.editing = false;
       }
-    };
+  };
 
-    $scope.hideGlobalTextLead = function(list)
-    {
+  $scope.hideGlobalTextLead = function(list)
+  {
     	list.editing = false;
       document.getElementById(list.category.categoryid).checked = false;
-    };
+      
+  };
 
-    $scope.applyLeadTimesAll = function(list)
-    {
+  $scope.applyLeadTimesAll = function(list)
+  {
       var arrayToBeSent = {'productleadtimedata' : []};
      
       if( list.new.leadtime.value === undefined ||  list.new.leadtime.value === '' || regexForNumbers.test(list.new.leadtime.value) === false)
@@ -136,16 +142,15 @@ angular.module('oz.ProviderApp')
            console.log(JSON.stringify(arrayToBeSent));
            ProviderLeadtimeService.changeProductLeadTime(arrayToBeSent);
       }
-    }
+   }
 
-
-    $scope.$on('$destroy', function(event, message) 
-    {
+  $scope.$on('$destroy', function(event, message) 
+  {
         cleanUpEventGotAllProducts();
         cleanUpEventGetAllProductFail();
         cleanUpEventChangeProductLeadtime();
         cleanUpEventNotChangeProductLeadtime();
-    });
+  });
 
  }]);
 
