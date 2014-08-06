@@ -32,7 +32,7 @@ return {
     var t_status;
     var t_orderid;
     $scope.today=Date();
-    $scope.deliveryOption='pref';
+    $scope.deliveryOption;
     $scope.ismeridian = false;
 
 $scope.fromNow = function (time) {
@@ -47,6 +47,7 @@ $scope.fromNow = function (time) {
     $scope.search='';
     var orderid=order.suborderid
     $scope.order=order;
+     $scope.orderPrefDate=new Date($scope.order.preferred_delivery_date);
   // console.log(status + " "+ orderid);
   if(status=='accept'){
        t_status=status;
@@ -69,6 +70,7 @@ $scope.fromNow = function (time) {
 
 
 
+
 $scope.onDateSelected=function(delivery_date,deliveryOption,preferred_delivery_date){
  var date;
      if(deliveryOption=='custom'){
@@ -82,6 +84,7 @@ $scope.onDateSelected=function(delivery_date,deliveryOption,preferred_delivery_d
   else{
     $('#calenderModal').modal('hide');
     $scope.delivery_date="";
+    $scope.deliveryOption='';
     console.log("date = "+ date);
     $scope.callServiceChangeStatusApprove(t_status,t_order,date);
   }

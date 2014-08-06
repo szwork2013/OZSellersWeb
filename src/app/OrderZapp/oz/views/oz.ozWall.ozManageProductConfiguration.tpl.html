@@ -11,9 +11,18 @@
     <tr>
          <td> Level III Categories </td>
         <td style = 'width : 50%'> 
-       			 <select  class=" form-control" ng-options="list as list.categoryname for list in  categoryLevelIII" ng-model="categoryIdContents"      style = ' float : right;margin-bottom : 10px;margin-top : 7px;'>
+       			 <select  class=" form-control" ng-options="list as list.categoryname for list in  categoryLevelIII" ng-model="categoryIdContentThree"      style = ' float : right;margin-bottom : 10px;margin-top : 7px;' ng-change = 'getLevelFourContent()'>
         		 </select>
         		 <span>  </span>
+        </td>
+    </tr>
+
+    <tr>
+         <td> Level IV Categories </td>
+        <td style = 'width : 50%'> 
+             <select  class=" form-control" ng-options="list as list.categoryname for list in  categoryLevelIV" ng-model="categoryIdContents"      style = ' float : right;margin-bottom : 10px;margin-top : 7px;'>
+             </select>
+             <span>  </span>
         </td>
     </tr>
     
@@ -101,7 +110,7 @@
                            <td ng-bind = 'content.description' ng-hide = 'list.editing'></td>
                            <td ng-show = 'list.editing' ><textarea type = 'text' class="form-control" ng-model = 'content.description' ng-show = 'list.editing'></textarea></td>
 
-                           <td ng-hide = 'list.editing' ng-click = 'assignCategoryDeleteCriteria($index, list.categoryid)' data-target = '#clearProductConfigurationList' data-toggle = 'modal'> <button class = 'glyphicon glyphicon-remove-sign' style = 'height : 40px; width : 100px; border-radius : 5px; '>&nbsp;Delete</button></td>
+                           <td ng-hide = 'list.editing' ng-click = 'assignCategoryDeleteCriteria($index, list.categoryid)' data-target = '#clearProductConfigurationList' data-toggle = 'modal'> <button class = 'glyphicon glyphicon-remove-sign btn btn-info' style = 'height : 40px; width : 100px; border-radius : 5px; '>&nbsp;Delete</button></td>
                     </tr>
                 </table>
 

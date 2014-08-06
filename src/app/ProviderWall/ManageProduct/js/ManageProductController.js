@@ -1,14 +1,24 @@
 angular.module('oz.ProviderApp')
   .controller('ManageProductController', ['$scope', '$state', '$http', '$timeout', '$sce', '$log', '$rootScope', 'ProviderServices','$upload','$stateParams','userproducttags','filterFilter',function($scope, $state, $http, $timeout, $sce, $log, $rootScope,ProviderServices,$upload, $stateParams,userproducttags,filterFilter) {
+   
+    $scope.outer={}; 
+  
     $scope.tabForPrice={};
     $scope.currentProdle='';
     $scope.editorPrice={};
+    $scope.allCategories=[];
+    $scope.ProductParentCategory=[];
     $scope.ProductCategory=[];
     $scope.ProductCategoryLevel3=[];
+    $scope.ProductCategoryLevel2=[];
     $scope.ProductCategoryLevel3All=[];
+    $scope.selectedCategory={};
+    $scope.selectedParentCategory={};
+    $scope.category={};
+    $rootScope.selectedCategoryid="";
+
     $scope.filtered;
-    $scope.category;
-    $scope.search={};
+   $scope.search={};
    $scope.$state = $state;
    $scope.editMode={
     editStatus:'',
@@ -25,6 +35,7 @@ angular.module('oz.ProviderApp')
      $scope.tempProduct={};
       $scope.product={
       	"productname":"",
+        "leadtime":{"value":"1","option":""}, 
       	"price":{"value":"","currency":"\u20b9","uom":""},
       	"productdescription":"",
       	"productcode":"",
@@ -32,17 +43,17 @@ angular.module('oz.ProviderApp')
         "usertags":[]
       };
    	  $scope.foodtypes=['veg','non-veg','both'];
-
-  
+      $scope.leadOptions=['minutes','hours','days','weeks','months'];
       $scope.$state = $state;
       // $scope.product.usertags=[];
       $scope.product.foodtype=$scope.foodtypes[0]; 
       $scope.measures=['kg','gm','no','lb','lt'];
       $scope.product.price.uom=$scope.measures[0];
-
+      $scope.product.leadtime.option=$scope.leadOptions[0];
       $scope.editMode.editorEnabled=false;
       $scope.productusertags=[];
-      $scope.product.usertags=[]
+      $scope.product.usertags=[];
+
    }
 
    $scope.usertagsList=[];
@@ -51,6 +62,7 @@ angular.module('oz.ProviderApp')
 $scope.clearProduct=function(){
    $scope.product={
         "productname":"",
+        "leadtime":{"value":"1","option":"hours"}, 
         "price":{"value":"","currency":"\u20b9","uom":""},
         "productdescription":"",
         "productcode":"",
@@ -58,7 +70,7 @@ $scope.clearProduct=function(){
         "usertags":[]
       };
     $scope.chckedIndexs=[];
-    $scope.tempProduct={};
+    // $scope.tempProduct={}; /.
 }
 
 
@@ -97,76 +109,114 @@ $scope.clearProduct=function(){
   });
 
 
-     $scope.getCategories=function(providerid){
+      $scope.cleanConfigs=function(){
+          $scope.ProductCategory=[];
+          $scope.ProductCategoryLevel3All=[];
+          $scope.selectedCategory={};
+          $scope.selectedParentCategory={};
+          $scope.ProductCategoryLevel3=[];
+          $scope.ProductCategoryLevel2=[];
+          $scope.ProductParentCategory=[];
+          $scope.category={};
+          $rootScope.selectedCategoryid="";
 
+          $scope.outer={};
+      }
+
+     $scope.getCategoriesFromDB=function(providerid){
+
+      $scope.cleanConfigs();
+       $scope.allCategories=[];
        ProviderServices.get_categories.getCategories({providerid:providerid},
       	function (successData) {
         if (successData.success == undefined) {
-            $scope.ProductCategory=[];
-            $scope.ProductCategoryLevel3All=[];
-            $scope.selectedCategory='';
-            $scope.ProductCategoryLevel3=[];
-            $rootScope.selectedCategoryid=[];
-            $scope.category={};
-            $rootScope.selectedCategoryid="";
-         // $rootScope.OZNotify(successData.error.message, 'error');  
+            $scope.cleanConfigs();
           if(successData.error.code=='AL001'){
             $rootScope.showModal();
           }
         } else {
-         console.log(successData.success);
-         if(successData.success.ProductCategory[1].level=2){
-             $scope.ProductCategory=successData.success.ProductCategory[1].category;
-             $scope.ProductCategoryLevel3All=successData.success.ProductCategory[0].category;
-         }else{
-           $scope.ProductCategory=successData.success.ProductCategory[0].category;
-           $scope.ProductCategoryLevel3All=successData.success.ProductCategory[1].category;
+         // console.log(successData.success);
+         $scope.allCategories=successData.success.ProductCategory;
+         
+
+           if($scope.allCategories[0]){
+           $scope.ProductParentCategory=$scope.allCategories[0].category;
+           // console.log($scope.ProductParentCategory);
          }
-         if($scope.ProductCategory.length>0){
-          $scope.selectedCategory=$scope.ProductCategory[0].categoryid
-          $scope.getLevel3Categories($scope.ProductCategory[0].categoryid);
-          
+          if($scope.allCategories[1]){
+           $scope.ProductCategory=$scope.allCategories[1].category;
+           // console.log($scope.ProductCategory);
+         }
+          if($scope.allCategories[2]){
+           $scope.ProductCategoryLevel3All=$scope.allCategories[2].category;
+           // console.log($scope.ProductCategoryLevel3All);
          }
 
-        }
+
+         }
        }, function (error) {
          $rootScope.OZNotify("Server Error:" + error.status, 'error');
        });
      };
 
-        $scope.getLevel3Categories=function(category){
-           $scope.ProductCategoryLevel3=[];
-        // console.log(category);
-        // console.log($scope.ProductCategoryLevel3All);
-        for (var i = $scope.ProductCategoryLevel3All.length - 1; i >= 0; i--) {
-          if(category==$scope.ProductCategoryLevel3All[i].parent){
-            $scope.ProductCategoryLevel3.push($scope.ProductCategoryLevel3All[i]);
+      $scope.getCategories=function(providerid){
+
+         if($scope.ProductParentCategory[0]){
+          $scope.outer.selectedParentCategory=$scope.ProductParentCategory[0];
+          $scope.getLevel2Categories($scope.outer.selectedParentCategory.categoryid);
+         }else{
+          $scope.outer.selectedParentCategory='';
+         }
+
+       
+     };
+
+
+    $scope.getLevel2Categories=function(category){
+      $scope.ProductCategoryLevel2=[];
+        for (var i = $scope.ProductCategory.length - 1; i >= 0; i--) {
+          if(category==$scope.ProductCategory[i].parent){
+            $scope.ProductCategoryLevel2.push($scope.ProductCategory[i]);
           }
         };
-        // console.log($scope.ProductCategoryLevel3);
+           if($scope.ProductCategoryLevel2[0]){
+             $scope.outer.selectedCategory=$scope.ProductCategoryLevel2[0];
+             $scope.getLevel3Categories($scope.outer.selectedCategory.categoryid);
+           }
+           else{
+                  $scope.outer.selectedCategory={};
+           }
+      };
+
+
+        $scope.getLevel3Categories=function(category){
+           $scope.ProductCategoryLevel3=[];
+            for (var i = $scope.ProductCategoryLevel3All.length - 1; i >= 0; i--) {
+              if(category==$scope.ProductCategoryLevel3All[i].parent){
+                $scope.ProductCategoryLevel3.push($scope.ProductCategoryLevel3All[i]);
+              }
+            };
            if($scope.ProductCategoryLevel3[0]){
-             $scope.category=$scope.ProductCategoryLevel3[0];
+             $scope.outer.category=$scope.ProductCategoryLevel3[0];
              $rootScope.selectedCategoryid=$scope.ProductCategoryLevel3[0].categoryid;
            }
            else{
-                  $scope.ProductCategoryLevel3All=[];
-                  $scope.ProductCategoryLevel3=[];
-                  $scope.category;
+                  $scope.outer.category={};
                   $rootScope.selectedCategoryid="";
+                  $scope.ProductConfigs=[];
            }
-       
       };
 
 
   $scope.changeCategory=function(category){
-    console.log(category.categoryid);
+    // console.log(category.categoryid);
     $rootScope.selectedCategoryid=category.categoryid;
     $scope.getProductConfig(category.categoryid);
   };
 
 
    $scope.onFileSelect = function($files) {
-    console.log($files);
+    // console.log($files);
      for (var i = 0; i < $files.length; i++) {
       if(($files[i].type == 'image/jpg') || ($files[i].type == 'image/png') || ($files[i].type == 'image/gif') || ($files[i].type == 'image/jpeg')){
        file = $files[i];
@@ -225,28 +275,31 @@ $scope.handleChangeLogo=function(data, status, headers, config){
 
 };
 
-
     $scope.enableEditor = function () {
      $scope.tempProduct = angular.copy( $scope.product);
      $scope.editMode.editorEnabled = true;
-    
      if($scope.editMode.editStatus=='add'){
       $scope.getCategories($rootScope.selectedproviderid);
-      $scope.getLevel3Categories($scope.ProductCategory[0].categoryid);
-      // $scope.getProductConfig($scope.ProductCategoryLevel3[0].categoryid);
      }
      else{
       if($scope.product.category){
       $scope.getProductConfig($scope.product.category.id);
       }
      }
-     console.log("id= "+$rootScope.selectedCategoryid);
+     // console.log("id= "+$rootScope.selectedCategoryid);
     // $rootScope.OZNotify("   Adding product data....", 'info');
   };
 
 
   $scope.disableEditor = function () {
+
+          $scope.selectedCategory={};
+          $scope.selectedParentCategory={};
+          $scope.category={};
+          $rootScope.selectedCategoryid="";
+
    $scope.product=  $scope.tempProduct ;
+   // console.log($scope.product);
       var field= document.getElementById('addLogoImg');
       field.value= field.defaultValue;
       var field= document.getElementById('updateLogo');
@@ -259,8 +312,10 @@ $scope.handleChangeLogo=function(data, status, headers, config){
 
 
 $scope.addProduct = function (editStatus) {
+ // console.log($scope.product);
+
   if($scope.form.productForm.$invalid){
-      // $rootScope.ProdoAppMessage("Please add valid information", 'error');
+      // $rootScope.OZNotify("Please add valid information", 'error');
       $scope.form.productForm.submitted=true;
     }
   else{
@@ -276,10 +331,12 @@ $scope.addProduct = function (editStatus) {
    if (editStatus == 'add') { 
 
     $scope.product.usertags=$scope.productusertags;
-    console.log($scope.product);
-    console.log(file);
+    // console.log($scope.product);
+    // console.log(file);
     if($scope.productusertags){
     if(file!==null || file !== undefined || file!=={}){
+
+     if($rootScope.selectedCategoryid){
      $scope.upload = $upload.upload({
         url: '/api/productcatalog/'+$scope.selectedBranchId+'/'+$scope.selectedproviderid+'/'+$rootScope.selectedCategoryid, 
         data: {"data":$scope.product} ,
@@ -291,13 +348,19 @@ $scope.addProduct = function (editStatus) {
          $scope.handleSaveProductResponse(data, status, headers, config);
         // console.log(data);
       });
+     }
+     else{
+           $rootScope.OZNotify("Please Select Level 4 Category", 'error');
+    }
+    
+
     }
      else{
-           $rootScope.ProdoAppMessage("Please upload product image", 'error');
+           $rootScope.OZNotify("Please upload product image", 'error');
     }
   }
     else{
-           $rootScope.ProdoAppMessage("Please add user tags", 'error');
+           $rootScope.OZNotify("Please add user tags", 'error');
     }
 
   }
@@ -328,7 +391,7 @@ $scope.addProduct = function (editStatus) {
      });
 
    }else{
-           $rootScope.ProdoAppMessage("Please add user tags", 'error');
+           $rootScope.OZNotify("Please add user tags", 'error');
     }
 
   }
@@ -378,6 +441,7 @@ $scope.handleSaveProductResponse=function(data, status, headers, config){
          // $rootScope.OZNotify(successData.error.message, 'error');  
         } else {
          $log.debug(successData.success.proudctcatalog);
+         $scope.getCategoriesFromDB($rootScope.selectedproviderid);
          $scope.productlist=successData.success.proudctcatalog;
          $scope.filtered=$scope.productlist;
          if($scope.currentProdle!==''){
@@ -467,7 +531,7 @@ $scope.getSelectedProduct = function (product1) {
 
 
  $scope.handleGetProductSuccess=function(successData){
-   console.log(successData);
+   // console.log(successData);
         $scope.ErrMsging=0;
         $scope.currentProdle=successData.success.proudctcatalog.productid;
         $scope.product = successData.success.proudctcatalog;

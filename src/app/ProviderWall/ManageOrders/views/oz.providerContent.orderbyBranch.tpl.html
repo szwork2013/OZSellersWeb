@@ -49,8 +49,14 @@
               <h4 class="modal-title" id="myModalLabel"> Select Delivery Date</h4>
             </div>
             <div class="modal-body">
-            <div class="row" style="padding:10px; padding-left:20px;">
-              <input type="radio" ng-model="deliveryOption" value="pref" > Accept Preferred Delivery Date - {{ getOrderDate(order.preferred_delivery_date )   }}
+          
+            <div ng-show="orderPrefDate < todaysDate" class="row" style="padding:10px; padding-left:20px;" tooltip="This option is disabled as today's date is more than customers preferred delivery date." tooltip-placement="top">
+              <input type="radio" ng-model="deliveryOption" value="pref" disabled >
+              <span style="color:gray"> Accept Preferred Delivery Date - {{ getOrderDate(order.preferred_delivery_date )   }}</span>
+            </div> 
+
+            <div class="row" style="padding:10px; padding-left:20px;" ng-hide="orderPrefDate < todaysDate ">
+              <input type="radio" ng-model="deliveryOption" value="pref"  > Accept Preferred Delivery Date - {{ getOrderDate(order.preferred_delivery_date )   }}
             </div> 
              <div class="row" style="padding:10px; padding-left:20px;">
                <input type="radio" ng-model="deliveryOption" value="custom" > Select New Delivery Date
@@ -81,7 +87,7 @@
               </div>
             </div>
             </div>
-            <a type="button" class="btn btn-default margin-left450" data-dismiss="modal"> <i class="glyphicon glyphicon-remove"></i>  &nbsp; Cancel</a>
+            <a type="button" class="btn btn-default margin-left450" ng-click="deliveryOption='';" data-dismiss="modal"> <i class="glyphicon glyphicon-remove"></i>  &nbsp; Cancel</a>
             <a class="btn btn-primary  "  ng-click="onDateSelected(delivery_date,deliveryOption,order.preferred_delivery_date)">Accept </a>
            </div>
           </div>
