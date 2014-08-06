@@ -6,6 +6,7 @@ angular.module('oz.ProviderApp')
    $scope.init=function(){
     $scope.orders=[];
     $scope.tabForOrders={};
+    $scope.todaysDate=new Date();
     // $scope.hideReceivedOrders ;
     // $scope.hideApproveOrders;
     // $scope.hideProcessingOrders;
