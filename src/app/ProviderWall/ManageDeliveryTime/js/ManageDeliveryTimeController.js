@@ -65,7 +65,7 @@ angular.module('oz.ProviderApp')
           }
           else
           {
-           var content = {"productleadtimedata":[{"productid":products.productid, 'productname' : products.productname,"leadtime":{"value": products.leadtime.value,"option": products.leadtime.option}}]};
+           var content = {"productleadtimedata":[{"productid":products.productid, 'productname' : products.productname,"leadtime":{"value": products.leadtime.value,"option": products.leadtime.option}}]}; 
            ProviderLeadtimeService.changeProductLeadTime(content);
          }
   };
@@ -139,7 +139,7 @@ angular.module('oz.ProviderApp')
            {
                    arrayToBeSent.productleadtimedata.push({'productid' : list.productleadtime[i].productid, 'productname' : list.productleadtime[i].productname, 'leadtime' : {'value' : list.new.leadtime.value, 'option' : list.new.leadtime.option}});
            }
-           console.log(JSON.stringify(arrayToBeSent));
+           // console.log(JSON.stringify(arrayToBeSent));
            ProviderLeadtimeService.changeProductLeadTime(arrayToBeSent);
       }
    }
