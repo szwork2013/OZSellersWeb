@@ -18,7 +18,7 @@
   </div>
  </a> 
   <ul class="listStyle" ng-show="showorders ==true">
-    <li  ng-repeat="order in dayorder.suborders |  filter: {suborderid: search }" ng-show="dayorder.suborders.length>0"   class="todoitem">
+    <li  ng-repeat="order in dayorder.suborders |  filter: search " ng-show="dayorder.suborders.length>0"   class="todoitem">
        <div ng-include="'../ProviderWall/ManageOrders/views/oz.OrderContent.tpl.html'"></div>
     </li>
   </ul>

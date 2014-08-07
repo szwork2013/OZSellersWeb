@@ -4,6 +4,6 @@
   * Author: Bhagyashri Jangam
   * 
   */-->
-<li  ng-repeat="order in orders |  filter: {suborderid: search }" class="todoitem">
+<li  ng-repeat="order in orders |  filter: search" class="todoitem">
    <div ng-include="'../ProviderWall/ManageOrders/views/oz.OrderContent.tpl.html'"></div>
 </li>
