@@ -43,6 +43,7 @@ angular.module('oz.ProviderApp')
          	     tempContentOfAllProducts = [];
                  $scope.contentOfAllProducts = angular.copy(data.success.productleadtime);
                  tempContentOfAllProducts = angular.copy(data.success.productleadtime);
+                 console.log('got content '+JSON.stringify(data.success.productleadtime));
        }
    });
 
@@ -65,8 +66,8 @@ angular.module('oz.ProviderApp')
           }
           else
           {
-           var content = {"productleadtimedata":[{"productid":products.productid,"leadtime":{"value": products.leadtime.value,"option": products.leadtime.option}}]};
-           ProviderLeadtimeService.changeProductLeadTime(content);
+           var content = {"productleadtimedata":[{"productid":products.productid, 'productname' : products.productname,"leadtime":{"value": products.leadtime.value,"option": products.leadtime.option}}]}; 
+           ProviderLeadtimeService.changeProductLeadTime(content); console.log(JSON.stringify(content));
          }
   };
 
@@ -137,11 +138,11 @@ angular.module('oz.ProviderApp')
       {
            for(var i = 0; i < list.productleadtime.length; i++)
            {
-                   arrayToBeSent.productleadtimedata.push({'productid' : list.productleadtime[i].productid, 'leadtime' : {'value' : list.new.leadtime.value, 'option' : list.new.leadtime.option}});
+                   arrayToBeSent.productleadtimedata.push({'productid' : list.productleadtime[i].productid, 'productname' : list.productleadtime[i].productname, 'leadtime' : {'value' : list.new.leadtime.value, 'option' : list.new.leadtime.option}});
            }
-           console.log(JSON.stringify(arrayToBeSent));
-           ProviderLeadtimeService.changeProductLeadTime(arrayToBeSent);
-      }
+           // console.log(JSON.stringify(arrayToBeSent));
+           ProviderLeadtimeService.changeProductLeadTime(arrayToBeSent); console.log(JSON.stringify(arrayToBeSent));
+      } 
    }
 
   $scope.$on('$destroy', function(event, message) 
