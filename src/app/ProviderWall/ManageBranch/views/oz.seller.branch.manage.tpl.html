@@ -133,7 +133,7 @@
 		     <div id="oz-signup-input-group" class="input-group">
 		     	<div style="margin:0px;" class="row">
 		     		<div style="padding:0px;" class="col-md-11">
-			     		<h5>Time Slots:</h5>
+			     		<h5>Delivery Time Slots:</h5>
 			     		<p style="font-size:12px;" class="text-muted">**It defines the time slot when delivery or pickup of products will occur. By default you have to provide a minimum of two time slots, and more time slots can be added as required. </p>
 			     	</div>
 			     	<div class="col-md-1" style="text-align:right;">
@@ -227,7 +227,34 @@
 						<p ng-show="branch.branchdescription && branch.branchdescription != null"><em>Description:</em>&nbsp;&nbsp; {{branch.branchdescription}}</p>
 						<p><em>Contact:</em>&nbsp;&nbsp; {{branch.contact_supports.toString()}}</p>
 						<p><em>Address:</em>&nbsp;&nbsp; {{branch.location.address1}},{{' ' + branch.location.address2}},{{' ' + branch.location.city}}, {{branch.location.state}}, {{branch.location.country}}, pincode- {{branch.location.zipcode}}</p>
-						<p><em>Working Hours:</em>&nbsp;&nbsp;From : <span ng-bind = ' branch.branch_availability.from'></span><span style = 'margin-left:5px;'></span>To:<span ng-bind = ' branch.branch_availability.to'></span></p>
+						<p><em>Working Hours:</em>&nbsp;&nbsp;
+							<ul class="list-group">
+							  <li class="list-group-item">
+								  <div style="margin:0px;" class="row">
+								  	<div class="col-md-6">
+								  		<b>From:</b>&nbsp;&nbsp;<span ng-bind = 'to_time(branch.branch_availability.from)'></span>
+								  	</div>
+								  	<div class="col-md-6">
+								  		<b>To:</b>&nbsp;&nbsp;<span ng-bind = 'to_time(branch.branch_availability.to)'></span>
+								  	</div>
+								  </div>
+							  </li>
+							</ul>
+						</p>
+						<p><em>Delivery Time Slots:</em>&nbsp;&nbsp;
+							<ul class="list-group">
+							  <li ng-repeat="slot in branch.deliverytimingslots" class="list-group-item">
+								  <div style="margin:0px;" class="row">
+								  	<div class="col-md-6">
+								  		<b>From:</b>&nbsp;&nbsp;<span ng-bind = 'to_time(slot.from)'></span>
+								  	</div>
+								  	<div class="col-md-6">
+								  		<b>To:</b>&nbsp;&nbsp;<span ng-bind = 'to_time(slot.to)'></span>
+								  	</div>
+								  </div>
+							  </li>
+							</ul>
+						</p>
 						<p><em>Delivery Type:</em>&nbsp;&nbsp;
 							<span ng-show="branch.delivery.isprovidehomedelivery" class="label label-success"><i class="fa fa-check"></i>&nbsp;&nbsp;HOME</span>
 							<span ng-show="branch.delivery.isprovidepickup" class="label label-success"><i class="fa fa-check"></i>&nbsp;&nbsp;PICKUP</span>					
@@ -384,19 +411,52 @@
 									<div id="oz-signup-input-group" class="input-group">
 									  <dt>Working Hours</dt>
 									  <dd> <h6>From:</h6>
-											<input type = 'text' class = 'form-control' placeholder = 'HH' style = 'width : 15%' ng-model = 'edit.branchFromHours' name = 'editOperationStartHs' ng-pattern = '/^(0?[1-9]|1[012])$/' required>
-                      <input type = 'text' class = 'form-control' placeholder = 'MM' style = 'width : 15%' ng-model = 'edit.branchFromMinutes' name = 'editOperationStartMs' ng-pattern = '/^[0-9]{1,2}$/' required>
+											<input type = 'text' class = 'form-control' placeholder = 'HH' style = 'width : 15%' ng-model = 'edit.from.hours' name = 'editOperationStartHs'  required>
+                      <input type = 'text' class = 'form-control' placeholder = 'MM' style = 'width : 15%' ng-model = 'edit.from.minutes' name = 'editOperationStartMs' required>
                       <small style="color:red;display:block" ng-show="(((form.editBranchForm.editOperationStartHs.$dirty && form.editBranchForm.editOperationStartMs.$dirty) && (form.editBranchForm.editOperationStartHs.$invalid || form.editBranchForm.editOperationStartMs.$invalid)) || ((form.editBranchForm.editOperationStartHs.$invalid || form.editBranchForm.editOperationStartMs.$invalid) && form.editBranchForm.submitted))">*Please enter valid 'From' delivery hours and minutes [only numbers are allowed and hours should be in range [1-12]]</small>
 								  		</dd>
 
 								  		<dd> <h6>To:</h6>
-												<input type = 'text' class = 'form-control' placeholder = 'HH' style = 'width : 15%' ng-model = 'edit.branchToHours' required name = 'editOperationEndHs' ng-pattern = '/^(0?[1-9]|1[012])$/'>
-							          <input type = 'text' class = 'form-control' placeholder = 'MM' style = 'width : 15%' ng-model = 'edit.branchToMinutes' required name = 'editOperationEndMs' ng-pattern = '/^[0-9]{1,2}$/'>
+												<input type = 'text' class = 'form-control' placeholder = 'HH' style = 'width : 15%' ng-model = 'edit.to.hours' required name = 'editOperationEndHs' >
+							          <input type = 'text' class = 'form-control' placeholder = 'MM' style = 'width : 15%' ng-model = 'edit.to.minutes' required name = 'editOperationEndMs' >
 							                    				                     
 							          <small style="color:red;display:inherit" ng-show="(((form.editBranchForm.editOperationEndHs.$dirty && form.editBranchForm.editOperationEndMs.$dirty) && (form.editBranchForm.editOperationEndHs.$invalid || form.addBranchForm.editOperationEndMs.$invalid)) || ((form.editBranchForm.editOperationEndHs.$invalid || form.editBranchForm.editOperationEndMs.$invalid) && form.editBranchForm.submitted))">*Please enter valid 'To' delivery hours and minutes [only numbers are allowed and hours should be in range [1-12]]</small>
 								  		</dd>
 
 									</div>
+
+									<div id="oz-signup-input-group" class="input-group">
+							     	<div style="margin:0px;" class="row">
+							     		<div style="padding:0px;" class="col-md-11">
+								     		<h5><b>Delivery Time Slots:</b></h5>
+								     		<p style="font-size:12px;" class="text-muted">**It defines the time slot when delivery or pickup of products will occur. By default you have to provide a minimum of two time slots, and more time slots can be added as required. </p>
+								     	</div>
+								     	<div class="col-md-1" style="text-align:right;">
+								     		<h5><a href="" class="pull-right" ng-click="addDeliverySlots()"><i class="fa fa-plus"></i></a></h5>
+								     	</div>	
+							     		
+							     	</div>
+							     	
+							     	<div style="margin: 5px auto;" ng-repeat="slot in editTimingSlots" class="row">
+							     		<div class="col-md-5">
+							     			<div class="row">
+							     				<div class="col-md-2" style="font-size:12px;">From:&nbsp;</div>
+							     				<div class="col-md-5"><input type = 'text' class = 'form-control' placeholder = 'HH' ng-model = 'slot.from.hours' name = '' required></div>
+							     				<div class="col-md-5"><input type = 'text' class = 'form-control' placeholder = 'MM' ng-model = 'slot.from.minutes' name = '' required></div>
+							     			</div>
+							     		</div>
+							     		<div class="col-md-5">
+							     			<div class="row">
+							     				<div class="col-md-2" style="font-size:12px;">To:</div>
+							     				<div class="col-md-5"><input type = 'text' class = 'form-control' placeholder = 'HH' ng-model = 'slot.to.hours' name = '' required></div>
+							     				<div class="col-md-5"><input type = 'text' class = 'form-control' placeholder = 'MM' ng-model = 'slot.to.minutes' name = '' required></div>
+							     			</div>
+							     		</div>
+							     		<div class="col-md-2">
+							     			<h5 ng-show="$index > 1"><a href="" class="pull-right" ng-click="removeEditSlots(slot)"><i class="fa fa-times"></i></a></h5>
+							     		</div>
+							     	</div>
+							     </div>
 
 									<div id="oz-signup-input-group" class="input-group">
 										<dt>Delivery Mode*:</dt> 
