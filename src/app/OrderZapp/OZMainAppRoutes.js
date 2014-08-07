@@ -388,6 +388,17 @@ angular.module('oz.OrderZappApp')
                   return OZGetCount.getCount.count().$promise;
         }
       },
+      onEnter : function($rootScope, $state, UserSessionService)
+      {
+              if($rootScope.usersession.currentUser.isAdmin === true)
+              {
+                    $rootScope.OZNotify('Welcome OrderZapp Admin!', 'success');
+              }
+              else
+              {
+                UserSessionService.logoutUser();
+              }
+      },
       views: {
         'OrderZappWallView' : {
             templateUrl:  'OrderZapp/oz/views/oz.oz_content.tpl.html',
