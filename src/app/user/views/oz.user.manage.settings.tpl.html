@@ -55,7 +55,7 @@
 				  </div>
 
 				  <div id="oz-signup-input-group" class="input-group">
-				  	<input type="text" name="zipcode" class="form-control" ng-pattern="/^[^0-9]*$/" ng-model="user_settings_data.location.zipcode" placeholder="zipcode" required>
+				  	<input type="text" name="zipcode" class="form-control" ng-pattern="/^[0-9]{6}$/" ng-model="user_settings_data.location.zipcode" placeholder="zipcode" required>
 				  	<small style="color:red;" ng-show="((form.editUserSettingsForm.zipcode.$dirty && form.editUserSettingsForm.zipcode.$invalid) || (form.editUserSettingsForm.zipcode.$invalid && form.editUserSettingsForm.submitted))">*Please enter zipcode.</small>
 				  </div>
 

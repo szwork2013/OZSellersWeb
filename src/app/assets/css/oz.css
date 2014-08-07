@@ -316,6 +316,8 @@ text-overflow: ellipsis;
   letter-spacing: 1px;
   border-radius: 5px;
 }
+.evenRowOrderid{ background-color:#4285F4;}
+.oddRowOrderid{ background-color: #3F51B5; }
 .radius5{border-radius: 5px;}
 .text-center{padding:5px;} 
 /*.tabPolicyLi{width: 16%; word-wrap:breakword;}*/
@@ -499,9 +501,9 @@ font-size: 12px;}
 
 .headingDiv{
     padding: 5px;
-    opacity: .8;
+    /*opacity: .8;*/
     color: black;
-    background-color: #F1F1F1;
+    background-color: #F6F6F6;;
     letter-spacing: 1px;
     margin-bottom: 10px;
      margin-top: 10px;
@@ -515,7 +517,7 @@ font-size: 12px;}
     padding: 8px;
     opacity: .8;
     color: black;
-    background-color: #EFF9FD;;
+    /*background-color: #EFF9FD;*/
     letter-spacing: 1px;
     margin-bottom: 10px;
     border-radius: 5px;
@@ -649,7 +651,8 @@ left: 35px;
 .oz-trackingUL{
   /*padding-left: 11%;*/ /*previous tracking tree for 4 tabs*/
   padding-left: 21%;  /*new tracking tree for 3 tabs*/
-  padding-top: 10px;}
+  /*padding-top: 10px;*/
+  }
 .trackingTabContent{margin-left: 22%;margin-right: 26%;}
 .active4{ 
   position: absolute;
@@ -668,6 +671,7 @@ left: 35px;
 .capital {
     text-transform: capitalize;
 }
+.color-white{color: white;}
 .oz-paddingLeft{padding-left: 140px;} 
 .oz-actionDropdown{padding: 3px;width: 125px;height: 25px;font-size: 13px;}
 .oz-adress{  }
