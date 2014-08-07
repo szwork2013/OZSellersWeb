@@ -19,7 +19,8 @@ angular.module('oz.ProviderApp')
     var finalEnd = '';
     var operationStartTimeEdit = '';
     var operationEndTimeEdit = '';
-    $scope.edit = {'branch2Meridian' : 'AM', 'branchFromMeridian' : 'AM'};
+    $scope.edit = {'from':{}, 'to':{}};
+    $scope.editTimingSlots = []; 
 
     $scope.$watch('$state.$current.locals.globals.MyProviderBranchList', function (MyProviderBranchList) {
       console.log(MyProviderBranchList);
@@ -79,6 +80,13 @@ angular.module('oz.ProviderApp')
       $scope.showBranchDetail = !$scope.showBranchDetail;
     }
 
+    $scope.to_time = function(time){
+      var working_time = time;
+      var hours = parseInt(working_time);
+      var minutes = Math.round((working_time - hours) * 60);      
+      return (hours + ' ' + 'Hrs' + ' ' + minutes + ' ' + 'Mins');
+    }
+
     $scope.addSlots = function() { 
       $scope.addbranch.timeslots.push({from: {hours:'', minutes: ''}, to: {hours: '', minutes: ''}});
     };
@@ -110,14 +118,16 @@ angular.module('oz.ProviderApp')
     $scope.jsonAddBranchData = function(){
       var supportnos = $scope.addbranch.supportno;
       var timeslots = [];
-      var working_from_time = parseInt($scope.addbranch.operationHours.from.hours) + ($scope.addbranch.operationHours.from.minutes)/60;
-      var working_to_time = parseInt($scope.addbranch.operationHours.to.hours) + ($scope.addbranch.operationHours.to.minutes)/60;
+      var from_minutes = Math.round( (($scope.addbranch.operationHours.from.minutes)/60) *100)/100;
+      var working_from_time = parseInt($scope.addbranch.operationHours.from.hours) + from_minutes;
+      var to_minutes = Math.round( (($scope.addbranch.operationHours.to.minutes)/60) *100)/100;
+      var working_to_time = parseInt($scope.addbranch.operationHours.to.hours) + to_minutes;
       for (var i = 0; i < $scope.addbranch.timeslots.length; i++) {
         var from_hrs = parseInt($scope.addbranch.timeslots[i].from.hours);
-        var from_mins = ($scope.addbranch.timeslots[i].from.minutes)/60;
+        var from_mins = Math.round( (($scope.addbranch.timeslots[i].from.minutes)/60) *100)/100;
         var from_timeslot = from_hrs + from_mins;
         var to_hrs = parseInt($scope.addbranch.timeslots[i].to.hours);
-        var to_mins = ($scope.addbranch.timeslots[i].to.minutes)/60;
+        var to_mins = Math.round( (($scope.addbranch.timeslots[i].to.minutes)/60) *100)/100;
         var to_timeslot = to_hrs + to_mins;
         timeslots.push({from:from_timeslot, to: to_timeslot});
       } 
@@ -229,62 +239,29 @@ angular.module('oz.ProviderApp')
     });
 
     // Edit Seller Branch Code.....................................................
-    $scope.edit.branchFromHours = '';
-    $scope.edit.branchFromMinutes = '';
-    $scope.edit.branchToHours = '';
-    $scope.edit.branchToMinutes = '';
-    $scope.edit.branchFromMeridian = '';
-    $scope.edit.branch2Meridian = '';
     $scope.openEditBranch = function(branch){
       $scope.editbranch = {};
       $scope.editbranch = angular.copy(branch);
-      if($scope.editbranch.branch_availability !== undefined)
-      {
-              var splittingoperationfromtime = $scope.editbranch.branch_availability.from.split(':');
-              var splittingoperationtotime = $scope.editbranch.branch_availability.to.split(':');
-              $scope.edit.branchFromHours = splittingoperationfromtime[0];
-              $scope.edit.branchFromMinutes = splittingoperationfromtime[1];
-              $scope.edit.branchToHours = splittingoperationtotime[0];
-              $scope.edit.branchToMinutes = splittingoperationtotime[1];
-              if(Number($scope.edit.branchFromHours) === 12)
-              {
-                $scope.edit.branchFromMeridian = 'PM';
-              }
-              else if(Number($scope.edit.branchFromHours) > 12 && $scope.edit.branchFromHours !== '00')
-              {
-                 $scope.edit.branchFromHours = Number($scope.edit.branchFromHours) - 12;
-                 $scope.edit.branchFromMeridian = 'PM';
-              }
-              else if($scope.edit.branchFromHours === '00')
-              {
-                 $scope.edit.branchFromMeridian = 'AM';
-              }
-              else if(Number($scope.edit.branchFromHours) < 12)
-              {
-                $scope.edit.branchFromMeridian = 'AM';
-              }
-
-              if(Number($scope.edit.branchToHours) === 12)
-              {
-                $scope.edit.branch2Meridian = 'PM';
-              }
-              else if(Number($scope.edit.branchToHours) > 12 && $scope.edit.branchToHours !== '00')
-              {
-                      $scope.edit.branchToHours = Number($scope.edit.branchToHours) - 12;
-                      $scope.edit.branch2Meridian = 'PM';
-              }
-              else if($scope.edit.branchToHours === '00')
-              {
-                $scope.edit.branch2Meridian = 'AM';
-              }
-              else if(Number($scope.edit.branchToHours) < 12)
-              {
-                $scope.edit.branch2Meridian = 'AM';
-              }
-            }
-
+      var working_from_time = $scope.editbranch.branch_availability.from;
+      var working_to_time = $scope.editbranch.branch_availability.to;
+      $scope.edit.from.hours = parseInt(working_from_time);
+      $scope.edit.from.minutes = Math.round((working_from_time - $scope.edit.from.hours) * 60);
+      $scope.edit.to.hours = parseInt(working_to_time);
+      $scope.edit.to.minutes = Math.round((working_to_time - $scope.edit.to.hours) * 60);
       var branch_supportnos = angular.copy($scope.editbranch.contact_supports);
       $scope.editbranch.edit_supportnos = branch_supportnos.toString();
+      if (branch.deliverytimingslots && branch.deliverytimingslots.length !== 0) {
+        $scope.editTimingSlots = []; 
+        for (var i = 0; i < branch.deliverytimingslots.length; i++) {
+          var from_slot = branch.deliverytimingslots[i].from;
+          var from_slot_hours = parseInt(from_slot);
+          var from_slot_minutes = Math.round((from_slot - from_slot_hours) * 60);
+          var to_slot = branch.deliverytimingslots[i].to;
+          var to_slot_hours = parseInt(to_slot);
+          var to_slot_minutes = Math.round((to_slot - to_slot_hours) * 60);
+          $scope.editTimingSlots.push({'from':{'hours':from_slot_hours, 'minutes': from_slot_minutes}, 'to': {'hours': to_slot_hours, 'minutes': to_slot_minutes}});
+        };
+      }
       $('#editBranchModal').modal({ 
         keyboard: false,
         backdrop: 'static',
@@ -292,43 +269,42 @@ angular.module('oz.ProviderApp')
       });
     };
 
+    $scope.addDeliverySlots = function(){
+      $scope.editTimingSlots.push({from: {hours:'', minutes: ''}, to: {hours: '', minutes: ''}})
+    }
+
+    $scope.removeEditSlots = function(slot) {
+      var timeslots = $scope.editTimingSlots;
+      for (var i = 0, ii = timeslots.length; i < ii; i++) {
+        if (slot === timeslots[i]) { 
+          timeslots.splice(i, 1); 
+        }
+        else {
+          timeslots.splice(i,0);
+        } 
+      }
+    };
+
     // function to send and stringify user registration data to Rest APIs
     $scope.jsonEditBranchData = function(){
+      var timeslots = [];
+      for (var i = 0; i < $scope.editTimingSlots.length; i++) {
+        var from_hrs = parseInt($scope.editTimingSlots[i].from.hours);
+        var from_mins = Math.round( (($scope.editTimingSlots[i].from.minutes)/60) *100)/100;
+        var from_timeslot = from_hrs + from_mins;
+        var to_hrs = parseInt($scope.editTimingSlots[i].to.hours);
+        var to_mins = Math.round( (($scope.editTimingSlots[i].to.minutes)/60) *100)/100;
+        var to_timeslot = to_hrs + to_mins;
+        timeslots.push({from:from_timeslot, to: to_timeslot});
+      } 
+
+      var from_minutes = Math.round( (($scope.edit.from.minutes)/60) *100)/100;
+      var working_from_time = parseInt($scope.edit.from.hours) + from_minutes;
+      var to_minutes = Math.round( (($scope.edit.to.minutes)/60) *100)/100;
+      var working_to_time = parseInt($scope.edit.to.hours) + to_minutes;
       var result = $scope.contact_regex.test($scope.editbranch.edit_supportnos);
       if (result) {
         var supportnos = $scope.editbranch.edit_supportnos;
-        var finalFromTimeEdit = '';
-        var finalToTimeEdit = '';
-        if(Number(operationStartTimeEdit) === 24)
-        {
-            if($scope.edit.branchFromMeridian === 'PM')
-            {
-              operationStartTimeEdit = 12;
-            }
-            else {operationStartTimeEdit = '00';}
-        }
-        if(Number(operationEndTimeEdit) === 24)
-        {
-            if($scope.edit.branch2Meridian === 'PM')
-            {
-              operationEndTimeEdit = 12;
-            }
-            
-            else
-            {
-                operationEndTimeEdit = '00';
-            }
-        }
-        if($scope.edit.branchFromMeridian === 'AM' && Number(operationStartTimeEdit === 12))
-        {
-          operationStartTimeEdit = '00';
-        }
-        if($scope.edit.branch2Meridian === 'AM' && Number(operationEndTimeEdit === 12))
-        {
-          operationEndTimeEdit = '00';
-        }
-        finalFromTimeEdit = operationStartTimeEdit + ":" + $scope.edit.branchFromMinutes;
-        finalToTimeEdit = operationEndTimeEdit + ":" + $scope.edit.branchToMinutes;
         $scope.support_nos = supportnos.split(",");
         if ($scope.editbranch.delivery.isprovidehomedelivery !== true) {
           if ($scope.editbranch.delivery.isdeliverychargeinpercent == true) {
@@ -358,14 +334,11 @@ angular.module('oz.ProviderApp')
               'contact_supports': $scope.support_nos,
               'branchdescription' : $scope.editbranch.branchdescription,
               'note' : $scope.editbranch.note,
-              // 'delivery_leadtime' : {
-              //     'time' : $scope.editbranch.delivery_leadtime.time,
-              //     'format' : $scope.editbranch.delivery_leadtime.format
-              // },
               "branch_availability" : {
-                  'from' : finalFromTimeEdit,
-                 'to' : finalToTimeEdit
-            }
+                  'from' : working_from_time,
+                 'to' : working_to_time
+            },
+            'deliverytimingslots': timeslots
             }  
         };
         return JSON.stringify(Branchdata); 
@@ -393,43 +366,12 @@ angular.module('oz.ProviderApp')
     $scope.editSellerBranch = function(branchid){
       if ($scope.form.editBranchForm.$valid) {
         console.log($scope.jsonEditBranchData());
-        // if($scope.editbranchFromMeridian === 'PM')
-        // {
-        //   operationStartTimeEdit = Number($scope.editbranchFromHours) - 12;
-        // }
-        // else
-        // {
-        //   operationStartTimeEdit = $scope.editbranchFromHours;
-        // }
-        if($scope.edit.branch2Meridian === 'PM')
-        {
-          operationEndTimeEdit = Number($scope.edit.branchToHours) + 12;
+        if ($scope.jsonEditBranchData()) {   
+          ManageBranchService.editBranch($scope.jsonEditBranchData(), branchid);
+        } else {
+          $scope.form.editBranchForm.editcontact.$invalid = true;
+          $scope.form.editBranchForm.submitted = true;
         }
-        else
-        {
-          operationEndTimeEdit = $scope.edit.branchToHours;
-        }
-        if($scope.edit.branchFromMeridian === 'PM')
-        {
-          operationStartTimeEdit = Number($scope.edit.branchFromHours) + 12;
-        }
-        else
-        {
-          operationStartTimeEdit = $scope.edit.branchFromHours;
-        }
-        if(($scope.edit.branchFromMeridian === $scope.edit.branch2Meridian) && (Number($scope.edit.branchFromHours)>Number($scope.edit.branchToHours)))
-        {
-          $rootScope.OZNotify('The opening time cant be greater than the closing time', 'error');
-        }
-        else
-        {
-            if ($scope.jsonEditBranchData()) {   
-              ManageBranchService.editBranch($scope.jsonEditBranchData(), branchid);
-            } else {
-              $scope.form.editBranchForm.editcontact.$invalid = true;
-              $scope.form.editBranchForm.submitted = true;
-            }
-      }
       } else {
         console.log('incorrect data');
         $scope.form.editBranchForm.editcontact.$invalid = true;
