@@ -74,7 +74,7 @@ $scope.fromNow = function (time) {
 $scope.onDateSelected=function(delivery_date,deliveryOption,preferred_delivery_date){
  var date;
      if(deliveryOption=='custom'){
-      date=delivery_date;
+      date=delivery_date.toUTCString();
      }else if(deliveryOption=='pref'){
       date=preferred_delivery_date;
      }
