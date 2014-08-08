@@ -1,5 +1,5 @@
 <div style="border: 1px solid #EEE8E8; border-radius: 6px;" class="">
-	<div ng-show ="!addnewbranch" style="margin:10px auto; padding: 40px; padding-bottom: 0px;" class="row">
+	<div ng-show ="(!addnewbranch && selectedprovider.status !== 'init')" style="margin:10px auto; padding: 40px; padding-bottom: 0px;" class="row">
 		<div class="col-md-10">
 			<p style="font-size:14px; letter-spacing:1px; word-space:1px;" class="text-justify">To add branch to your seller account, please click on <strong>'Add Branch'</strong> button.</p>
 		</div>
@@ -14,8 +14,9 @@
     <div class="col-md-12">
       <div class="no-message">
         <center>
-          <p style="font-size: 14px;">You have not added any branch to {{selectedprovider.providername}}.</p>      
+          <p style="font-size: 14px;"><b>You have not added any branch to {{selectedprovider.providername}}.</b></p>      
           <p style="font-size: 12px;">To start managing please add atleast one branch. Your list of branches and other related information will be shown here.</p>
+          <p class="text-warning" style="font-size:14px;"><b>Note:&nbsp; Your seller account is not yet activated. To activate your account, please contact OrderZapp support team. Once your account is activated then only you will be able to add branch to your seller account.</b></p>
         </center>
       </div>
     </div>
@@ -23,7 +24,7 @@
 
 	<!-- add seller branch start-->
 
-	<div ng-show="providers_branch_list.length == 0 || addnewbranch" style="margin:10px auto; padding: 20px;" class="row">
+	<div ng-show="((providers_branch_list.length == 0 || addnewbranch) && selectedprovider.status !== 'init')" style="margin:10px auto; padding: 20px;" class="row">
 		<div class="col-md-12">
 			<div class="add-seller-container">
 				<form style="width: 90%; margin: 20px; " name="form.addBranchForm" class="css-form" ng-submit="" novalidate>
