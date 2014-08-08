@@ -95,6 +95,7 @@
 		     	<div style="margin:0px;" class="row">
 		     		<div style="padding:0px;" class="col-md-10">
 			     		<h5>Working Hours:</h5>
+			     		<p style="font-size:12px;" class="text-info"><b>Note:</b> The time slot format must start from 0-23 or 00-23 for hours and follow by 00-59 for minutes.</p>
 			     	</div>     		
 		     	</div>
 		     	
@@ -103,28 +104,28 @@
 		     			<div class="row">
 		     				<div class="col-md-2" style="font-size:12px;">From:</div>
 		     				<div class="col-md-5">
-		     					<input type = 'text' class = 'form-control' placeholder = 'HH' ng-model = 'addbranch.operationHours.from.hours' name = 'workstarthours' required>
+		     					<input type = 'text' class = 'form-control' placeholder = 'HH' ng-model = 'addbranch.operationHours.from.hours' ng-pattern="/^([01]?[0-9]|2[0-3])$/" name = 'workstarthours' required>
 		     				</div>
 		     				<div class="col-md-5">
-		     					<input type = 'text' class = 'form-control' placeholder = 'MM' ng-model = 'addbranch.operationHours.from.minutes' name = 'workstartminute' ng-pattern="/^[0-9]{1,2}$/" required>
+		     					<input type = 'text' class = 'form-control' placeholder = 'MM' ng-model = 'addbranch.operationHours.from.minutes' name = 'workstartminute' ng-pattern="/^[0-5][0-9]$/" required>
 		     				</div>
 		     			</div>
 		     			<div class="row">
-		     				<p><small style="color:red;" ng-show="(((form.addBranchForm.workstarthours.$dirty && form.addBranchForm.workstartminute.$dirty) && (form.addBranchForm.workstarthours.$invalid || form.addBranchForm.workstartminute.$invalid)) || ((form.addBranchForm.workstarthours.$invalid || form.addBranchForm.workstartminute.$invalid) && form.addBranchForm.submitted))">*Please enter valid 'From' delivery hours and minutes [only numbers are allowed and hours should be in range [1-12]]</small></p>
+		     				<p><small style="color:red;" ng-show="(((form.addBranchForm.workstarthours.$dirty && form.addBranchForm.workstartminute.$dirty) && (form.addBranchForm.workstarthours.$invalid || form.addBranchForm.workstartminute.$invalid)) || ((form.addBranchForm.workstarthours.$invalid || form.addBranchForm.workstartminute.$invalid) && form.addBranchForm.submitted))">*Please enter valid 'From' delivery hours and minutes (only numbers are allowed and hours should be in range [0-23])</small></p>
 		     			</div>
 		     		</div>
 		     		<div class="col-md-5">
 		     			<div class="row">
 		     				<div class="col-md-2" style="font-size:12px;">To:</div>
 		     				<div class="col-md-5">
-		     					<input type = 'text' class = 'form-control' placeholder = 'HH' ng-model = 'addbranch.operationHours.to.hours' name = 'workendhours' required>
+		     					<input type = 'text' class = 'form-control' placeholder = 'HH' ng-model = 'addbranch.operationHours.to.hours' name = 'workendhours' ng-pattern="/^([01]?[0-9]|2[0-3])$/" required>
 		     				</div>
 		     				<div class="col-md-5">
-		     					<input type = 'text' class = 'form-control' placeholder = 'MM' ng-model = 'addbranch.operationHours.to.minutes' name = 'workendminutes' ng-pattern = '/^[0-9]{1,2}$/' required>
+		     					<input type = 'text' class = 'form-control' placeholder = 'MM' ng-model = 'addbranch.operationHours.to.minutes' name = 'workendminutes' ng-pattern="/^[0-5][0-9]$/" required>
 		     				</div>
 		     			</div>
 		     			<div class="row">
-		     				<p><small style="color:red;" ng-show="(((form.addBranchForm.workendhours.$dirty && form.addBranchForm.workendminutes.$dirty) && (form.addBranchForm.workendhours.$invalid || form.addBranchForm.workendminutes.$invalid)) || ((form.addBranchForm.workendhours.$invalid || form.addBranchForm.workendminutes.$invalid) && form.addBranchForm.submitted))">*Please enter valid 'To' delivery hours and minutes [only numbers are allowed and hours should be in range [1-12]]</small></p>
+		     				<p><small style="color:red;" ng-show="(((form.addBranchForm.workendhours.$dirty && form.addBranchForm.workendminutes.$dirty) && (form.addBranchForm.workendhours.$invalid || form.addBranchForm.workendminutes.$invalid)) || ((form.addBranchForm.workendhours.$invalid || form.addBranchForm.workendminutes.$invalid) && form.addBranchForm.submitted))">*Please enter valid 'To' delivery hours and minutes (only numbers are allowed and hours should be in range [0-23])</small></p>
 		     			</div>
 		     		</div>
 		     	</div>
@@ -135,6 +136,8 @@
 		     		<div style="padding:0px;" class="col-md-11">
 			     		<h5>Delivery Time Slots:</h5>
 			     		<p style="font-size:12px;" class="text-muted">**It defines the time slot when delivery or pickup of products will occur. By default you have to provide a minimum of two time slots, and more time slots can be added as required. </p>
+
+			     		<p style="font-size:12px;" class="text-info"><b>Note:</b> The time slot format must start from 0-23 or 00-23 for hours and follow by 00-59 for minutes.</p>
 			     	</div>
 			     	<div class="col-md-1" style="text-align:right;">
 			     		<h5><a href="" class="pull-right" ng-click="addSlots()"><i class="fa fa-plus"></i></a></h5>
@@ -146,22 +149,29 @@
 		     		<div class="col-md-5">
 		     			<div class="row">
 		     				<div class="col-md-2" style="font-size:12px;">From:</div>
-		     				<div class="col-md-5"><input type = 'text' class = 'form-control' placeholder = 'HH' ng-model = 'slot.from.hours' name = '' required></div>
-		     				<div class="col-md-5"><input type = 'text' class = 'form-control' placeholder = 'MM' ng-model = 'slot.from.minutes' name = '' required></div>
+		     				<div class="col-md-5">
+		     					<input type = 'text' class = 'form-control' placeholder = 'HH' ng-model = 'slot.from.hours' name = "fromtimeinhours" ng-pattern="/^([01]?[0-9]|2[0-3])$/" required>
+		     				</div>
+		     				<div class="col-md-5">
+		     					<input type = 'text' class = 'form-control' placeholder = 'MM' ng-model = 'slot.from.minutes' name = "fromtimeinminutes" ng-pattern="/^[0-5][0-9]$/" required>
+		     				</div>
 		     			</div>
 		     		</div>
 		     		<div class="col-md-5">
 		     			<div class="row">
 		     				<div class="col-md-2" style="font-size:12px;">To:</div>
-		     				<div class="col-md-5"><input type = 'text' class = 'form-control' placeholder = 'HH' ng-model = 'slot.to.hours' name = '' required></div>
-		     				<div class="col-md-5"><input type = 'text' class = 'form-control' placeholder = 'MM' ng-model = 'slot.to.minutes' name = '' required></div>
+		     				<div class="col-md-5"><input type = 'text' class = 'form-control' placeholder = 'HH' ng-model = 'slot.to.hours' name = "totimeinhours" ng-pattern="/^([01]?[0-9]|2[0-3])$/" required></div>
+		     				<div class="col-md-5"><input type = 'text' class = 'form-control' placeholder = 'MM' ng-model = 'slot.to.minutes' name = "totimeinminutes" ng-pattern="/^[0-5][0-9]$/" required></div>
 		     			</div>
 		     		</div>
 		     		<div class="col-md-2">
 		     			<h5 ng-show="$index > 1"><a href="" class="pull-right" ng-click="removeSlots(slot)"><i class="fa fa-times"></i></a></h5>
 		     		</div>
 		     	</div>
-		     </div>
+		     	<div style="margin:0px;" class="row">
+     				<p><small style="color:red;" ng-show="(form.addBranchForm.submitted && (form.addBranchForm.fromtimeinhours.$invalid || form.addBranchForm.fromtimeinminutes.$invalid || form.addBranchForm.totimeinhours.$invalid || form.addBranchForm.totimeinminutes.$invalid))">*Please enter valid delivery time slot hours and minutes in (numbers only and hours should be in range [0-23] and minutes should be in range [00-59])</small></p>
+     			</div>
+		    </div>
 
 
 					<div id="oz-signup-input-group" class="input-group">
@@ -241,7 +251,7 @@
 							  </li>
 							</ul>
 						</p>
-						<p><em>Delivery Time Slots:</em>&nbsp;&nbsp;
+						<p ng-show="branch.deliverytimingslots && branch.deliverytimingslots.length > 0"><em>Delivery Time Slots:</em>&nbsp;&nbsp;
 							<ul class="list-group">
 							  <li ng-repeat="slot in branch.deliverytimingslots" class="list-group-item">
 								  <div style="margin:0px;" class="row">
@@ -410,17 +420,18 @@
 
 									<div id="oz-signup-input-group" class="input-group">
 									  <dt>Working Hours</dt>
+									  <dd><p style="font-size:12px;" class="text-info"><b>Note:</b> The time slot format must start from 0-23 or 00-23 for hours and follow by 00-59 for minutes.</p></dd>
 									  <dd> <h6>From:</h6>
-											<input type = 'text' class = 'form-control' placeholder = 'HH' style = 'width : 15%' ng-model = 'edit.from.hours' name = 'editOperationStartHs'  required>
-                      <input type = 'text' class = 'form-control' placeholder = 'MM' style = 'width : 15%' ng-model = 'edit.from.minutes' name = 'editOperationStartMs' required>
-                      <small style="color:red;display:block" ng-show="(((form.editBranchForm.editOperationStartHs.$dirty && form.editBranchForm.editOperationStartMs.$dirty) && (form.editBranchForm.editOperationStartHs.$invalid || form.editBranchForm.editOperationStartMs.$invalid)) || ((form.editBranchForm.editOperationStartHs.$invalid || form.editBranchForm.editOperationStartMs.$invalid) && form.editBranchForm.submitted))">*Please enter valid 'From' delivery hours and minutes [only numbers are allowed and hours should be in range [1-12]]</small>
+											<input type = 'text' class = 'form-control' placeholder = 'HH' style = 'width : 15%' ng-model = 'edit.from.hours' name = 'editOperationStartHs' ng-pattern="/^([01]?[0-9]|2[0-3])$/" required>
+                      <input type = 'text' class = 'form-control' placeholder = 'MM' style = 'width : 15%' ng-model = 'edit.from.minutes' name = 'editOperationStartMs' ng-pattern="/^[0-5][0-9]$/" required>
+                      <small style="color:red;display:block" ng-show="(((form.editBranchForm.editOperationStartHs.$dirty && form.editBranchForm.editOperationStartMs.$dirty) && (form.editBranchForm.editOperationStartHs.$invalid || form.editBranchForm.editOperationStartMs.$invalid)) || ((form.editBranchForm.editOperationStartHs.$invalid || form.editBranchForm.editOperationStartMs.$invalid) && form.editBranchForm.submitted))">*Please enter valid 'From' delivery hours and minutes [only numbers are allowed and hours should be in range [0-23]]</small>
 								  		</dd>
 
 								  		<dd> <h6>To:</h6>
-												<input type = 'text' class = 'form-control' placeholder = 'HH' style = 'width : 15%' ng-model = 'edit.to.hours' required name = 'editOperationEndHs' >
-							          <input type = 'text' class = 'form-control' placeholder = 'MM' style = 'width : 15%' ng-model = 'edit.to.minutes' required name = 'editOperationEndMs' >
+												<input type = 'text' class = 'form-control' placeholder = 'HH' style = 'width : 15%' ng-model = 'edit.to.hours' required name = 'editOperationEndHs' ng-pattern="/^([01]?[0-9]|2[0-3])$/">
+							          <input type = 'text' class = 'form-control' placeholder = 'MM' style = 'width : 15%' ng-model = 'edit.to.minutes' required name = 'editOperationEndMs' ng-pattern="/^[0-5][0-9]$/" >
 							                    				                     
-							          <small style="color:red;display:inherit" ng-show="(((form.editBranchForm.editOperationEndHs.$dirty && form.editBranchForm.editOperationEndMs.$dirty) && (form.editBranchForm.editOperationEndHs.$invalid || form.addBranchForm.editOperationEndMs.$invalid)) || ((form.editBranchForm.editOperationEndHs.$invalid || form.editBranchForm.editOperationEndMs.$invalid) && form.editBranchForm.submitted))">*Please enter valid 'To' delivery hours and minutes [only numbers are allowed and hours should be in range [1-12]]</small>
+							          <small style="color:red;display:inherit" ng-show="(((form.editBranchForm.editOperationEndHs.$dirty && form.editBranchForm.editOperationEndMs.$dirty) && (form.editBranchForm.editOperationEndHs.$invalid || form.addBranchForm.editOperationEndMs.$invalid)) || ((form.editBranchForm.editOperationEndHs.$invalid || form.editBranchForm.editOperationEndMs.$invalid) && form.editBranchForm.submitted))">*Please enter valid 'To' delivery hours and minutes [only numbers are allowed and hours should be in range [0-23]]</small>
 								  		</dd>
 
 									</div>
@@ -430,6 +441,7 @@
 							     		<div style="padding:0px;" class="col-md-11">
 								     		<h5><b>Delivery Time Slots:</b></h5>
 								     		<p style="font-size:12px;" class="text-muted">**It defines the time slot when delivery or pickup of products will occur. By default you have to provide a minimum of two time slots, and more time slots can be added as required. </p>
+								     		<p style="font-size:12px;" class="text-info"><b>Note:</b> The time slot format must start from 0-23 or 00-23 for hours and follow by 00-59 for minutes.</p>
 								     	</div>
 								     	<div class="col-md-1" style="text-align:right;">
 								     		<h5><a href="" class="pull-right" ng-click="addDeliverySlots()"><i class="fa fa-plus"></i></a></h5>
@@ -441,21 +453,24 @@
 							     		<div class="col-md-5">
 							     			<div class="row">
 							     				<div class="col-md-2" style="font-size:12px;">From:&nbsp;</div>
-							     				<div class="col-md-5"><input type = 'text' class = 'form-control' placeholder = 'HH' ng-model = 'slot.from.hours' name = '' required></div>
-							     				<div class="col-md-5"><input type = 'text' class = 'form-control' placeholder = 'MM' ng-model = 'slot.from.minutes' name = '' required></div>
+							     				<div class="col-md-5"><input type = 'text' class = 'form-control' placeholder = 'HH' ng-model = 'slot.from.hours' name = 'editfromtimeinhours' ng-pattern="/^([01]?[0-9]|2[0-3])$/" required></div>
+							     				<div class="col-md-5"><input type = 'text' class = 'form-control' placeholder = 'MM' ng-model = 'slot.from.minutes' name = 'editfromtimeinminutes' ng-pattern="/^[0-5][0-9]$/" required></div>
 							     			</div>
 							     		</div>
 							     		<div class="col-md-5">
 							     			<div class="row">
 							     				<div class="col-md-2" style="font-size:12px;">To:</div>
-							     				<div class="col-md-5"><input type = 'text' class = 'form-control' placeholder = 'HH' ng-model = 'slot.to.hours' name = '' required></div>
-							     				<div class="col-md-5"><input type = 'text' class = 'form-control' placeholder = 'MM' ng-model = 'slot.to.minutes' name = '' required></div>
+							     				<div class="col-md-5"><input type = 'text' class = 'form-control' placeholder = 'HH' ng-model = 'slot.to.hours' name = 'edittotimeinhours' ng-pattern="/^([01]?[0-9]|2[0-3])$/" required></div>
+							     				<div class="col-md-5"><input type = 'text' class = 'form-control' placeholder = 'MM' ng-model = 'slot.to.minutes' name = 'edittotimeinminutes' ng-pattern="/^[0-5][0-9]$/" required></div>
 							     			</div>
 							     		</div>
 							     		<div class="col-md-2">
 							     			<h5 ng-show="$index > 1"><a href="" class="pull-right" ng-click="removeEditSlots(slot)"><i class="fa fa-times"></i></a></h5>
 							     		</div>
 							     	</div>
+							     	<div style="margin:0px;" class="row">
+					     				<p><small style="color:red;" ng-show="(form.editBranchForm.submitted && (form.editBranchForm.editfromtimeinhours.$invalid || form.editBranchForm.editfromtimeinminutes.$invalid || form.editBranchForm.edittotimeinhours.$invalid || form.editBranchForm.edittotimeinminutes.$invalid))">*Please enter valid delivery time slot hours and minutes in (numbers only and hours should be in range [0-23] and minutes should be in range [00-59])</small></p>
+					     			</div>
 							     </div>
 
 									<div id="oz-signup-input-group" class="input-group">
