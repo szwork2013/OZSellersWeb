@@ -15,46 +15,41 @@
 
         <div > <!-- product table -->
            <div class="row margintop5">
-              <div  class="col-md-3">
+              <div  class="col-md-5">
                 <span class="bold">Product name </span> 
               </div>
-               <div  class="col-md-3">
+               <div  class="col-md-4">
                 <span class="bold">Product code  </span> 
               </div>
-               <div  class="col-md-2">
+               <div  class="col-md-3">
                 <span class="bold">Quantity </span> 
               </div>
-               <div  class="col-md-2">
-                <span class="bold">Price </span> 
-              </div>
-               <div  class="col-md-2">
-                <span class="bold">Total </span> 
-              </div>
+              
         </div>
 
         <div class="row margintop5 rowSideMargin" ng-repeat="product in order.products   |  filter:  search "  ng-class-even="'OZ-evenRow'"> <!-- ng-repeat for product -->
-              <div  class="col-md-3">
+              <div  class="col-md-5">
                 
                  <span class=" oz-contentsRight "> {{product.productname}} </span>
 <!--                     <span class="oz-productcode"> [ {{product.productcode}} ] </span> --> 
               </div>
-                   <div  class="col-md-3">
+                   <div  class="col-md-4">
                 
                  <!-- <span class=" oz-contentsRight"> {{product.productname}} </span> -->
                     <span class=""> {{product.productcode}}  </span> 
               </div>
 
-              <div  class="col-md-2">
+              <div  class="col-md-3">
                  <span class=" oz-contentsRight">{{product.qty}} {{product.uom}}</span>
               </div>
 
-              <div  class="col-md-2">
+        <!--       <div  class="col-md-2">
                  <span class=" oz-contentsRight">{{product.currency}}  {{(product.orderprice/product.qty).toFixed(2)}}</span>
               </div>
 
               <div  class="col-md-2">
                  <span class=" oz-contentsRight"> &#x20B9;  {{product.orderprice.toFixed(2)}}</span>
-              </div>
+              </div> -->
        </div> <!-- ng-repeat for product -->
 
 

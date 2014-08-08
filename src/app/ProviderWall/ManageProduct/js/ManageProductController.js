@@ -43,7 +43,7 @@ angular.module('oz.ProviderApp')
         "usertags":[]
       };
    	  $scope.foodtypes=['veg','non-veg','both'];
-      $scope.leadOptions=['minutes','hours','days','weeks','months'];
+      $scope.leadOptions=['minutes','hours','days','weeks'];
       $scope.$state = $state;
       // $scope.product.usertags=[];
       $scope.product.foodtype=$scope.foodtypes[0]; 
