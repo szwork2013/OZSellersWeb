@@ -43,7 +43,7 @@ angular.module('oz.ProviderApp')
         "usertags":[]
       };
    	  $scope.foodtypes=['veg','non-veg','both'];
-      $scope.leadOptions=['minutes','hours','days','weeks','months'];
+      $scope.leadOptions=['minutes','hours','days','weeks'];
       $scope.$state = $state;
       // $scope.product.usertags=[];
       $scope.product.foodtype=$scope.foodtypes[0]; 
@@ -312,12 +312,12 @@ $scope.handleChangeLogo=function(data, status, headers, config){
     $scope.form.productForm.submitted=false;
   };
 
-
 $scope.addProduct = function (editStatus) {
  // console.log($scope.product);
 
   if($scope.form.productForm.$invalid){
       // $rootScope.OZNotify("Please add valid information", 'error');
+      $log.debug("Please add valid information");
       $scope.form.productForm.submitted=true;
     }
   else{
@@ -377,7 +377,7 @@ $scope.addProduct = function (editStatus) {
       usertags:$scope.product.usertags,
       productconfiguration:$scope.product.productconfiguration
     }
- // console.log($scope.product);
+ console.log($scope.product);
  if($scope.product.usertags){
   	 $http({
         method: 'PUT',
@@ -386,9 +386,9 @@ $scope.addProduct = function (editStatus) {
         // file:file, 
       }).success(function(data, status, headers, config) {
          $scope.handleSaveProductResponse(data, status, headers, config);
-        // console.log(data);
+        console.log(data);
       }).error(function (data, status, headers, cfg) {
-        // $log.debug(status);
+        $log.debug(status);
        $rootScope.OZNotify(status, 'error'); 
      });
 
@@ -440,7 +440,7 @@ $scope.handleSaveProductResponse=function(data, status, headers, config){
           }
          $scope.filtered=[];
          $scope.product=[];
-         // $rootScope.OZNotify(successData.error.message, 'error');  
+         $rootScope.OZNotify(successData.error.message, 'error');  
         } else {
          $log.debug(successData.success.proudctcatalog);
          $scope.productlist=successData.success.proudctcatalog;

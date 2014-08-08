@@ -103,21 +103,36 @@
 			           	   		
 			            </td>
 			          </tr>
-			    <tr ng-show="editMode.editStatus=='add'"> 
+
+			          <tr ng-show="selectedBranchId && allCategories.length<1 && editMode.editStatus=='add'"> 
+			           <td colspan="4"  > 
+	           	   		  <div class="OZ-PolicyNotAddedMsg row" >
+						       <div class="col-md-12">
+						       <div class="no-message">
+						        <center>
+						        <span style="font-size:16px;">No Categories added. Please contact admin to add products</span>
+						        </center>
+						        </div>
+						       </div>
+						    </div>
+			            </td>
+			          </tr>
+
+			    <tr ng-if="editMode.editStatus=='add'"> 
 			          
-			            <td  style="width:33%" ng-show="selectedBranchId && ProductCategory.length>0">
+			            <td  style="width:33%" ng-show="selectedBranchId && allCategories.length>0">
 			              		<span class="bold">Level 2 Category  </span>
 			              		<p style="margin-top: 10px;"><em ng-hide="ProductParentCategory">No Level 2 Categories </em></p>
 			              		<select ng-show="ProductParentCategory"  class=" form-control prodo-width50 prodo-validation" ng-model="outer.selectedParentCategory" ng-change="getLevel2Categories(outer.selectedParentCategory.categoryid);" ng-options="category as category.categoryname for category in ProductParentCategory" required  name="selectedParentCategory"></select>
 			              </td>
 
-			              <td style="width:33%" ng-show="selectedBranchId && ProductCategory.length>0">
+			              <td style="width:33%" ng-show="selectedBranchId && allCategories.length>0">
 			              		<span class="bold">Level 3 Category  </span>
 			              		<p style="margin-top: 10px;"><em ng-hide="ProductCategoryLevel2">No Level 3 Categories </em></p>
 			              		<select  ng-show="ProductCategoryLevel2" class=" form-control prodo-width50 prodo-validation" ng-model="outer.selectedCategory" ng-change="getLevel3Categories(outer.selectedCategory.categoryid);" ng-options="category as category.categoryname for category in ProductCategoryLevel2" required  name="selectedCategory"></select>
 			              </td>
 
-			               <td style="width:33%" ng-show="selectedBranchId && ProductCategory.length>0">
+			               <td style="width:33%" ng-show="selectedBranchId && allCategories.length>0">
 			              		<span class="bold"> Level 4 Category </span>
 
 			              		<p style="margin-top: 10px;"><em ng-hide="ProductCategoryLevel3">No Level 4 Categories </em></p>
@@ -207,7 +222,7 @@
 					 		 </div>
 		             </td>
 
-		               <tr ng-show="editMode.editStatus=='add'">
+		               <tr ng-if="editMode.editStatus=='add'">
 			           
 			            <td  colspan="2" > <span class="bold"> Lead Time </span>
 			             <input ng-model="product.leadtime.value"
@@ -231,9 +246,6 @@
 			               
 			            </td>
 			          </tr>
-
-		           </tr>
-
 
 		             <tr> 
 		             
