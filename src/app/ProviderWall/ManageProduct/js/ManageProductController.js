@@ -163,50 +163,67 @@ $scope.getCategoriesFromDB($rootScope.selectedproviderid);
 
       $scope.getCategories=function(providerid){
 
-         if($scope.ProductParentCategory[0]){
-          $scope.outer.selectedParentCategory=$scope.ProductParentCategory[0];
-          $scope.getLevel2Categories($scope.outer.selectedParentCategory.categoryid);
-         }else{
-          $scope.outer.selectedParentCategory='';
-         }
+         // if($scope.ProductParentCategory[0]){
+         //  $scope.outer.selectedParentCategory=$scope.ProductParentCategory[0];
+         //  $scope.getLevel2Categories($scope.outer.selectedParentCategory.categoryid);
+         // }else{
+         //  $scope.outer.selectedParentCategory='';
+         // }
 
-       
+            $scope.outer.selectedParentCategory='';
+            $scope.outer.selectedCategory={};
+            $scope.outer.category={};
+            $rootScope.selectedCategoryid="";
+            $scope.ProductConfigs=[];
+            $scope.ProductCategoryLevel2=[];
+            $scope.ProductCategoryLevel3=[];
      };
 
 
     $scope.getLevel2Categories=function(category){
-      $scope.ProductCategoryLevel2=[];
+      
+        $scope.outer.selectedCategory={};
+        $scope.ProductConfigs=[];
+        $scope.outer.category={};
+        $rootScope.selectedCategoryid="";
+        $scope.ProductCategoryLevel2=[];
+        $scope.ProductCategoryLevel3=[];
+
         for (var i = $scope.ProductCategory.length - 1; i >= 0; i--) {
           if(category==$scope.ProductCategory[i].parent){
             $scope.ProductCategoryLevel2.push($scope.ProductCategory[i]);
           }
         };
-           if($scope.ProductCategoryLevel2[0]){
-             $scope.outer.selectedCategory=$scope.ProductCategoryLevel2[0];
-             $scope.getLevel3Categories($scope.outer.selectedCategory.categoryid);
-           }
-           else{
-                  $scope.outer.selectedCategory={};
-           }
+           // if($scope.ProductCategoryLevel2[0]){
+           //   $scope.outer.selectedCategory=$scope.ProductCategoryLevel2[0];
+           //   $scope.getLevel3Categories($scope.outer.selectedCategory.categoryid);
+           // }
+           // else{
+           //        $scope.outer.selectedCategory={};
+           // }
       };
 
 
         $scope.getLevel3Categories=function(category){
-           $scope.ProductCategoryLevel3=[];
+            $scope.ProductConfigs=[];
+            $scope.outer.category={};
+            $rootScope.selectedCategoryid="";
+            $scope.ProductCategoryLevel3=[];
+
             for (var i = $scope.ProductCategoryLevel3All.length - 1; i >= 0; i--) {
               if(category==$scope.ProductCategoryLevel3All[i].parent){
                 $scope.ProductCategoryLevel3.push($scope.ProductCategoryLevel3All[i]);
               }
             };
-           if($scope.ProductCategoryLevel3[0]){
-             $scope.outer.category=$scope.ProductCategoryLevel3[0];
-             $rootScope.selectedCategoryid=$scope.ProductCategoryLevel3[0].categoryid;
-           }
-           else{
-                  $scope.outer.category={};
-                  $rootScope.selectedCategoryid="";
-                  $scope.ProductConfigs=[];
-           }
+           // if($scope.ProductCategoryLevel3[0]){
+           //   $scope.outer.category=$scope.ProductCategoryLevel3[0];
+           //   $rootScope.selectedCategoryid=$scope.ProductCategoryLevel3[0].categoryid;
+           // }
+           // else{
+           //        $scope.outer.category={};
+           //        $rootScope.selectedCategoryid="";
+           //        $scope.ProductConfigs=[];
+           // }
       };
 
 

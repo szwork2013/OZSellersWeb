@@ -26,6 +26,7 @@ angular.module('oz.OrderZappApp',['ui.router', 'ui.bootstrap', 'ngAnimate','text
   .controller('OZMainController', ['$scope', '$rootScope', '$state', '$log','UserSessionService', 'notify','ProviderServices',  function($scope, $rootScope, $state, $log, UserSessionService, notify,ProviderServices) {
     $state.transitionTo('home.start');
     $rootScope.selectedproviderid = '';
+    $rootScope.deliveryTimeSlots=[];
     $rootScope.selectedBranchId = '';
     $rootScope.orderConfigStatus=[]; 
     $rootScope.providers=[];
@@ -139,6 +140,7 @@ $scope.getProviders=function(){
     $scope.resetProviderData=function(){
       $rootScope.orderConfigStatus=[]; 
       $rootScope.providers=[];
+      $rootScope.deliveryTimeSlots=[];
       $rootScope.branches=[]; 
       $rootScope.provider={};
       $rootScope.branch={};
@@ -156,6 +158,7 @@ $scope.getProviders=function(){
       if (successData.success == undefined) {
        $rootScope.selectedBranchId="";
        $rootScope.branches = [];
+       $rootScope.deliveryTimeSlots=[];
        $rootScope.branch={};
         if(successData.error.code=='AL001'){
                     $rootScope.showModal();
@@ -167,6 +170,7 @@ $scope.getProviders=function(){
        if(successData.success.branches[0]){
         $rootScope.selectedBranchId=successData.success.branches[0].branchid;
         $rootScope.branch=successData.success.branches[0];
+        $rootScope.deliveryTimeSlots=successData.success.branches[0].deliverytimingslots;
        }
       }
      }, function (error) {
@@ -177,6 +181,7 @@ $scope.getProviders=function(){
   $scope.getBranchId=function(branch){
     console.log(branch);
           $rootScope.selectedBranchId=branch.branchid;
+          $rootScope.deliveryTimeSlots=branch.deliverytimingslots;
           $rootScope.$broadcast('change_in_branchid', $rootScope.selectedBranchId);
           $log.debug("bid "+ $rootScope.selectedBranchId);
 
