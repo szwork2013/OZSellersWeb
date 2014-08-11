@@ -31,7 +31,7 @@
 <div class="headingDiv"> 
 <span class="bold">Delivery Info</span>
  <div  class="pull-right">
-        <span class="bold" ng-show="order.deliverydate"> Seller Accepted Delivery : </span> <span ng-show="order.deliverydate" class=" oz-contentsRight">{{ getOrderDate(order.deliverydate ) }}</span>
+        <span class="bold" ng-show="order.deliverydate"> Seller Accepted Delivery : </span> <span ng-show="order.deliverydate" class=" oz-contentsRight">{{ order.deliverydate  | date:'dd-MM-yyyy ' }}  In {{order.prefdeltimeslot.from}}  To {{order.prefdeltimeslot.to}}</span>
       </div> 
 
 
@@ -41,14 +41,16 @@
   <div class="row margintop5 " ><!-- 2nd line -->
      
      
-     <div  class="col-md-6">
+     <div  class="col-md-5">
         <span class="bold">Order Created : </span> <span class=" oz-contentsRight">{{ getOrderDate(order.createdate )  }}</span>
       </div>
 
 
 
-      <div  class="col-md-6">
-        <span class="bold">Customer Requested Delivery : </span> <span class=" oz-contentsRight">{{ order.preferred_delivery_date | date:'dd-MM-yyyy '}}  in {{order.prefdeltimeslot.from}}  to {{order.prefdeltimeslot.to}}</span>
+      <div  class=" col-md-7 ">
+      <span class="pull-right">
+        <span class="bold">Customer Requested Delivery : </span> <span class=" oz-contentsRight">{{ order.preferred_delivery_date | date:'dd-MM-yyyy '}}  In {{order.deliverytimeslot.from}}  To {{order.deliverytimeslot.to}}</span>
+        </span>
       </div>
      
      <!--  <div  class="col-md-4">
