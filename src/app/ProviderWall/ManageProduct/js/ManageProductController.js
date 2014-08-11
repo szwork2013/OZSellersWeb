@@ -487,8 +487,8 @@ $scope.handleSaveProductResponse=function(data, status, headers, config){
          branchid:branchid,
          productid:productid
       }, function (successData) {
+        $scope.ErrMsging=0;
         if (successData.success == undefined) { //if not product
-
            $scope.handleGetProductError(successData.error);
         } else {
           $scope.handleGetProductSuccess(successData); 
