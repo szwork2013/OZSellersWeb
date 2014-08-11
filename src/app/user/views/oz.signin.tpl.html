@@ -11,7 +11,7 @@
 		</div>
 
 		<div id="oz-signin-input-group" class="input-group">
-	  	<input name="mobileno" type="text" class="form-control" ng-model="user.mobileno" ng-pattern="/^[0-9]{10}$/" placeholder="Mobile No." required />
+	  	<input name="mobileno" type="text" class="form-control" ng-model="user.mobileno" placeholder="Mobile No. or Username" required />
 		</div>
 
 		<div id="oz-signin-input-group" class="input-group">
@@ -29,9 +29,8 @@
 
 		<div id="oz-signin-input-group" ng-show="(signinForm.mobileno.$dirty && signinForm.mobileno.$invalid) || (signinForm.password.$dirty && signinForm.password.$invalid) || (signinForm.$invalid && signinForm.submitted)" style="background-color:black; opacity:.85;color:white;letter-spacing:1px; font-size:11px;" class="alert alert-danger">
       <ul class="error-ul">
-      	<li ng-show="(signinForm.mobileno.$dirty && signinForm.mobileno.$error.pattern) || (signinForm.mobileno.$invalid && signinForm.submitted)">Mobile No. must be in 10 digits only!
-        <li ng-show="(signinForm.mobileno.$dirty && signinForm.mobileno.$error.required) || (signinForm.mobileno.$error.required && signinForm.submitted)">Mobile No. is required!</li>
-        <li ng-show="(signinForm.password.$dirty && signinForm.password.$error.required)|| (signinForm.password.$invalid && signinForm.submitted)">Password is required!</li>
+        <li ng-show="(signinForm.mobileno.$dirty && signinForm.mobileno.$error.required) || (signinForm.mobileno.$error.required && signinForm.submitted)">Mobile No. or username is required.</li>
+        <li ng-show="(signinForm.password.$dirty && signinForm.password.$error.required)|| (signinForm.password.$invalid && signinForm.submitted)">Password is required.</li>
       </ul>
     </div> 
 

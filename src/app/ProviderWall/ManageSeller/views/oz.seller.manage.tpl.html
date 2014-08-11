@@ -112,6 +112,9 @@
 						<p style="font-size:12px;" class="text-muted">* We offer two payment options Cash-on-deliver (COD) and Payment by Card. COD is optional, all buyers get to pay through card by default. Please select COD if you offer this payment option to buyers.</p> 
 					 	<span>
 					 		COD&nbsp;<input type="checkbox" ng-model="addseller.cod">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					 	</span>
+					 	<span>
+					 		Online Payment&nbsp;<input type="checkbox" ng-model="addseller.online" ng-disabled="true">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					 	</span>			 	
 					</div>	
 
@@ -138,7 +141,14 @@
 					<img style="width:100%; height:100px;" ng-src="{{provider.providerlogo.image}}">
 				</div>
 				<div class="col-md-8">
-					<p style="text-transform:uppercase; font-size:18px; ">{{provider.providername}}</p>
+					<div style="margin:0px;" class="row">
+						<div style="padding:0px;" class="col-md-8">
+							<p style="text-transform:uppercase;"><span style="font-size:18px; " ng-bind="provider.providername"></span></p>
+						</div>
+						<div style="padding:0px; text-align:right;" class="col-md-4">
+							<p style="text-transform:uppercase; margin-top: 3px;"><span class="label label-primary" style="font-size:12px; " ng-bind="getTrialDate(provider.trial)"></span></p>
+						</div>
+					</div>
 					<p>{{provider.providercode}}</p>
 					<div ng-show="$index == currentSellerIndex" class="">
 					
@@ -288,7 +298,10 @@
 								<p style="font-size:12px;" class="text-muted">**We offer two payment options Cash-on-deliver (COD) and Payment by Card. COD is optional, all buyers get to pay through card by default. Please select COD if you offer this payment option to buyers.</p> 
 							 	<span>
 							 		COD&nbsp;<input type="checkbox" ng-model="editseller.paymentmode.cod">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							 	</span>			 	
+							 	</span>	
+							 	<span>
+							 		Online Payment&nbsp;<input type="checkbox" ng-model="editseller.paymentmode.online" ng-disabled="true">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							 	</span>		 	
 							</div>
 						</dl>		
 
