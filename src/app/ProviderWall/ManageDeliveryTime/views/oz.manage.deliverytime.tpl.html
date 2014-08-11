@@ -4,7 +4,7 @@
    <input type = 'text' class = 'form-control' ng-model = 'search' placeholder = 'Search products or categories from the list '>
 
 	<div  ng-repeat = 'list in contentOfAllProducts | filter : search' style = 'margin : 20px;border : 1px solid #ccc; border-radius : 5px;' ng-if = 'list.productleadtime.length > 0'>
-      <div style = 'min-height : 56px;height : auto'>
+      <div style = 'min-height : 69px;height : auto'>
 		  <div style = 'width : 50%; float:left'> 
 		     	 <h5 style = 'font-size :17px '>Category Name : <span ng-bind = 'list.category.categoryname'></span>
 		         </h5>
