@@ -181,7 +181,14 @@ $scope.getCategoriesFromDB($rootScope.selectedproviderid);
 
 
     $scope.getLevel2Categories=function(category){
-      $scope.ProductCategoryLevel2=[];
+      
+        $scope.outer.selectedCategory={};
+        $scope.ProductConfigs=[];
+        $scope.outer.category={};
+        $rootScope.selectedCategoryid="";
+        $scope.ProductCategoryLevel2=[];
+        $scope.ProductCategoryLevel3=[];
+
         for (var i = $scope.ProductCategory.length - 1; i >= 0; i--) {
           if(category==$scope.ProductCategory[i].parent){
             $scope.ProductCategoryLevel2.push($scope.ProductCategory[i]);
@@ -198,7 +205,11 @@ $scope.getCategoriesFromDB($rootScope.selectedproviderid);
 
 
         $scope.getLevel3Categories=function(category){
-           $scope.ProductCategoryLevel3=[];
+            $scope.ProductConfigs=[];
+            $scope.outer.category={};
+            $rootScope.selectedCategoryid="";
+            $scope.ProductCategoryLevel3=[];
+
             for (var i = $scope.ProductCategoryLevel3All.length - 1; i >= 0; i--) {
               if(category==$scope.ProductCategoryLevel3All[i].parent){
                 $scope.ProductCategoryLevel3.push($scope.ProductCategoryLevel3All[i]);
