@@ -46,49 +46,37 @@
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-              <h4 class="modal-title" id="myModalLabel"> Select Delivery Date</h4>
+              <h4 class="modal-title" id="myModalLabel"> Select Delivery Slot</h4>
             </div>
             <div class="modal-body">
-          
+
             <div ng-show="orderPrefDate < todaysDate" class="row" style="padding:10px; padding-left:20px;" tooltip="This option is disabled as today's date is more than customers preferred delivery date." tooltip-placement="top">
               <input type="radio" ng-model="deliveryOption" value="pref" disabled >
-              <span style="color:gray"> Accept Preferred Delivery Date - {{ getOrderDate(order.preferred_delivery_date )   }}</span>
+              <span style="color:gray"> Accept Preferred Delivery Date  - {{order.preferred_delivery_date | date:'dd-MM-yyyy ' }} On {{ order.prefdeltimeslot.from }} To {{ order.prefdeltimeslot.to }}</span>
             </div> 
 
             <div class="row" style="padding:10px; padding-left:20px;" ng-hide="orderPrefDate < todaysDate ">
-              <input type="radio" ng-model="deliveryOption" value="pref"  > Accept Preferred Delivery Date - {{ getOrderDate(order.preferred_delivery_date )   }}
+              <input type="radio" ng-model="deliveryOption" value="pref"  >Accept Preferred Delivery Date  - {{order.preferred_delivery_date | date:'dd-MM-yyyy ' }} On {{ order.prefdeltimeslot.from }} To {{ order.prefdeltimeslot.to }}
             </div> 
              <div class="row" style="padding:10px; padding-left:20px;">
-               <input type="radio" ng-model="deliveryOption" value="custom" > Select New Delivery Date
+               <input type="radio" ng-model="deliveryOption" value="custom" > Select New Delivery Date 
             </div> 
 
 
 
-            <div ng-show="deliveryOption=='custom'" style="margin:10px;">
-            <div class="row">
-              <div class="col-md-6">
-               <span class="bold">Date </span>
-              </div>
-              <div class="col-md-6">
-                 <span class="bold">Time </span>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-               <div class="input-group" style="margin-top:35px;">
-                <span class="input-group-addon"> <i class="fa fa-calendar"></i></span>
+            <div ng-show="deliveryOption=='custom'" style="margin:10px; margin-left:30px;"><!-- deliveryTimeSlots -->
 
-                 <input id="delivery_date"  type="text" placeholder="Select delivery date" ng-model="delivery_date" class="form-control  oz-datepickerTextWidth"  datepicker-popup="{{format}}"  is-open="opened1" min="todaysDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" required close-text="Close">
-               
-            </div>
-              </div>
-              <div class="col-md-6">
-                  <timepicker ng-model="delivery_date" show-meridian="ismeridian" style = 'width:100px'></timepicker> 
-              </div>
-            </div>
+             <input id="delivery_date"  type="text" placeholder="Select delivery date" ng-model="delivery_date.date" class="form-control  oz-datepickerTextWidth"  datepicker-popup="{{format}}"  is-open="opened1" min="todaysDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" required close-text="Close"><br/>
+            
+            <span ng-show="delivery_date.date">Select New Delivery Slot
+               <p ng-repeat="ds in deliveryTimeSlots" >
+                 <input type="radio" ng-model="delivery_date.newDeliverySlot" ng-value="ds" > {{ds.from}} To {{ds.to}} 
+               </p>
+             </span>
+                
             </div>
             <a type="button" class="btn btn-default margin-left450" ng-click="deliveryOption='';" data-dismiss="modal"> <i class="glyphicon glyphicon-remove"></i>  &nbsp; Cancel</a>
-            <a class="btn btn-primary  "  ng-click="onDateSelected(delivery_date,deliveryOption,order.preferred_delivery_date)">Accept </a>
+            <a class="btn btn-primary  "  ng-click="onDateSelected(delivery_date,deliveryOption,order)">Accept </a>
            </div>
           </div>
         </div>

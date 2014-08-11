@@ -27,7 +27,7 @@ return {
 
   function ($scope, $log, ProviderServices, $rootScope, $http) {
     $scope.tabFortrack={};
-    $scope.delivery_date;
+    $scope.delivery_date={};
     $scope.todaysDate=moment();
     var t_status;
     var t_orderid;
@@ -71,21 +71,25 @@ $scope.fromNow = function (time) {
 
 
 
-$scope.onDateSelected=function(delivery_date,deliveryOption,preferred_delivery_date){
- var date;
+$scope.onDateSelected=function(delivery_date,deliveryOption,order){
+ var date={};
+ console.log(delivery_date);
      if(deliveryOption=='custom'){
-      date=delivery_date.toUTCString();
+      // delivery_date.date=delivery_date.date.toUTCString();
+      date=delivery_date;
+      
      }else if(deliveryOption=='pref'){
-      date=preferred_delivery_date;
+      date={'date':order.preferred_delivery_date,
+             'newDeliverySlot':order.prefdeltimeslot  };
      }
-  if(date==null || date==undefined || date == ''){
-      $rootScope.OZNotify("Please Select Delivery Date", 'error');  
+  if(date.date==null || date.date==undefined || date.date == '' || date.newDeliverySlot==null || date.newDeliverySlot==undefined || date.newDeliverySlot == ''){
+      $rootScope.OZNotify("Please Select Delivery Date & Time Slot", 'error');  
   }
   else{
     $('#calenderModal').modal('hide');
     $scope.delivery_date="";
     $scope.deliveryOption='';
-    console.log("date = "+ date);
+    console.log( date);
     $scope.callServiceChangeStatusApprove(t_status,t_order,date);
   }
 };
@@ -95,7 +99,7 @@ $scope.callServiceChangeStatusApprove=function(status,order,date){
   
     $http({
           method: 'GET',
-          url: 'api/manageorder/'+order.suborderid+'?action='+status+'&deliverydate='+date,
+          url: 'api/manageorder/'+order.suborderid+'?action='+status+'&deliverydate='+date.date+'&deliverytimeslot='+date.newDeliverySlot.from+'-'+date.newDeliverySlot.to,
          }).success(function(data, status, headers, cfg){
             $scope.handleChangeStatus(data);
          }).error(function(data, status, headers, cfg){
