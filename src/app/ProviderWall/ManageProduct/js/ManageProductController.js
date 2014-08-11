@@ -164,7 +164,7 @@ $scope.getCategoriesFromDB($rootScope.selectedproviderid);
       $scope.getCategories=function(providerid){
 
          // if($scope.ProductParentCategory[0]){
-         //  $scope.outer.selectedParentCategory=$scope.ProductParentCategory[0];
+          // $scope.outer.selectedParentCategory=$scope.ProductParentCategory[0];
          //  $scope.getLevel2Categories($scope.outer.selectedParentCategory.categoryid);
          // }else{
          //  $scope.outer.selectedParentCategory='';
@@ -295,6 +295,15 @@ $scope.handleChangeLogo=function(data, status, headers, config){
 };
 
     $scope.enableEditor = function () {
+     if($scope.editMode.editStatus=='update'){
+       // $scope.getCategories($rootScope.selectedproviderid);
+       $scope.outer.selectedParentCategory=$scope.product.category.ancestors[1];
+       $scope.outer.selectedCategory=$scope.product.category.ancestors[2];
+       $scope.outer.category={'categoryid':$scope.product.category.categoryid,'categoryname':$scope.product.category.categoryname}
+       $rootScope.selectedCategoryid=$scope.product.category.categoryid;
+       console.log($scope.outer.selectedParentCategory);
+     }
+
      $scope.tempProduct = angular.copy( $scope.product);
      $scope.editMode.editorEnabled = true;
      if($scope.editMode.editStatus=='add'){
@@ -387,6 +396,7 @@ $scope.addProduct = function (editStatus) {
     $scope.productUpdated={
       productname:$scope.product.productname,
       productdescription:$scope.product.productdescription,
+      categoryid: $rootScope.selectedCategoryid,
       productcode:$scope.product.productcode,
       foodtype:$scope.product.foodtype,
       max_weight:$scope.product.max_weight,
