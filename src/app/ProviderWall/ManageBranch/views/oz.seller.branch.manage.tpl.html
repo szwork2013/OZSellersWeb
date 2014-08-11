@@ -95,7 +95,7 @@
 		     	<div style="margin:0px;" class="row">
 		     		<div style="padding:0px;" class="col-md-10">
 			     		<h5>Working Hours:</h5>
-			     		<p style="font-size:12px;" class="text-info"><b>Note:</b> The time slot format must start from 0-23 or 00-23 for hours and follow by 00-59 for minutes.</p>
+			     		<p style="font-size:16px;" class="text-danger"><b>Note:</b> Please enter working time in 24 hours format.</p>
 			     	</div>     		
 		     	</div>
 		     	
@@ -137,7 +137,7 @@
 			     		<h5>Delivery Time Slots:</h5>
 			     		<p style="font-size:12px;" class="text-muted">**It defines the time slot when delivery or pickup of products will occur. By default you have to provide a minimum of two time slots, and more time slots can be added as required. </p>
 
-			     		<p style="font-size:12px;" class="text-info"><b>Note:</b> The time slot format must start from 0-23 or 00-23 for hours and follow by 00-59 for minutes.</p>
+			     		<p style="font-size:16px;" class="text-danger"><b>Note:</b> Please enter the delivery time slots in a 24 hours format.</p>
 			     	</div>
 			     	<div class="col-md-1" style="text-align:right;">
 			     		<h5><a href="" class="pull-right" ng-click="addSlots()"><i class="fa fa-plus"></i></a></h5>
@@ -420,7 +420,7 @@
 
 									<div id="oz-signup-input-group" class="input-group">
 									  <dt>Working Hours</dt>
-									  <dd><p style="font-size:12px;" class="text-info"><b>Note:</b> The time slot format must start from 0-23 or 00-23 for hours and follow by 00-59 for minutes.</p></dd>
+									  <dd><p style="font-size:16px;" class="text-danger"><b>Note:</b> Please enter working time in a 24 hours format.</p></dd>
 									  <dd> <h6>From:</h6>
 											<input type = 'text' class = 'form-control' placeholder = 'HH' style = 'width : 15%' ng-model = 'edit.from.hours' name = 'editOperationStartHs' ng-pattern="/^([01]?[0-9]|2[0-3])$/" required>
                       <input type = 'text' class = 'form-control' placeholder = 'MM' style = 'width : 15%' ng-model = 'edit.from.minutes' name = 'editOperationStartMs' ng-pattern="/^[0-5][0-9]$/" required>
@@ -441,7 +441,7 @@
 							     		<div style="padding:0px;" class="col-md-11">
 								     		<h5><b>Delivery Time Slots:</b></h5>
 								     		<p style="font-size:12px;" class="text-muted">**It defines the time slot when delivery or pickup of products will occur. By default you have to provide a minimum of two time slots, and more time slots can be added as required. </p>
-								     		<p style="font-size:12px;" class="text-info"><b>Note:</b> The time slot format must start from 0-23 or 00-23 for hours and follow by 00-59 for minutes.</p>
+								     		<p style="font-size:16px;" class="text-danger"><b>Note:</b> Please enter the delivery time slots in a 24 hours format.</p>
 								     	</div>
 								     	<div class="col-md-1" style="text-align:right;">
 								     		<h5><a href="" class="pull-right" ng-click="addDeliverySlots()"><i class="fa fa-plus"></i></a></h5>
