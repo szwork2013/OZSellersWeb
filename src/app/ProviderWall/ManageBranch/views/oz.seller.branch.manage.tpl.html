@@ -10,13 +10,12 @@
 		</div>
 	</div>
 
-	<div ng-show="((providers_branch_list.length == 0 && !addnewbranch) || (providers_branch_list.length == 0))" style="padding:40px; opacity: .8; margin:40px; margin-bottom: 1px; color: rgb(80, 74, 74);background-color:#F1F1F1; letter-spacing: 1px;" class="row">
+	<div ng-show="((providers_branch_list.length == 0 && !addnewbranch && selectedprovider.status == 'init') || (providers_branch_list.length == 0 && selectedprovider.status == 'init'))" style="padding:40px; opacity: .8; margin:40px; margin-bottom: 10px; color: rgb(80, 74, 74);background-color:#F1F1F1; letter-spacing: 1px;" class="row">
     <div class="col-md-12">
       <div class="no-message">
         <center>
-          <p style="font-size: 14px;"><b>You have not added any branch to {{selectedprovider.providername}}.</b></p>      
-          <p style="font-size: 12px;">To start managing please add atleast one branch. Your list of branches and other related information will be shown here.</p>
-          <p class="text-warning" style="font-size:14px;"><b>Note:&nbsp; Your seller account is not yet activated. To activate your account, please contact OrderZapp support team. Once your account is activated then only you will be able to add branch to your seller account.</b></p>
+          <p style="font-size: 14px;"><b>No branch exists for your seller account. </b></p>  
+          <p class="text-danger" style="font-size:13px;"><b>Note:&nbsp; The seller account should be activated to add any branches/stores/outlets. Please contact OrderZapp support team to activate your seller account.</b></p>
         </center>
       </div>
     </div>
@@ -430,7 +429,7 @@
 
 								  		<dd> <h6>To:</h6>
 												<input type = 'text' class = 'form-control' placeholder = 'HH' style = 'width : 15%' ng-model = 'edit.to.hours' required name = 'editOperationEndHs' ng-pattern="/^([01]?[0-9]|2[0-3])$/">
-							          <input type = 'text' class = 'form-control' placeholder = 'MM' style = 'width : 15%' ng-model = 'edit.to.minutes' required name = 'editOperationEndMs' ng-pattern="/^[0-5][0-9]$/" >
+							          <input type = 'text' class = 'form-control' placeholder = 'MM' style = 'width : 15%' ng-model = 'edit.to.minutes' required name = 'editOperationEndMs' ng-pattern="/^[0-9]|[0-5][0-9]$/" >
 							                    				                     
 							          <small style="color:red;display:inherit" ng-show="(((form.editBranchForm.editOperationEndHs.$dirty && form.editBranchForm.editOperationEndMs.$dirty) && (form.editBranchForm.editOperationEndHs.$invalid || form.addBranchForm.editOperationEndMs.$invalid)) || ((form.editBranchForm.editOperationEndHs.$invalid || form.editBranchForm.editOperationEndMs.$invalid) && form.editBranchForm.submitted))">*Please enter valid 'To' delivery hours and minutes [only numbers are allowed and hours should be in range [0-23]]</small>
 								  		</dd>
@@ -455,14 +454,14 @@
 							     			<div class="row">
 							     				<div class="col-md-2" style="font-size:12px;">From:&nbsp;</div>
 							     				<div class="col-md-5"><input type = 'text' class = 'form-control' placeholder = 'HH' ng-model = 'slot.from.hours' name = 'editfromtimeinhours' ng-pattern="/^([01]?[0-9]|2[0-3])$/" required></div>
-							     				<div class="col-md-5"><input type = 'text' class = 'form-control' placeholder = 'MM' ng-model = 'slot.from.minutes' name = 'editfromtimeinminutes' ng-pattern="/^[0-5][0-9]$/" required></div>
+							     				<div class="col-md-5"><input type = 'text' class = 'form-control' placeholder = 'MM' ng-model = 'slot.from.minutes' name = 'editfromtimeinminutes' ng-pattern="/^[0-9]|[0-5][0-9]$/" required></div>
 							     			</div>
 							     		</div>
 							     		<div class="col-md-5">
 							     			<div class="row">
 							     				<div class="col-md-2" style="font-size:12px;">To:</div>
 							     				<div class="col-md-5"><input type = 'text' class = 'form-control' placeholder = 'HH' ng-model = 'slot.to.hours' name = 'edittotimeinhours' ng-pattern="/^([01]?[0-9]|2[0-3])$/" required></div>
-							     				<div class="col-md-5"><input type = 'text' class = 'form-control' placeholder = 'MM' ng-model = 'slot.to.minutes' name = 'edittotimeinminutes' ng-pattern="/^[0-5][0-9]$/" required></div>
+							     				<div class="col-md-5"><input type = 'text' class = 'form-control' placeholder = 'MM' ng-model = 'slot.to.minutes' name = 'edittotimeinminutes' ng-pattern="/^[0-9]|[0-5][0-9]$/" required></div>
 							     			</div>
 							     		</div>
 							     		<div class="col-md-2">

@@ -37,7 +37,7 @@ angular.module('oz.UserApp')
     $scope.jsonUserSigninData = function() {
       var userSigninData = 
         {
-          'mobileno' : '91'+$scope.user.mobileno,
+          'mobileno' : $scope.user.mobileno,
           'password' : $scope.user.password
         };
       return JSON.stringify(userSigninData); 
@@ -110,7 +110,7 @@ angular.module('oz.UserApp')
     {
       var userData = 
         {
-         'mobileno' : '91'+$scope.forgotpassword.mobileno 
+         'mobileno' : $scope.forgotpassword.mobileno 
         }
       return JSON.stringify(userData); 
     }

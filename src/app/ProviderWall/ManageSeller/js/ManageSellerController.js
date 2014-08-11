@@ -84,6 +84,15 @@ angular.module('oz.ProviderApp')
 
     $scope.showSellerDetail = false;
 
+    $scope.getTrialDate = function(trialdate){
+      if (trialdate && trialdate.expirydate) {
+        var planExpiryDate = moment.utc(moment(trialdate.expirydate));
+        var todaysDate = moment.utc(moment());
+        $scope.remainingDaysCount = planExpiryDate.diff(todaysDate, 'days'); 
+        return 'Trial' + ' (' + ' ' + $scope.remainingDaysCount + ' ' + 'days remaining )';
+      }
+    }
+
     $scope.viewSellerDetail = function(index){
       if (index !== null) {
         $scope.currentSellerIndex = index;
