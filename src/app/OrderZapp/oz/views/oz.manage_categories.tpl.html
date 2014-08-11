@@ -5,7 +5,7 @@
    <table class = 'table table-hover'>
        <tr>
            <td style = 'width : 70%'>
-                 <input type= text class = 'form-control' typeahead="list as list.categoryname for list in arrayOfCategoryI | filter:$viewValue" ng-model = 'levelOneIds' placeholder = 'Level one ' ng-click = 'refreshArrayLists();'>
+                 <input type= text class = 'form-control' typeahead="list as list.categoryname for list in arrayOfCategoryI | filter:$viewValue" ng-model = 'levelOneIds' placeholder = 'Level one ' ng-focus = 'refreshArrayLists();'>
            </td>
            <td style = 'width : 30%'>
                  <button class = 'btn btn-info btn-sm' ng-click = 'addToLavelFirst();'>Add To Level One</button>
@@ -14,7 +14,7 @@
        
        <tr>
            <td style = 'width : 70%'>
-                 <input type= text class = 'form-control' typeahead="list3 as list3.categoryname for list3 in arrayOfCategoryII | filter:$viewValue" ng-model = 'levelTwoIds' ng-click = 'fetchLevelIIContent()' placeholder = 'Level two ' >
+                 <input type= text class = 'form-control' typeahead="list3 as list3.categoryname for list3 in arrayOfCategoryII | filter:$viewValue" ng-model = 'levelTwoIds' ng-focus = 'fetchLevelIIContent()' placeholder = 'Level two ' >
            </td>
            <td style = 'width : 30%'>
                  <button class = 'btn btn-info btn-sm' ng-click = 'addToSecLevel()'>Add To Level Two</button>
@@ -23,7 +23,7 @@
 
        <tr>
            <td style = 'width : 70%'>
-                 <input type= text class = 'form-control' typeahead="list4 as list4.categoryname for list4 in arrayOfCategoryIII | filter:$viewValue" ng-model = 'levelThreeIds' ng-click = 'fetchLevelThreeContent()' placeholder = 'Level three '>
+                 <input type= text class = 'form-control' typeahead="list4 as list4.categoryname for list4 in arrayOfCategoryIII | filter:$viewValue" ng-model = 'levelThreeIds' ng-focus = 'fetchLevelThreeContent()' placeholder = 'Level three '>
            </td>
            <td style = 'width : 30%'>
                  <button class = 'btn btn-info btn-sm' ng-click = 'addToLevelThree()'>Add To Level Three</button>
@@ -32,14 +32,14 @@
 
        <tr>
            <td style = 'width : 70%'>
-                 <input type= text class = 'form-control' typeahead="list5 as list5.categoryname for list5 in arrayOfCategoryIV | filter:$viewValue" ng-model = 'levelFourIds' ng-click = 'fetchLevelFourContent()' placeholder = 'Level Four '>
+                 <input type= text class = 'form-control' typeahead="list5 as list5.categoryname for list5 in arrayOfCategoryIV | filter:$viewValue" ng-model = 'levelFourIds' ng-focus = 'fetchLevelFourContent()' placeholder = 'Level Four '>
            </td>
            <td style = 'width : 30%'>
                  <button class = 'btn btn-info btn-sm' ng-click = 'addToLevelFour()'>Add To Level Four</button>
            </td>
        </tr>   
     </table>
-
+    <h4> Category : <span ng-bind = 'categoryLevel'></span></h4>
     <table class = 'table table-hover'>
         <tr ng-repeat = 'list in category'>
             <td ng-bind = 'list.categoryname' ng-hide = 'list.editing === true'></td>
