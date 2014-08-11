@@ -57,6 +57,8 @@ angular.module('oz.UserApp')
 
     $scope.categoryLevelIV = [];
 
+    $scope.categoryLevel = '';
+
     var cleanUpEventGotAllCategories = $scope.$on("gotAllCategoriesContent",function(event,data){
 		    if(data.error)
 		    {
@@ -93,6 +95,7 @@ angular.module('oz.UserApp')
            
                     }
 		          $scope.category = $scope.arrayOfCategoryI;
+              $scope.categoryLevel = 'Level I';
 		    } 
     });
 
@@ -118,6 +121,7 @@ angular.module('oz.UserApp')
                 }
                 $scope.arrayOfCategoryII = $scope.tempArray;
                 $scope.category = $scope.arrayOfCategoryII;
+                $scope.categoryLevel = 'Level II';
     	}
     };
 
@@ -137,7 +141,7 @@ angular.module('oz.UserApp')
     			}
     		}
     		$scope.arrayOfCategoryIII = $scope.tempArray;
-    		$scope.category = $scope.arrayOfCategoryIII;
+    		$scope.category = $scope.arrayOfCategoryIII;$scope.categoryLevel = 'Level III';
     	}
     };
     $scope.fetchLevelFourContent = function()
@@ -156,7 +160,7 @@ angular.module('oz.UserApp')
           }
         }
         $scope.arrayOfCategoryIV = $scope.tempArray;
-        $scope.category = $scope.arrayOfCategoryIV;
+        $scope.category = $scope.arrayOfCategoryIV; $scope.categoryLevel = 'Level IV';
       }
     };
 
@@ -250,6 +254,7 @@ angular.module('oz.UserApp')
     	  OZWallService.getAllCategories();
     	  $scope.levelTwoIds = ''; $scope.levelOneIds = '';
     	  $scope.levelThreeIds = '';
+        $scope.levelFourIds = '';
     };
 
     $scope.edit = function(list)
