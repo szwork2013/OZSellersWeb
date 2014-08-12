@@ -79,34 +79,16 @@ $scope.fromNow = function (time) {
   }
 };
 
-// for add
-// var timeslots = [];
-//       for (var i = 0; i < $scope.addbranch.timeslots.length; i++) {
-//         if (parseInt($scope.addbranch.timeslots[i].from.hours) < parseInt($scope.addbranch.timeslots[i].to.hours)) {
-//           var from_hrs = parseInt($scope.addbranch.timeslots[i].from.hours);
-//           var from_mins = Math.round( (($scope.addbranch.timeslots[i].from.minutes)/60) *100)/100;
-//           var from_timeslot = from_hrs + from_mins;
-//           var to_hrs = parseInt($scope.addbranch.timeslots[i].to.hours);
-//           var to_mins = Math.round( (($scope.addbranch.timeslots[i].to.minutes)/60) *100)/100;
-//           var to_timeslot = to_hrs + to_mins;
-//           timeslots.push({from:from_timeslot, to: to_timeslot});
-//         } 
-
-// for display
- // $scope.editTimingSlots = []; 
-        // for (var i = 0; i < branch.deliverytimingslots.length; i++) {
-        //   var from_slot = branch.deliverytimingslots[i].from;
-        //   var from_slot_hours = parseInt(from_slot);
-        //   var from_slot_minutes = Math.round((from_slot - from_slot_hours) * 60);
-        //   var to_slot = branch.deliverytimingslots[i].to;
-        //   var to_slot_hours = parseInt(to_slot);
-        //   var to_slot_minutes = Math.round((to_slot - to_slot_hours) * 60);
-        //   $scope.editTimingSlots.push({'from':{'hours':from_slot_hours, 'minutes': from_slot_minutes}, 'to': {'hours': to_slot_hours, 'minutes': to_slot_minutes}});
-        // };
 
 $scope.changeTimeSlotDisplayFormat= function(slot){
     var slot_hours = parseInt(slot);
     var slot_minutes = Math.round((slot - slot_hours) * 60);
+       
+       var output = slot_minutes + ''; //2 digit no 
+       while (output.length < 2) {
+        output = '0' + output;
+       }
+    slot_minutes=output;
     return slot_hours+'.'+slot_minutes;
 }
 
