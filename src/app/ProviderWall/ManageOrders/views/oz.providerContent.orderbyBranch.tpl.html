@@ -46,23 +46,23 @@
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-              <h4 class="modal-title" id="myModalLabel"> Select Delivery Slot</h4>
+              <h4 class="modal-title" id="myModalLabel"> Select Delivery Time Slot</h4>
             </div>
             <div class="modal-body">
 
             <div ng-show="(orderPrefDate | date:'dd-MM-yyyy')  == ( todaysDate1 | date:'dd-MM-yyyy')  "> 
 
-            <div ng-show="todaysDate1.getHours() < order.prefdeltimeslot.from" class="row" style="padding:10px; padding-left:20px;" >
+            <div  ng-show="todaysDate1.getHours() < order.prefdeltimeslot.to" class="row" style="padding:10px; padding-left:20px;" >
              <span >
               <input type="radio" ng-model="deliveryOption" value="pref"  >
-              <span > Accept Preferred Delivery Date  - [{{order.preferred_delivery_date | date:'dd-MM-yyyy ' }}] And On Time Slot - {{changeTimeSlotDisplayFormat( order.prefdeltimeslot.from ) }} To  {{ changeTimeSlotDisplayFormat(order.prefdeltimeslot.to) }}</span>
+              <span >  Customer Requested Delivery Date  - [{{order.preferred_delivery_date | date:'dd-MM-yyyy ' }}] , Time Slot - {{changeTimeSlotDisplayFormat( order.prefdeltimeslot.from ) }} To  {{ changeTimeSlotDisplayFormat(order.prefdeltimeslot.to) }}</span>
               </span>
             </div> 
 
-              <div  ng-hide="todaysDate1.getHours() < order.prefdeltimeslot.from" class="row" style="padding:10px; padding-left:20px;" tooltip="This option is disabled as today's date is more than customers preferred delivery date." tooltip-placement="top">
+              <div  ng-hide="todaysDate1.getHours() < order.prefdeltimeslot.to" class="row" style="padding:10px; padding-left:20px;" tooltip="This option is disabled as today's date is more than customers preferred delivery date." tooltip-placement="top">
               <span >
               <input type="radio" ng-model="deliveryOption" value="pref" disabled >
-              <span style="color:gray"> Accept Preferred Delivery Date  - [{{order.preferred_delivery_date | date:'dd-MM-yyyy ' }}] And On Time Slot - {{ changeTimeSlotDisplayFormat(order.prefdeltimeslot.from )}}  To  {{ changeTimeSlotDisplayFormat( order.prefdeltimeslot.to) }}</span>
+              <span style="color:gray">  Customer Requested Delivery  Date  - [{{order.preferred_delivery_date | date:'dd-MM-yyyy ' }}] , Time Slot - {{ changeTimeSlotDisplayFormat(order.prefdeltimeslot.from )}}  To  {{ changeTimeSlotDisplayFormat( order.prefdeltimeslot.to) }}</span>
               </span>
             </div> 
 
@@ -72,18 +72,18 @@
             <div ng-show="(orderPrefDate | date:'dd-MM-yyyy')  < ( todaysDate1 | date:'dd-MM-yyyy' ) ">
             <div  class="row" style="padding:10px; padding-left:20px;" tooltip="This option is disabled as today's date is more than customers preferred delivery date." tooltip-placement="top">
              <span >  <input type="radio" ng-model="deliveryOption" value="pref" disabled >
-              <span style="color:gray"> Accept Preferred Delivery Date  - [{{order.preferred_delivery_date | date:'dd-MM-yyyy ' }}] And On Time Slot - {{changeTimeSlotDisplayFormat( order.prefdeltimeslot.from) }} To {{changeTimeSlotDisplayFormat( order.prefdeltimeslot.to )}}</span>
+              <span style="color:gray">  Customer Requested Delivery Date  - [{{order.preferred_delivery_date | date:'dd-MM-yyyy ' }}] , Time Slot - {{changeTimeSlotDisplayFormat( order.prefdeltimeslot.from) }} To {{changeTimeSlotDisplayFormat( order.prefdeltimeslot.to )}}</span>
               </span>
             </div> 
             </div>
 
             <div class="row" style="padding:10px; padding-left:20px;" ng-hide="((orderPrefDate | date:'dd-MM-yyyy') <  (todaysDate1  | date:'dd-MM-yyyy')) || ((orderPrefDate | date:'dd-MM-yyyy')  == ( todaysDate1 | date:'dd-MM-yyyy') ) ">
-             <span >  <input type="radio" ng-model="deliveryOption" value="pref"  >Accept Preferred Delivery Date  - [{{order.preferred_delivery_date | date:'dd-MM-yyyy ' }}] And On Time Slot - {{changeTimeSlotDisplayFormat( order.prefdeltimeslot.from) }} To {{ changeTimeSlotDisplayFormat(order.prefdeltimeslot.to )}}
+             <span >  <input type="radio" ng-model="deliveryOption" value="pref"  > Customer Requested Delivery Date  - [{{order.preferred_delivery_date | date:'dd-MM-yyyy ' }}] , Time Slot - {{changeTimeSlotDisplayFormat( order.prefdeltimeslot.from) }} To {{ changeTimeSlotDisplayFormat(order.prefdeltimeslot.to )}}
              </span>
             </div> 
              <div class="row" style="padding:10px; padding-left:20px;">
              <span >
-               <input type="radio" ng-model="deliveryOption" value="custom" > Select New Delivery Date 
+               <input type="radio" ng-model="deliveryOption" value="custom" >  New Delivery Date 
              </span>
              <span ng-show="deliveryOption=='custom'" >&nbsp; &nbsp; <a  href="" ng-init="showCal=0" ng-click="showCal=1"> [{{delivery_date.date | date:'dd-MM-yyyy'}} ]</a>
                
@@ -113,7 +113,7 @@
                <p ng-repeat="ds in deliveryTimeSlots" >
              
                <span ng-show="(delivery_date.date | date:'dd-MM-yyyy' )== (todaysDate1 |  date:'dd-MM-yyyy') "> 
-                 <span ng-show=" todaysDate1.getHours() < ds.from " >
+                 <span ng-show=" todaysDate1.getHours() < ds.to " >
                   <input  type="radio" ng-model="delivery_date.newDeliverySlot" ng-value="ds" > &nbsp; &nbsp; {{changeTimeSlotDisplayFormat(ds.from)}}&nbsp; &nbsp; <span style="color:gray">|</span>  &nbsp; &nbsp; {{changeTimeSlotDisplayFormat(ds.to)}} 
                   </span>
                </span>
