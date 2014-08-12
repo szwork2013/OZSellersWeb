@@ -4,7 +4,7 @@
   * Author: Bhagyashri Jangam
   * 
   */-->
-<li ng-repeat="dayorder in orders">
+<li ng-repeat="dayorder in orders  |  filter:  search">
 <a href="" class="prodo-cursor" ng-init="showorders=true" ng-click="showorders = showorders === false ? true: false;">
  <div class="   orderdate" ng-show="(tabForOrders.recieved ==true || tabForOrders.approval == true) && dayorder.deliverydatetime" ><!--  2nd line -->
         <span class="bold" ng-show="tabForOrders.recieved == true ">Preferred  Delivery Date : </span>
@@ -18,7 +18,7 @@
   </div>
  </a> 
   <ul class="listStyle" ng-show="showorders ==true">
-    <li  ng-repeat="order in dayorder.suborders" class="todoitem">
+    <li  ng-repeat="order in dayorder.suborders |  filter: search " ng-show="dayorder.suborders.length>0"   class="todoitem">
        <div ng-include="'../ProviderWall/ManageOrders/views/oz.OrderContent.tpl.html'"></div>
     </li>
   </ul>

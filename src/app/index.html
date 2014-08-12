@@ -30,10 +30,10 @@
 	
 	</head>
 	<body id="body" ng-controller="OZMainController">
-		<div class="oz-navbar navbar navbar-inverse navbar-static-top" role="navigation">
+		<div class="oz-fixedHeader oz-navbar navbar navbar-inverse navbar-static-top" role="navigation">
   		<div id="oz-navbar-container" class="">
    			<a id="oz-navbar-brand" class="navbar-brand" href="#">
-          <img style="width:40px;" src="assets/images/orderzapp.png">&nbsp;sellers
+          <img style="width:2.500em;" src="assets/images/orderzapp.png">&nbsp;sellers
    			</a>
 
         <ul id="oz-navbar-ul" ng-cloak class="oz-navbar-li nav navbar-nav navbar-right" ng-show="usersession.isLoggedIn">
@@ -45,14 +45,14 @@
               <div class="form-group">
                 <div ng-show="providers">
                   <span> Seller  </span>
-                  <select ng-show="providers.length > 1" class="oz-headerSelectBox form-control" ng-model="provider" ng-options="provider as provider.providername for provider in providers" ng-change="getProviderId(provider)"></select>
+                  <select ng-show="providers.length > 1" class="oz-headerSelectBox form-control" ng-model="provider" ng-options="provider as provider.providerbrandname  for provider in providers" ng-change="getProviderId(provider)"></select>
                 </div>
               </div>             
             </form>
           </li>
           <li ng-show="selectedproviderid && providers.length == 1">
             <div style="margin-left: 20px; padding:3px;" ng-show="providers">
-              <span> Seller:&nbsp;&nbsp;</span><span style="color: #599FD6;">{{providers[0].providername}}</span>
+              <span> Seller:&nbsp;&nbsp;</span><span style="color: #599FD6;">{{providers[0]. providerbrandname }}</span>
             </div>
           </li>
           <li ng-show="branches.length > 1">
@@ -73,7 +73,7 @@
           <li class="dropdown">
             <a showtab="" style="padding:2px;" href="#" class="dropdown-toggle" data-toggle="dropdown">{{usersession.currentUser.username}}<span class="caret"></span></a>
             <ul style="font-size: 12px;" class="dropdown-menu" role="menu">
-              <li ng-show="(usersession.currentUser.isAdmin == true && usersession.currentUser.usertype == 'provider')"><a href="" ui-sref="oz.ozWall">Admin</a></li>
+              <li ng-if="(usersession.currentUser.isAdmin == true && usersession.currentUser.usertype == 'provider')"><a href="" ui-sref="oz.ozWall">Admin</a></li>
               <li><a href="" ui-sref="seller.view">Manage Seller</a></li>
               <li><a ng-show="selectedproviderid" href="" ui-sref="sellerbranch.view">Manage Branch</a></li>
               <li><a ng-show="selectedproviderid && selectedBranchId" href="" ui-sref="pickupaddress.view">Manage Pickup Address</a></li>
@@ -81,6 +81,7 @@
               <li><a ng-show="selectedproviderid && selectedBranchId" href="" ui-sref="manageproduct.view">Manage Product</a></li>
               <li><a ng-show="selectedproviderid && selectedBranchId" href="" ui-sref="manageprices.view">Manage Prices</a></li>
               <li><a ng-show="selectedproviderid && selectedBranchId" href="" ui-sref="managediscount.view">Manage Discount</a></li>
+              <li><a ng-show="selectedproviderid && selectedBranchId" href="" ui-sref="deliverytime.view">Manage Delivery Time</a></li>
               <li><a ng-show="selectedproviderid && selectedBranchId" href="" ui-sref="managedeliverycharges.view.display">Manage Delivery Charges</a></li>
               <li><a ng-show="selectedproviderid && selectedBranchId" href="" ui-sref='manageproductavailability.view'>Manage Product Availability</a></li>
               <li><a ng-show="selectedproviderid && selectedBranchId" href="" ui-sref="managepolicy.view">Manage Policy</a></li>
@@ -93,8 +94,8 @@
    		</div>
 		</div>
 
-		<div oz-alert-message></div> 
-		<div id="oz-main-view" class="" >        
+		<div oz-alert-message></div> <br/>
+		<div id="oz-main-view" class="" style="margin-top: 15px;">        
       <div ui-view></div>
     </div>
 
@@ -162,6 +163,8 @@
   <script src = "ProviderWall/ManageSeller/js/ManageSellerService.js" ></script>
   <script src = "ProviderWall/ManageDeliveryCharges/js/ManageDeliveryChargesController.js" ></script>
   <script src = "ProviderWall/ManageDeliveryCharges/js/DeliveryChargesService.js" ></script>
+  <script src = "ProviderWall/ManageDeliveryTime/js/ManageDeliveryTimeController.js" ></script>
+  <script src = "ProviderWall/ManageDeliveryTime/js/ManageDeliveryTimeService.js" ></script>
   <script type="text/javascript" src = 'ProviderWall/ManageProductAvailability/js/OZProductAvailabilityController.js'></script>
   <script type="text/javascript" src = 'OrderZapp/oz/js/OZManageLocation.js'></script>
   <!-- // <script src = 'OrderZapp/oz/js/OZProductConfigurationManagementController.js'></script> -->

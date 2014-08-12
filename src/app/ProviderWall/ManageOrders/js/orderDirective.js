@@ -27,12 +27,12 @@ return {
 
   function ($scope, $log, ProviderServices, $rootScope, $http) {
     $scope.tabFortrack={};
-    $scope.delivery_date;
+    $scope.delivery_date={};
     $scope.todaysDate=moment();
     var t_status;
     var t_orderid;
     $scope.today=Date();
-    $scope.deliveryOption='pref';
+    $scope.deliveryOption;
     $scope.ismeridian = false;
 
 $scope.fromNow = function (time) {
@@ -44,8 +44,10 @@ $scope.fromNow = function (time) {
 
 
  $scope.changeStatus=function(status,order){
+    $scope.search='';
     var orderid=order.suborderid
     $scope.order=order;
+     $scope.orderPrefDate=new Date($scope.order.preferred_delivery_date);
   // console.log(status + " "+ orderid);
   if(status=='accept'){
        t_status=status;
@@ -68,20 +70,25 @@ $scope.fromNow = function (time) {
 
 
 
-$scope.onDateSelected=function(delivery_date,deliveryOption,preferred_delivery_date){
- var date;
+
+$scope.onDateSelected=function(delivery_date,deliveryOption,order){
+ var date={};
      if(deliveryOption=='custom'){
+      // delivery_date.date=delivery_date.date.toUTCString();
       date=delivery_date;
+      
      }else if(deliveryOption=='pref'){
-      date=preferred_delivery_date;
+      date={'date':order.preferred_delivery_date,
+             'newDeliverySlot':order.prefdeltimeslot  };
      }
-  if(date==null || date==undefined || date == ''){
-      $rootScope.OZNotify("Please Select Delivery Date", 'error');  
+  if(date.date==null || date.date==undefined || date.date == '' || date.newDeliverySlot==null || date.newDeliverySlot==undefined || date.newDeliverySlot == ''){
+      $rootScope.OZNotify("Please Select Delivery Date & Time Slot", 'error');  
   }
   else{
     $('#calenderModal').modal('hide');
     $scope.delivery_date="";
-    console.log("date = "+ date);
+    $scope.deliveryOption='';
+    console.log( date);
     $scope.callServiceChangeStatusApprove(t_status,t_order,date);
   }
 };
@@ -91,7 +98,7 @@ $scope.callServiceChangeStatusApprove=function(status,order,date){
   
     $http({
           method: 'GET',
-          url: 'api/manageorder/'+order.suborderid+'?action='+status+'&deliverydate='+date,
+          url: 'api/manageorder/'+order.suborderid+'?action='+status+'&deliverydate='+date.date+'&deliverytimeslot='+date.newDeliverySlot.from+'-'+date.newDeliverySlot.to,
          }).success(function(data, status, headers, cfg){
             $scope.handleChangeStatus(data);
          }).error(function(data, status, headers, cfg){
@@ -253,6 +260,7 @@ for (var i = $scope.orderConfigStatus.length - 1; i >= 0; i--) {
  }
 }
 };
+
 
 
   }

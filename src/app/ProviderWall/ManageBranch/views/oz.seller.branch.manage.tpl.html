@@ -1,5 +1,5 @@
 <div style="border: 1px solid #EEE8E8; border-radius: 6px;" class="">
-	<div ng-show ="!addnewbranch" style="margin:10px auto; padding: 40px; padding-bottom: 0px;" class="row">
+	<div ng-show ="(!addnewbranch && selectedprovider.status !== 'init')" style="margin:10px auto; padding: 40px; padding-bottom: 0px;" class="row">
 		<div class="col-md-10">
 			<p style="font-size:14px; letter-spacing:1px; word-space:1px;" class="text-justify">To add branch to your seller account, please click on <strong>'Add Branch'</strong> button.</p>
 		</div>
@@ -10,12 +10,12 @@
 		</div>
 	</div>
 
-	<div ng-show="((providers_branch_list.length == 0 && !addnewbranch) || (providers_branch_list.length == 0))" style="padding:40px; opacity: .8; margin:40px; margin-bottom: 1px; color: rgb(80, 74, 74);background-color:#F1F1F1; letter-spacing: 1px;" class="row">
+	<div ng-show="((providers_branch_list.length == 0 && !addnewbranch && selectedprovider.status == 'init') || (providers_branch_list.length == 0 && selectedprovider.status == 'init'))" style="padding:40px; opacity: .8; margin:40px; margin-bottom: 10px; color: rgb(80, 74, 74);background-color:#F1F1F1; letter-spacing: 1px;" class="row">
     <div class="col-md-12">
       <div class="no-message">
         <center>
-          <p style="font-size: 14px;">You have not added any branch to {{selectedprovider.providername}}.</p>      
-          <p style="font-size: 12px;">To start managing please add atleast one branch. Your list of branches and other related information will be shown here.</p>
+          <p style="font-size: 14px;"><b>No branch exists for your seller account. </b></p>  
+          <p class="text-danger" style="font-size:13px;"><b>Note:&nbsp; The seller account should be activated to add any branches/stores/outlets. Please contact OrderZapp support team to activate your seller account.</b></p>
         </center>
       </div>
     </div>
@@ -23,7 +23,7 @@
 
 	<!-- add seller branch start-->
 
-	<div ng-show="providers_branch_list.length == 0 || addnewbranch" style="margin:10px auto; padding: 20px;" class="row">
+	<div ng-show="((providers_branch_list.length == 0 || addnewbranch) && selectedprovider.status !== 'init')" style="margin:10px auto; padding: 20px;" class="row">
 		<div class="col-md-12">
 			<div class="add-seller-container">
 				<form style="width: 90%; margin: 20px; " name="form.addBranchForm" class="css-form" ng-submit="" novalidate>
@@ -53,22 +53,22 @@
 				  </div>
 
 				  <div id="oz-signup-input-group" class="input-group">
-				  	<input type="text" name="area" class="form-control" ng-model="addbranch.area" placeholder="area" ng-pattern="/^[a-zA-Z]*$/" required>
+				  	<input type="text" name="area" class="form-control" ng-model="addbranch.area" placeholder="area" required>
 				  	<small style="color:red;" ng-show="((form.addBranchForm.area.$dirty && form.addBranchForm.area.$invalid) || (form.addBranchForm.area.$invalid && form.addBranchForm.submitted))">*Please enter branch area.</small>
 				  </div>
 
 				  <div id="oz-signup-input-group" class="input-group">
-				  	<input type="text" name="city" class="form-control" ng-model="addbranch.city" placeholder="city" ng-pattern="/^[a-zA-Z]*$/" required>
+				  	<input type="text" name="city" class="form-control" ng-model="addbranch.city" placeholder="city" ng-pattern="/^[^0-9]*$/" required>
 				  	<small style="color:red;" ng-show="((form.addBranchForm.city.$dirty && form.addBranchForm.city.$invalid) || (form.addBranchForm.city.$invalid && form.addBranchForm.submitted))">*Please enter branch city.</small>
 				  </div>
 
 				  <div id="oz-signup-input-group" class="input-group">
-				  	<input type="text" name="country" class="form-control" ng-model="addbranch.country" placeholder="country" ng-pattern="/^[a-zA-Z]*$/" required>
+				  	<input type="text" name="country" class="form-control" ng-model="addbranch.country" placeholder="country" ng-pattern="/^[^0-9]*$/" required>
 				  	<small style="color:red;" ng-show="((form.addBranchForm.country.$dirty && form.addBranchForm.country.$invalid) || (form.addBranchForm.country.$invalid && form.addBranchForm.submitted))">*Please enter branch country.</small>
 				  </div>
 
 				  <div id="oz-signup-input-group" class="input-group">
-				  	<input type="text" name="state" class="form-control" ng-model="addbranch.state" placeholder="state" ng-pattern="/^[a-zA-Z]*$/" required>
+				  	<input type="text" name="state" class="form-control" ng-model="addbranch.state" placeholder="state" ng-pattern="/^[^0-9]*$/" required>
 				  	<small style="color:red;" ng-show="((form.addBranchForm.state.$dirty && form.addBranchForm.state.$invalid) || (form.addBranchForm.state.$invalid && form.addBranchForm.submitted))">*Please enter branch state.</small>
 				  </div>
 
@@ -91,6 +91,89 @@
 				  	<small style="color:red;" ng-show="((form.addBranchForm.note.$dirty && form.addBranchForm.note.$invalid) || (form.addBranchForm.note.$invalid && form.addBranchForm.submitted))">*Please enter instruction note.</small>
 					</div>
 
+		     <div id="oz-signup-input-group" class="input-group">
+		     	<div style="margin:0px;" class="row">
+		     		<div style="padding:0px;" class="col-md-10">
+			     		<h5>Working Hours:</h5>
+			     		<p style="font-size:16px;" class="text-danger"><b>Note:</b> Please enter working time in 24 hours format.</p>
+			     	</div>     		
+		     	</div>
+		     	
+		     	<div style="margin: 5px auto;" class="row">
+		     		<div class="col-md-5">
+		     			<div class="row">
+		     				<div class="col-md-2" style="font-size:12px;">From:</div>
+		     				<div class="col-md-5">
+		     					<input type = 'text' class = 'form-control' placeholder = 'HH' ng-model = 'addbranch.operationHours.from.hours' ng-pattern="/^([01]?[0-9]|2[0-3])$/" name = 'workstarthours' required>
+		     				</div>
+		     				<div class="col-md-5">
+		     					<input type = 'text' class = 'form-control' placeholder = 'MM' ng-model = 'addbranch.operationHours.from.minutes' name = 'workstartminute' ng-pattern="/^[0-5][0-9]$/" required>
+		     				</div>
+		     			</div>
+		     			<div class="row">
+		     				<p><small style="color:red;" ng-show="(((form.addBranchForm.workstarthours.$dirty && form.addBranchForm.workstartminute.$dirty) && (form.addBranchForm.workstarthours.$invalid || form.addBranchForm.workstartminute.$invalid)) || ((form.addBranchForm.workstarthours.$invalid || form.addBranchForm.workstartminute.$invalid) && form.addBranchForm.submitted))">*Please enter valid 'From' delivery hours and minutes (only numbers are allowed and hours should be in range [0-23])</small></p>
+		     			</div>
+		     		</div>
+		     		<div class="col-md-5">
+		     			<div class="row">
+		     				<div class="col-md-2" style="font-size:12px;">To:</div>
+		     				<div class="col-md-5">
+		     					<input type = 'text' class = 'form-control' placeholder = 'HH' ng-model = 'addbranch.operationHours.to.hours' name = 'workendhours' ng-pattern="/^([01]?[0-9]|2[0-3])$/" required>
+		     				</div>
+		     				<div class="col-md-5">
+		     					<input type = 'text' class = 'form-control' placeholder = 'MM' ng-model = 'addbranch.operationHours.to.minutes' name = 'workendminutes' ng-pattern="/^[0-5][0-9]$/" required>
+		     				</div>
+		     			</div>
+		     			<div class="row">
+		     				<p><small style="color:red;" ng-show="(((form.addBranchForm.workendhours.$dirty && form.addBranchForm.workendminutes.$dirty) && (form.addBranchForm.workendhours.$invalid || form.addBranchForm.workendminutes.$invalid)) || ((form.addBranchForm.workendhours.$invalid || form.addBranchForm.workendminutes.$invalid) && form.addBranchForm.submitted))">*Please enter valid 'To' delivery hours and minutes (only numbers are allowed and hours should be in range [0-23])</small></p>
+		     			</div>
+		     		</div>
+		     	</div>
+		     </div>
+
+		     <div id="oz-signup-input-group" class="input-group">
+		     	<div style="margin:0px;" class="row">
+		     		<div style="padding:0px;" class="col-md-11">
+			     		<h5>Delivery Time Slots:</h5>
+			     		<p style="font-size:12px;" class="text-muted">**It defines the time slot when delivery or pickup of products will occur. By default you have to provide a minimum of two time slots, and more time slots can be added as required. </p>
+
+			     		<p style="font-size:16px;" class="text-danger"><b>Note:</b> Please enter the delivery time slots in a 24 hours format.</p>
+			     	</div>
+			     	<div class="col-md-1" style="text-align:right;">
+			     		<h5><a href="" class="pull-right" ng-click="addSlots()"><i class="fa fa-plus"></i></a></h5>
+			     	</div>	
+		     		
+		     	</div>
+		     	
+		     	<div style="margin: 5px auto;" ng-repeat="slot in addbranch.timeslots" class="row">
+		     		<div class="col-md-5">
+		     			<div class="row">
+		     				<div class="col-md-2" style="font-size:12px;">From:</div>
+		     				<div class="col-md-5">
+		     					<input type = 'text' class = 'form-control' placeholder = 'HH' ng-model = 'slot.from.hours' name = "fromtimeinhours" ng-pattern="/^([01]?[0-9]|2[0-3])$/" required>
+		     				</div>
+		     				<div class="col-md-5">
+		     					<input type = 'text' class = 'form-control' placeholder = 'MM' ng-model = 'slot.from.minutes' name = "fromtimeinminutes" ng-pattern="/^[0-5][0-9]$/" required>
+		     				</div>
+		     			</div>
+		     		</div>
+		     		<div class="col-md-5">
+		     			<div class="row">
+		     				<div class="col-md-2" style="font-size:12px;">To:</div>
+		     				<div class="col-md-5"><input type = 'text' class = 'form-control' placeholder = 'HH' ng-model = 'slot.to.hours' name = "totimeinhours" ng-pattern="/^([01]?[0-9]|2[0-3])$/" required></div>
+		     				<div class="col-md-5"><input type = 'text' class = 'form-control' placeholder = 'MM' ng-model = 'slot.to.minutes' name = "totimeinminutes" ng-pattern="/^[0-5][0-9]$/" required></div>
+		     			</div>
+		     		</div>
+		     		<div class="col-md-2">
+		     			<h5 ng-show="$index > 1"><a href="" class="pull-right" ng-click="removeSlots(slot)"><i class="fa fa-times"></i></a></h5>
+		     		</div>
+		     	</div>
+		     	<div style="margin:0px;" class="row">
+     				<p><small style="color:red;" ng-show="(form.addBranchForm.submitted && (form.addBranchForm.fromtimeinhours.$invalid || form.addBranchForm.fromtimeinminutes.$invalid || form.addBranchForm.totimeinhours.$invalid || form.addBranchForm.totimeinminutes.$invalid))">*Please enter valid delivery time slot hours and minutes in (numbers only and hours should be in range [0-23] and minutes should be in range [00-59])</small></p>
+     			</div>
+		    </div>
+
+
 					<div id="oz-signup-input-group" class="input-group">
 						<h5>Delivery Mode:</h5>
 						<p style="font-size:12px;" class="text-muted">**The store or outlet offers two types of delivery modes. Please select at least one mode, that you wish to offer to buyers.</p> 
@@ -104,6 +187,8 @@
 					 		Delivery Charges in percent&nbsp;<input id="checkSlave" type="checkbox"  ng-model="addbranch.chargeinpercent">
 					 	</span>					 	
 					</div>	
+
+
 
 					<div id="oz-signup-input-group" class="input-group">
 						<button style="width: 49.5%;margin:.5px;background-color:transparent;border-color: #b3b3b3; color:black;font-weight:bold;border-radius:1px;" class="btn btn-primary" ng-click="cancelAddSellerBranch()"><i class="fa fa-times"></i>&nbsp;&nbsp;Cancel</button>
@@ -129,7 +214,7 @@
 			<p style="letter-spacing:1px; font-size:14px;" class="text-muted"><em>** Publishing your branch will also publish products (if any) by default. </em></p>
 		</div>
 
-		<div ng-repeat="branch in providers_branch_list" style="padding:10px; margin:5px auto; box-shadow: 0 1px 2px 1px rgba(248, 245, 245, 0.2), 0 2px 6px rgba(0,0,0,0.15);" class="col-md-12">
+		<div ng-repeat="branch in providers_branch_list" style="padding:10px; margin:5px auto; box-shadow: 0 1px 2px 1px rgba(248, 245, 245, 0.2), 0 2px 6px rgba(0,0,0,0.15);" class="col-md-12" ng-class="{'seller-activated': branch.status !== 'init', 'seller-notactive': branch.status == 'init' }">
 			<div class="view-branch-container">
 				<div class="row">
 					<div class="col-md-2">
@@ -152,13 +237,41 @@
 						<p ng-show="branch.branchdescription && branch.branchdescription != null"><em>Description:</em>&nbsp;&nbsp; {{branch.branchdescription}}</p>
 						<p><em>Contact:</em>&nbsp;&nbsp; {{branch.contact_supports.toString()}}</p>
 						<p><em>Address:</em>&nbsp;&nbsp; {{branch.location.address1}},{{' ' + branch.location.address2}},{{' ' + branch.location.city}}, {{branch.location.state}}, {{branch.location.country}}, pincode- {{branch.location.zipcode}}</p>
+						<p><em>Working Hours:</em>&nbsp;&nbsp;
+							<ul class="list-group">
+							  <li class="list-group-item">
+								  <div style="margin:0px;" class="row">
+								  	<div class="col-md-6">
+								  		<b>From:</b>&nbsp;&nbsp;<span ng-bind = 'to_time(branch.branch_availability.from)'></span>
+								  	</div>
+								  	<div class="col-md-6">
+								  		<b>To:</b>&nbsp;&nbsp;<span ng-bind = 'to_time(branch.branch_availability.to)'></span>
+								  	</div>
+								  </div>
+							  </li>
+							</ul>
+						</p>
+						<p ng-show="branch.deliverytimingslots && branch.deliverytimingslots.length > 0"><em>Delivery Time Slots:</em>&nbsp;&nbsp;
+							<ul class="list-group">
+							  <li ng-repeat="slot in branch.deliverytimingslots" class="list-group-item">
+								  <div style="margin:0px;" class="row">
+								  	<div class="col-md-6">
+								  		<b>From:</b>&nbsp;&nbsp;<span ng-bind = 'to_time(slot.from)'></span>
+								  	</div>
+								  	<div class="col-md-6">
+								  		<b>To:</b>&nbsp;&nbsp;<span ng-bind = 'to_time(slot.to)'></span>
+								  	</div>
+								  </div>
+							  </li>
+							</ul>
+						</p>
 						<p><em>Delivery Type:</em>&nbsp;&nbsp;
 							<span ng-show="branch.delivery.isprovidehomedelivery" class="label label-success"><i class="fa fa-check"></i>&nbsp;&nbsp;HOME</span>
 							<span ng-show="branch.delivery.isprovidepickup" class="label label-success"><i class="fa fa-check"></i>&nbsp;&nbsp;PICKUP</span>					
 							<span ng-show="branch.delivery.isdeliverychargeinpercent" class="label label-success"><i class="fa fa-check"></i>&nbsp;&nbsp;CHARGE IN PERCENT</span>
 						</p>
 						<p style="font-size:12px;" class="text-muted">**The store or outlet delivery option is offered by seller.</p> 
-						<p style="font-size:12px; font-weight:bold;" ng-show="branch.note && branch.note != null" class="text-info"><em>Note:</em>&nbsp;&nbsp; {{branch.note}}</p>
+						<p style="font-size:12px; font-weight:bold;" ng-show="branch.note && branch.note != null" class="text-info"><em>Note:</em>&nbsp;&nbsp; {{branch.note}}</p>    
 
 					</div>
 				</div>
@@ -230,7 +343,7 @@
 								  	<!-- <dl> -->
 										  <dt>Area</dt>
 										  <dd>
-										  	<input type="text" name="editarea" class="form-control" ng-model="editbranch.location.area" placeholder="area" ng-pattern="/^[a-zA-Z]*$/" required>
+										  	<input type="text" name="editarea" class="form-control" ng-model="editbranch.location.area" placeholder="area" required>
 								  			<small style="color:red;" ng-show="((form.editBranchForm.editarea.$dirty && form.editBranchForm.editarea.$invalid) || (form.editBranchForm.editarea.$invalid && form.editBranchForm.submitted))">*Please enter branch area.</small>
 								  		</dd>
 								  	<!-- </dl>		 -->
@@ -240,7 +353,7 @@
 								  	<!-- <dl> -->
 										  <dt>City</dt>
 										  <dd>
-										  	<input type="text" name="editcity" class="form-control" ng-model="editbranch.location.city" placeholder="city" ng-pattern="/^[a-zA-Z]*$/" required>
+										  	<input type="text" name="editcity" class="form-control" ng-model="editbranch.location.city" placeholder="city" ng-pattern="/^[^0-9]*$/" required>
 								  			<small style="color:red;" ng-show="((form.editBranchForm.editcity.$dirty && form.editBranchForm.editcity.$invalid) || (form.editBranchForm.editcity.$invalid && form.editBranchForm.submitted))">*Please enter branch city.</small>
 								  		</dd>
 								  	<!-- </dl>		 -->
@@ -250,7 +363,7 @@
 								  	<!-- <dl> -->
 										  <dt>Country</dt>
 										  <dd>
-										  	<input type="text" name="editcountry" class="form-control" ng-model="editbranch.location.country" placeholder="country" ng-pattern="/^[a-zA-Z]*$/" required>
+										  	<input type="text" name="editcountry" class="form-control" ng-model="editbranch.location.country" placeholder="country" ng-pattern="/^[^0-9]*$/" required>
 								  			<small style="color:red;" ng-show="((form.editBranchForm.editcountry.$dirty && form.editBranchForm.editcountry.$invalid) || (form.editBranchForm.editcountry.$invalid && form.editBranchForm.submitted))">*Please enter branch country.</small>
 								  		</dd>
 								  	<!-- </dl>		 -->
@@ -260,7 +373,7 @@
 								  	<!-- <dl> -->
 										  <dt>State</dt>
 										  <dd>
-										  	<input type="text" name="editstate" class="form-control" ng-model="editbranch.location.state" placeholder="state" ng-pattern="/^[a-zA-Z]*$/" required>
+										  	<input type="text" name="editstate" class="form-control" ng-model="editbranch.location.state" placeholder="state" ng-pattern="/^[^0-9]*$/" required>
 								  			<small style="color:red;" ng-show="((form.editBranchForm.editstate.$dirty && form.editBranchForm.editstate.$invalid) || (form.editBranchForm.editstate.$invalid && form.editBranchForm.submitted))">*Please enter branch state.</small>
 								  		</dd>
 								  	<!-- </dl>		 -->
@@ -304,6 +417,61 @@
 								  		</dd>
 								  	<!-- </dl>		 -->
 									</div>
+
+									<div id="oz-signup-input-group" class="input-group">
+									  <dt>Working Hours</dt>
+									  <dd><p style="font-size:16px;" class="text-danger"><b>Note:</b> Please enter working time in a 24 hours format.</p></dd>
+									  <dd> <h6>From:</h6>
+											<input type = 'text' class = 'form-control' placeholder = 'HH' style = 'width : 15%' ng-model = 'edit.from.hours' name = 'editOperationStartHs' ng-pattern="/^([01]?[0-9]|2[0-3])$/" required>
+                      <input type = 'text' class = 'form-control' placeholder = 'MM' style = 'width : 15%' ng-model = 'edit.from.minutes' name = 'editOperationStartMs' ng-pattern="/^[0-5][0-9]$/" required>
+                      <small style="color:red;display:block" ng-show="(((form.editBranchForm.editOperationStartHs.$dirty && form.editBranchForm.editOperationStartMs.$dirty) && (form.editBranchForm.editOperationStartHs.$invalid || form.editBranchForm.editOperationStartMs.$invalid)) || ((form.editBranchForm.editOperationStartHs.$invalid || form.editBranchForm.editOperationStartMs.$invalid) && form.editBranchForm.submitted))">*Please enter valid 'From' delivery hours and minutes [only numbers are allowed and hours should be in range [0-23]]</small>
+								  		</dd>
+
+								  		<dd> <h6>To:</h6>
+												<input type = 'text' class = 'form-control' placeholder = 'HH' style = 'width : 15%' ng-model = 'edit.to.hours' required name = 'editOperationEndHs' ng-pattern="/^([01]?[0-9]|2[0-3])$/">
+							          <input type = 'text' class = 'form-control' placeholder = 'MM' style = 'width : 15%' ng-model = 'edit.to.minutes' required name = 'editOperationEndMs' ng-pattern="/^[0-9]|[0-5][0-9]$/" >
+							                    				                     
+							          <small style="color:red;display:inherit" ng-show="(((form.editBranchForm.editOperationEndHs.$dirty && form.editBranchForm.editOperationEndMs.$dirty) && (form.editBranchForm.editOperationEndHs.$invalid || form.addBranchForm.editOperationEndMs.$invalid)) || ((form.editBranchForm.editOperationEndHs.$invalid || form.editBranchForm.editOperationEndMs.$invalid) && form.editBranchForm.submitted))">*Please enter valid 'To' delivery hours and minutes [only numbers are allowed and hours should be in range [0-23]]</small>
+								  		</dd>
+
+									</div>
+
+									<div id="oz-signup-input-group" class="input-group">
+							     	<div style="margin:0px;" class="row">
+							     		<div style="padding:0px;" class="col-md-11">
+								     		<h5><b>Delivery Time Slots:</b></h5>
+								     		<p style="font-size:12px;" class="text-muted">**It defines the time slot when delivery or pickup of products will occur. By default you have to provide a minimum of two time slots, and more time slots can be added as required. </p>
+								     		<p style="font-size:16px;" class="text-danger"><b>Note:</b> Please enter the delivery time slots in a 24 hours format.</p>
+								     	</div>
+								     	<div class="col-md-1" style="text-align:right;">
+								     		<h5><a href="" class="pull-right" ng-click="addDeliverySlots()"><i class="fa fa-plus"></i></a></h5>
+								     	</div>	
+							     		
+							     	</div>
+							     	
+							     	<div style="margin: 5px auto;" ng-repeat="slot in editTimingSlots" class="row">
+							     		<div class="col-md-5">
+							     			<div class="row">
+							     				<div class="col-md-2" style="font-size:12px;">From:&nbsp;</div>
+							     				<div class="col-md-5"><input type = 'text' class = 'form-control' placeholder = 'HH' ng-model = 'slot.from.hours' name = 'editfromtimeinhours' ng-pattern="/^([01]?[0-9]|2[0-3])$/" required></div>
+							     				<div class="col-md-5"><input type = 'text' class = 'form-control' placeholder = 'MM' ng-model = 'slot.from.minutes' name = 'editfromtimeinminutes' ng-pattern="/^[0-9]|[0-5][0-9]$/" required></div>
+							     			</div>
+							     		</div>
+							     		<div class="col-md-5">
+							     			<div class="row">
+							     				<div class="col-md-2" style="font-size:12px;">To:</div>
+							     				<div class="col-md-5"><input type = 'text' class = 'form-control' placeholder = 'HH' ng-model = 'slot.to.hours' name = 'edittotimeinhours' ng-pattern="/^([01]?[0-9]|2[0-3])$/" required></div>
+							     				<div class="col-md-5"><input type = 'text' class = 'form-control' placeholder = 'MM' ng-model = 'slot.to.minutes' name = 'edittotimeinminutes' ng-pattern="/^[0-9]|[0-5][0-9]$/" required></div>
+							     			</div>
+							     		</div>
+							     		<div class="col-md-2">
+							     			<h5 ng-show="$index > 1"><a href="" class="pull-right" ng-click="removeEditSlots(slot)"><i class="fa fa-times"></i></a></h5>
+							     		</div>
+							     	</div>
+							     	<div style="margin:0px;" class="row">
+					     				<p><small style="color:red;" ng-show="(form.editBranchForm.submitted && (form.editBranchForm.editfromtimeinhours.$invalid || form.editBranchForm.editfromtimeinminutes.$invalid || form.editBranchForm.edittotimeinhours.$invalid || form.editBranchForm.edittotimeinminutes.$invalid))">*Please enter valid delivery time slot hours and minutes in (numbers only and hours should be in range [0-23] and minutes should be in range [00-59])</small></p>
+					     			</div>
+							     </div>
 
 									<div id="oz-signup-input-group" class="input-group">
 										<dt>Delivery Mode*:</dt> 

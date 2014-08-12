@@ -1,8 +1,8 @@
  <div class="list-group-item orderbox"> <!-- ngrepeat outer box css-->
 
 <!-- order /////////////////////////////////// -->
-<div class="headingOrderDiv"> 
- <span class="bold">Order No: </span> <span class="oz-contentsRight">{{order.suborderid}}</span>
+<div ng-class-odd="'oddRowOrderid'" ng-class-even="'evenRowOrderid'" class="headingOrderDiv" > 
+ <span class="bold color-white" >Order No:  <span class="oz-contentsRight">{{order.suborderid}}</span> </span>
 
       <span ng-hide="order.status =='cancelled' || order.status =='rejected' " class=" label label-info  font14 pull-right "  ng-class="{ 
                      bgGreen1: (order.status =='orderreceived' ) ,
@@ -31,7 +31,7 @@
 <div class="headingDiv"> 
 <span class="bold">Delivery Info</span>
  <div  class="pull-right">
-        <span class="bold" ng-show="order.deliverydate"> Delivery On </span> <span ng-show="order.deliverydate" class=" oz-contentsRight">{{ getOrderDate(order.deliverydate ) }}</span>
+        <span class="bold" ng-show="order.deliverydate"> Seller Accepted Delivery : </span> <span ng-show="order.deliverydate" class=" oz-contentsRight">{{ order.deliverydate  | date:'dd-MM-yyyy ' }}  In {{order.prefdeltimeslot.from}}  To {{order.prefdeltimeslot.to}}</span>
       </div> 
 
 
@@ -41,14 +41,16 @@
   <div class="row margintop5 " ><!-- 2nd line -->
      
      
-     <div  class="col-md-6">
+     <div  class="col-md-5">
         <span class="bold">Order Created : </span> <span class=" oz-contentsRight">{{ getOrderDate(order.createdate )  }}</span>
       </div>
 
 
 
-      <div  class="col-md-6">
-        <span class="bold">Preferred Delivery : </span> <span class=" oz-contentsRight">{{ getOrderDate(order.preferred_delivery_date ) }}</span>
+      <div  class=" col-md-7 ">
+      <span class="pull-right">
+        <span class="bold">Customer Requested Delivery : </span> <span class=" oz-contentsRight">{{ order.preferred_delivery_date | date:'dd-MM-yyyy '}}  In {{order.deliverytimeslot.from}}  To {{order.deliverytimeslot.to}}</span>
+        </span>
       </div>
      
      <!--  <div  class="col-md-4">
@@ -241,23 +243,16 @@
 
 <!-- Tracking tree////////////////////////////////// -->
 <div ng-hide=" order.status=='cancelled' || order.status=='rejected'">
-<div class="headingDiv"> 
-<span class="bold">Order Tracking</span>
+<div class="headingDiv" style="height:40px;"> 
 
 
-      
+<a  style="color:black" href="" ng-init="showTrackingTree=false" ng-click="showTrackingTree = showTrackingTree === false ? true: false;"><i style="vertical-align: sub;" class="fa fa-arrow-down"></i> <span class="bold" style="vertical-align: text-top;"> Order Tracking </span></a>
 
 
-</div>
-
-
-<div> <!-- order tracking tree -->
 
 
 <!-- action bar -->
-
-
-<div class="pull-right" ng-hide="order.status=='ordercomplete' || order.status=='cancelled' || order.status=='rejected'">
+     <div class="pull-right" ng-hide="order.status=='ordercomplete' || order.status=='cancelled' || order.status=='rejected'" style="margin-top: -5px">
        
             <div class="btn-group paddingRight10"><!-- <span class="Valign">Action</span> -->
               <a class=" dropdown-toggle "  type="button" data-toggle="dropdown">
@@ -265,14 +260,9 @@
               </a>
               <ul class="dropdownRightPosition dropdown-menu" style="right:4px" role="menu">
                                <!--ng-click -call showDisplay for previous menu where states not defined in ref dic  -->
-            
 
                    <li class="" ng-repeat="config in orderConfigStatus" ng-show="config.action !==null && config.order_status==order.status ">   
-                   
                     <a   href="#"   ng-click="changeStatus(config.action , order)"><span class="capital"> {{config.action}} </span></a>
-                    
-                    
-
                   </li>
 
                    <li class="" ng-show="order.status=='orderreceived'"> 
@@ -282,15 +272,20 @@
                   <li class="" ng-hide="order.status=='orderreceived' || order.status=='done'">
                     <a href="#"   ng-click="changeStatus('cancel' , order)"><span class="capital"> Cancel</span></a>
                   </li>
-                  
-
-
 
                 </ul>
                </div>
           </div>
-
 <!-- action bar -->
+
+
+</div>
+
+
+<div ng-show="showTrackingTree==true"> <!-- order tracking tree -->
+
+
+
              <div id="tabs">
           <ul id="tabTracking" class=" oz-trackingUL nav nav-pills" ng-init="firstTreeTabOpen(order.status);" >
             <li class="tabtrackingLi"  >
@@ -354,9 +349,9 @@
            
                     <p ng-style="displayAction('ordercomplete')" class="displaynone"><i class="oz-tickNotActive fa fa-check fa-lg" ng-class="{activatetick :  ( order.status=='ordercomplete'  )  }"></i> Order complete </p>
          </div>
-         <div ng-show="tab1==1 || tab2==1 || tab3==1 || tab4==1" >
-                <i ng-click="tab1=0; tab2 =0; tab3=0; tab4 =0; " class="prodo-cursor ozUpArrow  glyphicon glyphicon-circle-arrow-up " ></i>
-         </div>
+       <!--   <div ng-show="tab1==1 || tab2==1 || tab3==1 || tab4==1" >
+                <i ng-click="tab1=0; tab2 =0; tab3=0; tab4 =0; " class="prodo-cursor ozUpArrow  glyphicon glyphicon-circle-arrow-up " ></i>  to close tracking tree
+         </div> -->
       </div>
 
 
@@ -370,9 +365,11 @@
 <!-- Innvoice ////////////////////////////////// -->
 <div >
 <div class="headingDiv"> 
-<span class="bold">Customer Info & Invoice </span>
+
+<a  style="color:black" href="" ng-init="showCustInfo=false" ng-click="showCustInfo = showCustInfo === false ? true: false;"><i class="fa fa-arrow-down"></i> <span class="bold"> Customer Info & Invoice </span> </a>
+
 </div>
-<div class="row">
+<div class="row" ng-show="showCustInfo==true">
   <div>
 
 
@@ -397,7 +394,7 @@
 
 
 
-</div><br/>
+</div>
 <!-- Innvoice ////////////////////////////////// -->
      
 

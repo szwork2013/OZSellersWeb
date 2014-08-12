@@ -4,8 +4,10 @@ angular.module('oz.ProviderApp')
     $scope.form={};
     $scope.reason={};
    $scope.init=function(){
+    $scope.search='';
     $scope.orders=[];
     $scope.tabForOrders={};
+    $scope.todaysDate=new Date();
     // $scope.hideReceivedOrders ;
     // $scope.hideApproveOrders;
     // $scope.hideProcessingOrders;

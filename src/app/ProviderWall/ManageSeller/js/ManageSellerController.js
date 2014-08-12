@@ -84,6 +84,15 @@ angular.module('oz.ProviderApp')
 
     $scope.showSellerDetail = false;
 
+    $scope.getTrialDate = function(trialdate){
+      if (trialdate && trialdate.expirydate) {
+        var planExpiryDate = moment.utc(moment(trialdate.expirydate));
+        var todaysDate = moment.utc(moment());
+        $scope.remainingDaysCount = planExpiryDate.diff(todaysDate, 'days'); 
+        return 'Trial' + ' (' + ' ' + $scope.remainingDaysCount + ' ' + 'days remaining )';
+      }
+    }
+
     $scope.viewSellerDetail = function(index){
       if (index !== null) {
         $scope.currentSellerIndex = index;
@@ -150,6 +159,8 @@ angular.module('oz.ProviderApp')
           {
             'providername' : $scope.addseller.name,
             'providercode' : $scope.addseller.code,
+            'providerbrandname': $scope.addseller.providerbrandname,
+            'provideremail': $scope.addseller.provideremail,
             'category' : { 'categoryid': $scope.sellercategory.categoryname.categoryid, 'categoryname': $scope.sellercategory.categoryname.categoryname },
             'providerdescription' : $scope.addseller.description,
             'tax': {
@@ -258,6 +269,8 @@ angular.module('oz.ProviderApp')
           {
             'providername' : $scope.editseller.providername,
             'providercode' : $scope.editseller.providercode,
+            'providerbrandname': $scope.editseller.providerbrandname,
+            'provideremail': $scope.editseller.provideremail,
             'providerdescription' : $scope.editseller.providerdescription,
             'tax': {
               'tino': $scope.editseller.tax.tino,
