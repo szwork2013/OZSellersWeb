@@ -29,11 +29,14 @@ return {
     $scope.tabFortrack={};
     $scope.delivery_date={};
     $scope.todaysDate=moment();
+    $scope.todaysDate1=new Date();
     var t_status;
     var t_orderid;
     $scope.today=Date();
     $scope.deliveryOption;
     $scope.ismeridian = false;
+    $scope.format='dd-MM-yyyy';
+    $scope.delivery_date.date=$scope.todaysDate1;
 
 $scope.fromNow = function (time) {
   if (time != undefined) {
@@ -43,7 +46,16 @@ $scope.fromNow = function (time) {
 };
 
 
+  $scope.open = function($event) {
+    $event.preventDefault();
+    $event.stopPropagation();
+
+    $scope.opened = true;
+  };
+
  $scope.changeStatus=function(status,order){
+  $scope.delivery_date.date=$scope.todaysDate1;
+  $scope.showCal=0; 
     $scope.search='';
     var orderid=order.suborderid
     $scope.order=order;
@@ -68,8 +80,17 @@ $scope.fromNow = function (time) {
 };
 
 
-
-
+$scope.changeTimeSlotDisplayFormat= function(slot){
+    var slot_hours = parseInt(slot);
+    var slot_minutes = Math.round((slot - slot_hours) * 60);
+       
+       var output = slot_minutes + ''; //2 digit no 
+       while (output.length < 2) {
+        output = '0' + output;
+       }
+    slot_minutes=output;
+    return slot_hours+'.'+slot_minutes;
+}
 
 $scope.onDateSelected=function(delivery_date,deliveryOption,order){
  var date={};
