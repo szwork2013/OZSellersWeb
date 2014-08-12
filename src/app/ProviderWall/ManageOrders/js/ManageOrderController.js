@@ -237,7 +237,7 @@ $scope.getReceived=function(){
          $scope.orders=data.success.doc;
          $scope.hideProductOrders=false;
          // $scope.productOrdersCount=$scope.orders.length;
-          console.log($scope.orders);
+          // console.log('new changed data '+JSON.stringify($scope.orders));
        }
       else if(data.error){
             // $rootScope.OZNotify(data.error.message, 'error'); 

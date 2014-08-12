@@ -8,61 +8,89 @@
     <div class="list-group-item orderbox" > <!-- ngrepeat outer box css-->
          
       <div class=" margintop5 productsDate highlighrOrderContainer"  ><!--  2nd line -->
-       <em class="oz-adress" ng-class="{TextGray : order.deliverydate < today }"> {{ fromNow(order.deliverydate)  }}</em>  
+       <em class="oz-adress" ng-class="{TextGray : order.deliverydate < today }"> {{ convertMomentFormat(order.deliverydate)}}</em>  
       </div>
 
       <hr class="myhr">
 
         <div > <!-- product table -->
            <div class="row margintop5">
-              <div  class="col-md-5">
+              <div  class="col-md-4">
                 <span class="bold">Product name </span> 
               </div>
                <div  class="col-md-4">
                 <span class="bold">Product code  </span> 
               </div>
-               <div  class="col-md-3">
+               <div  class="col-md-4">
                 <span class="bold">Quantity </span> 
               </div>
               
         </div>
 
-        <div class="row margintop5 rowSideMargin" ng-repeat="product in order.products   |  filter:  search "  ng-class-even="'OZ-evenRow'"> <!-- ng-repeat for product -->
+<!--         <div class="row margintop5 rowSideMargin" ng-repeat="product in order.products   |  filter:  search "  ng-class-even="'OZ-evenRow'"> 
               <div  class="col-md-5">
                 
                  <span class=" oz-contentsRight "> {{product.productname}} </span>
-<!--                     <span class="oz-productcode"> [ {{product.productcode}} ] </span> --> 
               </div>
                    <div  class="col-md-4">
                 
-                 <!-- <span class=" oz-contentsRight"> {{product.productname}} </span> -->
                     <span class=""> {{product.productcode}}  </span> 
               </div>
 
               <div  class="col-md-3">
-                 <span class=" oz-contentsRight">{{product.qty}} {{product.uom}}</span>
+                 <span class=" oz-contentsRight">{{product.totalqty}} {{product.uom}}</span>
               </div>
+ -->
+      
+               <div class = 'row' style = 'border-bottom : 1px solid #ccc; border-bottom : 0px'>
+                 <div class="row rowSideMargin" ng-repeat="product in order.products   |  filter:  search " > 
+                      <div  class="col-md-4">  
+                     <!--     <span style = 'font-weight: bold;'>  -->
+                               <span style="">
+                               <a href="" ng-init="productMassage = false" ng-click="productMassage = productMassage === false ? true: false;" ng-show="product.productdetails.length>0">
+                                    <span class="fa fa-asterisk fa-lg" style="padding-right:5px"> </span>
+                               </a>
 
-        <!--       <div  class="col-md-2">
-                 <span class=" oz-contentsRight">{{product.currency}}  {{(product.orderprice/product.qty).toFixed(2)}}</span>
-              </div>
+                              <a  ng-show="product.productdetails.length<=0">
+                                    <span class="fa fa-asterisk fa-lg" style="padding-right:5px; color : #FFFFFF"> </span>
+                               </a>
+                              </span>
+                           <span class=" oz-contentsRight "> {{product.productname}} </span>
+         
+                     <!--     </span> -->
+                      </div>
+                      <div  class="col-md-4 ">
+                         <span class=" oz-contentsRight" >{{product.productcode}} </span>
+                      </div>
+                      <div  class="col-md-4 " style = ''>
+                         <span class=" oz-contentsRight"> {{product.totalqty}} {{product.uom}}</span>
+                      </div>
 
-              <div  class="col-md-2">
-                 <span class=" oz-contentsRight"> &#x20B9;  {{product.orderprice.toFixed(2)}}</span>
-              </div> -->
-       </div> <!-- ng-repeat for product -->
+                          <div class="" ng-show="productMassage==1" style = 'margin : 30px;'>
+                              <table style="margin:2px ;background-color:rgb(246, 241, 246)" class="borderless table table-condensed ">
+                                <tr>
+                                  <td class="width50 " style = 'font-weight: bold;'><span class=" bold">Order Number </span></td>
+                                  <td class="width50 " style = 'font-weight: bold;'><span class=" bold">Quantity </span></td>
+                                </tr>
+                                </table>
+                              <table style="margin:2px; " class="borderless table table-condensed " ng-repeat="prod in product.productdetails">
+                                <tr >
+                                  <td class="width50"><span class=" "> {{prod.suborderid}} </span></td>
+                                  <td class="width50"><span class=" breakword"> {{prod.qty}} {{product.uom}}</span></td>
+                                </tr>
+                              </table>
+                         </div>
 
 
-
-                  <hr class="myhr">
-  
-
-
+                 </div> 
+               </div>
+ 
+              <!--        </div>  -->
 
           </div>  <!-- product table -->
         
     </div> <!-- ngrepeat outer box css-->
-       <hr class="myhr" style="border-color:#A89797">
+       <!-- <hr class="myhr" style="border-color:#A89797"> -->
 
 
 
