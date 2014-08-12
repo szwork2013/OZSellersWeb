@@ -18,6 +18,9 @@ angular.module('oz.ProviderApp')
       }
       
     });
+
+      // var formatTextInitial = '<!DOCTYPE html><html><meta name="viewport" content="width=device-width, initial-scale=1"><div style = "text-align:justify">'+ $scope.template.content + '</div></html>';
+    
    // ------------------------op-----------------------------------
      $scope.new_ordering_policy;
      $scope.ordering_policy;
