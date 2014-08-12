@@ -15,7 +15,7 @@
 
                 <tr ng-repeat = "list in product.products" class = "fontsize">
                         <td ng-bind = "list.productname+' ['+list.productcode+ '] ' "></td>
-                        <td ng-bind = "list.qty + ' ' + list.uom"></td>
+                        <td ng-bind = "list.totalqty + ' ' + list.uom"></td>
                         <td ng-bind = "list.orderprice + ' ' + list.currency" style  = 'text-align : right;padding-left : 4%'></td>
                 </tr>
 

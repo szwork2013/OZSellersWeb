@@ -4,7 +4,7 @@
    <input type = 'text' class = 'form-control' ng-model = 'search' placeholder = 'Search products or categories from the list '>
 
 	<div  ng-repeat = 'list in contentOfAllProducts | filter : search' style = 'margin : 20px;border : 1px solid #ccc; border-radius : 5px;' ng-if = 'list.productleadtime.length > 0'>
-      <div style = 'min-height : 56px;height : auto'>
+      <div style = 'min-height : 69px;height : auto'>
 		  <div style = 'width : 50%; float:left'> 
 		     	 <h5 style = 'font-size :17px '>Category Name : <span ng-bind = 'list.category.categoryname'></span>
 		         </h5>
@@ -50,11 +50,11 @@
 				    	</td>
 				    	
 				    	<td ng-hide = 'products.editing'>
-				    	<button class = 'btn btn-info' style = 'width : 15%;' ng-click = 'enableTheEditorFunction(products)'>Edit</button></td>
+				    	<button class = 'btn btn-info' style = 'width : 28%;' ng-click = 'enableTheEditorFunction(products)'>Edit</button></td>
 
 				    	<td ng-show = 'products.editing'>
-				    	    <button class = 'btn btn-info' style = 'width : 15%;' ng-click = 'cancel(products)' style = 'float : left'>Cancel</button>
-				    	     <button class = 'btn btn-info' style = 'width : 15%;' ng-click = 'changeLeadTimes(products)' style = 'float : left'>Save</button>
+				    	    <button class = 'btn btn-info' style = 'width : 28%;' ng-click = 'cancel(products)' style = 'float : left'>Cancel</button>
+				    	     <button class = 'btn btn-info' style = 'width : 28%;' ng-click = 'changeLeadTimes(products)' style = 'float : left'>Save</button>
 				    	</td>
 				    </tr>
 				</table>
