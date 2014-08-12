@@ -29,11 +29,14 @@ return {
     $scope.tabFortrack={};
     $scope.delivery_date={};
     $scope.todaysDate=moment();
+    $scope.todaysDate1=new Date();
     var t_status;
     var t_orderid;
     $scope.today=Date();
     $scope.deliveryOption;
     $scope.ismeridian = false;
+    $scope.format='dd-MM-yyyy';
+    $scope.delivery_date.date=$scope.todaysDate1;
 
 $scope.fromNow = function (time) {
   if (time != undefined) {
@@ -43,7 +46,16 @@ $scope.fromNow = function (time) {
 };
 
 
+  $scope.open = function($event) {
+    $event.preventDefault();
+    $event.stopPropagation();
+
+    $scope.opened = true;
+  };
+
  $scope.changeStatus=function(status,order){
+  $scope.delivery_date.date=$scope.todaysDate1;
+  $scope.showCal=0; 
     $scope.search='';
     var orderid=order.suborderid
     $scope.order=order;
@@ -67,9 +79,36 @@ $scope.fromNow = function (time) {
   }
 };
 
+// for add
+// var timeslots = [];
+//       for (var i = 0; i < $scope.addbranch.timeslots.length; i++) {
+//         if (parseInt($scope.addbranch.timeslots[i].from.hours) < parseInt($scope.addbranch.timeslots[i].to.hours)) {
+//           var from_hrs = parseInt($scope.addbranch.timeslots[i].from.hours);
+//           var from_mins = Math.round( (($scope.addbranch.timeslots[i].from.minutes)/60) *100)/100;
+//           var from_timeslot = from_hrs + from_mins;
+//           var to_hrs = parseInt($scope.addbranch.timeslots[i].to.hours);
+//           var to_mins = Math.round( (($scope.addbranch.timeslots[i].to.minutes)/60) *100)/100;
+//           var to_timeslot = to_hrs + to_mins;
+//           timeslots.push({from:from_timeslot, to: to_timeslot});
+//         } 
 
+// for display
+ // $scope.editTimingSlots = []; 
+        // for (var i = 0; i < branch.deliverytimingslots.length; i++) {
+        //   var from_slot = branch.deliverytimingslots[i].from;
+        //   var from_slot_hours = parseInt(from_slot);
+        //   var from_slot_minutes = Math.round((from_slot - from_slot_hours) * 60);
+        //   var to_slot = branch.deliverytimingslots[i].to;
+        //   var to_slot_hours = parseInt(to_slot);
+        //   var to_slot_minutes = Math.round((to_slot - to_slot_hours) * 60);
+        //   $scope.editTimingSlots.push({'from':{'hours':from_slot_hours, 'minutes': from_slot_minutes}, 'to': {'hours': to_slot_hours, 'minutes': to_slot_minutes}});
+        // };
 
-
+$scope.changeTimeSlotDisplayFormat= function(slot){
+    var slot_hours = parseInt(slot);
+    var slot_minutes = Math.round((slot - slot_hours) * 60);
+    return slot_hours+'.'+slot_minutes;
+}
 
 $scope.onDateSelected=function(delivery_date,deliveryOption,order){
  var date={};
