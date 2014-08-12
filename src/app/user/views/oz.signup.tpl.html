@@ -40,6 +40,7 @@
 
 		<div id="oz-signup-input-group" class="input-group">
 			<p id="oz-general-terms">Please enter verification token sent to your mobile no.</p>
+			<a class="link" href="" style="text-align:right; font-weight:bold; font-size:12px;color: rgb(97, 139, 8); letter-spacing:1px;" ng-click="goToRegenerateToken()">Regenerate Verification Token</a>
 		</div>
 
 	</form>
@@ -52,8 +53,8 @@
 
 		<div id="oz-signup-input-group" class="input-group">
 			<p id="oz-general-terms">Please enter verification token sent to your mobile no.</p>
+			<a class="link" href="" style="text-align:right; font-weight:bold; font-size:12px;color: rgb(97, 139, 8); letter-spacing:1px;" ng-click="goToRegenerateToken()">Regenerate Verification Token</a>
 		</div>
-
 	</form>
 
 	<div ng-show="consumer_verify_user" id="oz-signup-input-group" class="input-group">
@@ -91,5 +92,28 @@
 	  	<li ng-show="(verificationForm.consumertoken.$dirty && verificationForm.consumertoken.$error.required) || (verificationForm.consumertoken.$invalid && verificationForm.submitted)">Verification token is required!
 	  </ul>
 	</div> 
+
+	<div class="modal fade" id="regenerateVerificationTokenModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" style="padding:90px;">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <center>
+						<h3 class="modal-title" id="myModalLabel" style=" text-transform:uppercase; font-weight: bold; font-size:20px;color: #8A847C;" id="oz-signin-heading">Regenerate Verification Token</h3>
+					</center>
+	      </div>
+	      <div class="modal-body">
+	      	<form style="width: 90%;" name="form.regenerateVerificationForm" id="oz-signup-form" novalidate>
+						<div id="oz-signup-input-group" class="input-group">
+					  	<input type="text" name="token" class="form-control" ng-model="regenerateverification.mobileno" placeholder="mobile no." required />
+						</div>
+					</form>
+	      </div>
+	      <div class="modal-footer">
+	        <button style="font-size:14px;font-weight:bold;border-radius:1px;" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        <button style="background-color:#EC670D;border-color: #E47814; font-size:14px;font-weight:bold;border-radius:1px;" type="button" class="btn btn-primary" ng-click="regenrateToken()">Submit</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 
 </div>
