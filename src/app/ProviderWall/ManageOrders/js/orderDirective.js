@@ -54,6 +54,29 @@ $scope.fromNow = function (time) {
   };
 
  $scope.changeStatus=function(status,order){
+  
+  if( moment(order.preferred_delivery_date).format('dd-MM-yyyy')  ==  moment($scope.todaysDate1).format('dd-MM-yyyy') ){
+    console.log("equal");
+    if($scope.todaysDate1.getHours() < order.prefdeltimeslot.from){
+      $scope.deliveryOption='pref';
+    }else{
+       $scope.deliveryOption='custom';
+    }
+
+  }else{
+     console.log("diff");
+      if( moment(order.preferred_delivery_date).format('dd-MM-yyyy')  >  moment($scope.todaysDate1).format('dd-MM-yyyy') ){
+        $scope.deliveryOption='pref';
+      }
+      else{
+         $scope.deliveryOption='custom';
+      }
+  }
+
+
+
+
+  // $scope.deliveryOption='pref';
   $scope.delivery_date.date=$scope.todaysDate1;
   $scope.showCal=0; 
     $scope.search='';

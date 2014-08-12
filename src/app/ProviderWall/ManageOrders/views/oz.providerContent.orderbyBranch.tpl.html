@@ -52,7 +52,7 @@
 
             <div ng-show="(orderPrefDate | date:'dd-MM-yyyy')  == ( todaysDate1 | date:'dd-MM-yyyy')  "> 
 
-            <div ng-show="todaysDate1.getHours() < order.prefdeltimeslot.from" class="row" style="padding:10px; padding-left:20px;" >
+            <div  ng-show="todaysDate1.getHours() < order.prefdeltimeslot.from" class="row" style="padding:10px; padding-left:20px;" >
              <span >
               <input type="radio" ng-model="deliveryOption" value="pref"  >
               <span > Accept Preferred Delivery Date  - [{{order.preferred_delivery_date | date:'dd-MM-yyyy ' }}] And On Time Slot - {{changeTimeSlotDisplayFormat( order.prefdeltimeslot.from ) }} To  {{ changeTimeSlotDisplayFormat(order.prefdeltimeslot.to) }}</span>
