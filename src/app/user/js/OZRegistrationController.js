@@ -8,6 +8,8 @@ angular.module('oz.UserApp')
     $scope.verify_user = false;   
     $scope.verification = {};
     $scope.consumerverification = {};  
+    $scope.form = {};
+    $scope.regenerateverification = {};
 
     $scope.user = 
       {
@@ -163,6 +165,54 @@ angular.module('oz.UserApp')
       $rootScope.OZNotify("It looks as though we have broken something on our server system. Our support team is notified and will take immediate action to fix it." + message, 'error');   
     });
 
+    $scope.goToRegenerateToken = function() {
+      $('#regenerateVerificationTokenModal').modal({ 
+        keyboard: false,
+        backdrop: 'static',
+        show: true
+      });
+    }
+
+     // function to send and stringify user registration data to Rest APIs
+    $scope.jsonTokenRegenerateData = function(){
+      var Data = 
+      {
+        'mobileno' : $scope.regenerateverification.mobileno
+      };
+      return JSON.stringify(Data); 
+    } 
+
+    // function to handle server side responses
+    $scope.handleRegenerateVerificationTokenResponse = function(data){
+      if (data.success) {
+        $('#regenerateVerificationTokenModal').modal('hide');
+        $rootScope.OZNotify(data.success.message,'success'); 
+      } else {
+        console.log(data.error.message);
+        $rootScope.OZNotify(data.error.message,'error');
+      }
+    };
+
+    $scope.regenrateToken = function(){
+      if ($scope.form.regenerateVerificationForm.$valid) {
+        console.log('OTP entered successfully');
+        UserSessionService.regenerateTokenUser($scope.jsonTokenRegenerateData());
+      } else {
+        $scope.form.regenerateVerificationForm.submitted = true;
+      }
+    }
+
+    var cleanupEventRegenerateVerificationTokenDone = $scope.$on("regenerateTokenDone", function(event, message){
+      $log.debug(message);
+      $scope.handleRegenerateVerificationTokenResponse(message);      
+    });
+
+    var cleanupEventRegenerateVerificationTokenNotDone = $scope.$on("regenerateTokenNotDone", function(event, message){
+      $log.debug(message);
+      $rootScope.OZNotify("It looks as though we have broken something on our server system. Our support team is notified and will take immediate action to fix it." + message, 'error');   
+    });
+
+
     $scope.$on('$destroy', function(event, message) {
       cleanupEventSignupDone();
       cleanupEventSignupNotDone();
@@ -170,6 +220,8 @@ angular.module('oz.UserApp')
       cleanupEventVerificationNotDone();
       cleanupEventConsumerVerificationDone();
       cleanupEventConsumerVerificationNotDone();
+      cleanupEventRegenerateVerificationTokenDone();
+      cleanupEventRegenerateVerificationTokenNotDone();
     });
 
   }]);

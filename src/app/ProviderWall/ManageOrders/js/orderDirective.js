@@ -45,6 +45,14 @@ $scope.fromNow = function (time) {
   }
 };
 
+$scope.convertMomentFormat = function(time)
+{
+       if (time != undefined) 
+        { 
+          return moment(time).format('dddd, MMMM Do YYYY')
+        }; 
+};
+
 
   $scope.open = function($event) {
     $event.preventDefault();

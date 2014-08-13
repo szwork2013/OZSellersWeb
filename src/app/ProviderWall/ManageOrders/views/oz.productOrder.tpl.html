@@ -8,7 +8,7 @@
     <div class="list-group-item orderbox" > <!-- ngrepeat outer box css-->
          
       <div class=" margintop5 productsDate highlighrOrderContainer"  ><!--  2nd line -->
-       <em class="oz-adress" ng-class="{TextGray : order.deliverydate < today }"> {{ fromNow(order.deliverydate)  }}</em>  
+       <em class="oz-adress" ng-class="{TextGray : order.deliverydate < today }"> {{ convertMomentFormat(order.deliverydate)}}</em>  
       </div>
 
       <hr class="myhr">
@@ -69,7 +69,7 @@
                           <div class="" ng-show="productMassage==1" style = 'margin : 30px;'>
                               <table style="margin:2px ;background-color:rgb(246, 241, 246)" class="borderless table table-condensed ">
                                 <tr>
-                                  <td class="width50 " style = 'font-weight: bold;'><span class=" bold">Order Id </span></td>
+                                  <td class="width50 " style = 'font-weight: bold;'><span class=" bold">Order Number </span></td>
                                   <td class="width50 " style = 'font-weight: bold;'><span class=" bold">Quantity </span></td>
                                 </tr>
                                 </table>
