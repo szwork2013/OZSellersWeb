@@ -261,9 +261,17 @@ angular.module('oz.ProviderApp')
         var working_from_time = $scope.editbranch.branch_availability.from;
         var working_to_time = $scope.editbranch.branch_availability.to;
         $scope.edit.from.hours = parseInt(working_from_time);
-        $scope.edit.from.minutes = Math.round((working_from_time - $scope.edit.from.hours) * 60);
+        if (Math.round((working_from_time - $scope.edit.from.hours) * 60).toString().length == 1) {
+          $scope.edit.from.minutes = '0' + Math.round((working_from_time - $scope.edit.from.hours) * 60);
+        } else {
+          $scope.edit.from.minutes = Math.round((working_from_time - $scope.edit.from.hours) * 60);
+        }
         $scope.edit.to.hours = parseInt(working_to_time);
-        $scope.edit.to.minutes = Math.round((working_to_time - $scope.edit.to.hours) * 60);
+        if (Math.round((working_to_time - $scope.edit.to.hours) * 60).toString().length == 1) {
+          $scope.edit.to.minutes = '0' + Math.round((working_to_time - $scope.edit.to.hours) * 60);
+        } else {
+          $scope.edit.to.minutes = Math.round((working_to_time - $scope.edit.to.hours) * 60);
+        }
       }
       var branch_supportnos = angular.copy($scope.editbranch.contact_supports);
       $scope.editbranch.edit_supportnos = branch_supportnos.toString();
@@ -272,10 +280,18 @@ angular.module('oz.ProviderApp')
         for (var i = 0; i < branch.deliverytimingslots.length; i++) {
           var from_slot = branch.deliverytimingslots[i].from;
           var from_slot_hours = parseInt(from_slot);
-          var from_slot_minutes = Math.round((from_slot - from_slot_hours) * 60);
+          if (Math.round((from_slot - from_slot_hours) * 60).toString().length == 1) {
+            var from_slot_minutes = '0' + Math.round((from_slot - from_slot_hours) * 60);
+          } else {
+            var from_slot_minutes = Math.round((from_slot - from_slot_hours) * 60);
+          }
           var to_slot = branch.deliverytimingslots[i].to;
           var to_slot_hours = parseInt(to_slot);
-          var to_slot_minutes = Math.round((to_slot - to_slot_hours) * 60);
+          if (Math.round((to_slot - to_slot_hours) * 60).toString().length == 1) {
+            var to_slot_minutes = '0' + Math.round((to_slot - to_slot_hours) * 60);
+          } else {
+            var to_slot_minutes = Math.round((to_slot - to_slot_hours) * 60);
+          }
           $scope.editTimingSlots.push({'from':{'hours':from_slot_hours, 'minutes': from_slot_minutes}, 'to': {'hours': to_slot_hours, 'minutes': to_slot_minutes}});
         };
       }
@@ -403,9 +419,9 @@ angular.module('oz.ProviderApp')
         }
       } else {
         console.log('incorrect data');
-        $scope.form.editBranchForm.editcontact.$invalid = true;
-        console.log($scope.jsonEditBranchData());
         $scope.form.editBranchForm.submitted = true;
+        // $scope.form.editBranchForm.editcontact.$invalid = true;
+        console.log($scope.jsonEditBranchData());
       }
     }
 
@@ -432,4 +448,3 @@ angular.module('oz.ProviderApp')
     });
 
  }]);
-

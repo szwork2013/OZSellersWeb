@@ -28,43 +28,70 @@
 
     <div id="oz-signup-input-group" class="input-group">
 				<p id="oz-general-terms">By clicking Sign Up, you agree to our<a href="" style="color: rgb(97, 139, 8);" ng-click="showStaticTemplates('pp')" id="oz-general-terms-link" class="link"> Privacy</a>&nbsp;and&nbsp;<a href="" style="color: rgb(97, 139, 8);" ng-click="showStaticTemplates('tc')" id="oz-general-terms-link" class="link">Terms</a>.</p>
+				<p class="pull-right" style="font-weight:bold; font-size:12px;color: #727070; letter-spacing:1px;"><a class="link" style="font-weight:bold; font-size:12px;color: rgb(97, 139, 8); letter-spacing:1px;" data-toggle="collapse" data-target="#RegenerateToken" ng-click="regenerate_token = !regenerate_token" href="">Regenerate</a>&nbsp;or&nbsp;<a style="font-weight:bold; font-size:12px;color: rgb(97, 139, 8); letter-spacing:1px;" class="link" data-toggle="collapse" data-target="#VerifyToken" ng-click="verify_user = !verify_user" href="">Verify</a> Token?</p>
 		</div>
-
 	</form>	
+	
+	<div ng-show="regenerate_token" id="RegenerateToken" class="collapse">
+    <div class="">
+      <form style="width: 90%;" name="form.regenerateVerificationForm" id="oz-signup-form" novalidate>
 
-	<form ng-show="verify_user" style="width: 90%;" name="verificationForm" id="oz-signup-form" novalidate>
+				<div id="oz-signup-input-group" class="input-group">
+			  	<input type="text" name="token" class="form-control" ng-model="regenerateverification.mobileno" placeholder="mobile no." required />
+				</div>
 
-		<div id="oz-signup-input-group" class="input-group">
-	  	<input type="text" name="token" class="form-control" ng-model="verification.token" placeholder=" verification token" required />
+				<div id="oz-signup-input-group" class="input-group">
+					<p id="oz-general-terms">Please enter your mobile no. to regenerate token and use the OTP sent to your mobile for verification.</p>
+				</div>
+
+				<div id="oz-signup-input-group" class="input-group">
+					<button style="width: 100%;background-color:#EC670D;border-color: #E47814; font-size:18px;font-weight:bold;border-radius:1px;" class="btn btn-primary" ng-click="regenrateToken()">Regenerate</button>
+				</div>
+
+			</form>
+    </div>
+  </div>
+
+  <div ng-show="verify_user" id="VerifyToken" class="collapse">
+    <div class="">
+      <form style="width: 90%;" name="verificationForm" id="oz-signup-form" novalidate>
+
+				<div id="oz-signup-input-group" class="input-group">
+			  	<input type="text" name="token" class="form-control" ng-model="verification.token" placeholder=" verification token" required />
+				</div>
+
+				<div id="oz-signup-input-group" class="input-group">
+					<p id="oz-general-terms">Please enter verification token sent to your mobile no.</p>
+				</div>
+
+				<div id="oz-signup-input-group" class="input-group">
+					<button style="width: 100%;background-color:#EC670D;border-color: #E47814; font-size:18px;font-weight:bold;border-radius:1px;" class="btn btn-primary" ng-click="verify()">Verify</button>
+				</div>
+
+			</form>
+    </div>
+  </div>
+  
+  <div ng-show="consumer_verify_user" id="ConsumerVerifyToken" class="collapse">
+    <div class="">
+			<form style="width: 90%;" name="consumerVerificationForm" id="oz-signup-form" novalidate>
+
+				<div id="oz-signup-input-group" class="input-group">
+			  	<input type="text" name="consumertoken" class="form-control" ng-model="consumerverification.token" placeholder="verification token" required />
+				</div>
+
+				<div id="oz-signup-input-group" class="input-group">
+					<p id="oz-general-terms">Please enter verification token sent to your mobile no.</p>
+				</div>
+
+				<div ng-show="consumer_verify_user" id="oz-signup-input-group" class="input-group">
+					<button style="width: 90%;background-color:#EC670D;border-color: #E47814; font-size:18px;font-weight:bold;border-radius:1px;" class="btn btn-primary" ng-click="consumerVerify()">Verify</button>
+				</div>
+			</form>
 		</div>
+	</div>		
 
-		<div id="oz-signup-input-group" class="input-group">
-			<p id="oz-general-terms">Please enter verification token sent to your mobile no.</p>
-		</div>
-
-	</form>
-
-	<form ng-show="consumer_verify_user" style="width: 90%;" name="consumerVerificationForm" id="oz-signup-form" novalidate>
-
-		<div id="oz-signup-input-group" class="input-group">
-	  	<input type="text" name="consumertoken" class="form-control" ng-model="consumerverification.token" placeholder="verification token" required />
-		</div>
-
-		<div id="oz-signup-input-group" class="input-group">
-			<p id="oz-general-terms">Please enter verification token sent to your mobile no.</p>
-		</div>
-
-	</form>
-
-	<div ng-show="consumer_verify_user" id="oz-signup-input-group" class="input-group">
-		<button style="width: 90%;background-color:#EC670D;border-color: #E47814; font-size:18px;font-weight:bold;border-radius:1px;" class="btn btn-primary" ng-click="consumerVerify()">Verify</button>
-	</div>
-
-	<div ng-show="verify_user" id="oz-signup-input-group" class="input-group">
-		<button style="width: 90%;background-color:#EC670D;border-color: #E47814; font-size:18px;font-weight:bold;border-radius:1px;" class="btn btn-primary" ng-click="verify()">Verify</button>
-	</div>
-
-  <div ng-hide="(verify_user || consumer_verify_user)" id="oz-signup-input-group" class="input-group">
+  <div ng-hide="(verify_user || consumer_verify_user || regenerate_token)" id="oz-signup-input-group" class="input-group">
 		<button style="width: 90%;background-color:#EC670D;border-color: #E47814; font-size:18px;font-weight:bold;border-radius:1px;" class="btn btn-primary" ng-click="signup()">Sign Up</button>
 	</div>
 
