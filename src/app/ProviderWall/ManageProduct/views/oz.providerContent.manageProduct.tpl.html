@@ -148,6 +148,40 @@
 
 
 	            </tr>
+                <tr ng-init="updateCategory.flag=false" ng-if="editMode.editStatus=='update'"> 
+                <td ><a href="" tooltip="Change Category" tooltip-placement="right" class="btn btn-default" ng-click="updateCategory.flag = updateCategory.flag === false ? true: false;"><i class="fa fa-pencil-square-o"></i> </a> 
+                 <span ng-hide=" updateCategory.flag==true" class="prodo-descriptionDisplay">  &nbsp;&nbsp; {{product.category.ancestors[0].categoryname}}  >  {{product.category.ancestors[1].categoryname}}  >  {{product.category.ancestors[2].categoryname}} >  {{product.category.categoryname}}  </span>
+                </td>
+          
+			          
+			            <td  style="width:33%" ng-show="selectedBranchId && allCategories.length>0  && updateCategory.flag==true">
+			              		<span class="bold">Level 2 Category  </span>
+			              		<p style="margin-top: 10px;"><em ng-hide="ProductParentCategory">No Level 2 Categories </em></p>
+			              		<select ng-show="ProductParentCategory"  class=" form-control prodo-width50 prodo-validation" ng-model="outer.selectedParentCategory" ng-change="getLevel2Categories(outer.selectedParentCategory.categoryid);" ng-options="category as category.categoryname for category in ProductParentCategory" required  name="selectedParentCategory"></select>
+			              </td>
+
+			              <td style="width:33%" ng-show="selectedBranchId && allCategories.length>0  && updateCategory.flag==true">
+			              		<span class="bold">Level 3 Category  </span>
+			              		<p style="margin-top: 10px;"><em ng-hide="ProductCategoryLevel2">No Level 3 Categories </em></p>
+			              		<select  ng-show="ProductCategoryLevel2" class=" form-control prodo-width50 prodo-validation" ng-model="outer.selectedCategory" ng-change="getLevel3Categories(outer.selectedCategory.categoryid);" ng-options="category as category.categoryname for category in ProductCategoryLevel2" required  name="selectedCategory"></select>
+			              </td>
+
+			               <td style="width:33%" ng-show="selectedBranchId && allCategories.length>0  && updateCategory.flag==true">
+			              		<span class="bold"> Level 4 Category </span>
+
+			              		<p style="margin-top: 10px;"><em ng-hide="ProductCategoryLevel3">No Level 4 Categories </em></p>
+			              		 <select ng-show="ProductCategoryLevel3"  class=" form-control prodo-width50 prodo-validation" ng-change="changeCategory(outer.category)" ng-model="outer.category" ng-options="category as category.categoryname for category in ProductCategoryLevel3" name="subcategory" required ></select>
+
+
+                                 <div  ng-show="(form.productForm.subcategory.$dirty  && editMode.editorEnabled==true ) ||(form.productForm.submitted==true && form.productForm.subcategory.$invalid==true)" class="prodo-product-Invalid">
+								  <span ng-show="form.productForm.subcategory.$error.required">Please select sub category</span>
+								 </div>
+
+
+			              </td>
+
+
+	            </tr>
 	            </table>
 
 

@@ -16,7 +16,7 @@ angular.module('oz.ProviderApp')
     $scope.selectedParentCategory={};
     $scope.category={};
     $rootScope.selectedCategoryid="";
-
+    $scope.updateCategory={};
     $scope.filtered;
    $scope.search={};
    $scope.$state = $state;
@@ -164,7 +164,7 @@ $scope.getCategoriesFromDB($rootScope.selectedproviderid);
       $scope.getCategories=function(providerid){
 
          // if($scope.ProductParentCategory[0]){
-         //  $scope.outer.selectedParentCategory=$scope.ProductParentCategory[0];
+          // $scope.outer.selectedParentCategory=$scope.ProductParentCategory[0];
          //  $scope.getLevel2Categories($scope.outer.selectedParentCategory.categoryid);
          // }else{
          //  $scope.outer.selectedParentCategory='';
@@ -295,6 +295,16 @@ $scope.handleChangeLogo=function(data, status, headers, config){
 };
 
     $scope.enableEditor = function () {
+     if($scope.editMode.editStatus=='update'){
+      $scope.updateCategory.flag=false;  
+       // $scope.getCategories($rootScope.selectedproviderid);
+       $scope.outer.selectedParentCategory=$scope.product.category.ancestors[1];
+       $scope.outer.selectedCategory=$scope.product.category.ancestors[2];
+       $scope.outer.category={'categoryid':$scope.product.category.categoryid,'categoryname':$scope.product.category.categoryname}
+       $rootScope.selectedCategoryid=$scope.product.category.categoryid;
+       console.log($scope.outer.selectedParentCategory);
+     }
+
      $scope.tempProduct = angular.copy( $scope.product);
      $scope.editMode.editorEnabled = true;
      if($scope.editMode.editStatus=='add'){
@@ -384,9 +394,13 @@ $scope.addProduct = function (editStatus) {
 
   }
   else{
-    $scope.productUpdated={
+   
+ console.log($scope.product);
+if($scope.updateCategory.flag==false){
+   $scope.productUpdated={
       productname:$scope.product.productname,
       productdescription:$scope.product.productdescription,
+      // categoryid: $rootScope.selectedCategoryid,
       productcode:$scope.product.productcode,
       foodtype:$scope.product.foodtype,
       max_weight:$scope.product.max_weight,
@@ -394,9 +408,9 @@ $scope.addProduct = function (editStatus) {
       usertags:$scope.product.usertags,
       productconfiguration:$scope.product.productconfiguration
     }
- console.log($scope.product);
- if($scope.product.usertags){
-  	 $http({
+
+     if($scope.product.usertags){
+     $http({
         method: 'PUT',
         url: '/api/productcatalog/'+$scope.selectedproviderid+'/'+$scope.product.productid, 
         data: {"productcatalog":$scope.productUpdated} ,
@@ -413,6 +427,44 @@ $scope.addProduct = function (editStatus) {
            $rootScope.OZNotify("Please add user tags", 'error');
     }
 
+}
+
+if($scope.updateCategory.flag==true  ) {
+  if(($rootScope.selectedCategoryid ==undefined )||( $rootScope.selectedCategoryid =='') || ($rootScope.selectedCategoryid ==null)
+  ){
+     $rootScope.OZNotify("Please select categories ", 'error');
+    }else{
+         $scope.productUpdated={
+      productname:$scope.product.productname,
+      productdescription:$scope.product.productdescription,
+      categoryid: $rootScope.selectedCategoryid,
+      productcode:$scope.product.productcode,
+      foodtype:$scope.product.foodtype,
+      max_weight:$scope.product.max_weight,
+      min_weight:$scope.product.min_weight,
+      usertags:$scope.product.usertags,
+      productconfiguration:$scope.product.productconfiguration
+    }
+
+ if($scope.product.usertags){
+     $http({
+        method: 'PUT',
+        url: '/api/productcatalog/'+$scope.selectedproviderid+'/'+$scope.product.productid, 
+        data: {"productcatalog":$scope.productUpdated} ,
+        // file:file, 
+      }).success(function(data, status, headers, config) {
+         $scope.handleSaveProductResponse(data, status, headers, config);
+        console.log(data);
+      }).error(function (data, status, headers, cfg) {
+        $log.debug(status);
+       $rootScope.OZNotify(status, 'error'); 
+     });
+
+   }else{
+           $rootScope.OZNotify("Please add user tags", 'error');
+    } 
+    }
+  }
   }
  
    }
