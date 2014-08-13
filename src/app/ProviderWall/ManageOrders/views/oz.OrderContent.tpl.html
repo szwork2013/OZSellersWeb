@@ -204,7 +204,7 @@
               </div>
 
               <div  class="col-md-2">
-                 <span class="marginLeft15 oz-contentsRight  breakword"> &#x20B9;  {{product.orderprice.toFixed(2)}}</span>
+                 <span class=" oz-contentsRight  breakword">{{product.currency}}  {{product.orderprice.toFixed(2)}} <span  ng-show="product.productconfiguration">*</span></span>
               </div>
 
 
@@ -222,9 +222,10 @@
 
               </div>
               </div>
-         <div  class="col-md-2"> 
-           
-         </div> <div  class="col-md-2"></div>
+         <div  class="col-md-4"> 
+         <span ng-style="chargesNoteShow(order)"> *<span  class="text-muted" style="font-size:12px;"> Including configuration charges</span></span> 
+         </div> 
+         <!-- <div  class="col-md-2"></div> -->
          <div  class="col-md-2">
           <span class="bold">Grand Total </span> 
         </div>
