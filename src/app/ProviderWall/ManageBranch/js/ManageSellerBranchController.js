@@ -118,7 +118,7 @@ angular.module('oz.ProviderApp')
     $scope.jsonAddBranchData = function(){
       var timeslots = [];
       for (var i = 0; i < $scope.addbranch.timeslots.length; i++) {
-        if (parseInt($scope.addbranch.timeslots[i].from.hours) < parseInt($scope.addbranch.timeslots[i].to.hours)) {
+        if ((parseInt($scope.addbranch.timeslots[i].from.hours) < parseInt($scope.addbranch.timeslots[i].to.hours)) || ( (parseInt($scope.addbranch.timeslots[i].from.hours) == parseInt($scope.addbranch.timeslots[i].to.hours)) && (parseInt($scope.addbranch.timeslots[i].from.minutes) < parseInt($scope.addbranch.timeslots[i].to.minutes)))) {
           var from_hrs = parseInt($scope.addbranch.timeslots[i].from.hours);
           var from_mins = Math.round( (($scope.addbranch.timeslots[i].from.minutes)/60) *100)/100;
           var from_timeslot = from_hrs + from_mins;
@@ -128,7 +128,7 @@ angular.module('oz.ProviderApp')
           timeslots.push({from:from_timeslot, to: to_timeslot});
         } 
       } 
-      if (parseInt($scope.addbranch.operationHours.from.hours) < parseInt($scope.addbranch.operationHours.to.hours)) {
+      if ((parseInt($scope.addbranch.operationHours.from.hours) < parseInt($scope.addbranch.operationHours.to.hours)) || ( (parseInt($scope.addbranch.operationHours.from.hours) == parseInt($scope.addbranch.operationHours.to.hours)) && (parseInt($scope.addbranch.operationHours.from.minutes) < parseInt($scope.addbranch.operationHours.to.minutes)))) {
         if (($scope.addbranch.timeslots.length == timeslots.length) && ($scope.addbranch.timeslots.length > 0  && timeslots.length > 0)) {
           var supportnos = $scope.addbranch.supportno;
           var from_minutes = Math.round( (($scope.addbranch.operationHours.from.minutes)/60) *100)/100;
@@ -322,7 +322,7 @@ angular.module('oz.ProviderApp')
     $scope.jsonEditBranchData = function(){
       var timeslots = [];
       for (var i = 0; i < $scope.editTimingSlots.length; i++) {
-        if (parseInt($scope.editTimingSlots[i].from.hours) < parseInt($scope.editTimingSlots[i].to.hours)) {
+        if ((parseInt($scope.editTimingSlots[i].from.hours) < parseInt($scope.editTimingSlots[i].to.hours)) || ((parseInt($scope.editTimingSlots[i].from.hours) == parseInt($scope.editTimingSlots[i].to.hours)) && (parseInt($scope.editTimingSlots[i].from.minutes) < parseInt($scope.editTimingSlots[i].to.minutes)))) {
           var from_hrs = parseInt($scope.editTimingSlots[i].from.hours);
           var from_mins = Math.round( (($scope.editTimingSlots[i].from.minutes)/60) *100)/100;
           var from_timeslot = from_hrs + from_mins;
