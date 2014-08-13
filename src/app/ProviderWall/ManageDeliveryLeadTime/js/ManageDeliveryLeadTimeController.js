@@ -1,5 +1,5 @@
 angular.module('oz.ProviderApp')
-  .controller('ManageDeliveryTimeController', ['$scope', '$state', '$http', '$timeout', '$sce', '$log', '$rootScope', 'ProviderLeadtimeService','$upload','$stateParams', function($scope, $state, $http, $timeout, $sce, $log, $rootScope,ProviderLeadtimeService,$upload, $stateParams) {
+  .controller('ManageDeliveryLeadTimeController', ['$scope', '$state', '$http', '$timeout', '$sce', '$log', '$rootScope', 'ProviderLeadtimeService','$upload','$stateParams', function($scope, $state, $http, $timeout, $sce, $log, $rootScope,ProviderLeadtimeService,$upload, $stateParams) {
   
   $scope.$watch('selectedBranchId', function (selectedBranchId) {
       ProviderLeadtimeService.getAllCategories();

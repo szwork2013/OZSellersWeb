@@ -11,7 +11,7 @@ angular.module('oz.UserApp')
     $scope.user_edit = false;
 
     $scope.$watch('$state.$current.locals.globals.MyUserData', function (MyUserData) {
-      console.log(MyUserData);
+      $log.debug(MyUserData);
       if (MyUserData.success !== undefined && MyUserData.success.user !== undefined) {
         $scope.user_settings_data = angular.copy(MyUserData.success.user); 
         $scope.user_data = angular.copy(MyUserData.success.user); 
@@ -65,7 +65,7 @@ angular.module('oz.UserApp')
     // function to handle server side responses
     $scope.handleEditUserSettingsResponse = function(data){
       if (data.success) {
-        console.log(data.success);
+        $log.debug(data.success);
         $scope.cancelEditUser();
         $state.reload();
         $rootScope.OZNotify(data.success.message,'success');
@@ -73,7 +73,7 @@ angular.module('oz.UserApp')
         if(data.error.code=='AL001'){
           $rootScope.showModal();
         } else {
-          console.log(data.error.message);
+          $log.debug(data.error.message);
           $rootScope.OZNotify(data.error.message,'error');
         }
       }
@@ -82,7 +82,7 @@ angular.module('oz.UserApp')
     // function for resetpassword to Prodonus App using REST APIs and performs form validation.
     $scope.editUser = function() {
       if ($scope.form.editUserSettingsForm.$dirty && $scope.form.editUserSettingsForm.$valid) {
-        console.log($scope.jsonEditUserSettingsData());
+        $log.debug($scope.jsonEditUserSettingsData());
         UserSessionService.editUserSettings($scope.jsonEditUserSettingsData());
       } else {
         $scope.form.editUserSettingsForm.submitted = true;

@@ -63,14 +63,14 @@ angular.module('oz.UserApp')
         }
         $rootScope.OZNotify(data.success.message,'success'); 
       } else {
-        console.log(data.error.message);
+        $log.debug(data.error.message);
         $rootScope.OZNotify(data.error.message,'error');
       }
     };
   
     $scope.signup = function(){
       if ($scope.signupForm.$valid) {
-        console.log('User Data entered successfully');
+        $log.debug('User Data entered successfully');
         UserSessionService.signupUser($scope.jsonUserData());
       } else {
         $scope.signupForm.submitted = true;
@@ -105,14 +105,14 @@ angular.module('oz.UserApp')
         $rootScope.OZNotify(data.success.message,'success'); 
         UserSessionService.authSuccess(data.success.user);
       } else {
-        console.log(data.error.message);
+        $log.debug(data.error.message);
         $rootScope.OZNotify(data.error.message,'error');
       }
     };
   
     $scope.verify = function(){
       if ($scope.verificationForm.$valid) {
-        console.log('OTP entered successfully');
+        $log.debug('OTP entered successfully');
         UserSessionService.verifyUser($scope.jsonVerifyData());
       } else {
         $scope.verificationForm.submitted = true;
@@ -146,14 +146,14 @@ angular.module('oz.UserApp')
         $rootScope.OZNotify(data.success.message,'success'); 
         UserSessionService.authSuccess(data.success.user);
       } else {
-        console.log(data.error.message);
+        $log.debug(data.error.message);
         $rootScope.OZNotify(data.error.message,'error');
       }
     };
   
     $scope.consumerVerify = function(){
       if ($scope.consumerVerificationForm.$valid) {
-        console.log('OTP entered successfully');
+        $log.debug('OTP entered successfully');
         UserSessionService.consumerVerifyUser($scope.jsonConsumerVerifyData());
       } else {
         $scope.consumerVerificationForm.submitted = true;
@@ -182,20 +182,20 @@ angular.module('oz.UserApp')
     // function to handle server side responses
     $scope.handleRegenerateVerificationTokenResponse = function(data){
       if (data.success) {
-        console.log(data.success.message);
+        $log.debug(data.success.message);
         $('#RegenerateToken').collapse('hide');
         $scope.regenerate_token = false;
         $scope.regenerateverification = {};
         $rootScope.OZNotify(data.success.message,'success'); 
       } else {
-        console.log(data.error.message);
+        $log.debug(data.error.message);
         $rootScope.OZNotify(data.error.message,'error');
       }
     };
 
     $scope.regenrateToken = function(){
       if ($scope.form.regenerateVerificationForm.$valid) {
-        console.log('OTP entered successfully');
+        $log.debug('OTP entered successfully');
         UserSessionService.regenerateTokenUser($scope.jsonTokenRegenerateData());
       } else {
         $scope.form.regenerateVerificationForm.submitted = true;

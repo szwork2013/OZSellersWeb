@@ -23,7 +23,7 @@ angular.module('oz.ProviderApp')
     $scope.editTimingSlots = []; 
 
     $scope.$watch('$state.$current.locals.globals.MyProviderBranchList', function (MyProviderBranchList) {
-      console.log(MyProviderBranchList);
+      $log.debug(MyProviderBranchList);
       if (MyProviderBranchList.success !== undefined && MyProviderBranchList.success.branches.length !== 0) {
         $scope.providers_branch_list = angular.copy(MyProviderBranchList.success.branches); 
         $rootScope.branches = angular.copy(MyProviderBranchList.success.branches);
@@ -50,7 +50,7 @@ angular.module('oz.ProviderApp')
     });
 
     $scope.$watch('$state.$current.locals.globals.MySelectedProvider', function (MySelectedProvider) {
-      console.log(MySelectedProvider);
+      $log.debug(MySelectedProvider);
       if (MySelectedProvider.success !== undefined && MySelectedProvider.success.productprovider !== undefined) {
         $scope.selectedprovider = angular.copy(MySelectedProvider.success.productprovider); 
       } else {
@@ -67,7 +67,7 @@ angular.module('oz.ProviderApp')
     });
 
     var cleanupEventChange_in_provideridDone = $scope.$on("change_in_providerid", function(event, data){
-      console.log(data);
+      $log.debug(data);
       $state.reload();     
     });
 
@@ -192,7 +192,7 @@ angular.module('oz.ProviderApp')
         if(data.error.code=='AL001'){
           $rootScope.showModal();
         } else {
-          console.log(data.error.message);
+          $log.debug(data.error.message);
           $rootScope.OZNotify(data.error.message,'error');
         }
       }
@@ -206,7 +206,7 @@ angular.module('oz.ProviderApp')
           $scope.form.addBranchForm.submitted = true;
         }    
       } else {
-        console.log('incorrect data');
+        $log.debug('incorrect data');
         $scope.form.addBranchForm.submitted = true;
       }
     }
@@ -233,7 +233,7 @@ angular.module('oz.ProviderApp')
         if(data.error.code=='AL001'){
           $rootScope.showModal();
         } else {
-          console.log(data.error.message);
+          $log.debug(data.error.message);
           $rootScope.OZNotify(data.error.message,'error');
         }
       }
@@ -402,7 +402,7 @@ angular.module('oz.ProviderApp')
         if(data.error.code=='AL001'){
           $rootScope.showModal();
         } else {
-          console.log(data.error.message);
+          $log.debug(data.error.message);
           $rootScope.OZNotify(data.error.message,'error');
         }
       }
@@ -410,7 +410,7 @@ angular.module('oz.ProviderApp')
   
     $scope.editSellerBranch = function(branchid){
       if ($scope.form.editBranchForm.$valid) {
-        console.log($scope.jsonEditBranchData());
+        $log.debug($scope.jsonEditBranchData());
         if ($scope.jsonEditBranchData()) {   
           ManageBranchService.editBranch($scope.jsonEditBranchData(), branchid);
         } else {
@@ -418,10 +418,10 @@ angular.module('oz.ProviderApp')
           $scope.form.editBranchForm.submitted = true;
         }
       } else {
-        console.log('incorrect data');
+        $log.debug('incorrect data');
         $scope.form.editBranchForm.submitted = true;
         // $scope.form.editBranchForm.editcontact.$invalid = true;
-        console.log($scope.jsonEditBranchData());
+        $log.debug($scope.jsonEditBranchData());
       }
     }
 

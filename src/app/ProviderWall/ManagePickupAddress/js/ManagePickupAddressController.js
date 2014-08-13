@@ -17,7 +17,7 @@ angular.module('oz.ProviderApp')
     var zipcode_regex = /^[0-9]{6}$/;
 
     $scope.$watch('$state.$current.locals.globals.PickupAddressList', function (PickupAddressList) {
-      console.log(PickupAddressList);
+      $log.debug(PickupAddressList);
       if (PickupAddressList.success !== undefined && PickupAddressList.success.addresses.length !== 0) {
         $scope.providers_pickup_address = angular.copy(PickupAddressList.success.addresses); 
       } else {
@@ -33,28 +33,28 @@ angular.module('oz.ProviderApp')
     });
 
     $scope.$watch('$state.$current.locals.globals.StateDataList', function (StateDataList) {
-      console.log(StateDataList);
+      $log.debug(StateDataList);
       if (StateDataList.success && StateDataList.success.states.length !== 0) {
         $scope.states = angular.copy(StateDataList.success.states);
       }
     });
 
     $scope.$watch('$state.$current.locals.globals.CityDataList', function (CityDataList) {
-      console.log(CityDataList);
+      $log.debug(CityDataList);
       if (CityDataList.success && CityDataList.success.city.length !== 0) {
         $scope.cities = angular.copy(CityDataList.success.city);
       }
     });
 
     $scope.$watch('$state.$current.locals.globals.ZipcodeDataList', function (ZipcodeDataList) {
-      console.log(ZipcodeDataList);
+      $log.debug(ZipcodeDataList);
       if (ZipcodeDataList.success && ZipcodeDataList.success.zipcode.length !== 0) {
         $scope.zipcodes = angular.copy(ZipcodeDataList.success.zipcode);
       }
     });
 
     var cleanupEventChange_in_provideridDone = $scope.$on("change_in_providerid", function(event, data){
-      console.log(data);
+      $log.debug(data);
       $state.reload();     
     });
 
@@ -74,7 +74,7 @@ angular.module('oz.ProviderApp')
         }
         // $rootScope.OZNotify(data.success.message,'success'); 
       } else {
-        console.log(data.error.message);
+        $log.debug(data.error.message);
         $rootScope.OZNotify(data.error.message,'error');
       }
     };
@@ -104,7 +104,7 @@ angular.module('oz.ProviderApp')
         }
         // $rootScope.OZNotify(data.success.message,'success'); 
       } else {
-        console.log(data.error.message);
+        $log.debug(data.error.message);
         $rootScope.OZNotify(data.error.message,'error');
       }
     };
@@ -133,7 +133,7 @@ angular.module('oz.ProviderApp')
         }
         // $rootScope.OZNotify(data.success.message,'success'); 
       } else {
-        console.log(data.error.message);
+        $log.debug(data.error.message);
         $rootScope.OZNotify(data.error.message,'error');
       }
     };
@@ -182,19 +182,19 @@ angular.module('oz.ProviderApp')
         if(data.error.code=='AL001'){
           $rootScope.showModal();
         } else {
-          console.log(data.error.message);
+          $log.debug(data.error.message);
           $rootScope.OZNotify(data.error.message,'error');
         }
       }
     };
   
     $scope.addPickupAddress = function(){
-      console.log($rootScope.selectedproviderid);
-      console.log($scope.jsonAddPickupAddressData());
+      $log.debug($rootScope.selectedproviderid);
+      $log.debug($scope.jsonAddPickupAddressData());
       if ($scope.form.addPickupAddress.$valid) {
         ManageBranchService.addPickupLocation($scope.jsonAddPickupAddressData());
       } else {
-        console.log('incorrect data');
+        $log.debug('incorrect data');
         $scope.form.addPickupAddress.submitted = true;
       }
     }
@@ -251,18 +251,18 @@ angular.module('oz.ProviderApp')
         if(data.error.code=='AL001'){
           $rootScope.showModal();
         } else {
-          console.log(data.error.message);
+          $log.debug(data.error.message);
           $rootScope.OZNotify(data.error.message,'error');
         }
       }
     };
   
     $scope.editPickupAddress = function(addressid){
-      console.log($scope.jsonEditPickupAddressData());
+      $log.debug($scope.jsonEditPickupAddressData());
       if ($scope.form.editPickupAddress.$valid) {
         ManageBranchService.updatePickupLocation($scope.jsonEditPickupAddressData(), addressid);
       } else {
-        console.log('incorrect data');
+        $log.debug('incorrect data');
         $scope.form.editPickupAddress.submitted = true;
       }
     }
@@ -288,7 +288,7 @@ angular.module('oz.ProviderApp')
         if(data.error.code=='AL001'){
           $rootScope.showModal();
         } else {
-          console.log(data.error.message);
+          $log.debug(data.error.message);
           $rootScope.OZNotify(data.error.message,'error');
         }
       }

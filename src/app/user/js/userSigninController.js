@@ -46,7 +46,7 @@ angular.module('oz.UserApp')
     // function to handle server side responses
     $scope.handleSigninResponse = function(data){
       if (data.success) {
-        console.log(data.success);
+        $log.debug(data.success);
         $scope.clearsigninformData();    
         UserSessionService.authSuccess(data.success.user);
         $rootScope.OZNotify('Successful login !','success');
@@ -89,7 +89,7 @@ angular.module('oz.UserApp')
     $scope.signin = function() {
       if ($scope.signinForm.$valid) {
         $log.debug('User Data entered successfully');
-        console.log($scope.jsonUserSigninData());
+        $log.debug($scope.jsonUserSigninData());
         UserSessionService.signinUser($scope.jsonUserSigninData());
       } else {
         $scope.signinForm.submitted = true;
@@ -118,7 +118,7 @@ angular.module('oz.UserApp')
     // function to handle server side responses
     $scope.handleForgotPasswordResponse = function(data){
       if (data.success) {   
-        console.log(data.success);
+        $log.debug(data.success);
         $scope.clearforgotpasswordformData();
         $scope.reset_password = true;
         $rootScope.OZNotify(data.success.message,'success');
@@ -147,7 +147,7 @@ angular.module('oz.UserApp')
     $scope.forgotPassword = function() {
       if ($scope.forgotPasswordForm.$valid) {
         $log.debug('User Data entered successfully');
-        console.log($scope.jsonForgotPasswordData());
+        $log.debug($scope.jsonForgotPasswordData());
         UserSessionService.forgotPasswordUser($scope.jsonForgotPasswordData());
       } else {
         $scope.forgotPasswordForm.submitted = true;
@@ -177,7 +177,7 @@ angular.module('oz.UserApp')
     // function to handle server side responses
     $scope.handleResetPasswordResponse = function(data){
       if (data.success) {
-        console.log(data.success);
+        $log.debug(data.success);
         $scope.clearresetpasswordformData();
         $scope.reset_password = false;
         $state.transitionTo('home.start');

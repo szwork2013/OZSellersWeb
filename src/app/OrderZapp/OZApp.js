@@ -78,7 +78,7 @@ $scope.getProviders=function(){
                  $rootScope.provider=$rootScope.providers[0];
                  $rootScope.orderConfigStatus=$rootScope.provider.orderprocess_configuration;
                  $rootScope.selectedproviderid=successData.success.providers[0].providerid;
-                 console.log($scope.provider);
+                 $log.debug($scope.provider);
                  $scope.getBranches($rootScope.selectedproviderid);
                 }               
               }
@@ -166,7 +166,7 @@ $scope.getProviders=function(){
        $rootScope.OZNotify(successData.error.message, 'error');  
       } else {
        $rootScope.branches=successData.success.branches;
-       console.log($rootScope.branches);
+       $log.debug($rootScope.branches);
        if(successData.success.branches[0]){
         $rootScope.selectedBranchId=successData.success.branches[0].branchid;
         $rootScope.branch=successData.success.branches[0];
@@ -179,7 +179,7 @@ $scope.getProviders=function(){
    };
 
   $scope.getBranchId=function(branch){
-    console.log(branch);
+    $log.debug(branch);
           $rootScope.selectedBranchId=branch.branchid;
           $rootScope.deliveryTimeSlots=branch.deliverytimingslots;
           $rootScope.$broadcast('change_in_branchid', $rootScope.selectedBranchId);
@@ -188,7 +188,7 @@ $scope.getProviders=function(){
        };
 
   // $rootScope.$watch('selectedproviderid', function (selectedproviderid) {
-  //   console.log("watch"+ selectedproviderid);
+  //   $log.debug("watch"+ selectedproviderid);
   //   if($rootScope.selectedproviderid){
   //     $scope.getBranches($rootScope.selectedproviderid);
   //   }   
