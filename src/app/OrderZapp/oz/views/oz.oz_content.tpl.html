@@ -255,16 +255,31 @@
       <div class = "highlighrOrderContainer">
            <div class = "subOrderContainer">
                <h4 style = "float:left;"><b>Sub-order No : </b><span ng-bind = "orderContentObject.suborder.suborderid"></span></h4> 
-               <h4 style = "float:right;"><b>Delivery Date : </b><span ng-bind = "orderContentObject.suborder.deliverydate | date : 'yyyy-MM-dd HH:mm:ss'"></span></h4>      
+            <!--    <h4 style = "float:right;"><b>Delivery Date : </b><span ng-bind = "orderContentObject.suborder.deliverydate | date : 'yyyy-MM-dd HH:mm:ss'"></span></h4>     -->  
             </div>
-            <div class = "subOrderContainer">
-               <h4 style = "float:left;"><b>Seller Name : </b><span ng-bind = "orderContentObject.suborder.productprovider.providername"></span></h4> 
-               <h4 style = "float:right;"><b>Branch Name  : </b><span ng-bind = "orderContentObject.suborder.productprovider.branchname"></span></h4>      
+            <div class = "subOrderContainer" style = 'width:100%'>
+               <h4 style = "float:left;width:50%"><b>Seller Name : </b><span ng-bind = "orderContentObject.suborder.productprovider.providername"></span></h4> 
+               <h4 style = "float:right;width:50%"><b>Branch Name  : </b><span ng-bind = "orderContentObject.suborder.productprovider.branchname"></span></h4>      
             </div>
-            <div class = "subOrderContainer">
-               <h4 style = "float:left;"><b>Customer Contact No. : </b><span ng-bind = "orderContentObject.consumer.mobileno"></span></h4> 
-               <h4 style = "float:right;"><b>Seller Contact No.  : </b><span >Data not available</span></h4>      
+            <div class = "subOrderContainer" style = 'width:100%' style = 'min-height : 70px;'>
+               <h4 style = "float:left;width:50%"><b>Customer Contact No. : </b><span ng-bind = "orderContentObject.consumer.mobileno"></span></h4> 
+               <h4 style = "float:right;width:50%"><b>Seller Contact No.  : </b> <span ng-bind = 'orderContentObject.suborder.productprovider.contact_supports'></span> </h4>      
             </div>
+
+            <div class = "subOrderContainer" style = 'min-height : 95px;'>
+               <div style = 'width:100%'>
+                   <h4 style = "float:left;width:50%"><b>Buyers Delivery Date : </b><span ng-bind = "convertMomentFormat(orderContentObject.suborder.prefdeldtime)"></span></h4> 
+                   <h4 style = "float:right;width:50%"><b>Buyers Time Slot  : </b><span ng-if = 'orderContentObject.suborder.prefdeltimeslot !== undefined'><span ng-bind = "orderContentObject.suborder.prefdeltimeslot.from"></span> To <span ng-bind = "orderContentObject.suborder.prefdeltimeslot.to"></span></span></h4>      
+               </div>
+
+               <div style = 'width:100%'>
+                   <h4 style = "float:left;width:50%"><b>Seller Delivery Date : </b><span ng-bind = "convertMomentFormat(orderContentObject.suborder.deliverydate)"></span></h4> 
+                   <h4 style = "float:right;width:50%"><b>Seller Time Slot  : </b><span ng-if = 'orderContentObject.suborder.deliverytimeslot !== undefined'><span ng-bind = "orderContentObject.suborder.deliverytimeslot.from"></span> To <span ng-bind = "orderContentObject.suborder.deliverytimeslot.to"></span></span> </h4>      
+               </div>
+
+            </div>
+
+
             <div class = "fontsize"><u><b>Status : </b><span ng-bind = "orderContentObject.suborder.status"></span></u></div>
         <div class = 'row' style = 'border : 1px solid #ccc; ' >
                  <div  class="col-md-3">  <h4> Product Name </h4></div>

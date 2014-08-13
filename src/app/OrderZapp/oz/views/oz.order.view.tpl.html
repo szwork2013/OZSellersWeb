@@ -2,11 +2,19 @@
 <input type= ' text' ng-model = 'search' class = 'form-control'><div class = "mainOrderContainer" ng-repeat = "list in orders | filter : search" >
     
 		<div class = "highlighrOrderContainer">
-	         <div class = "subOrderContainer" style = 'height : 100px'>
-        				  <div style = "width:50%;float:left;">  <h4 ><b>Sub-order No : </b> <span ng-bind = "list.suborder.suborderid"></span></h4></div>
-        				  <div style = 'width:50%;float:left'><h4 ><b>Delivery Date : </b><span ng-bind = "list.suborder.deliverydate | date : 'yyyy-MM-dd HH:mm:ss'"></span> </h4>  </div> 
+	         <div class = "subOrderContainer" style = 'min-height : 180px'>
+        				  <div style = "width:100%;float:left;">  <h4 ><b>Sub-order No : </b> <span ng-bind = "list.suborder.suborderid"></span></h4></div>
+        				 
                   <div style = 'width : 50%; float : left;'> <h4 ><b>Customer Contact No. : </b> <span ng-bind = "list.consumer.mobileno"></span></h4></div>
-                  <div style = 'width : 50%;float:left;'><h4><b> Seller Contact No: </b><span >Data not available</span>  </h4></div>   
+                  <div style = 'width : 50%;float:left;'><h4><b> Seller Contact No: </b><span ng-bind = 'list.suborder.productprovider.contact_supports'></span>  </h4></div>   
+
+                   <div style = 'width:50%;float:left'><h4 ><b>User Delivery Date : </b><span ng-bind = "convertMomentFormat(list.suborder.prefdeldtime)"></span> </h4>  </div> 
+
+                   <div style = 'width:50%;float:left'><h4 ><b>Seller Delivery Date : </b><span ng-bind = "convertMomentFormat(list.suborder.deliverydate) "></span> </h4>  </div>
+
+                    <div style = 'width:50%;float:left'><h4 ><b>User Expected Time Slot : </b><span ng-if = 'list.suborder.prefdeltimeslot !== undefined'><span ng-bind = "list.suborder.prefdeltimeslot.from"></span> To <span ng-bind = "list.suborder.prefdeltimeslot.to"></span></span></h4>  </div> 
+
+                   <div style = 'width:50%;float:left'><h4 ><b>Seller Time Slot : </b><span ng-if = 'list.suborder.deliverytimeslot !== undefined'><span ng-bind = "list.suborder.deliverytimeslot.from"></span> To <span ng-bind = "list.suborder.deliverytimeslot.to"></span></span> </h4>  </div>
            </div>
 
               <div class = "fontsize"><u><b>Status : </b><span ng-bind = "list.suborder.status"></span></u></div>
