@@ -8,11 +8,11 @@
                   <div style = 'width : 50%; float : left;'> <h4 ><b>Customer Contact No. : </b> <span ng-bind = "list.consumer.mobileno"></span></h4></div>
                   <div style = 'width : 50%;float:left;'><h4><b> Seller Contact No: </b><span ng-bind = 'list.suborder.productprovider.contact_supports'></span>  </h4></div>   
 
-                   <div style = 'width:50%;float:left'><h4 ><b>User Delivery Date : </b><span ng-bind = "convertMomentFormat(list.suborder.prefdeldtime)"></span> </h4>  </div> 
+                   <div style = 'width:50%;float:left'><h4 ><b>Buyer Delivery Date : </b><span ng-bind = "convertMomentFormat(list.suborder.prefdeldtime)"></span> </h4>  </div> 
 
                    <div style = 'width:50%;float:left'><h4 ><b>Seller Delivery Date : </b><span ng-bind = "convertMomentFormat(list.suborder.deliverydate) "></span> </h4>  </div>
 
-                    <div style = 'width:50%;float:left'><h4 ><b>User Expected Time Slot : </b><span ng-if = 'list.suborder.prefdeltimeslot !== undefined'><span ng-bind = "list.suborder.prefdeltimeslot.from"></span> To <span ng-bind = "list.suborder.prefdeltimeslot.to"></span></span></h4>  </div> 
+                    <div style = 'width:50%;float:left'><h4 ><b>Buyer Expected Time Slot : </b><span ng-if = 'list.suborder.prefdeltimeslot !== undefined'><span ng-bind = "list.suborder.prefdeltimeslot.from"></span> To <span ng-bind = "list.suborder.prefdeltimeslot.to"></span></span></h4>  </div> 
 
                    <div style = 'width:50%;float:left'><h4 ><b>Seller Time Slot : </b><span ng-if = 'list.suborder.deliverytimeslot !== undefined'><span ng-bind = "list.suborder.deliverytimeslot.from"></span> To <span ng-bind = "list.suborder.deliverytimeslot.to"></span></span> </h4>  </div>
            </div>
