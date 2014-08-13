@@ -6,8 +6,11 @@ angular.module('oz.UserApp')
     $scope.submitted = false; 
     $scope.consumer_verify_user = false;  
     $scope.verify_user = false;   
+    regenerate_token = false;
     $scope.verification = {};
     $scope.consumerverification = {};  
+    $scope.form = {};
+    $scope.regenerateverification = {};
 
     $scope.user = 
       {
@@ -53,8 +56,10 @@ angular.module('oz.UserApp')
 				$scope.clearformData();
         if (data.success.code !== undefined && data.success.code == 'POTP') {
           $scope.consumer_verify_user = true;
+          $('#ConsumerVerifyToken').collapse('show');
         } else {
           $scope.verify_user = true;
+          $('#VerifyToken').collapse('show');
         }
         $rootScope.OZNotify(data.success.message,'success'); 
       } else {
@@ -96,6 +101,7 @@ angular.module('oz.UserApp')
     $scope.handleVerificationResponse = function(data){
       if (data.success) {
         $scope.verify_user = false;
+        $('#VerifyToken').collapse('hide');
         $rootScope.OZNotify(data.success.message,'success'); 
         UserSessionService.authSuccess(data.success.user);
       } else {
@@ -136,6 +142,7 @@ angular.module('oz.UserApp')
     $scope.handleConsumerVerificationResponse = function(data){
       if (data.success) {
         $scope.consumer_verify_user = false;
+        $('#ConsumerVerifyToken').collapse('hide');
         $rootScope.OZNotify(data.success.message,'success'); 
         UserSessionService.authSuccess(data.success.user);
       } else {
@@ -163,6 +170,49 @@ angular.module('oz.UserApp')
       $rootScope.OZNotify("It looks as though we have broken something on our server system. Our support team is notified and will take immediate action to fix it." + message, 'error');   
     });
 
+     // function to send and stringify user registration data to Rest APIs
+    $scope.jsonTokenRegenerateData = function(){
+      var Data = 
+      {
+        'mobileno' : '91' + $scope.regenerateverification.mobileno
+      };
+      return JSON.stringify(Data); 
+    } 
+
+    // function to handle server side responses
+    $scope.handleRegenerateVerificationTokenResponse = function(data){
+      if (data.success) {
+        console.log(data.success.message);
+        $('#RegenerateToken').collapse('hide');
+        $scope.regenerate_token = false;
+        $scope.regenerateverification = {};
+        $rootScope.OZNotify(data.success.message,'success'); 
+      } else {
+        console.log(data.error.message);
+        $rootScope.OZNotify(data.error.message,'error');
+      }
+    };
+
+    $scope.regenrateToken = function(){
+      if ($scope.form.regenerateVerificationForm.$valid) {
+        console.log('OTP entered successfully');
+        UserSessionService.regenerateTokenUser($scope.jsonTokenRegenerateData());
+      } else {
+        $scope.form.regenerateVerificationForm.submitted = true;
+      }
+    }
+
+    var cleanupEventRegenerateVerificationTokenDone = $scope.$on("regenerateTokenDone", function(event, message){
+      $log.debug(message);
+      $scope.handleRegenerateVerificationTokenResponse(message);      
+    });
+
+    var cleanupEventRegenerateVerificationTokenNotDone = $scope.$on("regenerateTokenNotDone", function(event, message){
+      $log.debug(message);
+      $rootScope.OZNotify("It looks as though we have broken something on our server system. Our support team is notified and will take immediate action to fix it." + message, 'error');   
+    });
+
+
     $scope.$on('$destroy', function(event, message) {
       cleanupEventSignupDone();
       cleanupEventSignupNotDone();
@@ -170,6 +220,8 @@ angular.module('oz.UserApp')
       cleanupEventVerificationNotDone();
       cleanupEventConsumerVerificationDone();
       cleanupEventConsumerVerificationNotDone();
+      cleanupEventRegenerateVerificationTokenDone();
+      cleanupEventRegenerateVerificationTokenNotDone();
     });
 
   }]);
