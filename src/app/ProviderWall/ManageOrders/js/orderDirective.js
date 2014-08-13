@@ -250,6 +250,41 @@ $scope.getDate=function(dayorder){
    }
   };
 
+  $scope.chargesNoteShow=function(order){
+  var products
+   if(order.products){
+    products=order.products;
+   }
+    // console.log(products);
+    var yes=false;
+    var no=false;
+    if(products){
+          for (var i = products.length - 1; i >= 0; i--) {
+         if(products[i].productconfiguration){
+          if((products[i].productconfiguration==undefined) || (products[i].productconfiguration==null) || (products[i].productconfiguration.length==0) ){
+             no=true;
+          }
+          else{
+            yes=true;
+          }
+
+        }
+        };
+    }
+
+    if(yes==true){
+     return {
+      display: "block"
+    }
+    }
+    else{
+     return {
+      display: "none"
+    }
+    }
+
+  }
+
   $scope.firstTreeTabOpen=function(status){
     if(status=='orderreceived'){
        $scope.tab1=true;
