@@ -80,12 +80,12 @@ angular.module('oz.ProviderApp')
          $scope.getOP();
      	}
      	else {
-     		console.log(data.error);
+     		$log.debug(data.error);
          if(data.error.code=='AL001'){
           $rootScope.showModal();
         }
      	}
-     	// console.log(data);
+     	// $log.debug(data);
      }
 
      $scope.getOP=function(){
@@ -193,9 +193,9 @@ angular.module('oz.ProviderApp')
          if(data.error.code=='AL001'){
             $rootScope.showModal();
           }
-     		console.log(data.error);
+     		$log.debug(data.error);
      	}
-     	// console.log(data);
+     	// $log.debug(data);
      }
 
      $scope.getRP=function(){
@@ -222,7 +222,7 @@ angular.module('oz.ProviderApp')
        else if(data.success){
        	$scope.rpAddEditor=0;
        	$scope.refunds_policy=data.success.policy.refunds_policy;
-       	// console.log($scope.refunds_policy);
+       	// $log.debug($scope.refunds_policy);
        }
 
      };
@@ -300,9 +300,9 @@ angular.module('oz.ProviderApp')
         if(data.error.code=='AL001'){
             $rootScope.showModal();
           }
-        console.log(data.error);
+        $log.debug(data.error);
       }
-      // console.log(data);
+      // $log.debug(data);
      }
 
      $scope.getPP=function(){
@@ -329,7 +329,7 @@ angular.module('oz.ProviderApp')
        else if(data.success){
         $scope.ppAddEditor=0;
         $scope.price_policy=data.success.policy.price_policy;
-        // console.log($scope.price_policy);
+        // $log.debug($scope.price_policy);
        }
 
      };
@@ -408,9 +408,9 @@ angular.module('oz.ProviderApp')
           if(data.error.code=='AL001'){
             $rootScope.showModal();
           }
-        console.log(data.error);
+        $log.debug(data.error);
       }
-      // console.log(data);
+      // $log.debug(data);
      }
 
      $scope.getDP=function(){
@@ -438,7 +438,7 @@ angular.module('oz.ProviderApp')
        else if(data.success){
         $scope.dpAddEditor=0;
         $scope.delivery_policy=data.success.policy.delivery_policy;
-        // console.log($scope.delivery_policy);
+        // $log.debug($scope.delivery_policy);
        }
 
      };
@@ -516,9 +516,9 @@ angular.module('oz.ProviderApp')
           if(data.error.code=='AL001'){
             $rootScope.showModal();
           }
-        console.log(data.error);
+        $log.debug(data.error);
       }
-      // console.log(data);
+      // $log.debug(data);
      }
 
      $scope.getCP=function(){
@@ -546,7 +546,7 @@ angular.module('oz.ProviderApp')
        else if(data.success){
         $scope.cpAddEditor=0;
         $scope.cancellation_policy=data.success.policy.cancellation_policy;
-        // console.log($scope.cancellation_policy);
+        // $log.debug($scope.cancellation_policy);
        }
 
      };

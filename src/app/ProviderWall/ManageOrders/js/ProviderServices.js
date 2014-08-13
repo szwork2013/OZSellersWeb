@@ -127,7 +127,7 @@
       });
     };
     productService.updateDiscountDetails = function(discountid, content, list)
-    {   console.log(JSON.stringify(content));
+    {   $log.debug(JSON.stringify(content));
          services.updateDiscountCode.put({discountid : discountid}, content, function(success)
          {
           $rootScope.$broadcast('codeChangedSuccessfully', success, list);
@@ -186,7 +186,7 @@
     // }
 
     productService.addMembersToGroup = function(content, ids)
-    {    console.log(JSON.stringify(content));
+    {    $log.debug(JSON.stringify(content));
       services.addMembersGroup.post({branchid : $rootScope.selectedBranchId, groupid : ids}, content, function(success)
       {
         $rootScope.$broadcast('membersAddedSuccessfully', success);
@@ -210,7 +210,7 @@
     };
 
     productService.removeGroupMember = function(userid, grpid)
-    {   console.log('userid '+userid+ 'grpid '  +grpid);
+    {   $log.debug('userid '+userid+ 'grpid '  +grpid);
       services.removeGroupMember.delete({branchid : $rootScope.selectedBranchId, groupid : grpid, userid : userid}, function(success)
       {
         $rootScope.$broadcast('memberRemoveSuccess', success, grpid);
@@ -270,10 +270,10 @@
 
     productService.get_Invoice = function (suborderid,branchid) {
       services.Invoice.getInvoiceData({branchid: branchid, suborderid: suborderid}, function (success) {
-        console.log(success);
+        $log.debug(success);
         $rootScope.$broadcast('getInvoiceDataDone', success);
       }, function (error) {
-        console.log(error);
+        $log.debug(error);
         $rootScope.$broadcast('getInvoiceDataNotDone', error.status);
       });
     };
