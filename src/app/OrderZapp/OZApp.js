@@ -4,7 +4,7 @@ angular.module('oz.AdApp', []);
 angular.module('oz.AdminApp', []);
 angular.module('oz.ProviderApp', []);
 
-angular.module('oz.OrderZappApp',['ui.router', 'ui.bootstrap', 'ngAnimate','textAngular', 'vcRecaptcha', 'ngResource', 'tags-input',  'oz.CommonApp',
+angular.module('oz.OrderZappApp',['ui.router', 'ui.bootstrap', 'ngAnimate','textAngular', 'ngResource', 'tags-input',  'oz.CommonApp',
   'oz.UserApp', 'oz.AdApp', 'oz.AdminApp',  'oz.ProviderApp','angularFileUpload', 'checklist-model'
 ])
 
