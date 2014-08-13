@@ -32,11 +32,14 @@ angular.module('oz.ProviderApp')
      if(ordering_policy==""){
       $rootScope.OZNotify("Please enter policy", 'error');  
      }else{
+
+     var ordering_policyFormated = '<!DOCTYPE html><html><meta name="viewport" content="width=device-width, initial-scale=1"><div style = "text-align:justify">'+ ordering_policy + '</div></html>';
+
         if($rootScope.selectedBranchId && $rootScope.selectedproviderid){
             $http({
                method: 'POST',
                url: ' /api/branchpolicy/'+$rootScope.selectedproviderid+'/'+$rootScope.selectedBranchId +'?type=ordering_policy',
-               data:{"text":ordering_policy}, 
+               data:{"text":ordering_policyFormated}, 
              }).success(function(data, status, headers, cfg){
                $scope.handleAddOPData(data);
             }).error(function(data, status, headers, cfg){
@@ -52,11 +55,13 @@ angular.module('oz.ProviderApp')
       if(ordering_policy==""){
        $rootScope.OZNotify("Please enter policy", 'error');  
       }else{
+     var ordering_policyFormated = '<!DOCTYPE html><html><meta name="viewport" content="width=device-width, initial-scale=1"><div style = "text-align:justify">'+ ordering_policy + '</div></html>';
+
         if($rootScope.selectedBranchId && $rootScope.selectedproviderid){ 
            $http({
     	        method: 'PUT',
     	        url: ' /api/branchpolicy/'+$rootScope.selectedproviderid+'/'+$rootScope.selectedBranchId +'?type=ordering_policy',
-    	        data:{"text":ordering_policy}, 
+    	        data:{"text":ordering_policyFormated}, 
     	    	 }).success(function(data, status, headers, cfg){
     	    	    $scope.handleAddOPData(data);
     		 	   }).error(function(data, status, headers, cfg){
@@ -138,11 +143,13 @@ angular.module('oz.ProviderApp')
       if(refunds_policy==""){
        $rootScope.OZNotify("Please enter policy", 'error');  
       }else{
+     var refunds_policyFormated = '<!DOCTYPE html><html><meta name="viewport" content="width=device-width, initial-scale=1"><div style = "text-align:justify">'+ refunds_policy + '</div></html>';
+
        if($rootScope.selectedBranchId && $rootScope.selectedproviderid){  
          $http({
   	        method: 'POST',
   	        url: ' /api/branchpolicy/'+$rootScope.selectedproviderid+'/'+$rootScope.selectedBranchId +'?type=refunds_policy',
-  	        data:{"text":refunds_policy}, 
+  	        data:{"text":refunds_policyFormated}, 
   	    	  }).success(function(data, status, headers, cfg){
   	    	    $scope.handleAddRPData(data);
   		 	    }).error(function(data, status, headers, cfg){
@@ -158,11 +165,13 @@ angular.module('oz.ProviderApp')
       if(refunds_policy==""){
        $rootScope.OZNotify("Please enter policy", 'error');  
       }else{
+     var refunds_policyFormated = '<!DOCTYPE html><html><meta name="viewport" content="width=device-width, initial-scale=1"><div style = "text-align:justify">'+ refunds_policy + '</div></html>';
+
        if($rootScope.selectedBranchId && $rootScope.selectedproviderid){  
          $http({
   	        method: 'PUT',
   	        url: ' /api/branchpolicy/'+$rootScope.selectedproviderid+'/'+$rootScope.selectedBranchId +'?type=refunds_policy',
-  	        data:{"text":refunds_policy}, 
+  	        data:{"text":refunds_policyFormated}, 
   	    	 }).success(function(data, status, headers, cfg){
   	    	    $scope.handleAddRPData(data);
   		   	 }).error(function(data, status, headers, cfg){
@@ -245,10 +254,12 @@ angular.module('oz.ProviderApp')
       if(price_policy==""){
        $rootScope.OZNotify("Please enter policy", 'error');  
       }else{
+     var price_policyFormated = '<!DOCTYPE html><html><meta name="viewport" content="width=device-width, initial-scale=1"><div style = "text-align:justify">'+ price_policy + '</div></html>';
+
        $http({
           method: 'POST',
           url: ' /api/branchpolicy/'+$rootScope.selectedproviderid+'/'+$rootScope.selectedBranchId +'?type=price_policy',
-          data:{"text":price_policy}, 
+          data:{"text":price_policyFormated}, 
          }).success(function(data, status, headers, cfg){
             $scope.handleAddPPData(data);
          }).error(function(data, status, headers, cfg){
@@ -263,10 +274,12 @@ angular.module('oz.ProviderApp')
       if(price_policy==""){
        $rootScope.OZNotify("Please enter policy", 'error');  
       }else{
+     var price_policyFormated = '<!DOCTYPE html><html><meta name="viewport" content="width=device-width, initial-scale=1"><div style = "text-align:justify">'+ price_policy + '</div></html>';
+
        $http({
           method: 'PUT',
           url: ' /api/branchpolicy/'+$rootScope.selectedproviderid+'/'+$rootScope.selectedBranchId +'?type=price_policy',
-          data:{"text":price_policy}, 
+          data:{"text":price_policyFormated}, 
          }).success(function(data, status, headers, cfg){
             $scope.handleAddPPData(data);
          }).error(function(data, status, headers, cfg){
@@ -350,10 +363,12 @@ angular.module('oz.ProviderApp')
       if(delivery_policy==""){
         $rootScope.OZNotify("Please enter policy", 'error');  
       }else{
+     var delivery_policyFormated = '<!DOCTYPE html><html><meta name="viewport" content="width=device-width, initial-scale=1"><div style = "text-align:justify">'+ delivery_policy + '</div></html>';
+
        $http({
           method: 'POST',
           url: ' /api/branchpolicy/'+$rootScope.selectedproviderid+'/'+$rootScope.selectedBranchId +'?type=delivery_policy',
-          data:{"text":delivery_policy}, 
+          data:{"text":delivery_policyFormated}, 
          }).success(function(data, status, headers, cfg){
             $scope.handleAddDPData(data);
          }).error(function(data, status, headers, cfg){
@@ -367,10 +382,12 @@ angular.module('oz.ProviderApp')
       if(delivery_policy==""){
         $rootScope.OZNotify("Please enter policy", 'error');  
       }else{
+     var delivery_policyFormated = '<!DOCTYPE html><html><meta name="viewport" content="width=device-width, initial-scale=1"><div style = "text-align:justify">'+ delivery_policy + '</div></html>';
+
        $http({
           method: 'PUT',
           url: ' /api/branchpolicy/'+$rootScope.selectedproviderid+'/'+$rootScope.selectedBranchId +'?type=delivery_policy',
-          data:{"text":delivery_policy}, 
+          data:{"text":delivery_policyFormated}, 
          }).success(function(data, status, headers, cfg){
             $scope.handleAddDPData(data);
          }).error(function(data, status, headers, cfg){
@@ -453,10 +470,12 @@ angular.module('oz.ProviderApp')
       if(cancellation_policy==""){
         $rootScope.OZNotify("Please enter policy", 'error');  
       }else{
+     var cancellation_policyFormated = '<!DOCTYPE html><html><meta name="viewport" content="width=device-width, initial-scale=1"><div style = "text-align:justify">'+ cancellation_policy + '</div></html>';
+
        $http({
           method: 'POST',
           url: ' /api/branchpolicy/'+$rootScope.selectedproviderid+'/'+$rootScope.selectedBranchId +'?type=cancellation_policy',
-          data:{"text":cancellation_policy}, 
+          data:{"text":cancellation_policyFormated}, 
          }).success(function(data, status, headers, cfg){
             $scope.handleAddCPData(data);
          }).error(function(data, status, headers, cfg){
@@ -471,10 +490,12 @@ angular.module('oz.ProviderApp')
       if(cancellation_policy==""){
         $rootScope.OZNotify("Please enter policy", 'error');  
       }else{
+     var cancellation_policyFormated = '<!DOCTYPE html><html><meta name="viewport" content="width=device-width, initial-scale=1"><div style = "text-align:justify">'+ cancellation_policy + '</div></html>';
+        
        $http({
           method: 'PUT',
           url: ' /api/branchpolicy/'+$rootScope.selectedproviderid+'/'+$rootScope.selectedBranchId +'?type=cancellation_policy',
-          data:{"text":cancellation_policy}, 
+          data:{"text":cancellation_policyFormated}, 
          }).success(function(data, status, headers, cfg){
             $scope.handleAddCPData(data);
          }).error(function(data, status, headers, cfg){
