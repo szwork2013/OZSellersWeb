@@ -62,13 +62,7 @@ angular.module('oz.ProviderApp')
         orderstatuslist = angular.copy(OrderStatusList.success.orderprocess);
         $scope.process_configuration_error = '';
         if ($scope.order_status_list.length == 0) {
-          for (var i = 0; i < orderstatuslist.length; ++i) {
-            if(orderstatuslist[i].require == true) {
-              $scope.order_status_list.push({index:orderstatuslist[i].index, order_status:orderstatuslist[i].order_status, require:orderstatuslist[i].require, default:true });
-            } else {
-              $scope.order_status_list.push({index:orderstatuslist[i].index, order_status:orderstatuslist[i].order_status, require:orderstatuslist[i].require});
-            }
-          }
+          $scope.process_configuration(orderstatuslist);
         }  
       } else {
         if(OrderStatusList.error.code=='AL001'){
@@ -82,6 +76,18 @@ angular.module('oz.ProviderApp')
         }
       }
     });
+
+    $scope.process_configuration = function(orderstatuslist){
+      if (orderstatuslist.length !== 0) {
+        for (var i = 0; i < orderstatuslist.length; ++i) {
+          if(orderstatuslist[i].require == true) {
+            $scope.order_status_list.push({index:orderstatuslist[i].index, order_status:orderstatuslist[i].order_status, require:orderstatuslist[i].require, default:true });
+          } else {
+            $scope.order_status_list.push({index:orderstatuslist[i].index, order_status:orderstatuslist[i].order_status, require:orderstatuslist[i].require});
+          }
+        }
+      }
+    }
 
     $scope.showSellerDetail = false;
 
@@ -116,6 +122,10 @@ angular.module('oz.ProviderApp')
       file = null;
       var fileinput = document.getElementById('addProvider');
       fileinput.value = '';
+      if (OrderStatusList.success !== undefined && OrderStatusList.success.orderprocess.length !== 0) {
+        $scope.order_status_list = [];
+        $scope.process_configuration(OrderStatusList.success.orderprocess);
+      }
     }
 
     $scope.onFileSelect = function($files) {
