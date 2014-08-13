@@ -547,7 +547,14 @@ angular.module('oz.UserApp')
           $scope.showSOrderView = 0;
           $scope.controlWallView = 1;
     };
-
+    
+    $scope.convertMomentFormat = function(time)
+    {
+       if (time != undefined) 
+        { 
+          return moment(time).format('dddd, MMMM Do YYYY')
+        }; 
+    };
 
  }]);
 
