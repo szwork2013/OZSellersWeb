@@ -140,7 +140,7 @@ angular.module('oz.UserApp')
     };
 
     session.getStaticData = function(type){
-      console.log(type);
+      $log.debug(type);
       UserService.Get_Static_Data.get_template({data: type}, function (success) {
         $log.debug(success);
         $rootScope.$broadcast('getStaticTemplateDone', success);

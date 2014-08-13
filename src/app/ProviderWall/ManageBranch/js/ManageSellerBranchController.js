@@ -23,7 +23,7 @@ angular.module('oz.ProviderApp')
     $scope.editTimingSlots = []; 
 
     $scope.$watch('$state.$current.locals.globals.MyProviderBranchList', function (MyProviderBranchList) {
-      console.log(MyProviderBranchList);
+      $log.debug(MyProviderBranchList);
       if (MyProviderBranchList.success !== undefined && MyProviderBranchList.success.branches.length !== 0) {
         $scope.providers_branch_list = angular.copy(MyProviderBranchList.success.branches); 
         $rootScope.branches = angular.copy(MyProviderBranchList.success.branches);
@@ -50,7 +50,7 @@ angular.module('oz.ProviderApp')
     });
 
     $scope.$watch('$state.$current.locals.globals.MySelectedProvider', function (MySelectedProvider) {
-      console.log(MySelectedProvider);
+      $log.debug(MySelectedProvider);
       if (MySelectedProvider.success !== undefined && MySelectedProvider.success.productprovider !== undefined) {
         $scope.selectedprovider = angular.copy(MySelectedProvider.success.productprovider); 
       } else {
@@ -67,7 +67,7 @@ angular.module('oz.ProviderApp')
     });
 
     var cleanupEventChange_in_provideridDone = $scope.$on("change_in_providerid", function(event, data){
-      console.log(data);
+      $log.debug(data);
       $state.reload();     
     });
 
@@ -118,7 +118,7 @@ angular.module('oz.ProviderApp')
     $scope.jsonAddBranchData = function(){
       var timeslots = [];
       for (var i = 0; i < $scope.addbranch.timeslots.length; i++) {
-        if (parseInt($scope.addbranch.timeslots[i].from.hours) < parseInt($scope.addbranch.timeslots[i].to.hours)) {
+        if ((parseInt($scope.addbranch.timeslots[i].from.hours) < parseInt($scope.addbranch.timeslots[i].to.hours)) || ( (parseInt($scope.addbranch.timeslots[i].from.hours) == parseInt($scope.addbranch.timeslots[i].to.hours)) && (parseInt($scope.addbranch.timeslots[i].from.minutes) < parseInt($scope.addbranch.timeslots[i].to.minutes)))) {
           var from_hrs = parseInt($scope.addbranch.timeslots[i].from.hours);
           var from_mins = Math.round( (($scope.addbranch.timeslots[i].from.minutes)/60) *100)/100;
           var from_timeslot = from_hrs + from_mins;
@@ -128,7 +128,7 @@ angular.module('oz.ProviderApp')
           timeslots.push({from:from_timeslot, to: to_timeslot});
         } 
       } 
-      if (parseInt($scope.addbranch.operationHours.from.hours) < parseInt($scope.addbranch.operationHours.to.hours)) {
+      if ((parseInt($scope.addbranch.operationHours.from.hours) < parseInt($scope.addbranch.operationHours.to.hours)) || ( (parseInt($scope.addbranch.operationHours.from.hours) == parseInt($scope.addbranch.operationHours.to.hours)) && (parseInt($scope.addbranch.operationHours.from.minutes) < parseInt($scope.addbranch.operationHours.to.minutes)))) {
         if (($scope.addbranch.timeslots.length == timeslots.length) && ($scope.addbranch.timeslots.length > 0  && timeslots.length > 0)) {
           var supportnos = $scope.addbranch.supportno;
           var from_minutes = Math.round( (($scope.addbranch.operationHours.from.minutes)/60) *100)/100;
@@ -192,7 +192,7 @@ angular.module('oz.ProviderApp')
         if(data.error.code=='AL001'){
           $rootScope.showModal();
         } else {
-          console.log(data.error.message);
+          $log.debug(data.error.message);
           $rootScope.OZNotify(data.error.message,'error');
         }
       }
@@ -206,7 +206,7 @@ angular.module('oz.ProviderApp')
           $scope.form.addBranchForm.submitted = true;
         }    
       } else {
-        console.log('incorrect data');
+        $log.debug('incorrect data');
         $scope.form.addBranchForm.submitted = true;
       }
     }
@@ -233,7 +233,7 @@ angular.module('oz.ProviderApp')
         if(data.error.code=='AL001'){
           $rootScope.showModal();
         } else {
-          console.log(data.error.message);
+          $log.debug(data.error.message);
           $rootScope.OZNotify(data.error.message,'error');
         }
       }
@@ -322,7 +322,7 @@ angular.module('oz.ProviderApp')
     $scope.jsonEditBranchData = function(){
       var timeslots = [];
       for (var i = 0; i < $scope.editTimingSlots.length; i++) {
-        if (parseInt($scope.editTimingSlots[i].from.hours) < parseInt($scope.editTimingSlots[i].to.hours)) {
+        if ((parseInt($scope.editTimingSlots[i].from.hours) < parseInt($scope.editTimingSlots[i].to.hours)) || ((parseInt($scope.editTimingSlots[i].from.hours) == parseInt($scope.editTimingSlots[i].to.hours)) && (parseInt($scope.editTimingSlots[i].from.minutes) < parseInt($scope.editTimingSlots[i].to.minutes)))) {
           var from_hrs = parseInt($scope.editTimingSlots[i].from.hours);
           var from_mins = Math.round( (($scope.editTimingSlots[i].from.minutes)/60) *100)/100;
           var from_timeslot = from_hrs + from_mins;
@@ -402,7 +402,7 @@ angular.module('oz.ProviderApp')
         if(data.error.code=='AL001'){
           $rootScope.showModal();
         } else {
-          console.log(data.error.message);
+          $log.debug(data.error.message);
           $rootScope.OZNotify(data.error.message,'error');
         }
       }
@@ -410,7 +410,7 @@ angular.module('oz.ProviderApp')
   
     $scope.editSellerBranch = function(branchid){
       if ($scope.form.editBranchForm.$valid) {
-        console.log($scope.jsonEditBranchData());
+        $log.debug($scope.jsonEditBranchData());
         if ($scope.jsonEditBranchData()) {   
           ManageBranchService.editBranch($scope.jsonEditBranchData(), branchid);
         } else {
@@ -418,10 +418,10 @@ angular.module('oz.ProviderApp')
           $scope.form.editBranchForm.submitted = true;
         }
       } else {
-        console.log('incorrect data');
+        $log.debug('incorrect data');
         $scope.form.editBranchForm.submitted = true;
         // $scope.form.editBranchForm.editcontact.$invalid = true;
-        console.log($scope.jsonEditBranchData());
+        $log.debug($scope.jsonEditBranchData());
       }
     }
 

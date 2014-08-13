@@ -146,7 +146,6 @@ angular.module('oz.OrderZappApp')
             var states = StateDataList.success.states;
             var result = states.indexOf("Maharashtra");
             if (result !== -1) {
-              console.log(result);
               return GetLocationService.LocationData.GetAllLocationData({keydata: 'city', data:'Maharashtra'}).$promise;
             } else {
               return GetLocationService.LocationData.GetAllLocationData({keydata: 'city', data:StateData.success.states[0]}).$promise;
@@ -155,11 +154,9 @@ angular.module('oz.OrderZappApp')
         },
         ZipcodeDataList: function(GetLocationService, CityDataList, $rootScope) {
           if (CityDataList.success && CityDataList.success.city.length !==0) {
-            console.log(CityDataList);
             var cities = CityDataList.success.city;
             var result = cities.indexOf("Pune");
             if (result !== -1) {
-              console.log(result);
               return GetLocationService.LocationData.GetAllLocationData({keydata: 'zipcode', data:'Pune'}).$promise;
             } else {
               return GetLocationService.LocationData.GetAllLocationData({keydata: 'zipcode', data:CityData.success.city[0]}).$promise;
@@ -177,13 +174,13 @@ angular.module('oz.OrderZappApp')
     })
     .state('deliverytime', {
       abstract: true,
-      templateUrl: 'ProviderWall/ManageDeliveryTime/views/oz.deliverytime.tpl.html',
-      controller: 'ManageDeliveryTimeController'
+      templateUrl: 'ProviderWall/ManageDeliveryLeadTime/views/oz.deliveryleadtime.tpl.html',
+      controller: 'ManageDeliveryLeadTimeController'
     })     
     .state('deliverytime.view', {
       views: {
         'manage-deliverytime': { 
-          templateUrl: 'ProviderWall/ManageDeliveryTime/views/oz.manage.deliverytime.tpl.html'
+          templateUrl: 'ProviderWall/ManageDeliveryLeadTime/views/oz.manage.deliveryleadtime.tpl.html'
         }
       }
     })
@@ -238,9 +235,7 @@ angular.module('oz.OrderZappApp')
       controller:'ManageProductController',
       resolve: {
         userproducttags: function(ProviderServices, $rootScope) {
-          var n = ProviderServices.get_productUserTags.getProductUserTags().$promise;
-          console.log(n);
-          return n;
+          return ProviderServices.get_productUserTags.getProductUserTags().$promise;
         }
       }  
     })     
@@ -289,7 +284,6 @@ angular.module('oz.OrderZappApp')
             var states = StateData.success.states;
             var result = states.indexOf("Maharashtra");
             if (result !== -1) {
-              console.log(result);
               return GetLocationService.LocationData.GetAllLocationData({keydata: 'city', data:'Maharashtra'}).$promise;
             } else {
               return GetLocationService.LocationData.GetAllLocationData({keydata: 'city', data:StateData.success.states[0]}).$promise;
@@ -298,11 +292,9 @@ angular.module('oz.OrderZappApp')
         },
         ZipcodeData: function(GetLocationService, CityData, $rootScope) {
           if (CityData.success && CityData.success.city.length !==0) {
-            console.log(CityData);
             var cities = CityData.success.city;
             var result = cities.indexOf("Pune");
             if (result !== -1) {
-              console.log(result);
               return GetLocationService.LocationData.GetAllLocationData({keydata: 'zipcode', data:'Pune'}).$promise;
             } else {
               return GetLocationService.LocationData.GetAllLocationData({keydata: 'zipcode', data:CityData.success.city[0]}).$promise;

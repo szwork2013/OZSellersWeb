@@ -6,7 +6,7 @@ angular.module('oz.ProviderApp')
       $scope.order_count = [];
 
       $scope.$watch('$state.$current.locals.globals.BranchOrderCount', function (BranchOrderCount) {
-        console.log(BranchOrderCount);
+        $log.debug(BranchOrderCount);
         if (BranchOrderCount.success !== undefined && BranchOrderCount.success.statuswisecount.length !== 0) {
           $scope.order_count = angular.copy(BranchOrderCount.success.statuswisecount); 
         } else {
@@ -28,12 +28,12 @@ angular.module('oz.ProviderApp')
       // })();
 
       var cleanupEventChange_in_provideridDone = $scope.$on("change_in_providerid", function(event, data){
-        console.log(data);
+        $log.debug(data);
         $state.reload();     
       });
 
       var cleanupEventChange_in_provideridDone = $scope.$on("change_in_branchid", function(event, data){
-        console.log(data);
+        $log.debug(data);
         $state.reload();     
       });
     
@@ -44,7 +44,7 @@ angular.module('oz.ProviderApp')
     // function to handle server side responses
     $scope.handleGetInvoiceDataDone = function(data){
       if (data.success) {
-        console.log(data.success);
+        $log.debug(data.success);
         var invoice = window.open(data.success.invoice);
         invoice.print();
         $rootScope.OZNotify(data.success.message, 'success');
@@ -52,7 +52,7 @@ angular.module('oz.ProviderApp')
         if(data.error.code=='AL001'){
           $rootScope.showModal();
         } else {
-          console.log(data.error.message);
+          $log.debug(data.error.message);
           $rootScope.OZNotify(data.error.message,'error');
         }
       }

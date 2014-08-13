@@ -20,7 +20,7 @@ angular.module('oz.ProviderApp')
    };
     $scope.init();    
    
-console.log($rootScope.orderConfigStatus);
+$log.debug($rootScope.orderConfigStatus);
 
    $rootScope.$watch('selectedBranchId', function (selectedBranchId) {
       $scope.init();  
@@ -30,7 +30,7 @@ console.log($rootScope.orderConfigStatus);
     });
 
    $scope.getBranchAddress=function(selectedBranchId){
-     console.log($rootScope.branches);
+     $log.debug($rootScope.branches);
       for (var i = $rootScope.branches.length - 1; i >= 0; i--) {
         if($rootScope.branches[i].branchid== selectedBranchId){
           $scope.branchAddress=$rootScope.branches[0].location;
@@ -77,7 +77,7 @@ $scope.getReceived=function(){
              $scope.orders=successData.success.suborders;
              $scope.hideReceivedOrders=false;
              // $rootScope.TotalOrdersCount=successData.success.suborders.length;
-             console.log($scope.orders);
+             $log.debug($scope.orders);
         } else {
            $scope.orders=[];
               $scope.hideReceivedOrders=true;
@@ -107,7 +107,7 @@ $scope.getReceived=function(){
              $scope.orders=successData.success.suborders;
              $scope.hideApproveOrders=false;
              // $rootScope.TotalOrdersCount=successData.success.suborders.length;
-             console.log($scope.orders);
+             $log.debug($scope.orders);
         } else {
            $scope.orders=[];
               $scope.hideApproveOrders=true;
@@ -134,12 +134,12 @@ $scope.getReceived=function(){
         criteriastatus:'packing'
        },
         function (successData) {
-          // console.log("calling.......");
+          // $log.debug("calling.......");
         if (successData.success ) {
              $scope.orders=successData.success.suborders;
              $scope.hideProcessingOrders=false;
              // $scope.processingOrdersCount=$scope.orders.length;
-              console.log($scope.orders);
+              $log.debug($scope.orders);
         } else {
            $scope.orders=[];
              $scope.hideProcessingOrders=true;
@@ -170,7 +170,7 @@ $scope.getReceived=function(){
              $scope.orders=successData.success.suborders;
              $scope.hideDeliveryOrders=false;
              // $scope.deliveryOrdersCount=$scope.orders.length;
-              // console.log($scope.orders);
+              // $log.debug($scope.orders);
         } else {
            $scope.orders=[];
              $scope.hideDeliveryOrders=true;
@@ -237,7 +237,7 @@ $scope.getReceived=function(){
          $scope.orders=data.success.doc;
          $scope.hideProductOrders=false;
          // $scope.productOrdersCount=$scope.orders.length;
-          // console.log('new changed data '+JSON.stringify($scope.orders));
+          // $log.debug('new changed data '+JSON.stringify($scope.orders));
        }
       else if(data.error){
             // $rootScope.OZNotify(data.error.message, 'error'); 
@@ -260,7 +260,7 @@ $scope.getReceived=function(){
             var counters=data.success.statuswisecount;
            for (var i = counters.length - 1; i >= 0; i--) {
              if(counters[i].status=='recieved'){
-              console.log(counters[i].statuscount);
+               $log.debug(counters[i].statuscount);
                $scope.receivedOrdersCount=counters[i].statuscount;
              }
              else if(counters[i].status=='approved'){

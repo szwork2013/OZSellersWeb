@@ -20,7 +20,7 @@ angular.module('oz.ProviderApp')
     $scope.process_configuration_error = '';
 
     $scope.$watch('$state.$current.locals.globals.MyProviderList', function (MyProviderList) {
-      console.log(MyProviderList);
+      $log.debug(MyProviderList);
       if (MyProviderList.success !== undefined && MyProviderList.success.providers.length !== 0) {
         $scope.providers_list = angular.copy(MyProviderList.success.providers); 
         $rootScope.providers = [];
@@ -40,7 +40,7 @@ angular.module('oz.ProviderApp')
     });
 
     $scope.$watch('$state.$current.locals.globals.ProviderCategoryList', function (ProviderCategoryList) {
-      console.log(ProviderCategoryList);
+      $log.debug(ProviderCategoryList);
       if (ProviderCategoryList.success !== undefined && ProviderCategoryList.success.category.length !== 0) {
         $scope.providers_category_list = angular.copy(ProviderCategoryList.success.category); 
       } else {
@@ -56,7 +56,7 @@ angular.module('oz.ProviderApp')
     });
 
     $scope.$watch('$state.$current.locals.globals.OrderStatusList', function (OrderStatusList) {
-      console.log(OrderStatusList);
+      $log.debug(OrderStatusList);
       if (OrderStatusList.success !== undefined && OrderStatusList.success.orderprocess.length !== 0) {
         var orderstatuslist = [];
         orderstatuslist = angular.copy(OrderStatusList.success.orderprocess);
@@ -129,7 +129,7 @@ angular.module('oz.ProviderApp')
     }
 
     $scope.onFileSelect = function($files) {
-      console.log($files);
+      $log.debug($files);
       for (var i = 0; i < $files.length; i++) {
         if(($files[i].type == 'image/jpg') || ($files[i].type == 'image/png') || ($files[i].type == 'image/gif') || ($files[i].type == 'image/jpeg')){
          file = $files[i];
@@ -198,7 +198,7 @@ angular.module('oz.ProviderApp')
         if(data.error.code=='AL001'){
           $rootScope.showModal();
         } else {
-          console.log(data.error.message);
+          $log.debug(data.error.message);
           $rootScope.OZNotify(data.error.message,'error');
         }
       }
@@ -208,18 +208,18 @@ angular.module('oz.ProviderApp')
       if ($scope.form.addSellerForm.$valid) {
         if (file !== undefined && file !== null) {
           $scope.addSellerLogo = false;
-          console.log('seller Data entered successfully');
+          $log.debug('seller Data entered successfully');
           var sellerdata = $scope.jsonAddSellerData();
-          console.log($scope.jsonAddSellerData());
+          $log.debug($scope.jsonAddSellerData());
           $scope.upload = $upload.upload({
             url: '/api/productprovider/', 
             data: sellerdata ,
             file:file, 
           }).progress(function(evt) {
-            console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
+            $log.debug('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
           }).success(function(data, status, headers, config) {
             $scope.handleAddSellerResponse(data);
-            console.log(data);
+            $log.debug(data);
           });
         } else{
           $scope.addSellerLogo = true;
@@ -306,7 +306,7 @@ angular.module('oz.ProviderApp')
         if(data.error.code=='AL001'){
           $rootScope.showModal();
         } else {
-          console.log(data.error.message);
+          $log.debug(data.error.message);
           $rootScope.OZNotify(data.error.message,'error');
         }
       }
@@ -318,7 +318,7 @@ angular.module('oz.ProviderApp')
         ManageBranchService.update_seller($scope.jsonEditSellerData(), providerid);
         $rootScope.OZNotify(data.success.message,'success'); 
       } else {
-        console.log(data.error.message);
+        $log.debug(data.error.message);
         $rootScope.OZNotify(data.error.message,'error');
       }
     };
@@ -326,21 +326,21 @@ angular.module('oz.ProviderApp')
     $scope.editSeller = function(providerid){
       if ($scope.form.editSellerForm.$valid) {
         if (fileUpdate !== undefined && fileUpdate !== null) {
-          console.log('seller Data entered successfully with logo');
+          $log.debug('seller Data entered successfully with logo');
           $scope.upload = $upload.upload({
             url: '/api/productprovider/logo/'+providerid, 
             file:fileUpdate, 
           }).progress(function(evt) {
-            console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
+            $log.debug('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
           }).success(function(data, status, headers, config) {
             $scope.handleChangeProviderLogo(data, providerid);
-            console.log(data);
+            $log.debug(data);
           });
         } else if (fileUpdate == null) {
           ManageBranchService.update_seller($scope.jsonEditSellerData(), providerid);
         }
       } else {
-        console.log('incorrect data');
+        $log.debug('incorrect data');
         $scope.form.editSellerForm.submitted = true;
       }
     }

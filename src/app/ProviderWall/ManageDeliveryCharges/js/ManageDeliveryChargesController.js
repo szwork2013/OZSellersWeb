@@ -20,7 +20,7 @@ angular.module('oz.ProviderApp')
     $scope.deliveryChargeError = false;
 
     $scope.$watch('$state.$current.locals.globals.AllBranchDeliveryAreaList', function (AllBranchDeliveryAreaList) {
-      console.log(AllBranchDeliveryAreaList);
+      $log.debug(AllBranchDeliveryAreaList);
       if (AllBranchDeliveryAreaList.success && AllBranchDeliveryAreaList.success.branchdeliverycharges.length !== 0) {
         $scope.AllBranchAreaList = angular.copy(AllBranchDeliveryAreaList.success.branchdeliverycharges);
       } else {
@@ -36,7 +36,7 @@ angular.module('oz.ProviderApp')
     });
 
     $scope.$watch('$state.$current.locals.globals.CountryData', function (CountryData) {
-      console.log(CountryData);
+      $log.debug(CountryData);
       if (CountryData.success && CountryData.success.country.length !== 0) {
         $scope.countries = angular.copy(CountryData.success.country);
         var result = $scope.countries.indexOf("IN");
@@ -49,7 +49,7 @@ angular.module('oz.ProviderApp')
     });
 
     $scope.$watch('$state.$current.locals.globals.StateData', function (StateData) {
-      console.log(StateData);
+      $log.debug(StateData);
       if (StateData.success && StateData.success.states.length !== 0) {
         $scope.states = angular.copy(StateData.success.states);
         var result = $scope.states.indexOf("Maharashtra");
@@ -62,7 +62,7 @@ angular.module('oz.ProviderApp')
     });
 
     $scope.$watch('$state.$current.locals.globals.CityData', function (CityData) {
-      console.log(CityData);
+      $log.debug(CityData);
       if (CityData.success && CityData.success.city.length !== 0) {
         $scope.cities = angular.copy(CityData.success.city);
         var result = $scope.cities.indexOf("Pune");
@@ -75,7 +75,7 @@ angular.module('oz.ProviderApp')
     });
 
     $scope.$watch('$state.$current.locals.globals.ZipcodeData', function (ZipcodeData) {
-      console.log(ZipcodeData);
+      $log.debug(ZipcodeData);
       if (ZipcodeData.success && ZipcodeData.success.zipcode.length !== 0) {
         $scope.zipcodes = angular.copy(ZipcodeData.success.zipcode);
         // $scope.zipcode = $scope.zipcodes[0];
@@ -83,12 +83,12 @@ angular.module('oz.ProviderApp')
     });
 
     var cleanupEventChange_in_provideridDone = $scope.$on("change_in_providerid", function(event, data){
-      console.log(data);
+      $log.debug(data);
       $state.reload();     
     });
 
     var cleanupEventChange_in_provideridDone = $scope.$on("change_in_branchid", function(event, data){
-      console.log(data);
+      $log.debug(data);
       $state.reload();     
     });
 
@@ -113,7 +113,7 @@ angular.module('oz.ProviderApp')
         }
         $rootScope.OZNotify(data.success.message,'success'); 
       } else {
-        console.log(data.error.message);
+        $log.debug(data.error.message);
         $rootScope.OZNotify(data.error.message,'error');
       }
     };
@@ -143,7 +143,7 @@ angular.module('oz.ProviderApp')
         }
         $rootScope.OZNotify(data.success.message,'success'); 
       } else {
-        console.log(data.error.message);
+        $log.debug(data.error.message);
         $rootScope.OZNotify(data.error.message,'error');
       }
     };
@@ -178,7 +178,7 @@ angular.module('oz.ProviderApp')
         }        
         $rootScope.OZNotify(data.success.message,'success'); 
       } else {
-        console.log(data.error.message);
+        $log.debug(data.error.message);
         $rootScope.OZNotify(data.error.message,'error');
       }
     };
@@ -223,12 +223,12 @@ angular.module('oz.ProviderApp')
             angular.forEach($scope.AreaUnderZipcode, function(area) {
               $scope.delivery_available.push({value:0, coverage:{ area:area,city:'',zipcode:zipcode} });
             });
-            console.log($scope.delivery_available);
+            $log.debug($scope.delivery_available);
           }
         } 
         $rootScope.OZNotify(data.success.message,'success'); 
       } else {
-        console.log(data.error.message);
+        $log.debug(data.error.message);
         $rootScope.OZNotify(data.error.message,'error');
       }
     };
@@ -273,11 +273,11 @@ angular.module('oz.ProviderApp')
     // // function to handle server side responses
     $scope.handleAddDeliveryAvailabilityResponse = function(data){
       if (data.success) {
-        console.log(data);
+        $log.debug(data);
         $scope.form.deliveryChargeForm.submitted = false;
         $rootScope.OZNotify(data.success.message,'success'); 
       } else {
-        console.log(data.error.message);
+        $log.debug(data.error.message);
         $rootScope.OZNotify(data.error.message,'error');
       }
     };
@@ -319,7 +319,7 @@ angular.module('oz.ProviderApp')
       }
       if (update_availability.length > 0) {
         var data = $scope.jsonEditDeliveryAvailabilityData(update_availability);
-        console.log(data);
+        $log.debug(data);
         ManageDeliveryChargesService.EditDeliveryAvailability(data);
       }
     }
@@ -327,10 +327,10 @@ angular.module('oz.ProviderApp')
     // // function to handle server side responses
     $scope.handleEditDeliveryAvailabilityResponse = function(data){
       if (data.success) {
-        console.log(data);
+        $log.debug(data);
         $rootScope.OZNotify(data.success.message,'success'); 
       } else {
-        console.log(data.error.message);
+        $log.debug(data.error.message);
         $rootScope.OZNotify(data.error.message,'error');
       }
     };
