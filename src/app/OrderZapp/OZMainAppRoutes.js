@@ -460,5 +460,9 @@ angular.module('oz.OrderZappApp')
       templateUrl : 'OrderZapp/oz/views/oz.orderProcess.tpl.html',
       controller : 'OZAdminController',
     })
+    .state('oz.ozWall.ozViewFeedback',
+    {
+      templateUrl : 'OrderZapp/oz/views/oz.view.user.feedbacks.tpl.html',
+    })
 
   }]);
