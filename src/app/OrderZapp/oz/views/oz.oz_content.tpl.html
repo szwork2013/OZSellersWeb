@@ -161,7 +161,7 @@
 
      $scope.showSorderView = 0; -->
 <!-- ng-if = 'controlWallView === 1 && showSorderView === 0'  -->
-<div style = 'margin-top : 5px;' >
+<div style = 'margin-top : 5px;' style = 'background-color : #FFFAFA'>
     <tabset>
         <tab heading = 'Orders' class = 'cursorPointerHyperlink' ng-init = 'showOrderContents()' ng-click = 'trigger();showOrderContents()'  ui-sref = "oz.ozWall.ozOrderViewContent">
 <!--           <div>
@@ -237,11 +237,12 @@
                       <tab heading="Privacy" ui-sref = "oz.ozWall.ozPrivacy" class = "cursorPointerHyperlink" select = "getTemplateContent('PP');clearTemplatecontent()"></tab>
           </tabset>
         </tab>
-        <tab heading = 'Analytics'  class = 'cursorPointerHyperlink' >
+        <tab heading = 'Analytics'  class = 'cursorPointerHyperlink' ng-click = 'triggerAnalyticsWizard();' ui-sref = "oz.ozWall.ozViewFeedback">
             <tabset>
                   <tab heading = 'Receivables'></tab>
                   <tab heading = 'Payables'></tab>
                   <tab heading = 'Refunds'></tab>
+                  <tab heading = 'Feedbacks' active = 'active.analytics' ui-sref = "oz.ozWall.ozViewFeedback" class = 'cursorPointerHyperlink' select = 'getAllFeedbackContent()'></tab>
             </tabset>      
         </tab> 
     </tabset>

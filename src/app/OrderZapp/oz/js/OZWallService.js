@@ -42,6 +42,7 @@ angular.module('oz.UserApp').factory('OZWallService', [
     addOrderProcess : $resource('/api/orderprocessconfig', {}, {post : {method : 'POST'}}),
     getOrderProcess : $resource('/api/orderprocessconfig', {}, {get : {method : 'GET'}}),
     removeOrderProcess : $resource('/api/orderprocessconfig/:index', {}, {remove : {method : 'DELETE', params : {index : '@index'}}}),
+    getAllFeedbacks : $resource('/api/feedback', {}, {get : {method : 'GET'}}),
   };
 
   var controller = {};
@@ -467,6 +468,18 @@ angular.module('oz.UserApp').factory('OZWallService', [
       {
         $rootScope.$broadcast('orderProcessNotRemoved', error);
       })
+    };
+
+    controller.getAllFeedbacks = function()
+    {
+      wallService.getAllFeedbacks.get(function(success)
+      {
+        $rootScope.$broadcast('gotFeedbackContent', success);
+      },
+      function(error)
+      {
+        $rootScope.$broadcast('notGotFeedbackContent', error);
+      });
     };
   return controller;
   }]);
