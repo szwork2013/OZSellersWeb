@@ -59,6 +59,14 @@ angular.module('oz.UserApp')
 
     $scope.showSpinnerLogo = 0;
 
+    $scope.allHelpData = [];
+
+    $scope.tempAllHelpData = [];
+
+    $scope.typeadheadFaqTitleArray = ['How To Order', 'How To Use', 'How To Contact Support'];
+
+    $scope.newFaqContentObject = {'question' : '', 'answer' : '', 'questionheading' : ''};
+
     $scope.trigger = function()
     {
       $scope.active.init = true;
@@ -522,6 +530,139 @@ angular.module('oz.UserApp')
             $rootScope.OZNotify('Some issue with server! Please try after some time', 'error');
     });
 
+    var cleanUpEventGotAllHelpContent = $scope.$on("gotHelpContent",function(event,data){
+        if(data.error)
+        {
+                if(data.error.code === 'AL001')
+                  {
+                        $rootScope.showModal();
+                  }
+                  else
+                  {
+                    $rootScope.OZNotify(data.error.message,'error');  
+                  }
+                  $scope.allHelpDate = [];
+        }
+        if(data.success)
+        { 
+            $scope.allHelpData = [];
+            $scope.allHelpData = angular.copy(data.success.faqs);
+            $scope.tempAllHelpData = [];
+            $scope.tempAllHelpData = angular.copy(data.success.faqs);
+        } 
+    });
+
+    var cleanUpEventNotGotAllHelpContent = $scope.$on("notGotHelpContent",function(event,data){
+            $rootScope.OZNotify('Some issue with server! Please try after some time', 'error');
+    });
+
+    $scope.editQuestionHere = function(list)
+    {
+      list.editing = true;
+    };
+
+    $scope.cancelQuestionChange = function(list)
+    {
+      list.editing = false;
+      $scope.allHelpData = angular.copy($scope.tempAllHelpData);
+    };
+
+
+    $scope.changeQuestionContent = function(list)
+    {
+       var content = { 'faqdata' : { 'question' : "" , ' answer' :""} };
+       content.faqdata.question = list.question;  content.faqdata.answer = list.answer;
+       OZWallService.changeHelpContent(content,list);
+    };
+
+    var cleanUpEventChangeHelpContent = $scope.$on("changedHelpContent",function(event,data,list){
+        if(data.error)
+        {
+                if(data.error.code === 'AL001')
+                  {
+                        $rootScope.showModal();
+                  }
+                  else
+                  {
+                    $rootScope.OZNotify(data.error.message,'error');  
+                  }
+        }
+        if(data.success)
+        { 
+            list.editing = false;
+            OZWallService.getHelpContent();
+            $rootScope.OZNotify(data.success.message, 'success');
+
+        } 
+    });
+
+    var cleanUpEventNotChangeHelpContent = $scope.$on("notChangedHelpContent",function(event,data){
+            $rootScope.OZNotify('Some issue with server! Please try after some time', 'error');
+    });
+
+    $scope.removeQuestionHere = function(faqid)
+    {
+           OZWallService.removeHelpContent(faqid);
+    };
+
+    var cleanUpEventRemoveHelpContent = $scope.$on("removedHelpContent",function(event,data){
+        if(data.error)
+        {
+                if(data.error.code === 'AL001')
+                  {
+                        $rootScope.showModal();
+                  }
+                  else
+                  {
+                    $rootScope.OZNotify(data.error.message,'error');  
+                  }
+        }
+        if(data.success)
+        { 
+              OZWallService.getHelpContent();
+              $rootScope.OZNotify(data.success.message, 'success');
+        } 
+    });
+
+    var cleanUpEventNotRemoveHelpContent = $scope.$on("notRemovedHelpContent",function(event,data){
+            $rootScope.OZNotify('Some issue with server! Please try after some time', 'error');
+    });
+
+    $scope.insertNewFaqContent = function()
+    {
+          var content = { 'faqdata' : { 'question' : "" , ' answer' :"", 'questionheading' : ''} };
+          content.faqdata.question = $scope.newFaqContentObject.question;
+          content.faqdata.answer = $scope.newFaqContentObject.answer;
+          content.faqdata.questionheading = $scope.newFaqContentObject.questionheading;
+          OZWallService.postHelpContent(content);
+    };
+
+   var cleanUpEventAddHelpContent = $scope.$on("addHelpContent",function(event,data){
+   if(data.error)
+        {
+                if(data.error.code === 'AL001')
+                  {
+                        $rootScope.showModal();
+                  }
+                  else
+                  {
+                    $rootScope.OZNotify(data.error.message,'error');  
+                  }
+        }
+        if(data.success)
+        { 
+            OZWallService.getHelpContent();
+            $rootScope.OZNotify(data.success.message, 'success');
+            $scope.newFaqContentObject = {'question' : '', 'answer' : '', 'questionheading' : ''};
+
+        } 
+    });
+
+    var cleanUpEventNotAddedHelpContent = $scope.$on("notAddedHelpContent",function(event,data){
+            $rootScope.OZNotify('Some issue with server! Please try after some time', 'error');
+    });
+
+
     $scope.$on('$destroy', function(event, message) 
     {
         cleanUpEventGetAllBranchSpecificorders();
@@ -540,6 +681,14 @@ angular.module('oz.UserApp')
         cleanUpEventLoadMoreFail();
         cleanUpEventGotFeedback();
         cleanUpEventNotGotFeedback();
+        cleanUpEventGotAllHelpContent();
+        cleanUpEventNotGotAllHelpContent();
+        cleanUpEventChangeHelpContent();
+        cleanUpEventNotChangeHelpContent();
+        cleanUpEventRemoveHelpContent();
+        cleanUpEventNotRemoveHelpContent();
+        cleanUpEventAddHelpContent();
+        cleanUpEventNotAddedHelpContent();
         // cleanUpEventgetAllCountSuccess();
         // cleanUpEventNotGotAllCount();
 
@@ -576,11 +725,13 @@ angular.module('oz.UserApp')
     // {
     //         $rootScope.OZNotify('There is some issue with server!', 'error');
     // }
-    // if(userCounter.success)
-    // {
-    //   $rootScope.OZNotify('success','success');
-    //   console.log(JSON.stringify(userCounter.success));
-    // }
+    
+    $scope.clearFAQObject = function()
+    {
+           $scope.newFaqContentObject = {'question' : '', 'answer' : '', 'questionheading' : ''};
+
+    };
+
     $scope.resetToMain = function()
     {
           $scope.showSOrderView = 0;
@@ -595,7 +746,13 @@ angular.module('oz.UserApp')
         }; 
     };
 
- 
+
+    $scope.getHelpContent = function()
+    {
+      OZWallService.getHelpContent();
+    };
+
+     
 
  }]);
 
