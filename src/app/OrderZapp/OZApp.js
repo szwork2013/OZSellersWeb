@@ -130,7 +130,6 @@ $scope.getProviders=function(){
       $rootScope.selectedproviderid=provider.providerid;
       $rootScope.provider=provider;
       $rootScope.orderConfigStatus=provider.orderprocess_configuration;
-      $rootScope.$broadcast('change_in_providerid', $rootScope.selectedproviderid);
       $log.debug("pid "+ $rootScope.selectedproviderid);
       if($rootScope.selectedproviderid){
         $scope.getBranches($rootScope.selectedproviderid);
@@ -160,6 +159,7 @@ $scope.getProviders=function(){
        $rootScope.branches = [];
        $rootScope.deliveryTimeSlots=[];
        $rootScope.branch={};
+       $rootScope.$broadcast('change_in_providerid', $rootScope.selectedproviderid);
         if(successData.error.code=='AL001'){
                     $rootScope.showModal();
                   }
@@ -171,6 +171,7 @@ $scope.getProviders=function(){
         $rootScope.selectedBranchId=successData.success.branches[0].branchid;
         $rootScope.branch=successData.success.branches[0];
         $rootScope.deliveryTimeSlots=successData.success.branches[0].deliverytimingslots;
+        $rootScope.$broadcast('change_in_providerid', $rootScope.selectedproviderid);
        }
       }
      }, function (error) {
