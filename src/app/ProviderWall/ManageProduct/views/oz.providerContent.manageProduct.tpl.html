@@ -608,7 +608,7 @@
 	</div>
       <!-- display mode -->
 
- <div ng-hide="branches.length>0" > 
+ <div ng-hide="branches.length>0  " > 
      <div  class="OZ-PolicyNotAddedMsg row" >
        <div class="col-md-12">
        <div class="no-message">
@@ -621,7 +621,7 @@
       </div>
  </div>
 
-<div ng-show="branches.length>0" > 
+<div ng-show="branches.length>0 && noProducts==true" > 
    <div ng-hide="productlist.length>0 || editMode.editorEnabled==true"  class="OZ-PolicyNotAddedMsg row" >
        <div class="col-md-12">
        <div class="no-message">
@@ -634,7 +634,9 @@
     </div>
  </div>
 
-
+ <center>
+   <img ng-hide="noProducts || productlist.length>0" src = '../assets/images/spinner1.GIF' >
+</center>
  
 </div>
 

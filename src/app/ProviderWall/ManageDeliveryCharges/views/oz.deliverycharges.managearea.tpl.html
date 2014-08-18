@@ -38,7 +38,7 @@
 
 			<div id="oz-signup-input-group" class="input-group">
 				<p class="text-muted">Please Select Zipcode*</p>
-	 			<input name="zipcode" class="form-control" type="text" placeholder="zipcode" required ng-model="zipcode" typeahead="zipcode for zipcode in zipcodes | filter:$viewValue | limitTo:6" typeahead-on-select="getAreaForZipcode(zipcode)" />
+	 			<input id="zipcode" name="zipcode" class="form-control" type="text" placeholder="zipcode" required ng-model="zipcode" typeahead="zipcode for zipcode in zipcodes | filter:$viewValue | limitTo:6" typeahead-on-select="getAreaForZipcode(zipcode)" />
 			</div>			
 
 		</div>		
