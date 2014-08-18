@@ -2,7 +2,7 @@ angular.module('oz.ProviderApp')
   .controller('ManageProductController', ['$scope', '$state', '$http', '$timeout', '$sce', '$log', '$rootScope', 'ProviderServices','$upload','$stateParams','userproducttags','filterFilter',function($scope, $state, $http, $timeout, $sce, $log, $rootScope,ProviderServices,$upload, $stateParams,userproducttags,filterFilter) {
    
     $scope.outer={}; 
-  
+    $scope.noProducts;
     $scope.tabForPrice={};
     $scope.currentProdle='';
     $scope.editorPrice={};
@@ -509,8 +509,10 @@ $scope.handleSaveProductResponse=function(data, status, headers, config){
           }
          $scope.filtered=[];
          $scope.product=[];
+         $scope.noProducts=true;
          $rootScope.OZNotify(successData.error.message, 'error');  
         } else {
+          $scope.noProducts=false;
          $log.debug(successData.success.proudctcatalog);
          $scope.productlist=successData.success.proudctcatalog;
          $scope.filtered=$scope.productlist;

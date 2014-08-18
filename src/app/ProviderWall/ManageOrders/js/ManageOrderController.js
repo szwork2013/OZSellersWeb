@@ -64,6 +64,7 @@ $log.debug($rootScope.orderConfigStatus);
 
 
 $scope.getReceived=function(){
+  $scope.hideReceivedOrders;
     $scope.resetCounters();
     // $scope.orders=[];
     if( $rootScope.selectedBranchId && $rootScope.selectedproviderid){
@@ -94,6 +95,7 @@ $scope.getReceived=function(){
  };
 
    $scope.getApproved=function(){
+    $scope.hideApproveOrders
     $scope.resetCounters();
     // $scope.orders=[];
     if( $rootScope.selectedBranchId && $rootScope.selectedproviderid){
@@ -125,6 +127,7 @@ $scope.getReceived=function(){
 
 
  $scope.getProcessing=function(){
+  $scope.hideProcessingOrders;
     $scope.resetCounters();
     // $scope.orders=[];
     if( $rootScope.selectedBranchId && $rootScope.selectedproviderid){
@@ -157,6 +160,7 @@ $scope.getReceived=function(){
 
 
    $scope.getDelivery=function(){
+    $scope.hideDeliveryOrders;
     $scope.resetCounters();
     // $scope.orders=[];
     if( $rootScope.selectedBranchId && $rootScope.selectedproviderid){
@@ -188,6 +192,7 @@ $scope.getReceived=function(){
 
 
    $scope.getPastOrders=function(){
+    $scope.hidePastOrders;
     $scope.resetCounters();
     // $scope.orders=[];
     if( $rootScope.selectedBranchId && $rootScope.selectedproviderid){
@@ -219,6 +224,7 @@ $scope.getReceived=function(){
 
 
     $scope.getProductOrders=function(){
+      $scope.hideProductOrders
       $scope.resetCounters();
        $scope.orders=[];
       $http({

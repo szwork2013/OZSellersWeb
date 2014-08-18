@@ -23,7 +23,8 @@ angular.module('oz.ProviderApp')
     		Get_Zipcode_For_City: $resource('/api/location?key=:keydata&value=:data', {}, { zipcode_for_city: { method: 'GET', params: { keydata: '@keydata', data: '@data' } } }),
     		Get_Area_For_Zipcode: $resource('/api/location?key=:keydata&value=:data', {}, { area_for_zipcode: { method: 'GET', params: { keydata: '@keydata', data: '@data' } } }),
     		Get_Area_For_Delivery: $resource('/api/branchdeliverycharges/:branchid?zipcode=:zipcode', {}, { area_for_delivery: { method: 'GET', params: { branchid: '@branchid', zipcode: '@zipcode' } } }),
-    		Add_Charges_For_Delivery: $resource('/api/managedeliverycharges/:branchid', {}, { manage_delivery_charges: { method: 'PUT', params: { branchid: '@branchid'} } })
+    		Add_Charges_For_Delivery: $resource('/api/managedeliverycharges/:branchid', {}, { manage_delivery_charges: { method: 'PUT', params: { branchid: '@branchid'} } }),
+    		Get_AllAvailableAreas_For_Delivery: $resource('/api/branchdeliverycharges/:branchid', {}, { all_brancharea_for_delivery: { method: 'GET' } })
     	};
 	    var DeliveryChargeService = {};
 
@@ -78,24 +79,36 @@ angular.module('oz.ProviderApp')
 	      });
 	    };
 
-	    DeliveryChargeService.AddDeliveryAvailability = function (data) {
+	    DeliveryChargeService.AddDeliveryAvailability = function (data, zipcode) {
 	      DeliveryChargeLocation.Add_Charges_For_Delivery.manage_delivery_charges({branchid: $rootScope.selectedBranchId}, data, function (success) {
 	        $log.debug(success);
-	        $rootScope.$broadcast('addDeliveryAvailabilityDone', success);
+	        $rootScope.$broadcast('addDeliveryAvailabilityDone', success, zipcode);
 	      }, function (error) {
 	        $log.debug(error);
 	        $rootScope.$broadcast('addDeliveryAvailabilityNotDone', error.status);
 	      });
 	    };
 
-	    DeliveryChargeService.EditDeliveryAvailability = function (data) {
+	    DeliveryChargeService.EditDeliveryAvailability = function (data, zipcode) {
 	      DeliveryChargeLocation.Add_Charges_For_Delivery.manage_delivery_charges({branchid: $rootScope.selectedBranchId}, data, function (success) {
 	        $log.debug(success);
-	        $rootScope.$broadcast('editDeliveryAvailabilityDone', success);
+	        $rootScope.$broadcast('editDeliveryAvailabilityDone', success, zipcode);
 	      }, function (error) {
 	        $log.debug(error);
 	        $rootScope.$broadcast('editDeliveryAvailabilityNotDone', error.status);
 	      });
+	    };
+
+	    DeliveryChargeService.GetAllAreaAvailabilityForBranch = function () {
+	    	if ($rootScope.selectedBranchId) {
+	    		DeliveryChargeLocation.Get_AllAvailableAreas_For_Delivery.all_brancharea_for_delivery({branchid: $rootScope.selectedBranchId}, function (success) {
+		        $log.debug(success);
+		        $rootScope.$broadcast('getAllAreaAvailabilityDone', success);
+		      }, function (error) {
+		        $log.debug(error);
+		        $rootScope.$broadcast('getAllAreaAvailabilityNotDone', error.status);
+		      });
+	    	}
 	    };
 
 	    return DeliveryChargeService;

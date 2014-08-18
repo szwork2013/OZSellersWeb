@@ -146,31 +146,32 @@
 		     	</div>
 		     	
 		     	<div style="margin: 5px auto;" ng-repeat="slot in addbranch.timeslots" class="row">
-		     		<div class="col-md-5">
-		     			<div class="row">
-		     				<div class="col-md-2" style="font-size:12px;">From:</div>
-		     				<div class="col-md-5">
-		     					<input type = 'text' class = 'form-control' placeholder = 'HH' ng-model = 'slot.from.hours' name = "fromtimeinhours" ng-pattern="/^([01]?[0-9]|2[0-3])$/" required>
-		     				</div>
-		     				<div class="col-md-5">
-		     					<input type = 'text' class = 'form-control' placeholder = 'MM' ng-model = 'slot.from.minutes' name = "fromtimeinminutes" ng-pattern="/^[0-5][0-9]$/" required>
-		     				</div>
-		     			</div>
-		     		</div>
-		     		<div class="col-md-5">
-		     			<div class="row">
-		     				<div class="col-md-2" style="font-size:12px;">To:</div>
-		     				<div class="col-md-5"><input type = 'text' class = 'form-control' placeholder = 'HH' ng-model = 'slot.to.hours' name = "totimeinhours" ng-pattern="/^([01]?[0-9]|2[0-3])$/" required></div>
-		     				<div class="col-md-5"><input type = 'text' class = 'form-control' placeholder = 'MM' ng-model = 'slot.to.minutes' name = "totimeinminutes" ng-pattern="/^[0-5][0-9]$/" required></div>
-		     			</div>
-		     		</div>
-		     		<div class="col-md-2">
-		     			<h5 ng-show="$index > 1"><a href="" class="pull-right" ng-click="removeSlots(slot)"><i class="fa fa-times"></i></a></h5>
-		     		</div>
+		     		<ng-form name="timeslotForm">
+			     		<div class="col-md-5">
+			     			<div class="row">
+			     				<div class="col-md-2" style="font-size:12px;">From:</div>
+			     				<div class="col-md-5">
+			     					<input type = 'text' class = 'form-control' placeholder = 'HH' ng-model = 'slot.from.hours' name = "fromtimeinhours" ng-pattern="/^([01]?[0-9]|2[0-3])$/" required>
+			     				</div>
+			     				<div class="col-md-5">
+			     					<input type = 'text' class = 'form-control' placeholder = 'MM' ng-model = 'slot.from.minutes' name = "fromtimeinminutes" ng-pattern="/^[0-5][0-9]$/" required>
+			     				</div>
+			     			</div>
+			     			<p><small style="color:red;" ng-show="((timeslotForm.fromtimeinhours.$dirty && timeslotForm.fromtimeinhours.$invalid) || (timeslotForm.fromtimeinminutes.$dirty && timeslotForm.fromtimeinminutes.$invalid)) || (form.addBranchForm.submitted && (timeslotForm.fromtimeinhours.$invalid || timeslotForm.fromtimeinminutes.$invalid))">*Please enter valid delivery time slot hours and minutes in (numbers only and hours should be in range [0-23] and minutes should be in range [00-59])</small></p>
+			     		</div>
+			     		<div class="col-md-5">
+			     			<div class="row">
+			     				<div class="col-md-2" style="font-size:12px;">To:</div>
+			     				<div class="col-md-5"><input type = 'text' class = 'form-control' placeholder = 'HH' ng-model = 'slot.to.hours' name = "totimeinhours" ng-pattern="/^([01]?[0-9]|2[0-3])$/" required></div>
+			     				<div class="col-md-5"><input type = 'text' class = 'form-control' placeholder = 'MM' ng-model = 'slot.to.minutes' name = "totimeinminutes" ng-pattern="/^[0-5][0-9]$/" required></div>
+			     			</div>
+			     			<p><small style="color:red;" ng-show="((timeslotForm.totimeinhours.$dirty && timeslotForm.totimeinhours.$invalid) || (timeslotForm.totimeinminutes.$dirty && timeslotForm.totimeinminutes.$invalid)) || (form.addBranchForm.submitted && (timeslotForm.totimeinhours.$invalid || timeslotForm.totimeinminutes.$invalid))">*Please enter valid delivery time slot hours and minutes in (numbers only and hours should be in range [0-23] and minutes should be in range [00-59])</small></p>
+			     		</div>
+			     		<div class="col-md-2">
+			     			<h5 ng-show="$index > 1"><a href="" class="pull-right" ng-click="removeSlots(slot)"><i class="fa fa-times"></i></a></h5>
+			     		</div>
+			     	</ng-form>
 		     	</div>
-		     	<div style="margin:0px;" class="row">
-     				<p><small style="color:red;" ng-show="(form.addBranchForm.submitted && (form.addBranchForm.fromtimeinhours.$invalid || form.addBranchForm.fromtimeinminutes.$invalid || form.addBranchForm.totimeinhours.$invalid || form.addBranchForm.totimeinminutes.$invalid))">*Please enter valid delivery time slot hours and minutes in (numbers only and hours should be in range [0-23] and minutes should be in range [00-59])</small></p>
-     			</div>
 		    </div>
 
 
@@ -450,27 +451,28 @@
 							     	</div>
 							     	
 							     	<div style="margin: 5px auto;" ng-repeat="slot in editTimingSlots" class="row">
-							     		<div class="col-md-5">
-							     			<div class="row">
-							     				<div class="col-md-2" style="font-size:12px;">From:&nbsp;</div>
-							     				<div class="col-md-5"><input type = 'text' class = 'form-control' placeholder = 'HH' ng-model = 'slot.from.hours' name = 'editfromtimeinhours' ng-pattern="/^([01]?[0-9]|2[0-3])$/" required></div>
-							     				<div class="col-md-5"><input type = 'text' class = 'form-control' placeholder = 'MM' ng-model = 'slot.from.minutes' name = 'editfromtimeinminutes' ng-pattern="/^[0-5][0-9]$/" required></div>
-							     			</div>
-							     		</div>
-							     		<div class="col-md-5">
-							     			<div class="row">
-							     				<div class="col-md-2" style="font-size:12px;">To:</div>
-							     				<div class="col-md-5"><input type = 'text' class = 'form-control' placeholder = 'HH' ng-model = 'slot.to.hours' name = 'edittotimeinhours' ng-pattern="/^([01]?[0-9]|2[0-3])$/" required></div>
-							     				<div class="col-md-5"><input type = 'text' class = 'form-control' placeholder = 'MM' ng-model = 'slot.to.minutes' name = 'edittotimeinminutes' ng-pattern="/^[0-5][0-9]$/" required></div>
-							     			</div>
-							     		</div>
-							     		<div class="col-md-2">
-							     			<h5 ng-show="$index > 1"><a href="" class="pull-right" ng-click="removeEditSlots(slot)"><i class="fa fa-times"></i></a></h5>
-							     		</div>
+							     		<ng-form name="editTimeslotForm">
+								     		<div class="col-md-5">
+								     			<div class="row">
+								     				<div class="col-md-2" style="font-size:12px;">From:&nbsp;</div>
+								     				<div class="col-md-5"><input type = 'text' class = 'form-control' placeholder = 'HH' ng-model = 'slot.from.hours' name = 'editfromtimeinhours' ng-pattern="/^([01]?[0-9]|2[0-3])$/" required></div>
+								     				<div class="col-md-5"><input type = 'text' class = 'form-control' placeholder = 'MM' ng-model = 'slot.from.minutes' name = 'editfromtimeinminutes' ng-pattern="/^[0-5][0-9]$/" required></div>
+								     			</div>
+								     			<p><small style="color:red;" ng-show="((editTimeslotForm.editfromtimeinhours.$dirty && editTimeslotForm.editfromtimeinhours.$invalid) || (editTimeslotForm.editfromtimeinminutes.$dirty && editTimeslotForm.editfromtimeinminutes.$invalid)) || (form.editBranchForm.submitted && (editTimeslotForm.editfromtimeinhours.$invalid || editTimeslotForm.editfromtimeinminutes.$invalid))">*Please enter valid delivery time slot hours and minutes in (numbers only and hours should be in range [0-23] and minutes should be in range [00-59])</small></p>
+								     		</div>
+								     		<div class="col-md-5">
+								     			<div class="row">
+								     				<div class="col-md-2" style="font-size:12px;">To:</div>
+								     				<div class="col-md-5"><input type = 'text' class = 'form-control' placeholder = 'HH' ng-model = 'slot.to.hours' name = 'edittotimeinhours' ng-pattern="/^([01]?[0-9]|2[0-3])$/" required></div>
+								     				<div class="col-md-5"><input type = 'text' class = 'form-control' placeholder = 'MM' ng-model = 'slot.to.minutes' name = 'edittotimeinminutes' ng-pattern="/^[0-5][0-9]$/" required></div>
+								     			</div>
+								     		</div>
+								     		<div class="col-md-2">
+								     			<h5 ng-show="$index > 1"><a href="" class="pull-right" ng-click="removeEditSlots(slot)"><i class="fa fa-times"></i></a></h5>
+								     		</div>
+								     		<p><small style="color:red;" ng-show="((editTimeslotForm.edittotimeinhours.$dirty && editTimeslotForm.edittotimeinhours.$invalid) || (editTimeslotForm.edittotimeinminutes.$dirty && editTimeslotForm.edittotimeinminutes.$invalid)) || (form.editBranchForm.submitted && (editTimeslotForm.edittotimeinhours.$invalid || editTimeslotForm.edittotimeinminutes.$invalid))">*Please enter valid delivery time slot hours and minutes in (numbers only and hours should be in range [0-23] and minutes should be in range [00-59])</small></p>
+								     	</ng-form>	
 							     	</div>
-							     	<div style="margin:0px;" class="row">
-					     				<p><small style="color:red;" ng-show="(form.editBranchForm.submitted && (form.editBranchForm.editfromtimeinhours.$invalid || form.editBranchForm.editfromtimeinminutes.$invalid || form.editBranchForm.edittotimeinhours.$invalid || form.editBranchForm.edittotimeinminutes.$invalid))">*Please enter valid delivery time slot hours and minutes in (numbers only and hours should be in range [0-23] and minutes should be in range [00-59])</small></p>
-					     			</div>
 							     </div>
 
 									<div id="oz-signup-input-group" class="input-group">

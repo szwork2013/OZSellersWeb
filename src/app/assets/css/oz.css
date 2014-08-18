@@ -1,4 +1,21 @@
-
+.question{
+  font-size: 20px;
+padding-bottom: 10px;
+cursor: pointer;
+-webkit-transition: color 0.05s ease;
+-moz-transition: color 0.05s ease;
+-ms-transition: color 0.05s ease;
+-o-transition: color 0.05s ease;
+transition: color 0.05s ease;
+display: block;
+margin: 0;
+padding: 0;
+font-weight: normal;
+font-style: normal;
+line-height: 1.2em;
+text-transform: none;
+text-decoration: none;
+}
 
 html,body{
 	height:100%;
