@@ -36,7 +36,7 @@ return {
     $scope.deliveryOption;
     $scope.ismeridian = false;
     $scope.format='dd-MM-yyyy';
-    $scope.delivery_date.date=$scope.todaysDate1;
+    $scope.delivery_date.date=new Date();
 
 $scope.fromNow = function (time) {
   if (time != undefined) {
@@ -62,7 +62,7 @@ $scope.convertMomentFormat = function(time)
   };
 
  $scope.changeStatus=function(status,order){
-  
+    $scope.delivery_date.date=new Date();
   if( moment(order.preferred_delivery_date).format('DD-MM-YYYY')  ==  moment($scope.todaysDate1).format('DD-MM-YYYY') ){
     if($scope.todaysDate1.getHours() < order.prefdeltimeslot.to){
       $scope.deliveryOption='pref';
@@ -71,7 +71,7 @@ $scope.convertMomentFormat = function(time)
     }
 
   }else{
-      if( moment(order.preferred_delivery_date).format('DD-MM-YYYY')  >  moment($scope.todaysDate1).format('DD-MM-YYYY') ){
+      if( moment(order.preferred_delivery_date)  >  moment($scope.todaysDate1) ){
         $scope.deliveryOption='pref';
       }
       else{
@@ -83,7 +83,7 @@ $scope.convertMomentFormat = function(time)
 
 
   // $scope.deliveryOption='pref';
-  $scope.delivery_date.date=$scope.todaysDate1;
+  // $scope.delivery_date.date=$scope.todaysDate1;
   $scope.showCal=0; 
     $scope.search='';
     var orderid=order.suborderid
@@ -141,11 +141,12 @@ $scope.onDateSelected=function(delivery_date,deliveryOption,order){
       $rootScope.OZNotify("Please Select Delivery Date & Time Slot", 'error');  
   }
   else{
+    $scope.callServiceChangeStatusApprove(t_status,t_order,date);
     $('#calenderModal').modal('hide');
-    $scope.delivery_date="";
+    $scope.delivery_date.newDeliverySlot={};
+    $scope.delivery_date.date=new Date();
     $scope.deliveryOption='';
     $log.debug( date);
-    $scope.callServiceChangeStatusApprove(t_status,t_order,date);
   }
 };
 
@@ -171,9 +172,10 @@ $scope.reasonEntered=function(reason){
   else{
     $scope.form.orderReason.$setPristine();
     $('#cancelReasonModal').modal('hide');
-    $scope.delivery_date="";
     $log.debug("t_order "+" reason = "+ reason.text);
     $scope.callServiceChangeStatusCancelReject(t_status,t_order,reason.text);
+    $scope.delivery_date.newDeliverySlot={};
+    $scope.delivery_date.date=new Date();
    
    }
 };
