@@ -31,7 +31,7 @@
 <div class="headingDiv"> 
 <span class="bold">Delivery Info</span>
  <div  class="pull-right">
-        <span class="bold" ng-show="order.deliverydate"> Seller Accepted Delivery : </span> <span ng-show="order.deliverydate" class=" oz-contentsRight">{{ order.deliverydate | date:'dd-MM-yyyy '}}  In {{changeTimeSlotDisplayFormat(order.deliverytimeslot.from)}}  To {{changeTimeSlotDisplayFormat(order.deliverytimeslot.to)}}</span>
+        <span class="bold" ng-show="order.deliverydate"> Seller Accepted Delivery: </span> <span ng-show="order.deliverydate" class=" oz-contentsRight">{{ order.deliverydate | date:'dd-MM-yyyy '}}  In {{changeTimeSlotDisplayFormat(order.deliverytimeslot.from)}}  To {{changeTimeSlotDisplayFormat(order.deliverytimeslot.to)}}</span>
       </div> 
 
 
@@ -86,7 +86,7 @@
 
           <div class=" margintop5"  ng-show="order.deliverytype=='pickup'"><!--  2nd line -->
 
-           <span class="bold">Pickup Address : </span> <span class="oz-adress"> {{order.pickup_address.address1}}  {{order.pickup_address.address2}}   {{order.pickup_address.area}}  {{order.pickup_address.city}}  {{order.pickup_address.state}}  {{order.pickup_address.country}}  {{order.pickup_address.zipcode}} </span>
+           <span class="bold">Pickup Address: </span> <span class="oz-adress"> {{order.pickup_address.address1}}  {{order.pickup_address.address2}}   {{order.pickup_address.area}}  {{order.pickup_address.city}}  {{order.pickup_address.state}}  {{order.pickup_address.country}}  {{order.pickup_address.zipcode}} </span>
           </div>
 <!-- Delivery////////////////////////////////// -->
 
