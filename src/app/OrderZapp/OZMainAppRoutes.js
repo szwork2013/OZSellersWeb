@@ -77,6 +77,17 @@ angular.module('oz.OrderZappApp')
         }
       }
     })
+    .state('help', {
+      abstract: true,
+      templateUrl: 'OrderZapp/help/views/oz.help.tpl.html'
+    })     
+    .state('help.view', {
+      views: {
+        'user-help': { 
+          templateUrl: 'OrderZapp/help/views/oz.help.view.tpl.html'
+        }
+      }
+    })
     .state('seller', {
       abstract: true,
       templateUrl: 'ProviderWall/ManageSeller/views/oz.seller.tpl.html',
@@ -263,7 +274,11 @@ angular.module('oz.OrderZappApp')
       templateUrl: 'ProviderWall/ManageDeliveryCharges/views/oz.deliverycharges.tpl.html',
       resolve: {
         AllBranchDeliveryAreaList: function(GetLocationService, $rootScope) {
-          return GetLocationService.Get_AllBranchArea_For_Delivery.all_brancharea_for_delivery({branchid: $rootScope.selectedBranchId}).$promise;
+          if ($rootScope.selectedBranchId) {
+            return GetLocationService.Get_AllBranchArea_For_Delivery.all_brancharea_for_delivery({branchid: $rootScope.selectedBranchId}).$promise;
+          } else {
+            return 'No branch exist for this seller';
+          }
         },
         CountryData: function(GetLocationService, $rootScope) {
           return GetLocationService.LocationData.GetAllLocationData({keydata: 'country', data:'country'}).$promise;
