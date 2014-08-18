@@ -541,7 +541,8 @@ angular.module('oz.UserApp')
                   {
                     $rootScope.OZNotify(data.error.message,'error');  
                   }
-                  $scope.allHelpDate = [];
+                  $scope.allHelpData = [];
+                  $scope.tempAllHelpData = [];
         }
         if(data.success)
         { 
@@ -586,6 +587,7 @@ angular.module('oz.UserApp')
                   {
                     $rootScope.OZNotify(data.error.message,'error');  
                   }
+
         }
         if(data.success)
         { 
@@ -616,6 +618,8 @@ angular.module('oz.UserApp')
                   {
                     $rootScope.OZNotify(data.error.message,'error');  
                   }
+                  $scope.allHelpDate = [];
+                  $scope.tempAllHelpData = [];
         }
         if(data.success)
         { 
