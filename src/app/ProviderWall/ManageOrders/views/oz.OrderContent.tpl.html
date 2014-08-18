@@ -42,14 +42,14 @@
      
      
      <div  class="col-md-5">
-        <span class="bold">Order Created : </span> <span class=" oz-contentsRight">{{ getOrderDate(order.createdate )  }}</span>
+        <span class="bold">Order Created: </span> <span class=" oz-contentsRight">{{ getOrderDate(order.createdate )  }}</span>
       </div>
 
 
 
       <div  class=" col-md-7 ">
       <span class="pull-right">
-        <span class="bold">Customer Requested Delivery Time Slot: </span> <span class=" oz-contentsRight">
+        <span class="bold">Customer Requested Delivery: </span> <span class=" oz-contentsRight">{{ order.preferred_delivery_date | date:'dd-MM-yyyy '}} In
             {{changeTimeSlotDisplayFormat(order.prefdeltimeslot.from)}}  To {{changeTimeSlotDisplayFormat(order.prefdeltimeslot.to)}}
         </span>
         </span>
