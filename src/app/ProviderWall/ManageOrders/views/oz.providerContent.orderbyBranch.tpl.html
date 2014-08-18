@@ -117,12 +117,14 @@
                <p ng-repeat="ds in deliveryTimeSlots" >
              
                <span ng-show="(delivery_date.date | date:'dd-MM-yyyy' )== (todaysDate1 |  date:'dd-MM-yyyy') "> 
-                 <span ng-show=" todaysDate1.getHours() < ds.to " >
+
+              
+                 <span ng-show=" ((delivery_date.date.getHours())+'.'+(delivery_date.date.getMinutes())) < changeTimeSlotDisplayFormatDot(ds.to) " >
                   <input  type="radio" ng-model="delivery_date.newDeliverySlot" ng-value="ds" > &nbsp; &nbsp; {{changeTimeSlotDisplayFormat(ds.from)}}&nbsp; &nbsp; <span style="color:gray">|</span>  &nbsp; &nbsp; {{changeTimeSlotDisplayFormat(ds.to)}} 
                   </span>
                </span>
 
-                 <span ng-hide="(delivery_date.date | date:'dd-MM-yyyy' )== (todaysDate1 |  date:'dd-MM-yyyy') ">
+                <span ng-hide="(delivery_date.date | date:'dd-MM-yyyy' )== (todaysDate1 |  date:'dd-MM-yyyy') ">
                   <input   type="radio" ng-model="delivery_date.newDeliverySlot" ng-value="ds" > &nbsp; &nbsp; {{changeTimeSlotDisplayFormat(ds.from)}}&nbsp; &nbsp;  <span style="color:gray">|</span>  &nbsp; &nbsp; {{changeTimeSlotDisplayFormat(ds.to)}} 
                </span>
 

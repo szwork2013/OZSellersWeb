@@ -125,7 +125,25 @@ $scope.changeTimeSlotDisplayFormat= function(slot){
        }
     slot_minutes=output;
     return slot_hours+':'+slot_minutes;
-}
+};
+
+$scope.changeTimeSlotDisplayFormatDot= function(slot){
+    var slot_hours = parseInt(slot);
+    var slot_minutes = Math.round((slot - slot_hours) * 60);
+       
+      var output1 = slot_hours + ''; //2 digit no 
+       while (output1.length < 2) {
+        output1 = '0' + output1;
+       }
+       slot_hours=output1;
+
+       var output = slot_minutes + ''; //2 digit no 
+       while (output.length < 2) {
+        output = '0' + output;
+       }
+    slot_minutes=output;
+    return slot_hours+'.'+slot_minutes;
+};
 
 $scope.onDateSelected=function(delivery_date,deliveryOption,order){
  var date={};
