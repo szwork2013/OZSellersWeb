@@ -89,7 +89,7 @@ $scope.convertMomentFormat = function(time)
     var orderid=order.suborderid
     $scope.order=order;
      $scope.orderPrefDate=new Date($scope.order.preferred_delivery_date);
-  // console.log(status + " "+ orderid);
+  // $log.debug(status + " "+ orderid);
   if(status=='accept'){
        t_status=status;
        t_order=order;
@@ -144,7 +144,7 @@ $scope.onDateSelected=function(delivery_date,deliveryOption,order){
     $('#calenderModal').modal('hide');
     $scope.delivery_date="";
     $scope.deliveryOption='';
-    console.log( date);
+    $log.debug( date);
     $scope.callServiceChangeStatusApprove(t_status,t_order,date);
   }
 };
@@ -172,7 +172,7 @@ $scope.reasonEntered=function(reason){
     $scope.form.orderReason.$setPristine();
     $('#cancelReasonModal').modal('hide');
     $scope.delivery_date="";
-    console.log("t_order "+" reason = "+ reason.text);
+    $log.debug("t_order "+" reason = "+ reason.text);
     $scope.callServiceChangeStatusCancelReject(t_status,t_order,reason.text);
    
    }
@@ -245,7 +245,7 @@ $scope.getDate=function(dayorder){
    }
    else if(data.success){
     // $rootScope.OZNotify(data.success.message, 'success');  
-    console.log(data.success);
+    $log.debug(data.success);
     $scope.getLatestOrders();
    }
   };
@@ -255,7 +255,7 @@ $scope.getDate=function(dayorder){
    if(order.products){
     products=order.products;
    }
-    // console.log(products);
+    // $log.debug(products);
     var yes=false;
     var no=false;
     if(products){

@@ -82,6 +82,14 @@ angular.module('oz.UserApp')
        $scope.active.policies = true;
        $scope.active.analytics = false;
     };
+
+    $scope.triggerAnalyticsWizard = function()
+    {
+       $scope.active.init = false;
+       $scope.active.category = false;
+       $scope.active.policies = false;
+       $scope.active.analytics = true;
+    };
   
     $scope.providerlogo = '';
       
@@ -95,6 +103,8 @@ angular.module('oz.UserApp')
      { 
               OZWallService.getContentOfOrder();
      };
+
+     $scope.feedbackContentObject = [];
    
      $scope.showRadioButtonss = 0;
 
@@ -483,7 +493,34 @@ angular.module('oz.UserApp')
             $rootScope.OZNotify('Some issue with server! Please try after some time', 'error');
     });
 
+    $scope.getAllFeedbackContent = function()
+    {
+       OZWallService.getAllFeedbacks();
+    };
 
+    var cleanUpEventGotFeedback = $scope.$on("gotFeedbackContent",function(event,data){
+        if(data.error)
+        {
+                if(data.error.code === 'AL001')
+                  {
+                        $rootScope.showModal();
+                  }
+                  else
+                  {
+                    $rootScope.OZNotify(data.error.message,'error');  
+                  }
+                  $scope.feedbackContentObject = [];
+        }
+        if(data.success)
+        { 
+            $scope.feedbackContentObject = [];
+            $scope.feedbackContentObject = angular.copy(data.success.feedback);
+        } 
+    });
+
+    var cleanUpEventNotGotFeedback = $scope.$on("notGotFeedbackContent",function(event,data){
+            $rootScope.OZNotify('Some issue with server! Please try after some time', 'error');
+    });
 
     $scope.$on('$destroy', function(event, message) 
     {
@@ -501,6 +538,8 @@ angular.module('oz.UserApp')
         cleanUpEventproviderRequestAcceptORRejectFail();
         cleanUpEventLoadMore();
         cleanUpEventLoadMoreFail();
+        cleanUpEventGotFeedback();
+        cleanUpEventNotGotFeedback();
         // cleanUpEventgetAllCountSuccess();
         // cleanUpEventNotGotAllCount();
 
@@ -555,6 +594,8 @@ angular.module('oz.UserApp')
           return moment(time).format('dddd, MMMM Do YYYY')
         }; 
     };
+
+ 
 
  }]);
 

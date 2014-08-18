@@ -2,7 +2,7 @@ angular.module('oz.ProviderApp')
   .controller('ManageProductController', ['$scope', '$state', '$http', '$timeout', '$sce', '$log', '$rootScope', 'ProviderServices','$upload','$stateParams','userproducttags','filterFilter',function($scope, $state, $http, $timeout, $sce, $log, $rootScope,ProviderServices,$upload, $stateParams,userproducttags,filterFilter) {
    
     $scope.outer={}; 
-  
+    $scope.noProducts;
     $scope.tabForPrice={};
     $scope.currentProdle='';
     $scope.editorPrice={};
@@ -135,21 +135,21 @@ $scope.clearProduct=function(){
             $rootScope.showModal();
           }
         } else {
-         // console.log(successData.success);
+         // $log.debug(successData.success);
          $scope.allCategories=successData.success.ProductCategory;
          
 
            if($scope.allCategories[0]){
            $scope.ProductParentCategory=$scope.allCategories[0].category;
-           // console.log($scope.ProductParentCategory);
+           // $log.debug($scope.ProductParentCategory);
          }
           if($scope.allCategories[1]){
            $scope.ProductCategory=$scope.allCategories[1].category;
-           // console.log($scope.ProductCategory);
+           // $log.debug($scope.ProductCategory);
          }
           if($scope.allCategories[2]){
            $scope.ProductCategoryLevel3All=$scope.allCategories[2].category;
-           // console.log($scope.ProductCategoryLevel3All);
+           // $log.debug($scope.ProductCategoryLevel3All);
          }
 
 
@@ -228,14 +228,14 @@ $scope.getCategoriesFromDB($rootScope.selectedproviderid);
 
 
   $scope.changeCategory=function(category){
-    // console.log(category.categoryid);
+    // $log.debug(category.categoryid);
     $rootScope.selectedCategoryid=category.categoryid;
     $scope.getProductConfig(category.categoryid);
   };
 
 
    $scope.onFileSelect = function($files) {
-    // console.log($files);
+    // $log.debug($files);
      for (var i = 0; i < $files.length; i++) {
       if(($files[i].type == 'image/jpg') || ($files[i].type == 'image/png') || ($files[i].type == 'image/gif') || ($files[i].type == 'image/jpeg')){
        file = $files[i];
@@ -256,10 +256,10 @@ $scope.getCategoriesFromDB($rootScope.selectedproviderid);
                 url: '/api/productlogo/'+$scope.selectedproviderid+'/'+$scope.product.productid, 
                 file:fileUpdate, 
               }).progress(function(evt) {
-                // console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
+                // $log.debug('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
               }).success(function(data, status, headers, config) {
                  $scope.handleChangeLogo(data, status, headers, config);
-                // console.log(data);
+                // $log.debug(data);
               });
 
       }
@@ -302,7 +302,7 @@ $scope.handleChangeLogo=function(data, status, headers, config){
        $scope.outer.selectedCategory=$scope.product.category.ancestors[2];
        $scope.outer.category={'categoryid':$scope.product.category.categoryid,'categoryname':$scope.product.category.categoryname}
        $rootScope.selectedCategoryid=$scope.product.category.categoryid;
-       console.log($scope.outer.selectedParentCategory);
+       $log.debug($scope.outer.selectedParentCategory);
      }
 
      $scope.tempProduct = angular.copy( $scope.product);
@@ -315,7 +315,7 @@ $scope.handleChangeLogo=function(data, status, headers, config){
       $scope.getProductConfig($scope.product.category.id);
       }
      }
-     // console.log("id= "+$rootScope.selectedCategoryid);
+     // $log.debug("id= "+$rootScope.selectedCategoryid);
     // $rootScope.OZNotify("   Adding product data....", 'info');
   };
 
@@ -328,7 +328,7 @@ $scope.handleChangeLogo=function(data, status, headers, config){
           $rootScope.selectedCategoryid="";
 
    $scope.product=  $scope.tempProduct ;
-   // console.log($scope.product);
+   // $log.debug($scope.product);
       var field= document.getElementById('addLogoImg');
       field.value= field.defaultValue;
       var field= document.getElementById('updateLogo');
@@ -340,7 +340,7 @@ $scope.handleChangeLogo=function(data, status, headers, config){
   };
 
 $scope.addProduct = function (editStatus) {
- // console.log($scope.product);
+ // $log.debug($scope.product);
 
   if($scope.form.productForm.$invalid){
       // $rootScope.OZNotify("Please add valid information", 'error');
@@ -360,8 +360,8 @@ $scope.addProduct = function (editStatus) {
    if (editStatus == 'add') { 
 
     $scope.product.usertags=$scope.productusertags;
-    // console.log($scope.product);
-    // console.log(file);
+    // $log.debug($scope.product);
+    // $log.debug(file);
     if($scope.productusertags){
     if(file!==null || file !== undefined || file!=={}){
 
@@ -371,11 +371,11 @@ $scope.addProduct = function (editStatus) {
         data: {"data":$scope.product} ,
         file:file, 
       }).progress(function(evt) {
-        // console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
+        // $log.debug('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
       }).success(function(data, status, headers, config) {
          $scope.currentProdle='';
          $scope.handleSaveProductResponse(data, status, headers, config);
-        // console.log(data);
+        // $log.debug(data);
       });
      }
      else{
@@ -395,7 +395,7 @@ $scope.addProduct = function (editStatus) {
   }
   else{
    
- console.log($scope.product);
+ $log.debug($scope.product);
 if($scope.updateCategory.flag==false){
    $scope.productUpdated={
       productname:$scope.product.productname,
@@ -417,7 +417,7 @@ if($scope.updateCategory.flag==false){
         // file:file, 
       }).success(function(data, status, headers, config) {
          $scope.handleSaveProductResponse(data, status, headers, config);
-        console.log(data);
+         $log.debug(data);
       }).error(function (data, status, headers, cfg) {
         $log.debug(status);
        $rootScope.OZNotify(status, 'error'); 
@@ -454,7 +454,7 @@ if($scope.updateCategory.flag==true  ) {
         // file:file, 
       }).success(function(data, status, headers, config) {
          $scope.handleSaveProductResponse(data, status, headers, config);
-        console.log(data);
+        $log.debug(data);
       }).error(function (data, status, headers, cfg) {
         $log.debug(status);
        $rootScope.OZNotify(status, 'error'); 
@@ -509,8 +509,10 @@ $scope.handleSaveProductResponse=function(data, status, headers, config){
           }
          $scope.filtered=[];
          $scope.product=[];
+         $scope.noProducts=true;
          $rootScope.OZNotify(successData.error.message, 'error');  
         } else {
+          $scope.noProducts=false;
          $log.debug(successData.success.proudctcatalog);
          $scope.productlist=successData.success.proudctcatalog;
          $scope.filtered=$scope.productlist;
@@ -601,7 +603,7 @@ $scope.getSelectedProduct = function (product1) {
 
 
  $scope.handleGetProductSuccess=function(successData){
-   // console.log(successData);
+   // $log.debug(successData);
         $scope.ErrMsging=0;
         $scope.currentProdle=successData.success.proudctcatalog.productid;
         $scope.product = successData.success.proudctcatalog;
@@ -681,7 +683,7 @@ if(value=='publish'){
         data: {"productids":arrayProductIds} ,
         // file:file, 
       }).success(function(data, status, headers, config) {
-        // console.log(data);
+        // $log.debug(data);
         if(data.success){
           $rootScope.OZNotify(data.success.message, 'success'); 
            if($rootScope.selectedBranchId && $rootScope.selectedproviderid){
@@ -707,7 +709,7 @@ if(value=='publish'){
               data: {"productids":arrayProductIds} ,
               // file:file, 
             }).success(function(data, status, headers, config) {
-              // console.log(data);
+              // $log.debug(data);
               if(data.success){
                 $rootScope.OZNotify(data.success.message, 'success'); 
                  if($rootScope.selectedBranchId && $rootScope.selectedproviderid){
@@ -756,7 +758,7 @@ if(value=='publish'){
             } else {
               
                $scope.ProductConfigs= angular.copy(successData.success.productconfig);
-               // console.log($scope.ProductConfigs);
+               // $log.debug($scope.ProductConfigs);
 
                  if ($scope.editMode.editStatus == 'update') { 
                        
@@ -814,7 +816,7 @@ $scope.rmSelectedConfigs=function(config){
  $scope.search.prod="";
 
  $scope.$watch('search.prod', function (search) {
-       // console.log(search);
+       // $log.debug(search);
         // $scope.filtered = filterFilter(  $scope.productlist, search);
 
         $scope.filtered= filterFilter($scope.productlist,{productname:search});
@@ -823,7 +825,7 @@ $scope.rmSelectedConfigs=function(config){
 
   // $scope.$watch('filtered', function (filtered) {
 
-  //      console.log(filtered);
+  //      $log.debug(filtered);
 
   // });
 

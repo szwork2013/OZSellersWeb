@@ -67,7 +67,7 @@ angular.module('oz.ProviderApp')
               newprice: successData.success.proudctcatalog[i].price.value
             })
          };
-         // console.log($scope.productPricelist);
+         // $log.debug($scope.productPricelist);
            
         }
        }, function (error) {
@@ -91,7 +91,7 @@ $scope.changePrice=function(product){
   }
  else{
   $scope.priceForm.$setPristine();
-  console.log( product);
+  $log.debug( product);
   $scope.productPrices=[];
   for (var i = product.length - 1; i >= 0; i--) {
     $scope.productPrices.push ({
@@ -99,7 +99,7 @@ $scope.changePrice=function(product){
       newprice:product[i].newprice
     })
    };
-   // console.log( $scope.productPrices);
+   // $log.debug( $scope.productPrices);
        $http({
         method: 'PUT', 
         url: '/api/productprice/'+$scope.selectedBranchId, 
@@ -107,7 +107,7 @@ $scope.changePrice=function(product){
         // file:file, 
       }).success(function(data, status, headers, config) {
       if(data.success){
-       // console.log(data);
+       // $log.debug(data);
        $scope.disableEditorPrice();
        $scope.getAllProducts($rootScope.selectedBranchId,$rootScope.selectedproviderid);
        $rootScope.OZNotify(data.success.message, 'success'); 
@@ -181,9 +181,9 @@ $scope.changePrice=function(product){
     };
 
     $scope.addHoldingPrice = function(list){
-       console.log(list);
+       $log.debug(list);
         $scope.content = {'pricedata' : {"newprice":list.holding_price.value,"uom":list.price.uom}};
-      console.log($scope.content);
+      $log.debug($scope.content);
 
        if($scope.priceForm.$invalid){
             $scope.priceForm.submitted=true;
@@ -197,7 +197,7 @@ $scope.changePrice=function(product){
               data:  $scope.content ,
               // file:file, 
             }).success(function(data, status, headers, config) {
-              console.log(data);
+              $log.debug(data);
             if(data.success){
              
              $scope.cancel(list);
@@ -237,9 +237,9 @@ $scope.changePrice=function(product){
               method: 'PUT', 
               url: '/api/activateprice/'+$rootScope.selectedBranchId +'/'+list.productid
             }).success(function(data, status, headers, config) {
-              console.log(data);
+              $log.debug(data);
             if(data.success){
-             console.log(data)
+             $log.debug(data)
              // $scope.cancel(list);
               $rootScope.OZNotify(data.success.message, 'success');
               $scope.getAllProducts($rootScope.selectedBranchId,$rootScope.selectedproviderid);
@@ -250,7 +250,7 @@ $scope.changePrice=function(product){
                   $rootScope.showModal();
                 }
                $rootScope.OZNotify(data.error.message, 'error');  
-                console.log(data.error.message);
+                $log.debug(data.error.message);
             }
 
 
@@ -268,9 +268,9 @@ $scope.changePrice=function(product){
               method: 'PUT', 
               url: '/api/deactivateprice/'+$rootScope.selectedBranchId +'/'+list.productid
             }).success(function(data, status, headers, config) {
-              console.log(data);
+              $log.debug(data);
             if(data.success){
-             console.log(data)
+             $log.debug(data)
              // $scope.cancel(list);
               $rootScope.OZNotify(data.success.message, 'success');
               $scope.getAllProducts($rootScope.selectedBranchId,$rootScope.selectedproviderid);
@@ -281,7 +281,7 @@ $scope.changePrice=function(product){
                   $rootScope.showModal();
                 }
                $rootScope.OZNotify(data.error.message, 'error');  
-                console.log(data.error.message);
+                $log.debug(data.error.message);
             }
 
 
