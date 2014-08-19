@@ -13,7 +13,7 @@
             <div class="modal-body" style="height:200px;">
            <form  id="Edit" class="css-form"  name="form.orderReason"   >  
           
-              <p style="font-size:12px;" class="text-muted">** Please enter reason for your order cancellation / rejection. Reqired field [max 160 characters]</p>
+              <p style="font-size:12px;" class="text-muted">** Please enter reason for your order cancellation / rejection. Required field [max 160 characters]</p>
             
             <textarea  type="text" 
                   ng-maxlength="160" name="reason" id="prodo-product-featuresDescription_textfield" class="form-control prodo-validation"  ng-model="reason.text"  col="40" required ></textarea>
@@ -55,32 +55,36 @@
             <div  ng-show="todaysDate1.getHours() < order.prefdeltimeslot.to" class="row" style="padding:10px; padding-left:20px;" >
              <span >
               <input type="radio" ng-model="deliveryOption" value="pref"  >
-              <span >  Customer Requested Delivery Date  - [{{order.preferred_delivery_date | date:'dd-MM-yyyy ' }}] , Time Slot - {{changeTimeSlotDisplayFormat( order.prefdeltimeslot.from ) }} To  {{ changeTimeSlotDisplayFormat(order.prefdeltimeslot.to) }}</span>
+              <span > Customer Requested Delivery Date  - [{{order.preferred_delivery_date | date:'dd-MM-yyyy ' }}] , Time Slot - {{changeTimeSlotDisplayFormat( order.prefdeltimeslot.from ) }} To  {{ changeTimeSlotDisplayFormat(order.prefdeltimeslot.to) }}</span>
               </span>
             </div> 
 
               <div  ng-hide="todaysDate1.getHours() < order.prefdeltimeslot.to" class="row" style="padding:10px; padding-left:20px;" tooltip="This option is disabled as today's date is more than customers preferred delivery date." tooltip-placement="top">
               <span >
               <input type="radio" ng-model="deliveryOption" value="pref" disabled >
-              <span style="color:gray">  Customer Requested Delivery  Date  - [{{order.preferred_delivery_date | date:'dd-MM-yyyy ' }}] , Time Slot - {{ changeTimeSlotDisplayFormat(order.prefdeltimeslot.from )}}  To  {{ changeTimeSlotDisplayFormat( order.prefdeltimeslot.to) }}</span>
+              <span style="color:gray"> Customer Requested Delivery  Date  - [{{order.preferred_delivery_date | date:'dd-MM-yyyy ' }}] , Time Slot - {{ changeTimeSlotDisplayFormat(order.prefdeltimeslot.from )}}  To  {{ changeTimeSlotDisplayFormat( order.prefdeltimeslot.to) }}</span>
               </span>
             </div> 
 
             </div>
+            
 
-
-            <div ng-show="(orderPrefDate | date:'dd-MM-yyyy')  < ( todaysDate1 | date:'dd-MM-yyyy' ) ">
-            <div  class="row" style="padding:10px; padding-left:20px;" tooltip="This option is disabled as today's date is more than customers preferred delivery date." tooltip-placement="top">
+            <div ng-hide=" (orderPrefDate | date:'dd-MM-yyyy')  == ( todaysDate1 | date:'dd-MM-yyyy') ">
+            
+            <div ng-show="(orderPrefDate )  < ( todaysDate1 ) " class="row" style="padding:10px; padding-left:20px;" tooltip="This option is disabled as today's date is more than customers preferred delivery date." tooltip-placement="top">
              <span >  <input type="radio" ng-model="deliveryOption" value="pref" disabled >
-              <span style="color:gray">  Customer Requested Delivery Date  - [{{order.preferred_delivery_date | date:'dd-MM-yyyy ' }}] , Time Slot - {{changeTimeSlotDisplayFormat( order.prefdeltimeslot.from) }} To {{changeTimeSlotDisplayFormat( order.prefdeltimeslot.to )}}</span>
+              <span style="color:gray"> Customer Requested Delivery Date  - [{{order.preferred_delivery_date | date:'dd-MM-yyyy ' }}] , Time Slot - {{changeTimeSlotDisplayFormat( order.prefdeltimeslot.from) }} To {{changeTimeSlotDisplayFormat( order.prefdeltimeslot.to )}}</span>
               </span>
             </div> 
-            </div>
+            
 
-            <div class="row" style="padding:10px; padding-left:20px;" ng-hide="((orderPrefDate | date:'dd-MM-yyyy') <  (todaysDate1  | date:'dd-MM-yyyy')) || ((orderPrefDate | date:'dd-MM-yyyy')  == ( todaysDate1 | date:'dd-MM-yyyy') ) ">
+            <div class="row" style="padding:10px; padding-left:20px;" ng-hide="((orderPrefDate ) <  (todaysDate1  ))  ">
              <span >  <input type="radio" ng-model="deliveryOption" value="pref"  > Customer Requested Delivery Date  - [{{order.preferred_delivery_date | date:'dd-MM-yyyy ' }}] , Time Slot - {{changeTimeSlotDisplayFormat( order.prefdeltimeslot.from) }} To {{ changeTimeSlotDisplayFormat(order.prefdeltimeslot.to )}}
              </span>
             </div> 
+
+           </div>
+
              <div class="row" style="padding:10px; padding-left:20px;">
              <span >
                <input type="radio" ng-model="deliveryOption" value="custom" >  New Delivery Date 
@@ -113,12 +117,14 @@
                <p ng-repeat="ds in deliveryTimeSlots" >
              
                <span ng-show="(delivery_date.date | date:'dd-MM-yyyy' )== (todaysDate1 |  date:'dd-MM-yyyy') "> 
-                 <span ng-show=" todaysDate1.getHours() < ds.to " >
+
+              
+                 <span ng-show=" ((delivery_date.date.getHours())+'.'+(delivery_date.date.getMinutes())) < changeTimeSlotDisplayFormatDot(ds.to) " >
                   <input  type="radio" ng-model="delivery_date.newDeliverySlot" ng-value="ds" > &nbsp; &nbsp; {{changeTimeSlotDisplayFormat(ds.from)}}&nbsp; &nbsp; <span style="color:gray">|</span>  &nbsp; &nbsp; {{changeTimeSlotDisplayFormat(ds.to)}} 
                   </span>
                </span>
 
-                 <span ng-hide="(delivery_date.date | date:'dd-MM-yyyy' )== (todaysDate1 |  date:'dd-MM-yyyy') ">
+                <span ng-hide="(delivery_date.date | date:'dd-MM-yyyy' )== (todaysDate1 |  date:'dd-MM-yyyy') ">
                   <input   type="radio" ng-model="delivery_date.newDeliverySlot" ng-value="ds" > &nbsp; &nbsp; {{changeTimeSlotDisplayFormat(ds.from)}}&nbsp; &nbsp;  <span style="color:gray">|</span>  &nbsp; &nbsp; {{changeTimeSlotDisplayFormat(ds.to)}} 
                </span>
 

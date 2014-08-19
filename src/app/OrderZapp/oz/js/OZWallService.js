@@ -43,6 +43,10 @@ angular.module('oz.UserApp').factory('OZWallService', [
     getOrderProcess : $resource('/api/orderprocessconfig', {}, {get : {method : 'GET'}}),
     removeOrderProcess : $resource('/api/orderprocessconfig/:index', {}, {remove : {method : 'DELETE', params : {index : '@index'}}}),
     getAllFeedbacks : $resource('/api/feedback', {}, {get : {method : 'GET'}}),
+    getAllHelpContent : $resource('/api/faq', {}, {get : { method : 'GET'}}),
+    putHelpContent : $resource('/api/faq/:faqid', {}, {put : {method : 'PUT', params : { faqid : '@faqid'}}}),
+    postHelpContent : $resource('/api/faq', {}, {post: {method : 'POST'}}),
+    removeHelpContent : $resource('/api/faq/:faqid', {}, {delete : {method  : 'DELETE', params : {faqid : '@faqid'}}}),
   };
 
   var controller = {};
@@ -479,6 +483,51 @@ angular.module('oz.UserApp').factory('OZWallService', [
       function(error)
       {
         $rootScope.$broadcast('notGotFeedbackContent', error);
+      });
+    };
+
+    controller.getHelpContent = function()
+    {
+     wallService.getAllHelpContent.get(function(success)
+     {
+      $rootScope.$broadcast('gotHelpContent', success);
+     }, function(error)
+     {
+      $rootScope.$broadcast('notGotHelpContent', error);
+     });
+    };
+
+    controller.changeHelpContent = function(content,list)
+    {
+      wallService.putHelpContent.put({ faqid : list.faqid }, content, function(success)
+      {
+        $rootScope.$broadcast('changedHelpContent', success,list);
+      }, 
+      function(error)
+      {
+        $rootScope.$broadcast('notChangedHelpContent', error);
+      });
+    };
+
+    controller.postHelpContent = function(content)
+    {
+      wallService.postHelpContent.post(content, function(success)
+      {
+        $rootScope.$broadcast('addHelpContent', success);
+      }, function(error)
+      {
+        $rootScope.$broadcast('notAddedHelpContent', error);
+      });
+    };
+
+    controller.removeHelpContent = function(faqid)
+    {
+      wallService.removeHelpContent.remove({faqid : faqid } , function(success)
+      {
+        $rootScope.$broadcast('removedHelpContent', success);
+      }, function(error)
+      {
+        $rootScope.$broadcast('notRemovedHelpContent', error);
       });
     };
   return controller;
