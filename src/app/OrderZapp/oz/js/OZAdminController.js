@@ -312,7 +312,8 @@ angular.module('oz.UserApp')
               }
               else
               {
-                    $rootScope.OZNotify(data.error.message,'error');  $scope.showSpinners = 0;
+                    //$rootScope.OZNotify(data.error.message,'error');  
+                    $scope.showSpinners = 0;
               }
             }
             if(data.success)
