@@ -66,10 +66,12 @@ angular.module('oz.UserApp')
         $log.debug(data.error.message);
         $rootScope.OZNotify(data.error.message,'error');
       }
+      $rootScope.hideSpinner();
     };
   
     $scope.signup = function(){
       if ($scope.signupForm.$valid) {
+        $rootScope.showSpinner();
         $log.debug('User Data entered successfully');
         UserSessionService.signupUser($scope.jsonUserData());
       } else {
@@ -108,10 +110,12 @@ angular.module('oz.UserApp')
         $log.debug(data.error.message);
         $rootScope.OZNotify(data.error.message,'error');
       }
+      $rootScope.hideSpinner();
     };
   
     $scope.verify = function(){
       if ($scope.verificationForm.$valid) {
+        $rootScope.showSpinner();
         $log.debug('OTP entered successfully');
         UserSessionService.verifyUser($scope.jsonVerifyData());
       } else {
@@ -149,10 +153,12 @@ angular.module('oz.UserApp')
         $log.debug(data.error.message);
         $rootScope.OZNotify(data.error.message,'error');
       }
+      $rootScope.hideSpinner();
     };
   
     $scope.consumerVerify = function(){
       if ($scope.consumerVerificationForm.$valid) {
+        $rootScope.showSpinner();
         $log.debug('OTP entered successfully');
         UserSessionService.consumerVerifyUser($scope.jsonConsumerVerifyData());
       } else {
@@ -191,10 +197,12 @@ angular.module('oz.UserApp')
         $log.debug(data.error.message);
         $rootScope.OZNotify(data.error.message,'error');
       }
+      $rootScope.hideSpinner();
     };
 
     $scope.regenrateToken = function(){
       if ($scope.form.regenerateVerificationForm.$valid) {
+        $rootScope.showSpinner();
         $log.debug('OTP entered successfully');
         UserSessionService.regenerateTokenUser($scope.jsonTokenRegenerateData());
       } else {

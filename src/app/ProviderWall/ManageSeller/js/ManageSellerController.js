@@ -1,5 +1,5 @@
 angular.module('oz.ProviderApp')
-  .controller('ManageSellerController', ['$scope', '$state', '$http', '$timeout', '$sce', '$log', '$rootScope', 'ProviderServices','$upload','$stateParams', 'ManageSellerService', 'ManageBranchService', 'MyProviderList', 'ProviderCategoryList', 'OrderStatusList', function($scope, $state, $http, $timeout, $sce, $log, $rootScope,ProviderServices,$upload, $stateParams, ManageSellerService,ManageBranchService, MyProviderList, ProviderCategoryList, OrderStatusList) {
+  .controller('ManageSellerController', ['$scope', '$state', '$http', '$timeout', '$sce', '$log', '$rootScope', 'ProviderServices','$upload','$stateParams', 'ManageSellerService', 'ManageBranchService', 'MyProviderList', 'ProviderCategoryList', 'OrderStatusList', 'checkIfSessionExist', function($scope, $state, $http, $timeout, $sce, $log, $rootScope,ProviderServices,$upload, $stateParams, ManageSellerService,ManageBranchService, MyProviderList, ProviderCategoryList, OrderStatusList, checkIfSessionExist) {
   
     $log.debug("initialising manage seller controller");
     $scope.submitted = false;
@@ -18,6 +18,12 @@ angular.module('oz.ProviderApp')
     var fileUpdate;
     $scope.currentSellerIndex;
     $scope.process_configuration_error = '';
+
+    $scope.$watch('$state.$current.locals.globals.checkIfSessionExist', function (checkIfSessionExist) {
+      if (checkIfSessionExist.error) {
+        $rootScope.showModal();
+      };
+    });
 
     $scope.$watch('$state.$current.locals.globals.MyProviderList', function (MyProviderList) {
       $log.debug(MyProviderList);
@@ -202,11 +208,13 @@ angular.module('oz.ProviderApp')
           $rootScope.OZNotify(data.error.message,'error');
         }
       }
+      $rootScope.hideSpinner();
     };
   
     $scope.addSeller = function(){
       if ($scope.form.addSellerForm.$valid) {
         if (file !== undefined && file !== null) {
+          $rootScope.showSpinner();
           $scope.addSellerLogo = false;
           $log.debug('seller Data entered successfully');
           var sellerdata = $scope.jsonAddSellerData();
@@ -310,6 +318,7 @@ angular.module('oz.ProviderApp')
           $rootScope.OZNotify(data.error.message,'error');
         }
       }
+      $rootScope.hideSpinner();
     };
 
 
@@ -326,6 +335,7 @@ angular.module('oz.ProviderApp')
     $scope.editSeller = function(providerid){
       if ($scope.form.editSellerForm.$valid) {
         if (fileUpdate !== undefined && fileUpdate !== null) {
+          $rootScope.showSpinner();
           $log.debug('seller Data entered successfully with logo');
           $scope.upload = $upload.upload({
             url: '/api/productprovider/logo/'+providerid, 
@@ -337,6 +347,7 @@ angular.module('oz.ProviderApp')
             $log.debug(data);
           });
         } else if (fileUpdate == null) {
+          $rootScope.showSpinner();
           ManageBranchService.update_seller($scope.jsonEditSellerData(), providerid);
         }
       } else {

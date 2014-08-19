@@ -94,12 +94,15 @@ $scope.changePrice=function(product){
   $log.debug( product);
   $scope.productPrices=[];
   for (var i = product.length - 1; i >= 0; i--) {
-    $scope.productPrices.push ({
-      productid:product[i].productid,
-      newprice:product[i].newprice
-    })
+    if(product[i].price !== product[i].newprice){
+          $scope.productPrices.push ({
+            productid:product[i].productid,
+            newprice:product[i].newprice
+          })
+    }
+
    };
-   // $log.debug( $scope.productPrices);
+   console.log($scope.productPrices);
        $http({
         method: 'PUT', 
         url: '/api/productprice/'+$scope.selectedBranchId, 

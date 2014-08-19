@@ -1,5 +1,5 @@
 angular.module('oz.ProviderApp')
-  .controller('ManageSellerBranchController', ['$scope', '$state', '$http', '$timeout', '$sce', '$log', '$rootScope', 'ProviderServices','$upload','$stateParams', 'ManageSellerService', 'ManageBranchService', 'MyProviderBranchList', 'MySelectedProvider',  function($scope, $state, $http, $timeout, $sce, $log, $rootScope,ProviderServices,$upload, $stateParams, ManageSellerService,ManageBranchService, MyProviderBranchList, MySelectedProvider) {
+  .controller('ManageSellerBranchController', ['$scope', '$state', '$http', '$timeout', '$sce', '$log', '$rootScope', 'ProviderServices','$upload','$stateParams', 'ManageSellerService', 'ManageBranchService', 'MyProviderBranchList', 'MySelectedProvider', 'checkIfSessionExist',  function($scope, $state, $http, $timeout, $sce, $log, $rootScope,ProviderServices,$upload, $stateParams, ManageSellerService,ManageBranchService, MyProviderBranchList, MySelectedProvider, checkIfSessionExist) {
   
     $log.debug("initialising manage seller branch controller");
     $scope.submitted = false;
@@ -22,6 +22,12 @@ angular.module('oz.ProviderApp')
     $scope.edit = {'from':{}, 'to':{}};
     $scope.editTimingSlots = []; 
     var deliveryslots = [];
+
+    $scope.$watch('$state.$current.locals.globals.checkIfSessionExist', function (checkIfSessionExist) {
+      if (checkIfSessionExist.error) {
+        $rootScope.showModal();
+      };
+    });
 
     $scope.$watch('$state.$current.locals.globals.MyProviderBranchList', function (MyProviderBranchList) {
       $log.debug(MyProviderBranchList);
@@ -197,11 +203,13 @@ angular.module('oz.ProviderApp')
           $rootScope.OZNotify(data.error.message,'error');
         }
       }
+      $rootScope.hideSpinner();
     };
   
     $scope.addSellerBranch = function(){
       if ($scope.form.addBranchForm.$valid) {
         if ($scope.jsonAddBranchData()) {
+          $rootScope.showSpinner();
           ManageBranchService.addBranch($scope.jsonAddBranchData());
         } else {
           $scope.form.addBranchForm.submitted = true;
@@ -238,9 +246,11 @@ angular.module('oz.ProviderApp')
           $rootScope.OZNotify(data.error.message,'error');
         }
       }
+      $rootScope.hideSpinner();
     };
 
     $scope.publishSellerBranch = function(branchid){
+      $rootScope.showSpinner();
       ManageBranchService.publishBranch(branchid);
     }
 
@@ -413,12 +423,14 @@ angular.module('oz.ProviderApp')
           $rootScope.OZNotify(data.error.message,'error');
         }
       }
+      $rootScope.hideSpinner();
     };
   
     $scope.editSellerBranch = function(branchid){
       if ($scope.form.editBranchForm.$valid) {
         $log.debug($scope.jsonEditBranchData());
         if ($scope.jsonEditBranchData()) {   
+          $rootScope.showSpinner();
           ManageBranchService.editBranch($scope.jsonEditBranchData(), branchid);
         } else {
           $scope.form.editBranchForm.editcontact.$invalid = true;

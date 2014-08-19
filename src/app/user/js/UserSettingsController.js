@@ -2,13 +2,20 @@
 *	User Signin Controller
 **/
 angular.module('oz.UserApp')
- 	.controller('UserSettingController', ['$scope', '$rootScope', '$state', '$timeout', '$stateParams', '$log', 'UserSessionService', 'MyUserData', function($scope, $rootScope, $state, $timeout, $stateParams, $log, UserSessionService, MyUserData) {
+ 	.controller('UserSettingController', ['$scope', '$rootScope', '$state', '$timeout', '$stateParams', '$log', 'UserSessionService', 'MyUserData', 'checkIfSessionExist', function($scope, $rootScope, $state, $timeout, $stateParams, $log, UserSessionService, MyUserData, checkIfSessionExist) {
     $scope.submitted = false;
     $scope.form = {};
     $scope.$state = $state;
     $scope.user_settings_data = {};
     $scope.user_data = {};
     $scope.user_edit = false;
+    $scope.showSpinner = false;
+
+    $scope.$watch('$state.$current.locals.globals.checkIfSessionExist', function (checkIfSessionExist) {
+      if (checkIfSessionExist.error) {
+        $rootScope.showModal();
+      };
+    });
 
     $scope.$watch('$state.$current.locals.globals.MyUserData', function (MyUserData) {
       $log.debug(MyUserData);
@@ -77,11 +84,13 @@ angular.module('oz.UserApp')
           $rootScope.OZNotify(data.error.message,'error');
         }
       }
+      $rootScope.hideSpinner();
     };
 
     // function for resetpassword to Prodonus App using REST APIs and performs form validation.
     $scope.editUser = function() {
       if ($scope.form.editUserSettingsForm.$dirty && $scope.form.editUserSettingsForm.$valid) {
+        $rootScope.showSpinner();
         $log.debug($scope.jsonEditUserSettingsData());
         UserSessionService.editUserSettings($scope.jsonEditUserSettingsData());
       } else {
