@@ -105,7 +105,7 @@ angular.module('oz.UserApp')
 
     $scope.fetchLevelIIContent = function()
     { 
-    	if($scope.levelOneIds.categoryid === '')
+    	if($scope.levelOneIds.categoryid === undefined || $scope.levelOneIds.categoryid === '')
     	{
     		$rootScope.OZNotify('Please select atleast one level one category', 'error');
     	}
@@ -127,7 +127,7 @@ angular.module('oz.UserApp')
 
     $scope.fetchLevelThreeContent = function()
     {
-    	if($scope.levelTwoIds.categoryid === '')
+    	if($scope.levelTwoIds.categoryid === undefined || $scope.levelTwoIds.categoryid === '')
     	{
     		$rootScope.OZNotify('Please select category from level two', 'error');
     	}
@@ -146,7 +146,7 @@ angular.module('oz.UserApp')
     };
     $scope.fetchLevelFourContent = function()
     {
-      if($scope.levelThreeIds.categoryid === '')
+      if($scope.levelThreeIds.categoryid === undefined || $scope.levelThreeIds.categoryid === '')
       {
         $rootScope.OZNotify('Please select category from level three', 'error');
       }
@@ -213,7 +213,8 @@ angular.module('oz.UserApp')
 		    if(data.success)
 		    {      
 		            $rootScope.OZNotify('Category added successfully', 'success');
-		               OZWallService.getAllCategories();
+                $scope.levelOneIds = ''; $scope.levelTwoIds = ''; $scope.levelThreeIds = ''; $scope.levelFourIds = '';
+		            OZWallService.getAllCategories();
 		    } 
     });
 
@@ -241,6 +242,7 @@ angular.module('oz.UserApp')
 		    if(data.success)
 		    {      
                     $rootScope.OZNotify(data.success.message, 'success');
+                    $scope.levelOneIds = ''; $scope.levelTwoIds = ''; $scope.levelThreeIds = ''; $scope.levelFourIds = '';
                     OZWallService.getAllCategories();
 		    } 
     });
@@ -275,7 +277,7 @@ angular.module('oz.UserApp')
     	}
     	else
     	{
-    		$scope.content = {'categorydata' : { 'categoryname' : list.categoryname}};
+    		    $scope.content = {'categorydata' : { 'categoryname' : list.categoryname}};
             OZWallService.modifyCategoryName(list.categoryid, $scope.content);
         }
     };
