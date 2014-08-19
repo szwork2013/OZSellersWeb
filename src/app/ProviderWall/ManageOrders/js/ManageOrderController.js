@@ -19,6 +19,25 @@ angular.module('oz.ProviderApp')
 
    };
     $scope.init();    
+
+
+   $scope.getProvider=function(providerid){
+     ProviderServices.get_provider.getProvider({providerid:providerid},
+      function (successData) {
+      if (successData.success == undefined) {
+      
+      } else {
+        if(successData.success.productprovider.orderprocess_configuration){
+           $log.debug(successData.success.productprovider.orderprocess_configuration);
+           $rootScope.orderConfigStatus=successData.success.productprovider.orderprocess_configuration;
+        }
+      }
+     }, function (error) {
+       $log.debug("Server Error:" + error.status);
+     });
+   };
+
+ $scope.getProvider($rootScope.selectedproviderid);
    
 $log.debug($rootScope.orderConfigStatus);
 

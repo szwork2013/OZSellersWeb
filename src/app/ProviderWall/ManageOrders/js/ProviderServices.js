@@ -11,7 +11,7 @@
         delete_product: $resource('/api/productcatalog/:providerid/:productid ', {}, { deleteProduct: { method: 'DELETE', params : {providerid:'@providerid', productid:'@productid'}} }),
         get_Orders: $resource('api/suborder/:providerid/:branchid?criteriastatus=:criteriastatus', {}, { getOrders: { method: 'GET', params : { providerid:'@providerid',branchid:'@branchid',criteriastatus:'@criteriastatus'}} }),
         get_productUserTags: $resource('/api/productusertags', {}, { getProductUserTags: { method: 'GET'}}),
-
+        get_provider: $resource('/api/productprovider/:providerid', {}, { getProvider: { method: 'GET', params : { providerid:'@providerid'}} }),
         get_productConfig: $resource('/api/productconfig/:categoryid', {}, { getProductConfig: { method: 'GET', params : { categoryid:'@categoryid'}} }),
         get_order_count: $resource('/api/suborderstatuscount/:providerid/:branchid', {}, { getOrderCount: { method: 'GET'} }),
         get_productConfig: $resource('/api/productconfig/:categoryid', {}, { getProductConfig: { method: 'GET', params : { categoryid:'@categoryid'}} })
