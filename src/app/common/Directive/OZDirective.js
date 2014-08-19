@@ -133,7 +133,7 @@ angular.module('oz.CommonApp').directive('prodonusPasswordCheck', [
       ]
     };
 }
-]).directive('prodoSpinner', [
+]).directive('ozSpinner', [
   '$timeout',
   function ($timeout) {
     return {
