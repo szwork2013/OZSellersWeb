@@ -18,7 +18,6 @@ angular.module('oz.ProviderApp')
     var fileUpdate;
     $scope.currentSellerIndex;
     $scope.process_configuration_error = '';
-    var orderConfigStatus = [];
 
     $scope.$watch('$state.$current.locals.globals.MyProviderList', function (MyProviderList) {
       $log.debug(MyProviderList);
@@ -275,10 +274,6 @@ angular.module('oz.ProviderApp')
           edit_order_status_list.push({index:$scope.edit_order_status_list[i].index, order_status:$scope.edit_order_status_list[i].order_status });
         }
       }
-
-      if (edit_order_status_list.length !== 0) {
-        orderConfigStatus = angular.copy(edit_order_status_list);
-      }
       var sellerdata = 
       {
         providerdata:
@@ -302,12 +297,9 @@ angular.module('oz.ProviderApp')
       return JSON.stringify(sellerdata); 
     } 
 
-    $scope.handleEditSellerResponse = function(data, providerid){
+    $scope.handleEditSellerResponse = function(data){
       if (data.success) {
         $('#editSellerModal').modal('hide');
-        if (providerid == $rootScope.selectedproviderid) {
-          $rootScope.orderConfigStatus = orderConfigStatus;
-        }
         $state.reload();
         $rootScope.OZNotify(data.success.message,'success'); 
       } else {
@@ -354,9 +346,9 @@ angular.module('oz.ProviderApp')
     }
 
 
-    var cleanupEventEditSellerDone = $scope.$on("editSellerDone", function(event, message, providerid){
+    var cleanupEventEditSellerDone = $scope.$on("editSellerDone", function(event, message){
       $log.debug(message);
-      $scope.handleEditSellerResponse(message, providerid);      
+      $scope.handleEditSellerResponse(message);      
     });
 
     var cleanupEventEditSellerNotDone = $scope.$on("editSellerNotDone", function(event, message){

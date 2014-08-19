@@ -65,7 +65,7 @@ angular.module('oz.ProviderApp')
 	    branch.update_seller = function (sellerdata, sellerid) {
 	      ManageBranchService.Edit_Seller.edit_Seller({providerid: sellerid}, sellerdata, function (success) {
 	        $log.debug(success);
-	        $rootScope.$broadcast('editSellerDone', success, sellerid);
+	        $rootScope.$broadcast('editSellerDone', success);
 	      }, function (error) {
 	        $log.debug(error);
 	        $rootScope.$broadcast('editSellerNotDone', error.status);
