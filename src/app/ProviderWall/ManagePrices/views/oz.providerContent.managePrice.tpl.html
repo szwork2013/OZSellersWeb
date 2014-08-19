@@ -136,7 +136,7 @@
     
         <td ng-hide = 'list.editing || list.holding_price === undefined' >
 
-         <div style = ' float : left' ng-if = 'list.holding_price.value !== null'> {{list.holding_price.currency}} {{list.holding_price.value}} / {{list.holding_price.uom}}</div>&nbsp;
+         <div style = ' float : left' ng-if = 'list.holding_price.value !== null'> {{list.holding_price.currency}} {{list.holding_price.value}}<span ng-show="list.holding_price.value"> / </span> {{list.holding_price.uom}}</div>&nbsp;
 
          
         </td>
