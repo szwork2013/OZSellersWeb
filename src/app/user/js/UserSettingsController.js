@@ -104,6 +104,7 @@ angular.module('oz.UserApp')
 
     var cleanupEventEditUserSettingsNotDone = $scope.$on("editUserSettingsNotDone", function(event, message){
       $log.debug(message);
+      $rootScope.hideSpinner();
       $rootScope.OZNotify("It looks as though we have broken something on our server system. Our support team is notified and will take immediate action to fix it." + message, 'error');   
     });
 

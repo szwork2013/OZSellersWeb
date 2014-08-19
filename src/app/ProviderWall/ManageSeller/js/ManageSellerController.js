@@ -364,6 +364,7 @@ angular.module('oz.ProviderApp')
 
     var cleanupEventEditSellerNotDone = $scope.$on("editSellerNotDone", function(event, message){
       $log.debug(message);
+      $rootScope.hideSpinner();
       $rootScope.OZNotify("It looks as though we have broken something on our server system. Our support team is notified and will take immediate action to fix it." + message, 'error');   
     });
 

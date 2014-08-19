@@ -97,6 +97,7 @@ angular.module('oz.ProviderApp')
     });
 
     var cleanupEventGetCityListNotDone = $scope.$on("getCityListNotDone", function(event, message){
+      $rootScope.hideSpinner();
       $rootScope.OZNotify("It looks as though we have broken something on our server system. Our support team is notified and will take immediate action to fix it." + message, 'error');   
     });
 
@@ -133,6 +134,7 @@ angular.module('oz.ProviderApp')
     });
 
     var cleanupEventGetZipcodeListNotDone = $scope.$on("getZipcodeListNotDone", function(event, message){
+      $rootScope.hideSpinner();
       $rootScope.OZNotify("It looks as though we have broken something on our server system. Our support team is notified and will take immediate action to fix it." + message, 'error');   
     });
 
@@ -168,6 +170,7 @@ angular.module('oz.ProviderApp')
     });
 
     var cleanupEventGetAreaListNotDone = $scope.$on("getAreaListNotDone", function(event, message){
+      $rootScope.hideSpinner();
       $rootScope.OZNotify("It looks as though we have broken something on our server system. Our support team is notified and will take immediate action to fix it." + message, 'error');   
     });
 
@@ -231,6 +234,7 @@ angular.module('oz.ProviderApp')
     });
 
     var cleanupEventAddPickupAddressNotDone = $scope.$on("addPickupAddressNotDone", function(event, message){
+      $rootScope.hideSpinner();
       $log.debug(message);
       $rootScope.OZNotify("It looks as though we have broken something on our server system. Our support team is notified and will take immediate action to fix it." + message, 'error');   
     });
@@ -301,6 +305,7 @@ angular.module('oz.ProviderApp')
     });
 
     var cleanupEventEditPickupAddressNotDone = $scope.$on("updatePickupAddressNotDone", function(event, message){
+      $rootScope.hideSpinner();
       $log.debug(message);
       $rootScope.OZNotify("It looks as though we have broken something on our server system. Our support team is notified and will take immediate action to fix it." + message, 'error');   
     });
@@ -335,6 +340,7 @@ angular.module('oz.ProviderApp')
     });
 
     var cleanupEventDeletePickupAddressNotDone = $scope.$on("deletePickupAddressNotDone", function(event, message){
+      $rootScope.hideSpinner();
       $log.debug(message);
       $rootScope.OZNotify("It looks as though we have broken something on our server system. Our support team is notified and will take immediate action to fix it." + message, 'error');   
     });
@@ -347,6 +353,12 @@ angular.module('oz.ProviderApp')
       cleanupEventDeletePickupAddressNotDone();
       cleanupEventEditPickupAddressDone();
       cleanupEventEditPickupAddressNotDone();
+      cleanupEventGetCityListDone();
+      cleanupEventGetCityListNotDone();
+      cleanupEventGetZipcodeListDone();
+      cleanupEventGetZipcodeListNotDone();
+      cleanupEventGetAreaListDone();
+      cleanupEventGetAreaListNotDone();
     });
 
 }]);

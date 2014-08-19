@@ -143,6 +143,7 @@ angular.module('oz.ProviderApp')
     });
 
     var cleanupEventGetAllAreaAvailabilityNotDone = $scope.$on("getAllAreaAvailabilityNotDone", function(event, message){
+      $rootScope.hideSpinner();
       $rootScope.OZNotify("It looks as though we have broken something on our server system. Our support team is notified and will take immediate action to fix it." + message, 'error');   
     });
 
@@ -180,6 +181,7 @@ angular.module('oz.ProviderApp')
     });
 
     var cleanupEventGetCityListNotDone = $scope.$on("getCityListNotDone", function(event, message){
+      $rootScope.hideSpinner();
       $rootScope.OZNotify("It looks as though we have broken something on our server system. Our support team is notified and will take immediate action to fix it." + message, 'error');   
     });
 
@@ -216,6 +218,7 @@ angular.module('oz.ProviderApp')
     });
 
     var cleanupEventGetZipcodeListNotDone = $scope.$on("getZipcodeListNotDone", function(event, message){
+      $rootScope.hideSpinner();
       $rootScope.OZNotify("It looks as though we have broken something on our server system. Our support team is notified and will take immediate action to fix it." + message, 'error');   
     });
 
@@ -258,6 +261,7 @@ angular.module('oz.ProviderApp')
     });
 
     var cleanupEventEditBranchNotDone = $scope.$on("getAvailableAreaListNotDone", function(event, message){
+      $rootScope.hideSpinner();
       $rootScope.OZNotify("It looks as though we have broken something on our server system. Our support team is notified and will take immediate action to fix it." + message, 'error');   
     });
 
@@ -313,6 +317,7 @@ angular.module('oz.ProviderApp')
     });
 
     var cleanupEventGetAreaListNotDone = $scope.$on("getAreaListNotDone", function(event, message){
+      $rootScope.hideSpinner();
       $rootScope.OZNotify("It looks as though we have broken something on our server system. Our support team is notified and will take immediate action to fix it." + message, 'error');   
     });
 
@@ -368,6 +373,7 @@ angular.module('oz.ProviderApp')
     });
 
     var cleanupEventAddDeliveryAvailabilityNotDone = $scope.$on("addDeliveryAvailabilityNotDone", function(event, message){
+      $rootScope.hideSpinner();
       $rootScope.OZNotify("It looks as though we have broken something on our server system. Our support team is notified and will take immediate action to fix it." + message, 'error');   
     });
 
@@ -428,6 +434,7 @@ angular.module('oz.ProviderApp')
     });
 
     var cleanupEventEditDeliveryAvailabilityNotDone = $scope.$on("editDeliveryAvailabilityNotDone", function(event, message){
+      $rootScope.hideSpinner();
       $rootScope.OZNotify("It looks as though we have broken something on our server system. Our support team is notified and will take immediate action to fix it." + message, 'error');   
     });
 
