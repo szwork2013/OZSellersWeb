@@ -56,8 +56,8 @@
                  	</div>
 
                     <div style = 'width : 100%; ' >
-                        <span ng-bind = 'list.answer' ng-hide = 'list.editing'></span>
-                        <textarea class = 'form-control' ng-model = 'list.answer' rows = '10' ng-if = 'list.editing'></textarea>
+                        <span ng-bind-html = 'list.answer' ng-hide = 'list.editing'></span>
+                        <text-angular name="faqEditText" ng-model="list.answer" ta-toolbar-button-class="texteditor-btn btn btn-default" ta-toolbar="[['h1','h2','h3', 'h4', 'h5', 'h6', 'p', 'quote','bold','italics','underline','ul', 'ol', 'undo', 'redo', 'clear', 'justifyLeft', 'justifyCenter', 'justifyRight']]" ng-if = 'list.editing'></text-angular>
                  	</div>
                  </div>
 
@@ -110,7 +110,8 @@
                       <div>
                          <div>Answer</div>
                          <div>
-                         	<textarea ng-model = 'newFaqContentObject.answer' class = 'form-control' rows = '10'></textarea>
+                         <!-- 	<textarea ng-model = 'newFaqContentObject.answer' class = 'form-control' rows = '10'></textarea> -->
+                           <text-angular name="faqAddText" ng-model="newFaqContentObject.answer" ta-toolbar-button-class="texteditor-btn btn btn-default" ta-toolbar="[['h1','h2','h3', 'h4', 'h5', 'h6', 'p', 'quote','bold','italics','underline','ul', 'ol', 'undo', 'redo', 'clear', 'justifyLeft', 'justifyCenter', 'justifyRight']]"></text-angular>
                          </div> 	
                       </div> 
                     </div>
