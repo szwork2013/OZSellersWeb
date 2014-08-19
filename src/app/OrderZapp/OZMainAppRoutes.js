@@ -67,6 +67,9 @@ angular.module('oz.OrderZappApp')
       resolve: {
         MyUserData: function(UserSettingService, $rootScope) {
           return UserSettingService.MySettings.GetMyUserSettings({userid: $rootScope.usersession.currentUser.userid}).$promise;
+        },
+        checkIfSessionExist: function(UserSettingService, $rootScope) {
+          return UserSettingService.CheckIfUserLoggedin.checkUserSession().$promise;
         }
       }
     })     
@@ -101,6 +104,9 @@ angular.module('oz.OrderZappApp')
         },
         OrderStatusList: function(ManageSellerService, $rootScope) {
           return ManageSellerService.Order_Status.GetOrderStatus().$promise;
+        },
+        checkIfSessionExist: function(UserSettingService, $rootScope) {
+          return UserSettingService.CheckIfUserLoggedin.checkUserSession().$promise;
         }  
       }
     })     
@@ -131,6 +137,9 @@ angular.module('oz.OrderZappApp')
           } else {
             return ManageSellerService.SelectedProvider.GetSelectedProvider({providerid:$rootScope.selectedproviderid}).$promise;
           }
+        },
+        checkIfSessionExist: function(UserSettingService, $rootScope) {
+          return UserSettingService.CheckIfUserLoggedin.checkUserSession().$promise;
         }
       }
     })     
@@ -173,6 +182,9 @@ angular.module('oz.OrderZappApp')
               return GetLocationService.LocationData.GetAllLocationData({keydata: 'zipcode', data:CityData.success.city[0]}).$promise;
             }
           }
+        },
+        checkIfSessionExist: function(UserSettingService, $rootScope) {
+          return UserSettingService.CheckIfUserLoggedin.checkUserSession().$promise;
         }
       }
     })     
@@ -315,6 +327,9 @@ angular.module('oz.OrderZappApp')
               return GetLocationService.LocationData.GetAllLocationData({keydata: 'zipcode', data:CityData.success.city[0]}).$promise;
             }
           }
+        },
+        checkIfSessionExist: function(UserSettingService, $rootScope) {
+          return UserSettingService.CheckIfUserLoggedin.checkUserSession().$promise;
         }
       }
     })     

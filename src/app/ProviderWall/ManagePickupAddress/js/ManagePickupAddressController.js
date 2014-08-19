@@ -1,5 +1,5 @@
 angular.module('oz.ProviderApp')
-  .controller('ManagePickupAddressController', ['$scope', '$state', '$http', '$timeout', '$sce', '$log', '$rootScope', 'ProviderServices','$upload','$stateParams', 'ManageSellerService', 'ManageDeliveryChargesService', 'ManageBranchService', 'PickupAddressList', 'StateDataList', 'CityDataList', 'ZipcodeDataList', function($scope, $state, $http, $timeout, $sce, $log, $rootScope,ProviderServices,$upload, $stateParams, ManageSellerService, ManageDeliveryChargesService, ManageBranchService, PickupAddressList, StateDataList, CityDataList, ZipcodeDataList) {
+  .controller('ManagePickupAddressController', ['$scope', '$state', '$http', '$timeout', '$sce', '$log', '$rootScope', 'ProviderServices','$upload','$stateParams', 'ManageSellerService', 'ManageDeliveryChargesService', 'ManageBranchService', 'PickupAddressList', 'StateDataList', 'CityDataList', 'ZipcodeDataList', 'checkIfSessionExist', function($scope, $state, $http, $timeout, $sce, $log, $rootScope,ProviderServices,$upload, $stateParams, ManageSellerService, ManageDeliveryChargesService, ManageBranchService, PickupAddressList, StateDataList, CityDataList, ZipcodeDataList, checkIfSessionExist) {
   
     $log.debug("initialising manage pickup address controller");
     $scope.providers_pickup_address = [];
@@ -15,6 +15,12 @@ angular.module('oz.ProviderApp')
     $scope.Areas = [];
     var char_regex = /^[a-zA-Z]*$/;
     var zipcode_regex = /^[0-9]{6}$/;
+
+    $scope.$watch('$state.$current.locals.globals.checkIfSessionExist', function (checkIfSessionExist) {
+      if (checkIfSessionExist.error) {
+        $rootScope.showModal();
+      };
+    });
 
     $scope.$watch('$state.$current.locals.globals.PickupAddressList', function (PickupAddressList) {
       $log.debug(PickupAddressList);
@@ -74,8 +80,12 @@ angular.module('oz.ProviderApp')
         }
         // $rootScope.OZNotify(data.success.message,'success'); 
       } else {
-        $log.debug(data.error.message);
-        $rootScope.OZNotify(data.error.message,'error');
+        if(data.error.code=='AL001'){
+          $rootScope.showModal();
+        } else {
+          $log.debug(data.error.message);
+          $rootScope.OZNotify(data.error.message,'error');
+        }
       }
     };
 
@@ -104,8 +114,12 @@ angular.module('oz.ProviderApp')
         }
         // $rootScope.OZNotify(data.success.message,'success'); 
       } else {
-        $log.debug(data.error.message);
-        $rootScope.OZNotify(data.error.message,'error');
+        if(data.error.code=='AL001'){
+          $rootScope.showModal();
+        } else {
+          $log.debug(data.error.message);
+          $rootScope.OZNotify(data.error.message,'error');
+        }
       }
     };
 
@@ -133,8 +147,12 @@ angular.module('oz.ProviderApp')
         }
         // $rootScope.OZNotify(data.success.message,'success'); 
       } else {
-        $log.debug(data.error.message);
-        $rootScope.OZNotify(data.error.message,'error');
+        if(data.error.code=='AL001'){
+          $rootScope.showModal();
+        } else {
+          $log.debug(data.error.message);
+          $rootScope.OZNotify(data.error.message,'error');
+        }
       }
     };
 
