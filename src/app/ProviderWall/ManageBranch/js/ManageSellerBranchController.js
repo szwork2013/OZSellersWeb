@@ -21,6 +21,7 @@ angular.module('oz.ProviderApp')
     var operationEndTimeEdit = '';
     $scope.edit = {'from':{}, 'to':{}};
     $scope.editTimingSlots = []; 
+    var deliveryslots = [];
 
     $scope.$watch('$state.$current.locals.globals.MyProviderBranchList', function (MyProviderBranchList) {
       $log.debug(MyProviderBranchList);
@@ -343,6 +344,9 @@ angular.module('oz.ProviderApp')
           if (result) {
             var supportnos = $scope.editbranch.edit_supportnos;
             $scope.support_nos = supportnos.split(",");
+            if (timeslots.length !== 0) {
+              deliveryslots = angular.copy(timeslots);
+            }
             if ($scope.editbranch.delivery.isprovidehomedelivery !== true) {
               if ($scope.editbranch.delivery.isdeliverychargeinpercent == true) {
                 $scope.editbranch.delivery.isdeliverychargeinpercent = false;
@@ -393,9 +397,12 @@ angular.module('oz.ProviderApp')
     }; 
 
     // function to handle server side responses
-    $scope.handleEditBranchResponse = function(data){
+    $scope.handleEditBranchResponse = function(data, branchid){
       if (data.success) {
         $('#editBranchModal').modal('hide');
+        if (branchid == $rootScope.selectedBranchId) {
+          $rootScope.deliveryTimeSlots = deliveryslots;
+        }
         $state.reload();
         $rootScope.OZNotify(data.success.message,'success'); 
       } else {
@@ -425,9 +432,9 @@ angular.module('oz.ProviderApp')
       }
     }
 
-    var cleanupEventEditBranchDone = $scope.$on("editBranchDone", function(event, message){
+    var cleanupEventEditBranchDone = $scope.$on("editBranchDone", function(event, message, branchid){
       $log.debug(message);
-      $scope.handleEditBranchResponse(message);      
+      $scope.handleEditBranchResponse(message, branchid);      
     });
 
     var cleanupEventEditBranchNotDone = $scope.$on("editBranchNotDone", function(event, message){

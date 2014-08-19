@@ -2,14 +2,8 @@
 
 angular.module('oz.ProviderApp')
   .controller('OZProductAvailabilityController', ['$scope', '$state', '$http', '$timeout', '$sce', '$log', 'UserSessionService',  'ProviderServicesList', '$rootScope', function($scope, $state, $http, $timeout, $sce, $log, UserSessionService, ProviderServicesList, $rootScope) {
-    $scope.$watch('selectedBranchId', function(selectedBranchId)
-    {
-    	$scope.allProductsContent = [];
-    	if(selectedBranchId !== undefined && selectedBranchId !== '')
-    	{
-             ProviderServicesList.getAllProductForAvailability();
-    	}
-    });
+    
+    $scope.allProductsContent = [];
 
     $scope.mytime = new Date();
 
@@ -24,6 +18,15 @@ angular.module('oz.ProviderApp')
      $scope.tempProductCatalog = [];
 
      $scope.today = new Date();
+
+     $scope.$watch('selectedBranchId', function(selectedBranchId)
+    {
+      if(selectedBranchId !== undefined && selectedBranchId !== '')
+      {
+             ProviderServicesList.getAllProductForAvailability();
+      }
+    });
+
 
     var cleanUpEventGotAllProducts = $scope.$on("gotAllProducts",function(event,data){
             if(data.error)
@@ -40,6 +43,7 @@ angular.module('oz.ProviderApp')
             if(data.success)
             {      
                       //$rootScope.OZNotify(data.success.message, 'success'); 
+                      $scope.allProductsContent = [];
                       $scope.tempProductCatalog = [];
                       $scope.allProductsContent = angular.copy(data.success.proudctcatalog);
                       $scope.tempProductCatalog = angular.copy(data.success.proudctcatalog);
