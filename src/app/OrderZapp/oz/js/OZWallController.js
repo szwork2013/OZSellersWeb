@@ -63,7 +63,7 @@ angular.module('oz.UserApp')
 
     $scope.tempAllHelpData = [];
 
-    $scope.typeadheadFaqTitleArray = ['How To Order', 'How To Use', 'How To Contact Support'];
+    $scope.typeadheadFaqTitleArray = ['Refunds, Cancellation, Returns', 'Payments', 'Discounts', 'OrderZapp', 'Delivery', 'Order'];
 
     $scope.newFaqContentObject = {'question' : '', 'answer' : '', 'questionheading' : ''};
 
