@@ -1,5 +1,5 @@
 angular.module('oz.ProviderApp')
-  .controller('ManageDeliveryChargesController', ['$scope', '$state', '$http', '$timeout', '$sce', '$log', '$rootScope', 'ProviderServices','$upload','$stateParams', 'ManageDeliveryChargesService', 'AllBranchDeliveryAreaList', 'CountryData', 'StateData', 'CityData', 'ZipcodeData', function($scope, $state, $http, $timeout, $sce, $log, $rootScope,ProviderServices,$upload, $stateParams, ManageDeliveryChargesService, AllBranchDeliveryAreaList, CountryData, StateData, CityData, ZipcodeData) {
+  .controller('ManageDeliveryChargesController', ['$scope', '$state', '$http', '$timeout', '$sce', '$log', '$rootScope', 'ProviderServices','$upload','$stateParams', 'ManageDeliveryChargesService', 'AllBranchDeliveryAreaList', 'CountryData', 'StateData', 'CityData', 'ZipcodeData', 'checkIfSessionExist', function($scope, $state, $http, $timeout, $sce, $log, $rootScope,ProviderServices,$upload, $stateParams, ManageDeliveryChargesService, AllBranchDeliveryAreaList, CountryData, StateData, CityData, ZipcodeData, checkIfSessionExist) {
   
     $log.debug("initialising manage delivery charges controller");
 
@@ -18,6 +18,12 @@ angular.module('oz.ProviderApp')
     $scope.submitted = false;
     $scope.form = {};
     $scope.deliveryChargeError = false;
+
+    $scope.$watch('$state.$current.locals.globals.checkIfSessionExist', function (checkIfSessionExist) {
+      if (checkIfSessionExist.error) {
+        $rootScope.showModal();
+      };
+    });
 
     $scope.$watch('$state.$current.locals.globals.AllBranchDeliveryAreaList', function (AllBranchDeliveryAreaList) {
       $log.debug(AllBranchDeliveryAreaList);
@@ -116,8 +122,12 @@ angular.module('oz.ProviderApp')
           $log.debug(data.success.message);
         }        
       } else {
-        $log.debug(data.error.message);
-        $rootScope.OZNotify(data.error.message,'error');
+        if(data.error.code=='AL001'){
+          $rootScope.showModal();
+        } else {
+          $log.debug(data.error.message);
+          $rootScope.OZNotify(data.error.message,'error');
+        }
       }
     };
 
@@ -152,8 +162,12 @@ angular.module('oz.ProviderApp')
         }
         $rootScope.OZNotify(data.success.message,'success'); 
       } else {
-        $log.debug(data.error.message);
-        $rootScope.OZNotify(data.error.message,'error');
+        if(data.error.code=='AL001'){
+          $rootScope.showModal();
+        } else {
+          $log.debug(data.error.message);
+          $rootScope.OZNotify(data.error.message,'error');
+        }
       }
     };
 
@@ -182,8 +196,12 @@ angular.module('oz.ProviderApp')
         }
         $rootScope.OZNotify(data.success.message,'success'); 
       } else {
-        $log.debug(data.error.message);
-        $rootScope.OZNotify(data.error.message,'error');
+        if(data.error.code=='AL001'){
+          $rootScope.showModal();
+        } else {
+          $log.debug(data.error.message);
+          $rootScope.OZNotify(data.error.message,'error');
+        }
       }
     };
 
@@ -217,8 +235,12 @@ angular.module('oz.ProviderApp')
         }        
         $rootScope.OZNotify(data.success.message,'success'); 
       } else {
-        $log.debug(data.error.message);
-        $rootScope.OZNotify(data.error.message,'error');
+        if(data.error.code=='AL001'){
+          $rootScope.showModal();
+        } else {
+          $log.debug(data.error.message);
+          $rootScope.OZNotify(data.error.message,'error');
+        }
       }
     };
 
@@ -267,8 +289,12 @@ angular.module('oz.ProviderApp')
         } 
         $rootScope.OZNotify(data.success.message,'success'); 
       } else {
-        $log.debug(data.error.message);
-        $rootScope.OZNotify(data.error.message,'error');
+        if(data.error.code=='AL001'){
+          $rootScope.showModal();
+        } else {
+          $log.debug(data.error.message);
+          $rootScope.OZNotify(data.error.message,'error');
+        }
       }
     };
 
@@ -317,8 +343,12 @@ angular.module('oz.ProviderApp')
         $scope.getAreaForZipcode(zipcode);
         $rootScope.OZNotify(data.success.message,'success'); 
       } else {
-        $log.debug(data.error.message);
-        $rootScope.OZNotify(data.error.message,'error');
+        if(data.error.code=='AL001'){
+          $rootScope.showModal();
+        } else {
+          $log.debug(data.error.message);
+          $rootScope.OZNotify(data.error.message,'error');
+        }
       }
     };
 
@@ -371,8 +401,12 @@ angular.module('oz.ProviderApp')
         $scope.getAreaForZipcode(zipcode);
         $rootScope.OZNotify(data.success.message,'success'); 
       } else {
-        $log.debug(data.error.message);
-        $rootScope.OZNotify(data.error.message,'error');
+        if(data.error.code=='AL001'){
+          $rootScope.showModal();
+        } else {
+          $log.debug(data.error.message);
+          $rootScope.OZNotify(data.error.message,'error');
+        }
       }
     };
 

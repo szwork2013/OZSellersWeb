@@ -2,13 +2,19 @@
 *	User Signin Controller
 **/
 angular.module('oz.UserApp')
- 	.controller('UserSettingController', ['$scope', '$rootScope', '$state', '$timeout', '$stateParams', '$log', 'UserSessionService', 'MyUserData', function($scope, $rootScope, $state, $timeout, $stateParams, $log, UserSessionService, MyUserData) {
+ 	.controller('UserSettingController', ['$scope', '$rootScope', '$state', '$timeout', '$stateParams', '$log', 'UserSessionService', 'MyUserData', 'checkIfSessionExist', function($scope, $rootScope, $state, $timeout, $stateParams, $log, UserSessionService, MyUserData, checkIfSessionExist) {
     $scope.submitted = false;
     $scope.form = {};
     $scope.$state = $state;
     $scope.user_settings_data = {};
     $scope.user_data = {};
     $scope.user_edit = false;
+
+    $scope.$watch('$state.$current.locals.globals.checkIfSessionExist', function (checkIfSessionExist) {
+      if (checkIfSessionExist.error) {
+        $rootScope.showModal();
+      };
+    });
 
     $scope.$watch('$state.$current.locals.globals.MyUserData', function (MyUserData) {
       $log.debug(MyUserData);

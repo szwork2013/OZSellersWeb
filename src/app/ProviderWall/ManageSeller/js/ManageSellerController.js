@@ -1,5 +1,5 @@
 angular.module('oz.ProviderApp')
-  .controller('ManageSellerController', ['$scope', '$state', '$http', '$timeout', '$sce', '$log', '$rootScope', 'ProviderServices','$upload','$stateParams', 'ManageSellerService', 'ManageBranchService', 'MyProviderList', 'ProviderCategoryList', 'OrderStatusList', function($scope, $state, $http, $timeout, $sce, $log, $rootScope,ProviderServices,$upload, $stateParams, ManageSellerService,ManageBranchService, MyProviderList, ProviderCategoryList, OrderStatusList) {
+  .controller('ManageSellerController', ['$scope', '$state', '$http', '$timeout', '$sce', '$log', '$rootScope', 'ProviderServices','$upload','$stateParams', 'ManageSellerService', 'ManageBranchService', 'MyProviderList', 'ProviderCategoryList', 'OrderStatusList', 'checkIfSessionExist', function($scope, $state, $http, $timeout, $sce, $log, $rootScope,ProviderServices,$upload, $stateParams, ManageSellerService,ManageBranchService, MyProviderList, ProviderCategoryList, OrderStatusList, checkIfSessionExist) {
   
     $log.debug("initialising manage seller controller");
     $scope.submitted = false;
@@ -18,6 +18,12 @@ angular.module('oz.ProviderApp')
     var fileUpdate;
     $scope.currentSellerIndex;
     $scope.process_configuration_error = '';
+
+    $scope.$watch('$state.$current.locals.globals.checkIfSessionExist', function (checkIfSessionExist) {
+      if (checkIfSessionExist.error) {
+        $rootScope.showModal();
+      };
+    });
 
     $scope.$watch('$state.$current.locals.globals.MyProviderList', function (MyProviderList) {
       $log.debug(MyProviderList);

@@ -113,13 +113,8 @@ $scope.getProviders=function(){
     var cleanupEventLogoutDone = $scope.$on('logoutDone', function (event, data) {
       $log.debug($rootScope.usersession.isLoggedIn);
       $scope.resetProviderData();
-      if (data.success !== undefined && data.success.message !== undefined) {
-        $state.transitionTo('home.start');
-        $rootScope.OZNotify(data.success.message, 'success');
-      } else {
-        $state.transitionTo('home.start');
-        $rootScope.OZNotify(data.error.message, 'error');
-      }   
+      $state.transitionTo('home.start');
+      $rootScope.OZNotify('You are successfully signed out.', 'success');   
     });
 
     var cleanupEventLogoutNotDone = $scope.$on('logoutNotDone', function (event, message) {

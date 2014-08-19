@@ -1,5 +1,5 @@
 angular.module('oz.ProviderApp')
-  .controller('ManageSellerBranchController', ['$scope', '$state', '$http', '$timeout', '$sce', '$log', '$rootScope', 'ProviderServices','$upload','$stateParams', 'ManageSellerService', 'ManageBranchService', 'MyProviderBranchList', 'MySelectedProvider',  function($scope, $state, $http, $timeout, $sce, $log, $rootScope,ProviderServices,$upload, $stateParams, ManageSellerService,ManageBranchService, MyProviderBranchList, MySelectedProvider) {
+  .controller('ManageSellerBranchController', ['$scope', '$state', '$http', '$timeout', '$sce', '$log', '$rootScope', 'ProviderServices','$upload','$stateParams', 'ManageSellerService', 'ManageBranchService', 'MyProviderBranchList', 'MySelectedProvider', 'checkIfSessionExist',  function($scope, $state, $http, $timeout, $sce, $log, $rootScope,ProviderServices,$upload, $stateParams, ManageSellerService,ManageBranchService, MyProviderBranchList, MySelectedProvider, checkIfSessionExist) {
   
     $log.debug("initialising manage seller branch controller");
     $scope.submitted = false;
@@ -22,6 +22,12 @@ angular.module('oz.ProviderApp')
     $scope.edit = {'from':{}, 'to':{}};
     $scope.editTimingSlots = []; 
     var deliveryslots = [];
+
+    $scope.$watch('$state.$current.locals.globals.checkIfSessionExist', function (checkIfSessionExist) {
+      if (checkIfSessionExist.error) {
+        $rootScope.showModal();
+      };
+    });
 
     $scope.$watch('$state.$current.locals.globals.MyProviderBranchList', function (MyProviderBranchList) {
       $log.debug(MyProviderBranchList);
