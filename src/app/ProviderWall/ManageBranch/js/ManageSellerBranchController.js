@@ -203,11 +203,13 @@ angular.module('oz.ProviderApp')
           $rootScope.OZNotify(data.error.message,'error');
         }
       }
+      $rootScope.hideSpinner();
     };
   
     $scope.addSellerBranch = function(){
       if ($scope.form.addBranchForm.$valid) {
         if ($scope.jsonAddBranchData()) {
+          $rootScope.showSpinner();
           ManageBranchService.addBranch($scope.jsonAddBranchData());
         } else {
           $scope.form.addBranchForm.submitted = true;
@@ -244,9 +246,11 @@ angular.module('oz.ProviderApp')
           $rootScope.OZNotify(data.error.message,'error');
         }
       }
+      $rootScope.hideSpinner();
     };
 
     $scope.publishSellerBranch = function(branchid){
+      $rootScope.showSpinner();
       ManageBranchService.publishBranch(branchid);
     }
 
@@ -419,12 +423,14 @@ angular.module('oz.ProviderApp')
           $rootScope.OZNotify(data.error.message,'error');
         }
       }
+      $rootScope.hideSpinner();
     };
   
     $scope.editSellerBranch = function(branchid){
       if ($scope.form.editBranchForm.$valid) {
         $log.debug($scope.jsonEditBranchData());
         if ($scope.jsonEditBranchData()) {   
+          $rootScope.showSpinner();
           ManageBranchService.editBranch($scope.jsonEditBranchData(), branchid);
         } else {
           $scope.form.editBranchForm.editcontact.$invalid = true;

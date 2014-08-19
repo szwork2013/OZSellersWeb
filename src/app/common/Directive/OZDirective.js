@@ -139,7 +139,7 @@ angular.module('oz.CommonApp').directive('prodonusPasswordCheck', [
     return {
       restrict: 'EA',
       replace: true,
-      template: '<span ng-show="spinner.isShown">' + '<i style="color:black;" class="fa fa-spinner fa-spin fa-lg">' + '</i>' + '</span>',
+      template: '<div style="position:absolute;z-index:100;left:0;right:0;width:100%;height:100%;margin:auto;background:#ffffff;opacity:.4;" ng-show="spinner.isShown">' + '<center>' + '<img style="margin:250px;" src="../../assets/images/ajax-loader.gif">' + '</center>' + '</div>',
       controller: [
         '$scope',
         '$rootScope',

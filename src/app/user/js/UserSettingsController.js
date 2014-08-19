@@ -9,6 +9,7 @@ angular.module('oz.UserApp')
     $scope.user_settings_data = {};
     $scope.user_data = {};
     $scope.user_edit = false;
+    $scope.showSpinner = false;
 
     $scope.$watch('$state.$current.locals.globals.checkIfSessionExist', function (checkIfSessionExist) {
       if (checkIfSessionExist.error) {
@@ -83,11 +84,13 @@ angular.module('oz.UserApp')
           $rootScope.OZNotify(data.error.message,'error');
         }
       }
+      $rootScope.hideSpinner();
     };
 
     // function for resetpassword to Prodonus App using REST APIs and performs form validation.
     $scope.editUser = function() {
       if ($scope.form.editUserSettingsForm.$dirty && $scope.form.editUserSettingsForm.$valid) {
+        $rootScope.showSpinner();
         $log.debug($scope.jsonEditUserSettingsData());
         UserSessionService.editUserSettings($scope.jsonEditUserSettingsData());
       } else {

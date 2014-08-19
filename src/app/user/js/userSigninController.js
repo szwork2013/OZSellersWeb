@@ -83,11 +83,13 @@ angular.module('oz.UserApp')
 
         }
       }
+      $rootScope.hideSpinner();
     };  
 
     // function to signin to Prodonus App using REST APIs and performs form validation.
     $scope.signin = function() {
       if ($scope.signinForm.$valid) {
+        $rootScope.showSpinner();
         $log.debug('User Data entered successfully');
         $log.debug($scope.jsonUserSigninData());
         UserSessionService.signinUser($scope.jsonUserSigninData());
@@ -141,11 +143,13 @@ angular.module('oz.UserApp')
             $rootScope.OZNotify(data.error.message, 'error');
         }
       }
+      $rootScope.hideSpinner();
     };  
 
     // function for forgotpassword to Prodonus App using REST APIs and performs form validation.
     $scope.forgotPassword = function() {
       if ($scope.forgotPasswordForm.$valid) {
+        $rootScope.showSpinner();
         $log.debug('User Data entered successfully');
         $log.debug($scope.jsonForgotPasswordData());
         UserSessionService.forgotPasswordUser($scope.jsonForgotPasswordData());
@@ -191,11 +195,13 @@ angular.module('oz.UserApp')
            $rootScope.OZNotify(data.error.message,'error');
         }
       }
+      $rootScope.hideSpinner();
     };
 
     // function for resetpassword to Prodonus App using REST APIs and performs form validation.
     $scope.resetPassword = function() {
       if ($scope.resetPasswordForm.$valid) {
+        $rootScope.showSpinner();
         UserSessionService.resetPasswordUser($scope.jsonResetPasswordData());
       } else {
         $scope.resetPasswordForm.submitted = true;

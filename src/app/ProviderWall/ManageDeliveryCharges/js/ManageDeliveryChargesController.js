@@ -129,10 +129,11 @@ angular.module('oz.ProviderApp')
           $rootScope.OZNotify(data.error.message,'error');
         }
       }
+      $rootScope.hideSpinner();
     };
 
     $scope.viewAvailableAreaList = function() {
-      console.log('hello');
+      $rootScope.showSpinner();
       ManageDeliveryChargesService.GetAllAreaAvailabilityForBranch();    
     }
 
@@ -147,6 +148,7 @@ angular.module('oz.ProviderApp')
 
     $scope.getCityForState = function(state) {
       if (state) {
+        $rootScope.showSpinner();
         ManageDeliveryChargesService.GetCityList(state);
       }
     }
@@ -169,6 +171,7 @@ angular.module('oz.ProviderApp')
           $rootScope.OZNotify(data.error.message,'error');
         }
       }
+      $rootScope.hideSpinner();
     };
 
     var cleanupEventGetCityListDone = $scope.$on("getCityListDone", function(event, message, state){
@@ -182,6 +185,7 @@ angular.module('oz.ProviderApp')
 
     $scope.getZipcodeForCity = function(city) {
       if (city) {
+        $rootScope.showSpinner();
         ManageDeliveryChargesService.GetZipcodeList(city);
       }
     }
@@ -203,6 +207,7 @@ angular.module('oz.ProviderApp')
           $rootScope.OZNotify(data.error.message,'error');
         }
       }
+      $rootScope.hideSpinner();
     };
 
     var cleanupEventGetZipcodeListDone = $scope.$on("getZipcodeListDone", function(event, message, city){
@@ -217,6 +222,7 @@ angular.module('oz.ProviderApp')
 
     $scope.getAreaForZipcode = function(zipcode) {
       if (zipcode) {
+        $rootScope.showSpinner();
         ManageDeliveryChargesService.GetAvailableAreaList(zipcode);
       }
     }
@@ -229,6 +235,7 @@ angular.module('oz.ProviderApp')
           $scope.editDeliveryAvailaibility = false;
           $scope.showAreaUnderZipcode = false;
           $scope.deliveryAvailablityArea = angular.copy(data.success.branchdeliverycharges);
+          $rootScope.hideSpinner();
         } else {
           $scope.deliveryAvailablityArea = [];
           ManageDeliveryChargesService.GetAreaList(zipcode);
@@ -241,6 +248,7 @@ angular.module('oz.ProviderApp')
           $log.debug(data.error.message);
           $rootScope.OZNotify(data.error.message,'error');
         }
+        $rootScope.hideSpinner();
       }
     };
 
@@ -296,6 +304,7 @@ angular.module('oz.ProviderApp')
           $rootScope.OZNotify(data.error.message,'error');
         }
       }
+      $rootScope.hideSpinner();
     };
 
     var cleanupEventGetAreaListDone = $scope.$on("getAreaListDone", function(event, message, zipcode){
@@ -325,6 +334,7 @@ angular.module('oz.ProviderApp')
       }
       if ($scope.form.deliveryChargeForm.$valid) {
         if (add_availability.length > 0) {
+          $rootScope.showSpinner();
           var data = $scope.jsonAddDeliveryAvailabilityData(add_availability);
           $scope.deliveryChargeError = false;
           ManageDeliveryChargesService.AddDeliveryAvailability(data, zipcode);
@@ -350,6 +360,7 @@ angular.module('oz.ProviderApp')
           $rootScope.OZNotify(data.error.message,'error');
         }
       }
+      $rootScope.hideSpinner();
     };
 
     var cleanupEventAddDeliveryAvailabilityDone = $scope.$on("addDeliveryAvailabilityDone", function(event, message, zipcode){
@@ -388,6 +399,7 @@ angular.module('oz.ProviderApp')
         };
       }
       if (update_availability.length > 0) {
+        $rootScope.showSpinner();
         var data = $scope.jsonEditDeliveryAvailabilityData(update_availability);
         $log.debug(data);
         ManageDeliveryChargesService.EditDeliveryAvailability(data, zipcode);
@@ -408,6 +420,7 @@ angular.module('oz.ProviderApp')
           $rootScope.OZNotify(data.error.message,'error');
         }
       }
+      $rootScope.hideSpinner();
     };
 
     var cleanupEventEditDeliveryAvailabilityDone = $scope.$on("editDeliveryAvailabilityDone", function(event, message, zipcode){
