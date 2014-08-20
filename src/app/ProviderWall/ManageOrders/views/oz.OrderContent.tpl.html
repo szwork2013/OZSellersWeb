@@ -81,12 +81,32 @@
 
           <div class=" margintop5"  ng-show="order.deliverytype=='home'"><!--  2nd line -->
 
-           <span class="bold">Delivery Address : </span> <span class="oz-adress"> {{order.delivery_address.address1}}  {{order.delivery_address.address2}}   {{order.delivery_address.area}}  {{order.delivery_address.city}}  {{order.delivery_address.state}}  {{order.delivery_address.country}}  {{order.delivery_address.zipcode}} </span>
+           <span class="bold">Delivery Address : </span> <span class="oz-adress">
+           <span ng-show="order.delivery_address.address1"> {{order.delivery_address.address1}}, </span>
+           <span ng-show="order.delivery_address.address2"> {{order.delivery_address.address2}}, </span>
+           <span ng-show="order.delivery_address.area"> {{order.delivery_address.area}}, </span>
+           <span ng-show="order.delivery_address.city"> {{order.delivery_address.city}}, </span>
+           <span ng-show="order.delivery_address.state"> {{order.delivery_address.state}}, </span>
+           <span ng-show="order.delivery_address.country"> {{order.delivery_address.country}}, </span>
+           <span ng-show="order.delivery_address.zipcode"> {{order.delivery_address.zipcode}}. </span>
+                     
+          </span>
+
           </div>
 
           <div class=" margintop5"  ng-show="order.deliverytype=='pickup'"><!--  2nd line -->
 
-           <span class="bold">Pickup Address: </span> <span class="oz-adress"> {{order.pickup_address.address1}}  {{order.pickup_address.address2}}   {{order.pickup_address.area}}  {{order.pickup_address.city}}  {{order.pickup_address.state}}  {{order.pickup_address.country}}  {{order.pickup_address.zipcode}} </span>
+           <span class="bold">Pickup Address: </span> <span class="oz-adress"> 
+            <span ng-show="order.pickup_address.address1"> {{order.pickup_address.address1}}, </span>
+           <span ng-show="order.pickup_address.address2"> {{order.pickup_address.address2}}, </span>
+           <span ng-show="order.pickup_address.area"> {{order.pickup_address.area}}, </span>
+           <span ng-show="order.pickup_address.city"> {{order.pickup_address.city}}, </span>
+           <span ng-show="order.pickup_address.state"> {{order.pickup_address.state}}, </span>
+           <span ng-show="order.pickup_address.country"> {{order.pickup_address.country}}, </span>
+           <span ng-show="order.pickup_address.zipcode"> {{order.pickup_address.zipcode}}. </span>
+        
+                <!--          {{order.pickup_address.address1}}  {{order.pickup_address.address2}}   {{order.pickup_address.area}}  {{order.pickup_address.city}}  {{order.pickup_address.state}}  {{order.pickup_address.country}}  {{order.pickup_address.zipcode}} --> 
+         </span>
           </div>
 <!-- Delivery////////////////////////////////// -->
 
