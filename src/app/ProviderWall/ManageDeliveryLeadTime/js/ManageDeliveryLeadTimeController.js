@@ -3,6 +3,7 @@ angular.module('oz.ProviderApp')
   
   $scope.$watch('selectedBranchId', function (selectedBranchId) {
       ProviderLeadtimeService.getAllCategories();
+      $rootScope.showSpinner();
   });
     
   $scope.contentOfAllProducts = [];
@@ -36,6 +37,7 @@ angular.module('oz.ProviderApp')
           {
             $rootScope.OZNotify(data.error.message, 'error');
           }
+          $rootScope.hideSpinner();
        }
        if(data.success)
        {
@@ -43,7 +45,9 @@ angular.module('oz.ProviderApp')
          	     tempContentOfAllProducts = [];
                  $scope.contentOfAllProducts = angular.copy(data.success.productleadtime);
                  tempContentOfAllProducts = angular.copy(data.success.productleadtime);
+                                  $rootScope.hideSpinner();
                  $log.debug('got content '+JSON.stringify(data.success.productleadtime));
+
        }
    });
 
@@ -52,6 +56,7 @@ angular.module('oz.ProviderApp')
       $rootScope.OZNotify('Some issue with the server! Please try again after some time', 'error');
        $scope.contentOfAllProducts = [];
        $scope.tempContentOfAllProducts = []; 
+       $rootScope.hideSpinner();
   });
 
   $scope.changeLeadTimes = function(products)

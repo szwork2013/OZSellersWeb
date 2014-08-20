@@ -24,6 +24,7 @@ angular.module('oz.ProviderApp')
       if(selectedBranchId !== undefined && selectedBranchId !== '')
       {
              ProviderServicesList.getAllProductForAvailability();
+             $rootScope.showSpinner();
       }
     });
 
@@ -38,7 +39,7 @@ angular.module('oz.ProviderApp')
               else
               {
                     $scope.allProductsContent = [];$rootScope.OZNotify(data.error.message,'error');  
-              }
+              } $rootScope.hideSpinner();
             }
             if(data.success)
             {      
@@ -47,6 +48,7 @@ angular.module('oz.ProviderApp')
                       $scope.tempProductCatalog = [];
                       $scope.allProductsContent = angular.copy(data.success.proudctcatalog);
                       $scope.tempProductCatalog = angular.copy(data.success.proudctcatalog);
+                      $rootScope.hideSpinner();
                       //console.log(JSON.stringify( $scope.allProductsContent));
                       //ProviderServicesList.getAllProductForAvailability();
                       // console.log(JSON.stringify($scope.allProductsContent));
@@ -55,6 +57,7 @@ angular.module('oz.ProviderApp')
 
     var cleanUpEventCriteriaNotGotAllProducts = $scope.$on("notGotAllProducts",function(event,data){
             $rootScope.OZNotify('Some issue with server! Please try after some time', 'error');
+            $rootScope.hideSpinner();
     });
 
     $scope.edit = function(list)
@@ -103,6 +106,7 @@ angular.module('oz.ProviderApp')
           {
             $scope.content = {'productnotavailable' : {'from' : list.productnotavailable.from, 'to' : list.productnotavailable.to}};
             ProviderServicesList.assignProductAvailabilityContent(list.productid, $scope.content, list);
+            $rootScope.showSpinner();
           }
     };
 
@@ -117,6 +121,7 @@ angular.module('oz.ProviderApp')
               {
                     $rootScope.OZNotify(data.error.message,'error');  
               }
+               $rootScope.hideSpinner();
             }
             if(data.success)
             {      
@@ -124,6 +129,7 @@ angular.module('oz.ProviderApp')
                       ProviderServicesList.getAllProductForAvailability();
                       list.editing = false;
             } 
+           
     });
 
     // $scope.convertDate = function(date)
@@ -133,12 +139,14 @@ angular.module('oz.ProviderApp')
 
     var cleanUpEventCriteriaNotAssignedPA = $scope.$on("notAssignedProductAvail",function(event,data){
             $rootScope.OZNotify('Some issue with server! Please try after some time', 'error');
+            $rootScope.hideSpinner();
     });
 
     $scope.saveListContents = function(list)
     {
     	 $scope.content = {'productnotavailable' : {'from' : null, 'to' : null}};
        ProviderServicesList.assignProductAvailabilityContent(list.productid, $scope.content, list);
+       $rootScope.showSpinner();
     };
 
     $scope.verifyStartDate = function(content, list)
