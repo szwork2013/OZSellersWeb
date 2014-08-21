@@ -410,6 +410,31 @@ for (var i = $scope.orderConfigStatus.length - 1; i >= 0; i--) {
 }
 };
 
+ $scope.printOrder = function(suborderid){
+  var order_element="";
+      order_element= document.getElementById(suborderid).outerHTML;
+      console.log(order_element);
+
+       $http({
+        method: 'POST',
+        url: '/api/orderprint',
+        data:{"orderhtmldata":order_element}, 
+      }).success(function(data, status, headers, config) {
+        console.log(data)
+        if(data){
+        // window.open("data:application/pdf," + escape(data.url)); 
+        window.open("data:application/pdf;base64, " + data);
+        }
+        else{
+     
+        }
+      }).error(function (data, status, headers, cfg) {
+        $log.debug(status);
+     });
+
+
+
+ };
 
 
   }
