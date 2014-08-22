@@ -227,6 +227,7 @@ angular.module('oz.ProviderApp')
 
     var cleanupEventAddBranchNotDone = $scope.$on("addBranchNotDone", function(event, message){
       $log.debug(message);
+      $rootScope.hideSpinner();
       $rootScope.OZNotify("It looks as though we have broken something on our server system. Our support team is notified and will take immediate action to fix it." + message, 'error');   
     });
 
@@ -261,6 +262,7 @@ angular.module('oz.ProviderApp')
 
     var cleanupEventPublishBranchNotDone = $scope.$on("publishBranchNotDone", function(event, message){
       $log.debug(message);
+      $rootScope.hideSpinner();
       $rootScope.OZNotify("It looks as though we have broken something on our server system. Our support team is notified and will take immediate action to fix it." + message, 'error');   
     });
 
@@ -451,6 +453,7 @@ angular.module('oz.ProviderApp')
 
     var cleanupEventEditBranchNotDone = $scope.$on("editBranchNotDone", function(event, message){
       $log.debug(message);
+      $rootScope.hideSpinner();
       $rootScope.OZNotify("It looks as though we have broken something on our server system. Our support team is notified and will take immediate action to fix it." + message, 'error');   
     });
 

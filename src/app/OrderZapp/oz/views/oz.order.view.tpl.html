@@ -3,49 +3,84 @@
     
 		<div class = "highlighrOrderContainer">
 <!-- 	         <div class = "subOrderContainer" style = 'min-height : 180px;'>
-        				  <div style = "width:100%;float:left;">  <h4 ><b>Sub-order No : </b> <span ng-bind = "list.suborder.suborderid"></span></h4></div>
+        				  <div style = "width:100%;float:left;">  <h5 ><b>Sub-order No : </b> <span ng-bind = "list.suborder.suborderid"></span></h5></div>
         				 
-                  <div style = 'width : 50%; float : left;'> <h4 ><b>Customer Contact No. : </b> <span ng-bind = "list.consumer.mobileno"></span></h4></div>
-                  <div style = 'width : 50%;float:left;'><h4><b> Seller Contact No: </b><span ng-bind = 'list.suborder.productprovider.contact_supports'></span>  </h4></div>   
+                  <div style = 'width : 50%; float : left;'> <h5 ><b>Customer Contact No. : </b> <span ng-bind = "list.consumer.mobileno"></span></h5></div>
+                  <div style = 'width : 50%;float:left;'><h5><b> Seller Contact No: </b><span ng-bind = 'list.suborder.productprovider.contact_supports'></span>  </h5></div>   
 
-                   <div style = 'width:50%;float:left'><h4 ><b>Buyer Delivery Date : </b><span ng-bind = "convertMomentFormat(list.suborder.prefdeldtime)"></span> </h4>  </div> 
+                   <div style = 'width:50%;float:left'><h5 ><b>Buyer Delivery Date : </b><span ng-bind = "convertMomentFormat(list.suborder.prefdeldtime)"></span> </h5>  </div> 
 
-                   <div style = 'width:50%;float:left'><h4 ><b>Seller Delivery Date : </b><span ng-bind = "convertMomentFormat(list.suborder.deliverydate) "></span> </h4>  </div>
+                   <div style = 'width:50%;float:left'><h5 ><b>Seller Delivery Date : </b><span ng-bind = "convertMomentFormat(list.suborder.deliverydate) "></span> </h5>  </div>
 
-                    <div style = 'width:50%;float:left'><h4 ><b>Buyer Expected Time Slot : </b><span ng-if = 'list.suborder.prefdeltimeslot !== undefined'><span ng-bind = "list.suborder.prefdeltimeslot.from"></span> To <span ng-bind = "list.suborder.prefdeltimeslot.to"></span></span></h4>  </div> 
+                    <div style = 'width:50%;float:left'><h5 ><b>Buyer Expected Time Slot : </b><span ng-if = 'list.suborder.prefdeltimeslot !== undefined'><span ng-bind = "list.suborder.prefdeltimeslot.from"></span> To <span ng-bind = "list.suborder.prefdeltimeslot.to"></span></span></h5>  </div> 
 
-                   <div style = 'width:50%;float:left'><h4 ><b>Seller Time Slot : </b><span ng-if = 'list.suborder.deliverytimeslot !== undefined'><span ng-bind = "list.suborder.deliverytimeslot.from"></span> To <span ng-bind = "list.suborder.deliverytimeslot.to"></span></span> </h4>  </div>
+                   <div style = 'width:50%;float:left'><h5 ><b>Seller Time Slot : </b><span ng-if = 'list.suborder.deliverytimeslot !== undefined'><span ng-bind = "list.suborder.deliverytimeslot.from"></span> To <span ng-bind = "list.suborder.deliverytimeslot.to"></span></span> </h5>  </div>
            </div> -->
 
-           <div class = 'subOrderContainer row' style = 'min-height : 180px;'>
+           <div class = 'subOrderContainer row' style = 'min-height : 120px;'>
               <div class = 'row col-md-12 col-xs-12'>
-                <h4 ><b>Sub-order No : </b> <span ng-bind = "list.suborder.suborderid"></span></h4>
+                <h5 ><b>Sub-order No : </b> <span ng-bind = "list.suborder.suborderid"></span></h5>
               </div>
               <div  class="col-md-6 col-xs-6">
                 <div class = 'row'>
-                  <h4 ><b>Customer Contact No. : </b> <span ng-bind = "list.consumer.mobileno"></span></h4>
+                 <h5>
+                   <div class = 'col-md-6 col-xs-6'>
+                    <b>Customer Contact No. : </b> 
+                   </div>
+                   <div class = 'col-md-6 col-xs-6'>
+                   <span ng-bind = "list.consumer.mobileno"></span>
+                   </div>
+                 </h5>
                 </div>
 
                 <div class = 'row'>
-                  <h4 ><b>Buyer Delivery Date : </b><span ng-bind = "convertMomentFormat(list.suborder.prefdeldtime)"></span> </h4>  
+                  <h5 >
+                     <div class = 'col-md-6 col-xs-6'>
+                         <b>Buyer Delivery Date : </b>
+                     </div>
+                     <div class = 'col-md-6 col-xs-6'>
+                          <span ng-bind = "convertMomentFormat(list.suborder.prefdeldtime)"></span> 
+                     </div>     
+                  </h5>  
                 </div>
 
                 <div class = 'row'>
-                  <h4 ><b>Buyer Expected Time Slot : </b><span ng-if = 'list.suborder.prefdeltimeslot !== undefined'><span ng-bind = "list.suborder.prefdeltimeslot.from"></span> To <span ng-bind = "list.suborder.prefdeltimeslot.to"></span></span></h4>
+                  <h5 >
+                         <div class = 'col-md-6 col-xs-6'>
+                           <b>Buyer Expected Time Slot : </b>
+                         </div>
+                         <div class = 'col-md-6 col-xs-6'>  
+                               <span ng-if = 'list.suborder.prefdeltimeslot !== undefined'><span ng-bind = "list.suborder.prefdeltimeslot.from"></span> To <span ng-bind = "list.suborder.prefdeltimeslot.to"></span></span>
+                          </div>
+                   </h5>
                 </div>
 
               </div>
                <div  class="col-md-6 col-xs-6">
                 <div class = 'row'>
-                  <h4><b> Seller Contact No: </b><span ng-bind = 'list.suborder.productprovider.contact_supports'></span>  </h4>
+                  <h5>   <div class = 'col-md-6 col-xs-6'><b> Seller Contact No: </b></div>   <div class = 'col-md-6 col-xs-6'><span ng-bind = 'list.suborder.productprovider.contact_supports'></span> </div> </h5>
                 </div>
 
                 <div class = 'row'>
-                  <h4 ><b>Seller Delivery Date : </b><span ng-bind = "convertMomentFormat(list.suborder.deliverydate) "></span> </h4> 
+                  <h5 >
+                       <div class = 'col-md-6 col-xs-6'>
+                        <b>Seller Delivery Date : </b>
+                        </div>
+                        <div class = 'col-md-6 col-xs-6'>
+                                  <span ng-bind = "convertMomentFormat(list.suborder.deliverydate) "></span> 
+                        </div>
+                  </h5> 
                 </div>
 
                 <div class = 'row'>
-                  <h4 ><b>Seller Time Slot : </b><span ng-if = 'list.suborder.deliverytimeslot !== undefined'><span ng-bind = "list.suborder.deliverytimeslot.from"></span> To <span ng-bind = "list.suborder.deliverytimeslot.to"></span></span> </h4> 
+                  <h5 >
+                     <div class = 'col-md-6 col-xs-6'>
+                            <b>Seller Time Slot : </b>
+                     </div>
+                     <div class = 'col-md-6 col-xs-6'>
+                               <span ng-if = 'list.suborder.deliverytimeslot !== undefined'><span ng-bind = "list.suborder.deliverytimeslot.from"></span> To <span ng-bind = "list.suborder.deliverytimeslot.to"></span></span> 
+                      </div>
+                  </h5> 
                 </div>
               </div>
            </div>
@@ -79,10 +114,10 @@
 
                    
         <div class = 'row' style = 'border : 1px solid #ccc; ' >
-                 <div  class="col-md-3">  <h4> Product Name </h4></div>
-                 <div  class="col-md-3">  <h4> Quantity </h4></div>
-                 <div  class="col-md-3" style = 'text-align : right'>  <h4> Price per unit &nbsp;{{list.suborder.products[0].currency}}</h4></div>
-                  <div  class="col-md-3" style = 'text-align : right'>  <h4> Total &nbsp;{{list.suborder.products[0].currency}}</h4></div>
+                 <div  class="col-md-3">  <h5> Product Name </h5></div>
+                 <div  class="col-md-3">  <h5> Quantity </h5></div>
+                 <div  class="col-md-3" style = 'text-align : right'>  <h5> Price per unit &nbsp;{{list.suborder.products[0].currency}}</h5></div>
+                  <div  class="col-md-3" style = 'text-align : right'>  <h5> Total &nbsp;{{list.suborder.products[0].currency}}</h5></div>
         </div>
         <div class = 'row' style = 'border-bottom : 1px solid #ccc; border-bottom : 0px'>
          <div class="row rowSideMargin" ng-repeat="product in list.suborder.products" > 

@@ -5,6 +5,7 @@ angular.module('oz.ProviderApp')
 	  function ($resource) {
 	    var location = {
 	      LocationData: $resource('/api/location?key=:keydata&value=:data', {}, { GetAllLocationData: { method: 'GET'} }),
+	      LocationArea: $resource('api/location/area?city=:data&result=jsonarray', {}, { GetAllAreaForCity: {method: 'GET'} }),
 	      Get_AllBranchArea_For_Delivery: $resource('/api/branchdeliverycharges/:branchid', {}, { all_brancharea_for_delivery: { method: 'GET' } })
 	    }
 	    return location;
@@ -69,10 +70,10 @@ angular.module('oz.ProviderApp')
 	    };
 
 
-	    DeliveryChargeService.GetAvailableAreaList = function (zipcode) {
+	    DeliveryChargeService.GetAvailableAreaList = function (zipcode, arealist) {
 	      DeliveryChargeLocation.Get_Area_For_Delivery.area_for_delivery({branchid: $rootScope.selectedBranchId, zipcode: zipcode}, function (success) {
 	        $log.debug(success);
-	        $rootScope.$broadcast('getAvailableAreaListDone', success, zipcode);
+	        $rootScope.$broadcast('getAvailableAreaListDone', success, zipcode, arealist);
 	      }, function (error) {
 	        $log.debug(error);
 	        $rootScope.$broadcast('getAvailableAreaListNotDone', error.status);

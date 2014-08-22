@@ -12,7 +12,7 @@
   <div ng-show="allProductsContent.length != 0">
     <input class = "form-control" type = "text" ng-model = 'searchPro' style ='margin-bottom : 4px' placeholder = 'Filter products from the list'>
       <table class = 'table table-hover' ng-if = 'allProductsContent.length > 0' >
-        <tr style = 'background-color : #CFE'>
+        <tr >
           <td style = 'width : 15%'>
             <h5>Product Name</h5>
           </td>
@@ -21,7 +21,7 @@
           </td>
           <td style = 'width: 40%'>
             <h5>Product Non Availability</h5>
-            <div style = 'width : 50%;float:left;' ><h6>To</h6></div><div style = 'width : 50%; float :right' ><h6>From</h6></div>
+            <div style = 'width : 50%;float:left;' ><h6>From</h6></div><div style = 'width : 50%; float :right' ><h6>To</h6></div>
           </td>
           <td style = 'width : 35%'>
             <h5>Action</h5>
@@ -37,7 +37,7 @@
           </td>
           <td ng-hide = 'list.editing || list.productnotavailable.from === null || list.productnotavailable.to === null || list.productnotavailable === undefined' style = 'width: 50%' >
             <div style = 'width : 48%; float : left' ng-if = 'list.productnotavailable.from !== null'> From : <span ng-bind = 'list.productnotavailable.from | date : "yyyy-MM-dd HH:mm:ss "'></span> </div>&nbsp;
-            <div style = 'width : 48%; float : right' ng-if = 'list.productnotavailable.to !== null'> To: <span ng-bind = 'list.productnotavailable.to | date : "yyyy-MM-dd HH:mm:ss "'></span></div>
+            <div style = 'width : 50%; float : right' ng-if = 'list.productnotavailable.to !== null'> To: <span ng-bind = 'list.productnotavailable.to | date : "yyyy-MM-dd HH:mm:ss "'></span></div>
           </td>
           <td ng-show = 'list.productnotavailable === undefined || list.productnotavailable.from === null || list.productnotavailable.to === null'>
           </td>
@@ -65,8 +65,8 @@
 
             </td>
             <td ng-hide = 'list.editing'>
-                <button class = '  btn btn-sm btn-primary' ng-click = 'edit(list)' style = 'background-color:#24677C; border-color:#24677C; width : 47%'>Make Unavailable / Update</button>
-                 <button class = 'btn btn-sm btn-primary' ng-click = 'saveListContents(list)' style = 'background-color:#24677C; border-color:#24677C; width : 47%' ng-if = 'list.productnotavailable !== undefined && (list.productnotavailable.from !== null || list.productnotavailable.to !== null) '>Make Available</button>
+                <button class = '  btn btn-sm btn-primary' ng-click = 'edit(list)' style = 'background-color:#24677C; border-color:#24677C; width : 170px;margin-bottom : 5px;'>Make Unavailable / Update</button>
+                 <button class = 'btn btn-sm btn-primary' ng-click = 'saveListContents(list)' style = 'background-color:#24677C; border-color:#24677C; width : 170px;margin-bottom : 5px;' ng-if = 'list.productnotavailable !== undefined && (list.productnotavailable.from !== null || list.productnotavailable.to !== null) '>Make Available</button>
             </td>
               <td ng-show = 'list.editing'>
                 <button class = 'btn btn-sm btn-primary' ng-click = 'cancel(list)' style = 'background-color:#24677C; border-color:#24677C; width:40%;'>Cancel</button>
