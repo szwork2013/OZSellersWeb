@@ -413,20 +413,28 @@ for (var i = $scope.orderConfigStatus.length - 1; i >= 0; i--) {
  $scope.printOrder = function(suborderid){
   var order_element="";
       order_element= document.getElementById(suborderid).outerHTML;
-      console.log(order_element);
+      // console.log(order_element);
 
        $http({
         method: 'POST',
-        url: '/api/orderprint',
+        url: '/api/orderprint/'+suborderid,
         data:{"orderhtmldata":order_element}, 
       }).success(function(data, status, headers, config) {
-        console.log(data)
-        if(data){
-        // window.open("data:application/pdf," + escape(data.url)); 
-        window.open("data:application/pdf;base64, " + data);
+        console.log(data.success.data)
+        if(data.success){
+
+
+        var win= window.open("data:application/pdf;base64," + data.success.data ); 
+          // win.document.name = suborderid;
+          //  win.document.title = suborderid;
         }
         else{
-     
+            $rootScope.OZNotify(data.error.message, 'error');  
+            $log.debug(data.error.message);
+            if(data.error.code=='AL001'){
+              $rootScope.showModal();
+            }
+         
         }
       }).error(function (data, status, headers, cfg) {
         $log.debug(status);
