@@ -85,6 +85,7 @@ angular.module('oz.ProviderApp')
    	{
              
                  ProviderServicesList.addGroupContent($scope.contentOfGroup);
+                 $rootScope.showSpinner();
    	}
    };
 
@@ -99,6 +100,7 @@ angular.module('oz.ProviderApp')
                   {
                     $rootScope.OZNotify(data.error.message,'error');
                   }
+                  $rootScope.hideSpinner();
             }
             if(data.success)
             {    
@@ -112,6 +114,7 @@ angular.module('oz.ProviderApp')
                                                                             
     var cleanUpEventGroupContentNotAddedSuccessfully = $scope.$on("groupNotAddedSuccessfully",function(event,data){
             $rootScope.OZNotify('Some issue with server! Please try after some time', 'error');
+            $rootScope.hideSpinner();
     });
     var tempGroupContent = [];
     var cleanUpEventGotGroupsSuccessfully = $scope.$on("gotAllContent",function(event,data, list){
