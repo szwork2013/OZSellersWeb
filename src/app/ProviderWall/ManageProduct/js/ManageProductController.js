@@ -341,10 +341,17 @@ $scope.handleChangeLogo=function(data, status, headers, config){
 
 $scope.addProduct = function (editStatus) {
  // $log.debug($scope.product);
-
+    if (editStatus == 'add') { 
+  if(($rootScope.selectedCategoryid ==undefined )||( $rootScope.selectedCategoryid =='') || ($rootScope.selectedCategoryid ==null)){
+   $rootScope.OZNotify("Please Select Product Category And Other information", 'error');
+    }else{
+     
+    }
+  }
   if($scope.form.productForm.$invalid){
-      // $rootScope.OZNotify("Please add valid information", 'error');
-      $log.debug("Please add valid information");
+
+      $rootScope.OZNotify("Please add all information properly", 'error');
+      $log.debug("Please add all information properly");
       $scope.form.productForm.submitted=true;
     }
   else{
