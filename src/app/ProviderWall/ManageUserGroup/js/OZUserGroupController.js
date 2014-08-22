@@ -15,6 +15,7 @@ angular.module('oz.ProviderApp')
        if(selectedBranchId !== undefined && selectedBranchId !== '')
         {
           ProviderServicesList.getAllGroupContent(); 
+          $rootScope.showSpinner();
         }
     });
 
@@ -84,6 +85,7 @@ angular.module('oz.ProviderApp')
    	{
              
                  ProviderServicesList.addGroupContent($scope.contentOfGroup);
+                 $rootScope.showSpinner();
    	}
    };
 
@@ -98,6 +100,7 @@ angular.module('oz.ProviderApp')
                   {
                     $rootScope.OZNotify(data.error.message,'error');
                   }
+                  $rootScope.hideSpinner();
             }
             if(data.success)
             {    
@@ -111,6 +114,7 @@ angular.module('oz.ProviderApp')
                                                                             
     var cleanUpEventGroupContentNotAddedSuccessfully = $scope.$on("groupNotAddedSuccessfully",function(event,data){
             $rootScope.OZNotify('Some issue with server! Please try after some time', 'error');
+            $rootScope.hideSpinner();
     });
     var tempGroupContent = [];
     var cleanUpEventGotGroupsSuccessfully = $scope.$on("gotAllContent",function(event,data, list){
@@ -124,6 +128,7 @@ angular.module('oz.ProviderApp')
                   {
                     $rootScope.OZNotify(data.error.message,'error'); $scope.allGrpContents = []; 
                   }
+                  $rootScope.hideSpinner();
             }
             if(data.success)
             {    
@@ -131,11 +136,13 @@ angular.module('oz.ProviderApp')
                  $scope.allGrpContents = angular.copy(data.success.usergrp);
                  tempGroupContent = [];
                  tempGroupContent = angular.copy(data.success.usergrp);
+                 $rootScope.hideSpinner();
             } 
     });
                                                                             
     var cleanUpEventNotGotGroupsSuccessfully = $scope.$on("notGotContent",function(event,data){
             $rootScope.OZNotify('Some issue with server! Please try after some time', 'error');
+            $rootScope.hideSpinner();
     });
 
     $scope.edit = function(grps)
