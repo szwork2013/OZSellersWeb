@@ -24,7 +24,6 @@ angular.module('oz.ProviderApp')
       if(selectedBranchId !== undefined && selectedBranchId !== '')
       {
              ProviderServicesList.getAllProductForAvailability();
-             $rootScope.showSpinner();
       }
     });
 
@@ -104,7 +103,7 @@ angular.module('oz.ProviderApp')
          }
          else if(moment.utc(list.productnotavailable.to).diff(moment.utc(list.productnotavailable.from), 'minutes') <= 0)
          {
-             $rootScope.OZNotify("The From time can't be equal to To time", 'error');
+             $rootScope.OZNotify("The From time can't be equal to or greater than To time", 'error');
          }
          // else if(moment.utc(list.productnotavailable.to).diff(moment.utc(list.productnotavailable.from), 'minutes') === 0)
          // {
