@@ -163,17 +163,17 @@
                         <tr ng-show="config.prod_configtype =='msg'">
                           <td class="width25"><span class=" "> Message </span></td>
                           <td class="width50"><span class=" breakword"> {{config.data.msg}}</span></td>
-                          <td class="width25"> &#x20B9; {{config.prod_configprice.value}} / {{config.prod_configprice.uom}}</td>
+                          <td class="width25"> {{order.products[0].currency}} {{config.prod_configprice.value}} / {{config.prod_configprice.uom}}</td>
                         </tr>
                         <tr ng-show="config.prod_configtype =='ftp'">
                           <td class="width25"><span class=" "> Foodtype </span></td>
                           <td class="width50"><span class=" breakword">  {{config.data.ftp}}</span></td>
-                          <td class="width25">  &#x20B9; {{config.prod_configprice.value}} / {{config.prod_configprice.uom}}</td>
+                          <td class="width25">  {{order.products[0].currency}} {{config.prod_configprice.value}} / {{config.prod_configprice.uom}}</td>
                         </tr>
                         <tr ng-show="config.prod_configtype =='ppr'">
                           <td class="width25"><span class=" "> Photo print </span></td>
                           <td class="width50"> <img class="orderConfigImg" style="height:50px; width:50px" ng-src="{{config.data.ftp}}" alt-SRC src="../assets/images/if_no_org_images_available.jpg"  ></td>
-                          <td class="width25">  &#x20B9; {{config.prod_configprice.value}} / {{config.prod_configprice.uom}}</td>
+                          <td class="width25">  {{order.products[0].currency}} {{config.prod_configprice.value}} / {{config.prod_configprice.uom}}</td>
                         </tr>
 
                       </table>
@@ -209,7 +209,7 @@
           <span class=" pull-right">Delivery Charges </span> 
         </div>
          <div  class="col-md-2">
-          <span class=" breakword"> <!-- <i class="fa fa-inr"></i> --> &#x20B9;  {{order.deliverycharge.toFixed(2)}} </span> 
+          <span class=" breakword"> <!-- <i class="fa fa-inr"></i> --> {{order.products[0].currency}}  {{order.deliverycharge.toFixed(2)}} </span> 
          </div>
        </div>
 
@@ -232,7 +232,7 @@
           <span class="bold pull-right">Grand Total </span> 
         </div>
          <div  class="col-md-2">
-          <span class="bold breakword"> <i class="fa fa-inr"></i>  {{order.suborder_price.toFixed(2)}} </span> 
+          <span class="bold breakword"> {{order.products[0].currency}}  {{order.suborder_price.toFixed(2)}} </span> 
          </div>
        </div>
 
