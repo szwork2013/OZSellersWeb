@@ -142,7 +142,7 @@
                  <span class=" " > 
                 
                        <span style="">
-                       <a href="" ng-init="productMassage = false" ng-click="productMassage = productMassage === false ? true: false;" ng-show="product.productconfiguration">
+                       <a href="" ng-init="productMassage = true" ng-click="productMassage = productMassage === false ? true: false;" ng-show="product.productconfiguration">
                         <span class="fa fa-cog fa-lg" style="padding-right:5px"> </span>
                        </a>
                       </span>
@@ -150,7 +150,7 @@
                   {{product.productname}} 
                  
 
-                  <div class="OZ-cakeMessage removenghide "  ng-show="productMassage==1">
+                  <div class="OZ-cakeMessage removenghide "  ng-show="productMassage==1 && product.productconfiguration">
                      
                       <table style="margin:2px ;background-color:rgb(246, 241, 246)" class="borderless table table-condensed ">
                         <tr>
@@ -217,10 +217,10 @@
         <div class="row margintop5">
               <div  class="col-md-3"> 
               <div ng-show="order.orderinstructions">
-                  <a href="" ng-init="instruction=false" ng-click="instruction = instruction === false ? true: false;">
+                  <a href="" ng-init="instruction=true" ng-click="instruction = instruction === false ? true: false;">
                      Order Instructions  <i class="fa fa-hand-o-right"></i>
                   </a>
-                   <div class="OZ-cakeMessage removenghide" ng-show="instruction==1">{{order.orderinstructions}} </div>
+                   <div class="OZ-cakeMessage removenghide" ng-show="instruction==1 && order.orderinstructions">{{order.orderinstructions}} </div>
 
               </div>
               </div>

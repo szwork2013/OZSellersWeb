@@ -420,7 +420,7 @@ for (var i = $scope.orderConfigStatus.length - 1; i >= 0; i--) {
         url: '/api/orderprint/'+suborderid,
         data:{"orderhtmldata":order_element}, 
       }).success(function(data, status, headers, config) {
-        console.log(data.success.data)
+        // console.log(data.success.data)
         if(data.success){
 
 
