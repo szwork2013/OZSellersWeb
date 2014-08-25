@@ -1,5 +1,5 @@
  <div class="list-group-item orderbox" > <!-- ngrepeat outer box css-->
-<div ng-attr-id="{{order.suborderid}}">
+<div class="orderbox1" ng-attr-id="{{order.suborderid}}">
 <!-- order /////////////////////////////////// -->
 <div ng-class-odd="'oddRowOrderid'" ng-class-even="'evenRowOrderid'" class="headingOrderDiv" > 
  <span class="bold color-white" >Order No:  <span class="oz-contentsRight">{{order.suborderid}}</span> </span>
@@ -150,7 +150,7 @@
                   {{product.productname}} 
                  
 
-                  <div class="OZ-cakeMessage removenghide "  ng-show="productMassage==1 && product.productconfiguration">
+                  <div class="OZ-cakeMessage"  ng-class="product.productconfiguration ? 'removenghide' : 'notremovenghide'"  ng-show="productMassage==1 && product.productconfiguration">
                      
                       <table style="margin:2px ;background-color:rgb(246, 241, 246)" class="borderless table table-condensed ">
                         <tr>

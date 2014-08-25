@@ -1,3 +1,17 @@
+/*
+* Overview: Order Controller
+* Dated: 28/10/2013.
+* Author: Bhagyashri Jangam
+* Copyright: Prodonus Software Private Limited and GiantLeap Systems Private Limited 2013
+* Change History:
+* ----------------------------------------------------------------------
+* date | author | description 
+* ----------------------------------------------------------------------
+* 27-3/2013 | xyx | Add a new property
+* 
+*/
+
+
 angular.module('oz.ProviderApp')
   .controller('ManageOrderController', ['$scope', '$state', '$http', '$timeout', '$sce', '$log', '$rootScope', 'ProviderServices','$upload','$stateParams',function($scope, $state, $http, $timeout, $sce, $log, $rootScope,ProviderServices,$upload, $stateParams) {
   

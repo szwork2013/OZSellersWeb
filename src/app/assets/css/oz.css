@@ -333,6 +333,10 @@ text-overflow: ellipsis;
   letter-spacing: 1px;
   border-radius: 5px;
 }
+
+/*.orderPrintZoom{zoom:0.8;}*/
+/*.orderPrintZoom{width:90%;}*/
+
 .evenRowOrderid{ background-color:#0F9D58;}/*4285F4*/
 .oddRowOrderid{ background-color: #3F51B5; }
 .radius5{border-radius: 5px;}

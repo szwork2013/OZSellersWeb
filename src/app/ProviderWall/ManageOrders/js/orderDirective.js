@@ -1,6 +1,5 @@
 /*
-* Overview: comment Directive
-* It is comments block , where it has user avatar, user name, company name, date and time difference from the time of posting that comment, tags and many more
+* Overview: Order Directive
 * Dated: 28/10/2013.
 * Author: Bhagyashri Jangam
 * Copyright: Prodonus Software Private Limited and GiantLeap Systems Private Limited 2013
@@ -411,22 +410,22 @@ for (var i = $scope.orderConfigStatus.length - 1; i >= 0; i--) {
 };
 
  $scope.printOrder = function(suborderid){
+  // $("#"+suborderid).addClass('orderPrintZoom');
+
   var order_element="";
       order_element= document.getElementById(suborderid).outerHTML;
-      // console.log(order_element);
-
+      // $("#"+suborderid).removeClass('orderPrintZoom');
+      console.log(order_element);
+       $rootScope.showSpinner();
        $http({
         method: 'POST',
         url: '/api/orderprint/'+suborderid,
         data:{"orderhtmldata":order_element}, 
       }).success(function(data, status, headers, config) {
+        $rootScope.hideSpinner();
         // console.log(data.success.data)
         if(data.success){
-
-
         var win= window.open("data:application/pdf;base64," + data.success.data ); 
-          // win.document.name = suborderid;
-          //  win.document.title = suborderid;
         }
         else{
             $rootScope.OZNotify(data.error.message, 'error');  
@@ -434,16 +433,11 @@ for (var i = $scope.orderConfigStatus.length - 1; i >= 0; i--) {
             if(data.error.code=='AL001'){
               $rootScope.showModal();
             }
-         
-        }
+         }
       }).error(function (data, status, headers, cfg) {
         $log.debug(status);
      });
-
-
-
  };
-
 
   }
   ]
@@ -474,7 +468,6 @@ angular.module('oz.ProviderApp').filter('datetime1', function($filter)
  
   var _date = $filter('date')(new Date(input),
                               'yyyy-MM-dd @ HH:mm:ss');
- 
   return _date.toUpperCase();
 
  };
