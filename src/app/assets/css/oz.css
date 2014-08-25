@@ -334,7 +334,7 @@ text-overflow: ellipsis;
   border-radius: 5px;
 }
 
-/*.orderPrintZoom{zoom:0.8;}*/
+.orderPrintZoom{zoom:0.8;}
 /*.orderPrintZoom{width:90%;}*/
 
 .evenRowOrderid{ background-color:#0F9D58;}/*4285F4*/

@@ -150,7 +150,7 @@
                   {{product.productname}} 
                  
 
-                  <div class="OZ-cakeMessage"  ng-class="product.productconfiguration ? 'removenghide' : 'notremovenghide'"  ng-show="productMassage==1 && product.productconfiguration">
+                  <div class="OZ-cakeMessage"  ng-class="product.productconfiguration.length>0 ? 'removenghide' : 'notremovenghide'"  ng-show="productMassage==1 && product.productconfiguration">
                      
                       <table style="margin:2px ;background-color:rgb(246, 241, 246)" class="borderless table table-condensed ">
                         <tr>

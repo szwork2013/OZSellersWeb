@@ -415,6 +415,34 @@ for (var i = $scope.orderConfigStatus.length - 1; i >= 0; i--) {
   var order_element="";
       order_element= document.getElementById(suborderid).outerHTML;
       // $("#"+suborderid).removeClass('orderPrintZoom');
+
+
+order_element = order_element.split(';').join('');
+order_element = order_element.split('₹').join('&#x20B9;');
+order_element = order_element.split('removenghide ng-hide').join('removenghide');
+order_element = order_element.split('removenghide  ng-hide').join('removenghide');
+order_element = order_element.split('ng-hide removenghide').join('removenghide');
+order_element = order_element.split('ng-hide  removenghide').join('removenghide');
+order_element = order_element.split('orderbox1').join('orderbox1 orderPrintZoom');
+order_element = order_element.split("printOrder(order.suborderid)").join("");
+// order_element = order_element.split("fa fa-print").join("");
+// order_element = order_element.split("{ bgGreen1: (order.status =='orderreceived' ) , bgGreen: (order.status == 'accepted') , bgOrange: (order.status =='inproduction' ) ,       bgOrange1: (order.status == 'packing'),bgOrange2: (order.status =='factorytostore' ) , bgBlue: (order.status == 'indelivery') , bgGray: (order.status == 'ordercomplete') }").join("");
+// order_element = order_element.split("{ bgRed: (order.status =='cancelled' ) , bgRed1: (order.status == 'rejected') }").join("");
+
+
+
+      // order_element=S(order_element).replaceAll(";","");
+      // order_element=S(order_element).replaceAll("₹","&#x20B9;");
+      // order_element=S(order_element).replaceAll("removenghide ng-hide","removenghide");
+      // order_element=S(order_element).replaceAll("removenghide ng-hide","removenghide");
+      // order_element=S(order_element).replaceAll("ng-hide removenghide","removenghide");
+      // order_element=S(order_element).replaceAll("ng-hide removenghide","removenghide");
+      // order_element=S(order_element).replaceAll("orderbox1","orderbox1 orderPrintZoom");
+
+
+
+
+
       console.log(order_element);
        $rootScope.showSpinner();
        $http({
