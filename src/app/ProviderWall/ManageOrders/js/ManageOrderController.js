@@ -275,6 +275,7 @@ $scope.getReceived=function(){
       if(data.success){
          $scope.orders=data.success.doc;
          $scope.hideProductOrders=false;
+         $log.debug($scope.orders);
          // $scope.productOrdersCount=$scope.orders.length;
           // $log.debug('new changed data '+JSON.stringify($scope.orders));
        }
