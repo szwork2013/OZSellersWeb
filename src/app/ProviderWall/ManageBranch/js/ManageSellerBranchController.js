@@ -270,7 +270,7 @@ angular.module('oz.ProviderApp')
     $scope.openEditBranch = function(branch){
       $scope.editbranch = {};
       $scope.editbranch = angular.copy(branch);
-      if ($scope.editbranch.branch_availability && $scope.editbranch.branch_availability.from && $scope.editbranch.branch_availability.to) {
+      if ($scope.editbranch.branch_availability) {
         var working_from_time = $scope.editbranch.branch_availability.from;
         var working_to_time = $scope.editbranch.branch_availability.to;
         $scope.edit.from.hours = parseInt(working_from_time);
@@ -419,6 +419,7 @@ angular.module('oz.ProviderApp')
         $rootScope.OZNotify(data.success.message,'success'); 
       } else {
         if(data.error.code=='AL001'){
+          $('#editBranchModal').modal('hide');
           $rootScope.showModal();
         } else {
           $log.debug(data.error.message);
