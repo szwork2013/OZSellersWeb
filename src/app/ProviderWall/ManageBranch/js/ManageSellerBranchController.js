@@ -334,6 +334,7 @@ angular.module('oz.ProviderApp')
     // function to send and stringify user registration data to Rest APIs
     $scope.jsonEditBranchData = function(){
       var timeslots = [];
+      var validated_timeslots = [];
       for (var i = 0; i < $scope.editTimingSlots.length; i++) {
         if ((parseInt($scope.editTimingSlots[i].from.hours) < parseInt($scope.editTimingSlots[i].to.hours)) || ((parseInt($scope.editTimingSlots[i].from.hours) == parseInt($scope.editTimingSlots[i].to.hours)) && (parseInt($scope.editTimingSlots[i].from.minutes) < parseInt($scope.editTimingSlots[i].to.minutes)))) {
           var from_hrs = parseInt($scope.editTimingSlots[i].from.hours);
@@ -344,8 +345,29 @@ angular.module('oz.ProviderApp')
           var to_timeslot = to_hrs + to_mins;
           timeslots.push({from:from_timeslot, to: to_timeslot});
         }
-      } 
+      }
 
+      for (var i = 0; i < timeslots.length; i++) {
+        if(i == 0) {
+          validated_timeslots.push({from:timeslots[i].from, to: timeslots[i].to});
+        } else if(i > 0){  
+          if (timeslots[i].from >= timeslots[i-1].from && timeslots[i].from <= timeslots[i-1].to) {
+            $rootScope.OZNotify("Every Delivery Time Slots must have different time intervals.",'error');
+          } else {
+            if (timeslots[i].to >= timeslots[i-1].from && timeslots[i].to <= timeslots[i-1].to) {
+              $rootScope.OZNotify("Every Delivery Time Slots must have different time intervals.",'error');
+            } else {
+              if ((timeslots[i].from < timeslots[i-1].from) && (timeslots[i-1].to < timeslots[i].to)) {
+                $rootScope.OZNotify("Every Delivery Time Slots must have different time intervals.",'error');
+              } else{
+                validated_timeslots.push({from:timeslots[i].from, to: timeslots[i].to});
+              }
+            }
+          } 
+        }
+      }; 
+
+      console.log(validated_timeslots);
       if (parseInt($scope.edit.from.hours) < parseInt($scope.edit.to.hours)) {
         if (($scope.editTimingSlots.length == timeslots.length) && ($scope.editTimingSlots.length > 0  && timeslots.length > 0)) {
           var from_minutes = Math.round( (($scope.edit.from.minutes)/60) *100)/100;
@@ -391,7 +413,7 @@ angular.module('oz.ProviderApp')
                       'from' : working_from_time,
                      'to' : working_to_time
                 },
-                'deliverytimingslots': timeslots
+                'deliverytimingslots': validated_timeslots
                 }  
             };
             return JSON.stringify(Branchdata); 
