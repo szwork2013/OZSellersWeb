@@ -1,6 +1,5 @@
 /*
-* Overview: comment Directive
-* It is comments block , where it has user avatar, user name, company name, date and time difference from the time of posting that comment, tags and many more
+* Overview: Order Directive
 * Dated: 28/10/2013.
 * Author: Bhagyashri Jangam
 * Copyright: Prodonus Software Private Limited and GiantLeap Systems Private Limited 2013
@@ -411,22 +410,50 @@ for (var i = $scope.orderConfigStatus.length - 1; i >= 0; i--) {
 };
 
  $scope.printOrder = function(suborderid){
+  // $("#"+suborderid).addClass('orderPrintZoom');
+
   var order_element="";
       order_element= document.getElementById(suborderid).outerHTML;
-      // console.log(order_element);
+      // $("#"+suborderid).removeClass('orderPrintZoom');
 
+
+order_element = order_element.split(';').join('');
+order_element = order_element.split('₹').join('&#x20B9;');
+order_element = order_element.split('removenghide ng-hide').join('removenghide');
+order_element = order_element.split('removenghide  ng-hide').join('removenghide');
+order_element = order_element.split('ng-hide removenghide').join('removenghide');
+order_element = order_element.split('ng-hide  removenghide').join('removenghide');
+order_element = order_element.split('orderbox1').join('orderbox1 orderPrintZoom');
+order_element = order_element.split("printOrder(order.suborderid)").join("");
+order_element = order_element.split("fa fa-print").join("");
+// order_element = order_element.split("{ bgGreen1: (order.status =='orderreceived' ) , bgGreen: (order.status == 'accepted') , bgOrange: (order.status =='inproduction' ) ,       bgOrange1: (order.status == 'packing'),bgOrange2: (order.status =='factorytostore' ) , bgBlue: (order.status == 'indelivery') , bgGray: (order.status == 'ordercomplete') }").join("");
+// order_element = order_element.split("{ bgRed: (order.status =='cancelled' ) , bgRed1: (order.status == 'rejected') }").join("");
+
+
+
+      // order_element=S(order_element).replaceAll(";","");
+      // order_element=S(order_element).replaceAll("₹","&#x20B9;");
+      // order_element=S(order_element).replaceAll("removenghide ng-hide","removenghide");
+      // order_element=S(order_element).replaceAll("removenghide ng-hide","removenghide");
+      // order_element=S(order_element).replaceAll("ng-hide removenghide","removenghide");
+      // order_element=S(order_element).replaceAll("ng-hide removenghide","removenghide");
+      // order_element=S(order_element).replaceAll("orderbox1","orderbox1 orderPrintZoom");
+
+
+
+
+
+      console.log(order_element);
+       $rootScope.showSpinner();
        $http({
         method: 'POST',
         url: '/api/orderprint/'+suborderid,
         data:{"orderhtmldata":order_element}, 
       }).success(function(data, status, headers, config) {
+        $rootScope.hideSpinner();
         // console.log(data.success.data)
         if(data.success){
-
-
         var win= window.open("data:application/pdf;base64," + data.success.data ); 
-          // win.document.name = suborderid;
-          //  win.document.title = suborderid;
         }
         else{
             $rootScope.OZNotify(data.error.message, 'error');  
@@ -434,16 +461,11 @@ for (var i = $scope.orderConfigStatus.length - 1; i >= 0; i--) {
             if(data.error.code=='AL001'){
               $rootScope.showModal();
             }
-         
-        }
+         }
       }).error(function (data, status, headers, cfg) {
         $log.debug(status);
      });
-
-
-
  };
-
 
   }
   ]
@@ -474,7 +496,6 @@ angular.module('oz.ProviderApp').filter('datetime1', function($filter)
  
   var _date = $filter('date')(new Date(input),
                               'yyyy-MM-dd @ HH:mm:ss');
- 
   return _date.toUpperCase();
 
  };

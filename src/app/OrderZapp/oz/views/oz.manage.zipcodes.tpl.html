@@ -32,7 +32,7 @@
 
           <div style = 'margin : 5px'> <h5>Longitude :</h5> <input type = 'text' class = 'form-control' style = 'width : 100%;'  ng-model = 'array.longitude' ></div>
 
-          <div style = 'margin : 5px'> Areas : <textarea type = 'text' class = 'form-control' style = 'width : 100%;' ng-model = 'array.areas' ng-click = 'getAllAreas()'> </textarea> </div>
+          <div style = 'margin : 5px'> Areas : <textarea type = 'text' class = 'form-control' style = 'width : 100%;' ng-model = 'array.areas' ng-focus = 'getAllAreas()'> </textarea> </div>
  
           <div> <button class = 'btn btn-info' ng-click = 'addNewZipcode()'> Add </button> </div>
       </div>
@@ -49,7 +49,7 @@
 
         <div style = 'margin : 5px'>Zipcode : <input type = 'text' class = 'form-control' style = 'width : 100%;' ng-model = 'array.zc' typeahead = 'zip for zip in ZipCodeContainer | filter:$viewValue' ng-click = 'getAllZip() ' typeahead-on-select = 'getAllAreas()'></div>
 
-        <div style = 'margin : 5px'>Areas : <textarea ng-model = 'array.areas' class = form-control ng-click = 'getAllAreas()'></textarea></div>
+        <div style = 'margin : 5px'>Areas : <textarea ng-model = 'array.areas' class = form-control ng-focus = 'getAllAreas()'></textarea></div>
 
         <div style = 'margin : 5px'><button class = 'btn btn-info' ng-click = 'addAreaToZipcode()'> Add </button></div>
     </div>

@@ -235,10 +235,17 @@ $scope.getCategoriesFromDB($rootScope.selectedproviderid);
 
 
    $scope.onFileSelect = function($files) {
-    // $log.debug($files);
+    $log.debug($files);
      for (var i = 0; i < $files.length; i++) {
       if(($files[i].type == 'image/jpg') || ($files[i].type == 'image/png') || ($files[i].type == 'image/gif') || ($files[i].type == 'image/jpeg')){
-       file = $files[i];
+        if (($files[i].size / 1024) < 2048) {
+          file = $files[i];
+        }else{
+          var field= document.getElementById('addLogoImg');
+          field.value= field.defaultValue;
+          $rootScope.OZNotify("Image size must ne less than 2MB" ,'error');
+        }
+
       }
       else{
         var field= document.getElementById('addLogoImg');
@@ -251,6 +258,8 @@ $scope.getCategoriesFromDB($rootScope.selectedproviderid);
    $scope.onFileSelectUpdate = function($files) {
      for (var i = 0; i < $files.length; i++) {
       if(($files[i].type == 'image/jpg') || ($files[i].type == 'image/png') || ($files[i].type == 'image/gif') || ($files[i].type == 'image/jpeg')){
+        if (($files[i].size / 1024) < 2048) {
+
              fileUpdate = $files[i];
              $scope.upload = $upload.upload({
                 url: '/api/productlogo/'+$scope.selectedproviderid+'/'+$scope.product.productid, 
@@ -261,7 +270,11 @@ $scope.getCategoriesFromDB($rootScope.selectedproviderid);
                  $scope.handleChangeLogo(data, status, headers, config);
                 // $log.debug(data);
               });
-
+       }else{
+          var field= document.getElementById('updateLogo');
+          field.value= field.defaultValue;
+          $rootScope.OZNotify("Image size must ne less than 2MB" ,'error');
+       }
       }
       else{
         var field= document.getElementById('updateLogo');
@@ -341,10 +354,17 @@ $scope.handleChangeLogo=function(data, status, headers, config){
 
 $scope.addProduct = function (editStatus) {
  // $log.debug($scope.product);
-
+    if (editStatus == 'add') { 
+  if(($rootScope.selectedCategoryid ==undefined )||( $rootScope.selectedCategoryid =='') || ($rootScope.selectedCategoryid ==null)){
+   $rootScope.OZNotify("Please Select Product Category And Other information", 'error');
+    }else{
+     
+    }
+  }
   if($scope.form.productForm.$invalid){
-      // $rootScope.OZNotify("Please add valid information", 'error');
-      $log.debug("Please add valid information");
+
+      $rootScope.OZNotify("Please add all information properly", 'error');
+      $log.debug("Please add all information properly");
       $scope.form.productForm.submitted=true;
     }
   else{

@@ -5,10 +5,11 @@
   * 
   */-->
 <li  ng-repeat="order in orders |  filter:  search ">
-    <div class="list-group-item orderbox" > <!-- ngrepeat outer box css-->
+    <div class="list-group-item orderbox orderbox1" ng-attr-id="{{order.deliverydate}}" > <!-- ngrepeat outer box css-->
          
       <div class=" margintop5 productsDate highlighrOrderContainer"  ><!--  2nd line -->
        <em class="oz-adress" ng-class="{TextGray : order.deliverydate < today }"> {{ convertMomentFormat(order.deliverydate)}}</em>  
+       <a href=""  ng-click="printOrder(order.deliverydate)"><i class="fa fa-print pull-right" style=" margin:5px;">  </i></a>
       </div>
 
       <hr class="myhr">
@@ -66,8 +67,8 @@
                          <span class=" oz-contentsRight"> {{product.totalqty}} {{product.uom}}</span>
                       </div>
 
-                          <div class="" ng-show="productMassage==1" style = 'margin : 30px;'>
-                              <table style="margin:2px ;background-color:rgb(246, 241, 246)" class="borderless table table-condensed ">
+                          <div  class="" ng-class="product.productdetails.length>0 ? 'removenghide' : 'notremovenghide'" ng-show="productMassage==1" style = 'margin : 30px;'  >
+                              <table style="margin:2px ;background-color:rgb(246, 241, 246)" class="borderless table table-condensed "  >
                                 <tr>
                                   <td class="width50 " style = 'font-weight: bold;'><span class=" bold">Order Number </span></td>
                                   <td class="width50 " style = 'font-weight: bold;'><span class=" bold">Quantity </span></td>

@@ -35,6 +35,8 @@ angular.module('oz.UserApp')
 
     var file; 
 
+    var latestAPKFile;
+
     $scope.showSpinners = 0;
 
     $scope.categoryLevelIII = [];
@@ -58,6 +60,12 @@ angular.module('oz.UserApp')
     $scope.categoryLevelIV = [];
 
     $scope.categoryLevel = '';
+
+    $scope.providers = [];
+
+    var tempProviderArray = [];
+
+    $scope.application = {'version' : '', 'description' : ''};
 
     var cleanUpEventGotAllCategories = $scope.$on("gotAllCategoriesContent",function(event,data){
 		    if(data.error)
@@ -379,7 +387,8 @@ angular.module('oz.UserApp')
         "tagname" : content
       };
       return JSON.stringify(data); 
-    } 
+    };
+
     $scope.removeTagContent = function(content)
     {
              OZWallService.deleteProductTags(content);
@@ -407,7 +416,9 @@ angular.module('oz.UserApp')
     var cleanUpEventTagRemoveFailure = $scope.$on("productTagNotDeleted",function(event,data){
             $rootScope.OZNotify('Some issue with server! Please try after some time', 'error');
     });
-    $scope.allProvidersContent = [];
+
+   $scope.allProvidersContent = [];
+
    var cleanUpEventTagRemoveSuccess = $scope.$on("gotAllProviders",function(event,data){
             if(data.error)
             {
@@ -417,7 +428,7 @@ angular.module('oz.UserApp')
               }
               else
               {
-                    $rootScope.OZNotify(data.error.message,'error');  $scope.showSpinners = 0;
+                    // $rootScope.OZNotify(data.error.message,'error');  $scope.showSpinners = 0;
               }
             }
             if(data.success)
@@ -534,7 +545,9 @@ angular.module('oz.UserApp')
     };
 
    $scope.sellerAgreementContent = [];
+
    $scope.showSellerInsertScreen = 0;
+
    var cleanUpEventGotSellerAgreements = $scope.$on("gotSellerAgreement",function(event,data){
             if(data.error)
             {
@@ -595,6 +608,7 @@ angular.module('oz.UserApp')
             }
            } 
     };
+
     $scope.clear = function()
     {
       $scope.contentOfCategories = {'categoryid' : '', 'configurationname' : '', 'configurationprice' : '', 'uom' : '',  'configurationtype' : ''};
@@ -720,11 +734,8 @@ angular.module('oz.UserApp')
       list.editing = false;
     };
 
-
     $scope.changeCriteriaContent = function(list)
-    {
-    
-          
+    {   
          if(list.configuration[0].prod_configtype === '')
           {
             $rootScope.OZNotify('Please enter valid configurationtype' , 'error');
@@ -765,11 +776,10 @@ angular.module('oz.UserApp')
             if(data.success)
             {      
                       $rootScope.OZNotify(data.success.message, 'success'); OZWallService.getProductCriteria();
-                        $scope.categoryIdContent = {};
-                     $scope.categoryIdContents = {};
+                      $scope.categoryIdContent = {};
+                      $scope.categoryIdContents = {};
                       $scope.contentOfCategories = {'categoryid' : '', 'configurationname' : '', 'configurationprice' : '', 'uom' : '',  'configurationtype' : ''};
-                      $scope.categoryIdContentThree = {};
-                
+                      $scope.categoryIdContentThree = {};   
             } 
     });
 
@@ -822,7 +832,6 @@ angular.module('oz.UserApp')
       {    console.log(JSON.stringify({'process' : $scope.order}));
         OZWallService.addOrderProcessConfig({'process' : $scope.order});
       }
-
     };
 
     var cleanUpEventOrderConfigurationAdded = $scope.$on("orderConfigAdded",function(event,data){
@@ -923,6 +932,7 @@ angular.module('oz.UserApp')
     });
 
     $scope.indexOfCategoryToBeRemoved = '';
+
     $scope.categoryidOfCategoryToBeRemove = '';
 
     $scope.clearThisCategory = function()
@@ -934,14 +944,19 @@ angular.module('oz.UserApp')
                       $scope.changeOfCriterias = [];
                       $scope.changeOfCriterias = $scope.allConfigContent[i];
                       $scope.changeOfCriterias.configuration.splice($scope.indexOfCategoryToBeRemoved, 1);
-                      
-                      $scope.putContentToCriterias = {'productconfig' : { 'configuration' : $scope.changeOfCriterias.configuration}};
-                       
+                      $scope.putContentToCriterias = {'productconfig' : { 'configuration' : $scope.changeOfCriterias.configuration}};  
                       OZWallService.changeProductCriteria($scope.putContentToCriterias, $scope.categoryidOfCategoryToBeRemove);
                       status = 1;
               }
             }
     };
+
+    // $scope.getAllAcceptedSellers = function()
+    // {
+    //       OZWallService.getAllAcceptedProviders();alert('test');
+    // };
+
+    OZWallService.getAllAcceptedProviders();
 
     $scope.assignCategoryDeleteCriteria = function(index, categoryid)
     {
@@ -949,9 +964,153 @@ angular.module('oz.UserApp')
         $scope.categoryidOfCategoryToBeRemove = categoryid;
     };
 
+    var cleanUpEventGotAllSellers = $scope.$on('acceptedProvidersListGetSuccess', function(event, data)
+    {             
+         if(data.error)
+         {
+          if(data.error.code === 'AL001')
+          {
+            $rootScope.showModal();
+          }
+          else
+          {
+            $rootScope.OZNotify(data.error.message, 'error');
+          }
+         }
+         if(data.success)
+         {
+              $scope.providers = [];
+              tempProviderArray = [];
+              $scope.providers = angular.copy(data.success.doc);
+              tempProviderArray = angular.copy(data.success.doc);
+         }
+    });
 
+    var cleanUpEventNotGotAllSellers = $scope.$on('acceptedProvidersListGetError', function(event, data)
+    {
+      $rootScope.OZNotify('Some issue with the server! Please try again after some time', 'error');
+    });
 
+    $scope.providerPercentEdit = function(provider)
+    {
+        provider.editing = true;
+    };
 
+    $scope.providerPercentEditCancel = function(provider)
+    {
+      provider.editing = false;
+      $scope.providers = angular.copy(tempProviderArray);
+    };
+
+    $scope.providerPercentChangeFunction = function(provider)
+    {
+        var changedProviderContent = {};
+        changedProviderContent = {'percent' : provider.percent};
+        // if(pro)
+        if(provider.percent === undefined || provider.percent === '' || Number(provider.percent) < 0 || Number(provider.percent) > 100)
+        {
+          $rootScope.OZNotify('Please enter valid percent value', 'error');
+        }
+        else
+        {
+          OZWallService.changeSellerPayablePercent(changedProviderContent, provider);
+        }
+    };
+
+    var cleanUpEventModifiedPayableAndRefundablePercentCriteria = $scope.$on('changedSellerPayablePercent', function(event, data, provider)
+    {
+      if(data.error)
+      {
+        if(data.error.code === 'AL001')
+        {
+          $rootScope.showModal();
+        }
+        else
+        {
+          $rootScope.OZNotify(data.error.message, 'error');
+        }
+      }
+      if(data.success)
+      {
+        $rootScope.OZNotify(data.success.message, 'success');
+        OZWallService.getAllAcceptedProviders();
+      }
+    });
+
+    var cleanUpEventNotModifiedPayableAndRefundablePercentCriteria = $scope.$on('notChangedSellerPayablePercentCriteria', function(event, data)
+    {
+      $rootScope.OZNotify('Some issue with the server! Please try after some time', 'error');
+    });
+
+    $scope.onAPKSelect = function($files)  {
+     for (var i = 0; i < $files.length; i++) {
+      if(($files[i].name.split('.').pop() == 'apk')){
+       latestAPKFile = $files[i];
+       // console.log(JSON.stringify(latestAPKFile));
+      }
+      else{
+        $rootScope.OZNotify('Please add only apk before proceeding', 'error');
+        latestAPKFile = {};
+       document.getElementById('fileTypeApkHost').value = '';
+       }
+      }
+    };
+
+    $scope.addAPKToServer = function()
+    {
+
+              if(latestAPKFile === undefined || latestAPKFile === {} || document.getElementById('fileTypeApkHost').value === '')
+              {
+                $rootScope.OZNotify('Please select file before proceeding', 'error');
+              }
+              else if($scope.application.version === undefined || $scope.application.version === '')
+              {
+                $rootScope.OZNotify('Please enter version before proceeding', 'error');
+              }
+              else if($scope.application.description === undefined || $scope.application.description === '')
+              {
+                $rootScope.OZNotify('Please enter description before proceeding', 'error');
+              }
+              else
+              {       
+                      $rootScope.showSpinner();
+                      $scope.upload = $upload.upload({
+                        url: '/api/apk/' , 
+                        data: {'version' : $scope.application.version, 'description' : $scope.application.description},
+                        file : latestAPKFile, 
+                      })
+                      .progress(function(event)
+                      {
+
+                      })
+                      .success(function(data, status, headers, config)
+                      {
+                              if(data.success)
+                              {
+                                     $rootScope.OZNotify(data.success.message, 'success');
+                                     $scope.application = {'version' : '', 'description' : ''};
+                                     document.getElementById('fileTypeApkHost').value = '';
+                                     latestAPKFile = {};
+                              }
+                              if(data.error)
+                              {
+                                $rootScope.OZNotify(data.error.message ,'error');
+                                $scope.application = {'version' : '', 'description' : ''};
+                                document.getElementById('fileTypeApkHost').value = '';
+                                latestAPKFile = {};
+                              }
+                              $rootScope.hideSpinner();
+                      })
+                      .error(function(data, status, headers, config)
+                      {
+                              if(data.error)
+                              {
+                                     $rootScope.OZNotify(data.error.message, 'error');
+                              }
+                              $rootScope.hideSpinner();
+                      });
+               }       
+    };
 
     $scope.$on('$destroy', function(event, message) 
     {
@@ -985,7 +1144,9 @@ angular.module('oz.UserApp')
         cleanUpEventNotGotOrderProcessConfig();
         cleanUpEventOrderProcessConfigurationRemove();
         cleanUpEventOrderProcessConfigurationRemoveError();
-
+        cleanUpEventGotAllSellers();
+        cleanUpEventNotGotAllSellers();
+        cleanUpEventModifiedPayableAndRefundablePercentCriteria();
+        cleanUpEventNotModifiedPayableAndRefundablePercentCriteria();
     });
-
    }]);
