@@ -1059,7 +1059,7 @@ angular.module('oz.UserApp')
     $scope.addAPKToServer = function()
     {
 
-              if(latestAPKFile === undefined || latestAPKFile === {})
+              if(latestAPKFile === undefined || latestAPKFile === {} || document.getElementById('fileTypeApkHost').value === '')
               {
                 $rootScope.OZNotify('Please select file before proceeding', 'error');
               }
