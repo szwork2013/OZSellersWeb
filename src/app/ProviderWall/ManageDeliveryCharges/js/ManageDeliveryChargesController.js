@@ -302,7 +302,7 @@ angular.module('oz.ProviderApp')
     // // function to handle server side responses
     $scope.handleGetAreaListResponse = function(data, zipcode){
       if (data.success) {
-        if (data.success.area.length > 0) {
+        if (data.success.area.length !== 0) {
           console.log(data.success.area);
           $scope.AreaUnderZipcode = angular.copy(data.success.area);
           var sorted = [];
@@ -402,12 +402,16 @@ angular.module('oz.ProviderApp')
     } 
 
     $scope.addAreaDeliveryAvailability =function (city, add_availability) {
+      var add_area_availability = [];
       if ($scope.form.addDeliveryChargeForm.$valid) {
         availability_for_city = city;
-        if (add_availability.length > 0) {
+        for (var i = 0; i < add_availability.length; i++) {
+          add_area_availability.push({value:add_availability[i].value, coverage:{area:add_availability[i].coverage.area, city:availability_for_city, zipcode:add_availability[i].coverage.zipcode}, available:add_availability[i].available})
+        };
+        if (add_area_availability.length > 0) {
           $rootScope.showSpinner();
-          var zipcode = add_availability[0].coverage.zipcode;
-          var data = $scope.jsonAddDeliveryAvailabilityData(add_availability);
+          var zipcode = add_area_availability[0].coverage.zipcode;
+          var data = $scope.jsonAddDeliveryAvailabilityData(add_area_availability);
           $log.debug(data);
           $scope.deliveryChargeError = false;
           ManageDeliveryChargesService.AddDeliveryAvailability(data, zipcode);
