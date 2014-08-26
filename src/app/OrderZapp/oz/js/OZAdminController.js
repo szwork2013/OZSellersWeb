@@ -1046,10 +1046,12 @@ angular.module('oz.UserApp')
      for (var i = 0; i < $files.length; i++) {
       if(($files[i].name.split('.').pop() == 'apk')){
        latestAPKFile = $files[i];
+       // console.log(JSON.stringify(latestAPKFile));
       }
       else{
         $rootScope.OZNotify('Please add only apk before proceeding', 'error');
         latestAPKFile = {};
+       document.getElementById('fileTypeApkHost').value = '';
        }
       }
     };
@@ -1061,13 +1063,21 @@ angular.module('oz.UserApp')
               {
                 $rootScope.OZNotify('Please select file before proceeding', 'error');
               }
+              else if($scope.application.version === undefined || $scope.application.version === '')
+              {
+                $rootScope.OZNotify('Please enter version before proceeding', 'error');
+              }
+              else if($scope.application.description === undefined || $scope.application.description === '')
+              {
+                $rootScope.OZNotify('Please enter description before proceeding', 'error');
+              }
               else
               {       
                       $rootScope.showSpinner();
                       $scope.upload = $upload.upload({
                         url: '/api/apk/' , 
                         data: {'version' : $scope.application.version, 'description' : $scope.application.description},
-                        file:latestAPKFile, 
+                        file : latestAPKFile, 
                       })
                       .progress(function(event)
                       {
@@ -1081,6 +1091,13 @@ angular.module('oz.UserApp')
                                      $scope.application = {'version' : '', 'description' : ''};
                                      document.getElementById('fileTypeApkHost').value = '';
                                      latestAPKFile = {};
+                              }
+                              if(data.error)
+                              {
+                                $rootScope.OZNotify(data.error.message ,'error');
+                                $scope.application = {'version' : '', 'description' : ''};
+                                document.getElementById('fileTypeApkHost').value = '';
+                                latestAPKFile = {};
                               }
                               $rootScope.hideSpinner();
                       })
