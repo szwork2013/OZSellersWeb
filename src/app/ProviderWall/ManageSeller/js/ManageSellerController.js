@@ -312,6 +312,7 @@ angular.module('oz.ProviderApp')
         $rootScope.OZNotify(data.success.message,'success'); 
       } else {
         if(data.error.code=='AL001'){
+          $('#editSellerModal').modal('hide');
           $rootScope.showModal();
         } else {
           $log.debug(data.error.message);

@@ -161,7 +161,7 @@
 
      $scope.showSorderView = 0; -->
 <!-- ng-if = 'controlWallView === 1 && showSorderView === 0'  -->
-<div style = 'margin-top : 5px;' style = 'background-color : #FFFAFA'>
+<div style = 'margin-top : 5px;' >
     <tabset>
         <tab heading = 'Orders' class = 'cursorPointerHyperlink' ng-init = 'showOrderContents()' ng-click = 'trigger();showOrderContents()'  ui-sref = "oz.ozWall.ozOrderViewContent">
 <!--           <div>
@@ -215,11 +215,12 @@
                 <tab heading = 'Order Process' class = 'cursorPointerHyperlink' ui-sref = "oz.ozWall.ozOrderProcessCongiguration"> </tab>
                 <tab heading = 'Category' class = 'cursorPointerHyperlink' ui-sref = "oz.ozWall.ozManageCategoriesTab" ></tab>
                 <tab heading="Tags" ui-sref = "oz.ozWall.ozManageUserdefinedTags" class = "cursorPointerHyperlink" ></tab>
+                <tab  heading="New APK Upload" ui-sref = "oz.ozWall.ozAPKUploadInterface" class = "cursorPointerHyperlink" ></tab>
                 <tab heading = 'Locations' class = 'cursorPointerHyperlink' ui-sref = "oz.ozWall.ozManageLocations" ></tab>
           </tabset>
         </tab>
 
-        <tab heading = 'Agreements'   class = 'cursorPointerHyperlink'  ng-click = 'triggerPoliciesWizard();clearContentT();getAllProviders()' ui-sref = "oz.ozWall.ozProviderAcceptance" >
+        <tab heading = 'Agreements'   class = 'cursorPointerHyperlink'  ng-click = 'triggerPoliciesWizard();clearContentT();getAllProviders();' ui-sref = "oz.ozWall.ozProviderAcceptance" >
           <tabset >
 
                      <tab heading="New Seller Acceptance" ui-sref = "oz.ozWall.ozProviderAcceptance" class = "cursorPointerHyperlink" ng-click = 'getAllProviders()' active = 'active.policies'></tab>
@@ -235,13 +236,15 @@
                       <tab heading="Seller Participation Agreement" ui-sref = "oz.ozWall.ozSellerParticipationAgreement" class = "cursorPointerHyperlink" select = "getTemplateContent('SA');clearTemplatecontent()"></tab>
 
                       <tab heading="Privacy" ui-sref = "oz.ozWall.ozPrivacy" class = "cursorPointerHyperlink" select = "getTemplateContent('PP');clearTemplatecontent()"></tab>
+
+                      <tab heading = 'Transaction Processing Fees' ui-sref = 'oz.ozWall.ozSellerPayableReceivableCriteria' class = 'cursorPointerHyperlink' ></tab>
           </tabset>
         </tab>
         <tab heading = 'Analytics'  class = 'cursorPointerHyperlink' ng-click = 'triggerAnalyticsWizard();' ui-sref = "oz.ozWall.ozViewFeedback">
             <tabset>
-                  <tab heading = 'Receivables'></tab>
-                  <tab heading = 'Payables'></tab>
-                  <tab heading = 'Refunds'></tab>
+                  <tab heading = 'Receivables' ui-sref = 'oz.ozWall.ozSellerReceivableInterface' class = 'cursorPointerHyperlink'></tab>
+                  <tab heading = 'Payables' ui-sref = 'oz.ozWall.ozSellerPayableInterface' class = 'cursorPointerHyperlink'></tab>
+                  <tab heading = 'Refunds' ui-sref = 'oz.ozWall.ozCustomerRefundInterface' class = 'cursorPointerHyperlink'></tab>
                   <tab heading = 'Feedbacks' active = 'active.analytics' ui-sref = "oz.ozWall.ozViewFeedback" class = 'cursorPointerHyperlink' select = 'getAllFeedbackContent()'></tab>
             </tabset>      
         </tab> 

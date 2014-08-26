@@ -505,5 +505,27 @@ angular.module('oz.OrderZappApp')
     {
       templateUrl : 'OrderZapp/oz/views/oz.view.user.feedbacks.tpl.html',
     })
+    .state('oz.ozWall.ozSellerPayableReceivableCriteria',
+    {
+      templateUrl : 'OrderZapp/oz/views/oz.seller.payablepercent.criteria.tpl.html',
+      controller : 'OZAdminController'
+    })
+    .state('oz.ozWall.ozSellerPayableInterface',
+    {
+      templateUrl : 'OrderZapp/oz/views/oz.seller.payable.tpl.html'
+    })
+    .state('oz.ozWall.ozSellerReceivableInterface',
+    {
+      templateUrl : 'OrderZapp/oz/views/oz.seller.receivable.tpl.html'
+    })
+    .state('oz.ozWall.ozCustomerRefundInterface',
+    {
+      templateUrl : 'OrderZapp/oz/views/oz.customer.refunds.tpl.html'
+    })
+    .state('oz.ozWall.ozAPKUploadInterface',
+    {
+      templateUrl : 'OrderZapp/oz/views/oz.apk.upload.tpl.html',
+      controller : 'OZAdminController'
+    })
 
   }]);

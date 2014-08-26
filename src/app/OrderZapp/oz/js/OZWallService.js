@@ -47,6 +47,9 @@ angular.module('oz.UserApp').factory('OZWallService', [
     putHelpContent : $resource('/api/faq/:faqid', {}, {put : {method : 'PUT', params : { faqid : '@faqid'}}}),
     postHelpContent : $resource('/api/faq', {}, {post: {method : 'POST'}}),
     removeHelpContent : $resource('/api/faq/:faqid', {}, {delete : {method  : 'DELETE', params : {faqid : '@faqid'}}}),
+    getAllAcceptedProviders : $resource('/api/glspaymentpercent', {}, {get : {method : 'GET'}}),
+    // changeSellerPayableReceivables : $resource('/api/get/test', {}, {put : 'PUT'})
+    changeSellerPayablePercent : $resource('/api/glspaymentpercent/:providerid', {}, {put : {method : 'PUT', params : {providerid : '@providerid'}}}),
   };
 
   var controller = {};
@@ -530,6 +533,31 @@ angular.module('oz.UserApp').factory('OZWallService', [
         $rootScope.$broadcast('notRemovedHelpContent', error);
       });
     };
+
+    controller.getAllAcceptedProviders = function()
+    {
+      wallService.getAllAcceptedProviders.get(function(success)
+      {
+        $rootScope.$broadcast('acceptedProvidersListGetSuccess', success);
+      },
+      function(error)
+      {
+        $rootScope.$broadcast('acceptedProvidersListGetError', error);
+      });
+    };
+
+    controller.changeSellerPayablePercent = function(content, provider)
+    {
+        wallService.changeSellerPayablePercent.put({providerid : provider.providerid}, content, function(success)
+        {
+          $rootScope.$broadcast('changedSellerPayablePercent', success, provider);
+        },
+        function(error)
+        {
+          $rootScope.$broadcast('notChangedSellerPayablePercentCriteria', error);
+        });
+    }
+  
   return controller;
   }]);
 
