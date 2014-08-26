@@ -1092,6 +1092,13 @@ angular.module('oz.UserApp')
                                      document.getElementById('fileTypeApkHost').value = '';
                                      latestAPKFile = {};
                               }
+                              if(data.error)
+                              {
+                                $rootScope.OZNotify(data.error.message ,'error');
+                                $scope.application = {'version' : '', 'description' : ''};
+                                document.getElementById('fileTypeApkHost').value = '';
+                                latestAPKFile = {};
+                              }
                               $rootScope.hideSpinner();
                       })
                       .error(function(data, status, headers, config)
