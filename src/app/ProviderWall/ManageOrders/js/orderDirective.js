@@ -425,7 +425,7 @@ order_element = order_element.split('ng-hide removenghide').join('removenghide')
 order_element = order_element.split('ng-hide  removenghide').join('removenghide');
 order_element = order_element.split('orderbox1').join('orderbox1 orderPrintZoom');
 order_element = order_element.split("printOrder(order.suborderid)").join("");
-// order_element = order_element.split("fa fa-print").join("");
+order_element = order_element.split("fa fa-print").join("");
 // order_element = order_element.split("{ bgGreen1: (order.status =='orderreceived' ) , bgGreen: (order.status == 'accepted') , bgOrange: (order.status =='inproduction' ) ,       bgOrange1: (order.status == 'packing'),bgOrange2: (order.status =='factorytostore' ) , bgBlue: (order.status == 'indelivery') , bgGray: (order.status == 'ordercomplete') }").join("");
 // order_element = order_element.split("{ bgRed: (order.status =='cancelled' ) , bgRed1: (order.status == 'rejected') }").join("");
 
