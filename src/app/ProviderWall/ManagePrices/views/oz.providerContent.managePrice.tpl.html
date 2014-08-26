@@ -158,11 +158,13 @@
 
 
           </td>
-           <td ng-hide = 'list.editing'>
+           <td ng-hide ="list.editing">
+           <span ng-show ="list.holding_price.value">
               <button class = 'btn  btn-primary' ng-click = 'activateHolpingPrice(list)'  ng-show = "list.holding_price   && list.holding_price.status !=='active' "> Apply Holding Price</button>
                 
               <button  ng-show = "list.holding_price   && list.holding_price.status =='active' " class='btn  btn-primary' ng-click = 'deactivateHolpingPrice(list)'  ng-show = "list.holding_price   && list.holding_price.status !=='active' "> Apply Last Original Price</button>
 
+          </span>
           </td>
           <td ng-hide = 'list.editing'>
               
