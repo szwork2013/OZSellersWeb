@@ -47,6 +47,15 @@ angular.module('oz.UserApp').factory('OZWallService', [
     putHelpContent : $resource('/api/faq/:faqid', {}, {put : {method : 'PUT', params : { faqid : '@faqid'}}}),
     postHelpContent : $resource('/api/faq', {}, {post: {method : 'POST'}}),
     removeHelpContent : $resource('/api/faq/:faqid', {}, {delete : {method  : 'DELETE', params : {faqid : '@faqid'}}}),
+    getAllAcceptedProviders : $resource('/api/glspaymentpercent', {}, {get : {method : 'GET'}}),
+    // changeSellerPayableReceivables : $resource('/api/get/test', {}, {put : 'PUT'})
+    changeSellerPayablePercent : $resource('/api/glspaymentpercent/:providerid', {}, {put : {method : 'PUT', params : {providerid : '@providerid'}}}),
+    getPayableDetails : $resource('/get', {}, {get : {method : 'GET'}}),
+    getReceivableDetails : $resource('/get', {}, {get : {method : 'GET'}}),
+    getRefundsDetails : $resource('/get', {}, {get : {method : 'GET'}}),
+    changePayableDetails : $resource('/put', {}, {put : {method : 'PUT', params : {providerid : '@providerid'}}}),
+    changeReceivableDetails : $resource('/put', {}, {put : {method : 'PUT', params : {providerid : '@providerid'}}}),
+    changeRefundDetails : $resource('/put', {}, {put : {method : 'PUT', params : {providerid : '@providerid'}}}),
   };
 
   var controller = {};
@@ -530,6 +539,104 @@ angular.module('oz.UserApp').factory('OZWallService', [
         $rootScope.$broadcast('notRemovedHelpContent', error);
       });
     };
+
+    controller.getAllAcceptedProviders = function()
+    {
+      wallService.getAllAcceptedProviders.get(function(success)
+      {
+        $rootScope.$broadcast('acceptedProvidersListGetSuccess', success);
+      },
+      function(error)
+      {
+        $rootScope.$broadcast('acceptedProvidersListGetError', error);
+      });
+    };
+
+    controller.changeSellerPayablePercent = function(content, provider)
+    {
+        wallService.changeSellerPayablePercent.put({providerid : provider.providerid}, content, function(success)
+        {
+          $rootScope.$broadcast('changedSellerPayablePercent', success, provider);
+        },
+        function(error)
+        {
+          $rootScope.$broadcast('notChangedSellerPayablePercentCriteria', error);
+        });
+    };
+
+    controller.getPayableDetails = function()
+    {
+      wallService.getPayableDetails.get(function(success)
+      {
+        $rootScope.$broadcast('gotPayableDetails', success);
+      },
+      function(error)
+      {
+        $rootScope.$broadcast('notGotPayableDetails', error);
+      });
+    };
+
+    controller.getReceivableDetails = function()
+    {
+      wallService.getReceivableDetails.get(function(success)
+      {
+        $rootScope.$broadcast('gotReceivableDetails', success);
+      },
+      function(error)
+      {
+        $rootScope.$broadcast('notGotReceivableDetails', error);
+      });
+    };
+
+    controller.getRefundsDetails = function()
+    {
+      wallService.getRefundsDetails.get(function(success)
+      {
+        $rootScope.$broadcast('gotRefundsDetails', success);
+      },
+      function(error)
+      {
+        $rootScope.$broadcast('notGotRefundsDetails', error);
+      });
+    };
+
+    controller.changePayableDetails = function(content, provider)
+    {
+      wallService.changeProductCriteria.put({providerid : provider.providerid}, content, function(success)
+      {
+        $rootScope.$broadcast('changedPayableDetails', success);
+      },
+      function(error)
+      {
+        $rootScope.$broadcast('notChangedPayableDetails', error);
+      });
+    };
+
+    controller.changeReceivableDetails = function(content, provider)
+    {
+      wallService.changeReceivableDetails.put({providerid : provider.providerid}, content, function(success)
+      {
+        $rootScope.$broadcast('changedReceivableDetails', success);
+      },
+      function(error)
+      {
+        $rootScope.$broadcast('notChangedReceivableDetails', error);
+      });
+    };
+
+    controller.changeRefundsDetails = function(content, provider)
+    {
+      wallService.changeRefundsDetails.put({providerid : provider.providerid}, content, function(success)
+      {
+        $rootScope.$broadcast('refundsDetailsChanged', success);
+      },
+      function(error)
+      {
+        $rootScope.$broadcast('refundsDetailsNotChanged', error);
+      });
+    };
+
+      
   return controller;
   }]);
 

@@ -138,11 +138,17 @@ angular.module('oz.ProviderApp')
       $log.debug($files);
       for (var i = 0; i < $files.length; i++) {
         if(($files[i].type == 'image/jpg') || ($files[i].type == 'image/png') || ($files[i].type == 'image/gif') || ($files[i].type == 'image/jpeg')){
-         file = $files[i];
+          if (($files[i].size / 1024) < 2048) {
+             file = $files[i];
+          }else{
+             var field= document.getElementById('addProvider');
+             field.value= field.defaultValue;
+             $rootScope.OZNotify("Image size must ne less than 2MB" ,'error');
+          }
         } else {
-          var field= document.getElementById('addProvider');
-          field.value= field.defaultValue;
-          $rootScope.OZNotify("Please upload image only" ,'error');
+              var field= document.getElementById('addProvider');
+              field.value= field.defaultValue;
+              $rootScope.OZNotify("Please upload image only" ,'error');
         }
       }
       if (file != null) {
@@ -153,7 +159,13 @@ angular.module('oz.ProviderApp')
     $scope.onFileSelectUpdate = function($files) {
       for (var i = 0; i < $files.length; i++) {
         if(($files[i].type == 'image/jpg') || ($files[i].type == 'image/png') || ($files[i].type == 'image/gif') || ($files[i].type == 'image/jpeg')){
+         if (($files[i].size / 1024) < 2048) {
           fileUpdate = $files[i];
+        }else{
+          var field= document.getElementById('updateProvider');
+          field.value= field.defaultValue;
+          $rootScope.OZNotify("Image size must ne less than 2MB" ,'error');
+        }
         } else {
           var field= document.getElementById('updateProvider');
           field.value= field.defaultValue;
