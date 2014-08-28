@@ -4,7 +4,7 @@
 <div ng-class-odd="'oddRowOrderid'" ng-class-even="'evenRowOrderid'" class="headingOrderDiv" > 
  <span class="bold color-white" >Order No:  <span class="oz-contentsRight">{{order.suborderid}}</span> </span>
 
-<a href=""  ng-click="printOrder(order.suborderid)"><i class="fa fa-print pull-right" style="color:white; margin:5px;">  </i></a>
+<span class="anchor"  ng-click="printOrder(order.suborderid)"><i class="fa fa-print pull-right" style="color:white; margin:5px;">  </i></span>
  
       <span ng-hide="order.status =='cancelled' || order.status =='rejected' " class=" label label-info  font14 pull-right "  ng-class="{ 
                      bgGreen1: (order.status =='orderreceived' ) ,
@@ -141,10 +141,10 @@
               <div  class="col-md-3">
                  <span class=" " > 
                 
-                       <span style="">
-                       <a href="" ng-init="productMassage = true" ng-click="productMassage = productMassage === false ? true: false;" ng-show="product.productconfiguration">
+                       <span class="anchor">
+                       <span  ng-init="productMassage = true" ng-click="productMassage = productMassage === false ? true: false;" ng-show="product.productconfiguration">
                         <span class="fa fa-cog fa-lg" style="padding-right:5px"> </span>
-                       </a>
+                       </span>
                       </span>
                
                   {{product.productname}} 
@@ -217,9 +217,9 @@
         <div class="row margintop5">
               <div  class="col-md-3"> 
               <div ng-show="order.orderinstructions">
-                  <a href="" ng-init="instruction=true" ng-click="instruction = instruction === false ? true: false;">
+                  <span class="anchor" ng-init="instruction=true" ng-click="instruction = instruction === false ? true: false;">
                      Order Instructions  <i class="fa fa-hand-o-right"></i>
-                  </a>
+                  </span>
                    <div class="OZ-cakeMessage removenghide" ng-show="instruction==1 && order.orderinstructions">{{order.orderinstructions}} </div>
 
               </div>
@@ -240,6 +240,31 @@
 
 
 <!-- Items ////////////////////////////////// -->
+
+
+
+<!-- Innvoice ////////////////////////////////// -->
+<div class="hidecustinfo">
+<div class="headingDiv"> 
+ <span class="bold"> Customer Info & Invoice </span> 
+</div>
+<div class="row" >
+  <div>
+     <div  class="col-md-4">
+        <span class="bold">Mobile No:</span>
+        <span ng-bind="order.consumer.mobileno"> </span>
+    </div>
+      <div  class="col-md-6">
+        <span class="bold">Email:</span>
+        <span ng-bind="order.consumer.email " class="breakword"> </span>
+    </div>
+  </div>
+</div>
+</div>
+
+
+<!-- Innvoice ////////////////////////////////// -->
+
 </div>  <!--  for printing invoice upto this
  -->
 <!-- Tracking tree////////////////////////////////// -->
@@ -247,7 +272,7 @@
 <div class="headingDiv" style="height:40px;"> 
 
 
-<a  style="color:black" href="" ng-init="showTrackingTree=false" ng-click="showTrackingTree = showTrackingTree === false ? true: false;"><i style="vertical-align: sub;" class="fa fa-arrow-down"></i> <span class="bold" style="vertical-align: text-top;"> Order Tracking </span></a>
+<a  style="color:black"  ng-init="showTrackingTree=false" ng-click="showTrackingTree = showTrackingTree === false ? true: false;"><i style="vertical-align: sub;" class="fa fa-arrow-down"></i> <span class="bold" style="vertical-align: text-top;"> Order Tracking </span></a>
 
 <!-- action bar -->
      <div class="pull-right" ng-hide="order.status=='ordercomplete' || order.status=='cancelled' || order.status=='rejected'" style="margin-top: -5px">

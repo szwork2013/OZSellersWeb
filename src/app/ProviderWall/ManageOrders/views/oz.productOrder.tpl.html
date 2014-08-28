@@ -9,7 +9,7 @@
          
       <div class=" margintop5 productsDate highlighrOrderContainer"  ><!--  2nd line -->
        <em class="oz-adress" ng-class="{TextGray : order.deliverydate < today }"> {{ convertMomentFormat(order.deliverydate)}}</em>  
-       <a href=""  ng-click="printOrder(order.deliverydate)"><i class="fa fa-print pull-right" style=" margin:5px;">  </i></a>
+       <span class="anchor" ng-click="printOrder(order.deliverydate)"><i class="fa fa-print pull-right" style=" margin:5px;">  </i></span>
       </div>
 
       <hr class="myhr">
@@ -48,13 +48,13 @@
                       <div  class="col-md-4">  
                      <!--     <span style = 'font-weight: bold;'>  -->
                                <span style="">
-                               <a href="" ng-init="productMassage = false" ng-click="productMassage = productMassage === false ? true: false;" ng-show="product.productdetails.length>0">
+                               <span class="anchor" ng-init="productMassage = false" ng-click="productMassage = productMassage === false ? true: false;" ng-show="product.productdetails.length>0">
                                     <span class="fa fa-asterisk fa-lg" style="padding-right:5px"> </span>
-                               </a>
+                               </span>
 
-                              <a  ng-show="product.productdetails.length<=0">
+                              <span  ng-show="product.productdetails.length<=0">
                                     <span class="fa fa-asterisk fa-lg" style="padding-right:5px; color : #FFFFFF"> </span>
-                               </a>
+                               </span>
                               </span>
                            <span class=" oz-contentsRight "> {{product.productname}} </span>
          

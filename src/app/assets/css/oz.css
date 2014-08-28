@@ -336,7 +336,7 @@ text-overflow: ellipsis;
 
 .orderPrintZoom{zoom:0.8;}
 /*.orderPrintZoom{width:90%;}*/
-
+.anchor{cursor: pointer; cursor: hand; color:rgb(0, 128, 255);}
 .evenRowOrderid{ background-color:#0F9D58;}/*4285F4*/
 .oddRowOrderid{ background-color: #3F51B5; }
 .radius5{border-radius: 5px;}
@@ -351,6 +351,7 @@ color: black;}
 .prodo-CategoryUl{margin-bottom: -20px;word-wrap: break-word;
 width: 90%;overflow-x: hidden;overflow-y: auto;left: 55px;position: relative;top: -20px;}
 .veg{color: green}
+.hidecustinfo{display:none;}
 .nonveg{color:rgb(165, 12, 12)}
 .displaynone{display: none;}
 .margin-left450{margin-left: 350px;}
