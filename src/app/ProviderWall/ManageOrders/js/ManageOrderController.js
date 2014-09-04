@@ -34,7 +34,6 @@ angular.module('oz.ProviderApp')
    };
     $scope.init();    
 
-
    $scope.getProvider=function(providerid){
      ProviderServices.get_provider.getProvider({providerid:providerid},
       function (successData) {
