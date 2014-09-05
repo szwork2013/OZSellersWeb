@@ -415,6 +415,17 @@
                      		</td>
 
                           </tr>
+                           	<tr>
+                     
+                     		<td colspan="2">
+                     			 <div  ng-show="(form.productForm.configPrice.$dirty  && editMode.editorEnabled==true ) ||(form.productForm.submitted==true && form.productForm.configPrice.$invalid==true)" class="prodo-product-Invalid">
+                                 	 <div class="prodo-product-Invalid" ng-show="form.productForm.configPrice.$error.ngMin">
+							           Price cannot be negative number
+							         </div>
+								  </div>
+                     		</td>
+
+                          </tr>
                           <tr ng-repeat=" config in chckedIndexs">
                           	<td>
                           <!-- 		  <input type="checkbox" value="config" ng-model="chckedIndexs" ng-click="getSelectedConfigs(config)" /> -->
@@ -426,12 +437,7 @@
                             <td>
                             	 <input placeholder="Price &#xf156;" ng-model="config.prod_configprice.value"  id="prodo-product-features_textfield"   type="number" ng-min="0"  class="form-control   rs oz-InputConfigs prodo-validation"  name="configPrice"  />  
 
-                            	  <div  ng-show="(form.productForm.configPrice.$dirty  && editMode.editorEnabled==true ) ||(form.productForm.submitted==true && form.productForm.configPrice.$invalid==true)" class="prodo-product-Invalid">
-                                 	 <div ng-show="form.productForm.configPrice.$error.ngMin">
-							           Price cannot be negative number
-							         </div>
-								  </div>
-
+                            	 
                             </td>
                           </tr>
 					   </table>
