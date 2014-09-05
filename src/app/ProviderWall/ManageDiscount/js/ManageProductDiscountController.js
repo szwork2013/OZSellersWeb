@@ -37,6 +37,10 @@ angular.module('oz.ProviderApp')
             {
                 $scope.errorForEmptyCode = 'Please enter valid discount code'; $scope.allValidContent = 1;
             }
+            if($scope.codeContent.discountcode.length > 20)
+            {
+              $rootScope.OZNotify('The length of discount code should be less than 20 characters', 'error');$scope.allValidContent = 1;
+            }
             if($scope.codeContent.description === '')
             {
                 $scope.errorForEmptyDescription = 'Please enter valid description for discount code';$scope.allValidContent = 1;
@@ -64,6 +68,8 @@ angular.module('oz.ProviderApp')
                 ProviderServicesList.addProductCode($scope.codeContentObject);
             }
     };
+
+    var countProductsLength = [];
 
     $scope.cancelAll = function()
     {
@@ -220,6 +226,7 @@ angular.module('oz.ProviderApp')
             if(data.success)
             {    $scope.productsList = [];
                  $scope.productsList = data.success.products; 
+                 countProductsLength = angular.copy(data.success.products);
             } 
     });
                                                                             
@@ -368,7 +375,28 @@ angular.module('oz.ProviderApp')
             }
             if(data.success)
             {    
-                $rootScope.OZNotify(data.success.message, 'success');
+                var varProductsArray = data.success.alreadyappliedproductids;
+                var successMessage = '';
+                if(varProductsArray.length !== 0)
+                {
+                      for(var i = 0 ; i < varProductsArray.length; i++)
+                      {
+                        for(var j = 0 ; j < countProductsLength.length; j++)
+                        {
+                          if(countProductsLength[j].productid === varProductsArray[i])
+                          {
+                            successMessage = successMessage + ' ' + countProductsLength[j].productname + ',';
+                          }
+
+                         }
+                      }
+                      var message = '';
+                      message = 'Discount code not applied for' + successMessage + ' ' + ' The reason for not applying discount code is that these products already have discount code previously applied! Rest all products the current discount code is successfully applied';
+                      $rootScope.OZNotify(message, 'success');
+                }
+                else{
+                   $rootScope.OZNotify(data.success.message, 'success');
+                } 
             } 
     });
                                                                             
@@ -418,6 +446,10 @@ angular.module('oz.ProviderApp')
         else if($scope.newCodeContents.percent === '' || $scope.regexForNumbers.test($scope.newCodeContents.percent) === false || $scope.newCodeContents.percent > 100 || $scope.newCodeContents.percent<1)
         {
             $rootScope.OZNotify('Please enter valid percentage before proceeding' , 'error');
+        }
+        else if(moment.utc($scope.newCodeContents.startdate).diff(moment.utc($scope.newCodeContents.expirydate), 'days') > 0 )
+        {
+          $rootScope.OZNotify('The start date cant be greater than end date' , 'error');
         }
         else
         {

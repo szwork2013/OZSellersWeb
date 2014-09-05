@@ -164,7 +164,7 @@
           </tr>
           <tr ng-repeat = 'list in containerOfDiscountCode' ng-if = 'containerOfDiscountCode.length !== 0'>
              <td ng-bind = 'list.discountcode' ng-hide = 'list.editing'></td>
-             <td ng-bind = 'list.description' ng-hide = 'list.editing'></td>
+             <td ng-bind = 'list.description' ng-hide = 'list.editing' style = 'word-break: break-word;'></td>
              <td ng-bind = 'list.percent + " %"' ng-hide = 'list.editing'></td>
              <td ng-bind = 'list.startdate | date: fullDate' ng-hide = 'list.editing'></td>
              <td ng-bind = 'list.expirydate | date: fullDate' ng-hide = 'list.editing'></td>
