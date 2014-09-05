@@ -66,10 +66,12 @@
           <span class="bold">Delivery Type: </span> <span class=" oz-contentsRight">{{order.deliverytype}}</span>
         </div>
         <div  class="col-md-4">
-          <span class="bold">Payment By: </span> <span  class="  oz-contentsRight">{{order.buyerpayment.mode}}</span>
+          <span class="bold">Payment By: </span> <span  class="  oz-contentsRight">{{order.payment.mode}}</span>
         </div> 
       
-        <div  class="col-md-4" >  <span class="bold">Payment Status:  </span> <span  class="  oz-contentsRight">{{order.buyerpayment.status}}</span>
+        <div  class="col-md-4" >  
+          <span class="bold">Payment Status:  </span> <span  class="  oz-contentsRight" ng-show="order.payment.status.indexOf('pending') !== -1">Pending</span>
+          <span  class="  oz-contentsRight" ng-show="order.payment.status.indexOf('pending') == -1">Done</span>
         </div>
  
 
