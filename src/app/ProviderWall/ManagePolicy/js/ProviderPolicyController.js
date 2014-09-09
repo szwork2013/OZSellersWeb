@@ -36,13 +36,16 @@ angular.module('oz.ProviderApp')
      var ordering_policyFormated = '<!DOCTYPE html><html><meta name="viewport" content="width=device-width, initial-scale=1"><div style = "text-align:justify">'+ ordering_policy + '</div></html>';
 
         if($rootScope.selectedBranchId && $rootScope.selectedproviderid){
+          $rootScope.showSpinner();
             $http({
                method: 'POST',
                url: ' /api/branchpolicy/'+$rootScope.selectedproviderid+'/'+$rootScope.selectedBranchId +'?type=ordering_policy',
                data:{"text":ordering_policyFormated}, 
              }).success(function(data, status, headers, cfg){
+               $rootScope.hideSpinner();
                $scope.handleAddOPData(data);
             }).error(function(data, status, headers, cfg){
+               $rootScope.hideSpinner();
                $rootScope.OZNotify(status, 'error');  
            });
         }
@@ -58,13 +61,16 @@ angular.module('oz.ProviderApp')
      var ordering_policyFormated = '<!DOCTYPE html><html><meta name="viewport" content="width=device-width, initial-scale=1"><div style = "text-align:justify">'+ ordering_policy + '</div></html>';
 
         if($rootScope.selectedBranchId && $rootScope.selectedproviderid){ 
+          $rootScope.showSpinner();
            $http({
     	        method: 'PUT',
     	        url: ' /api/branchpolicy/'+$rootScope.selectedproviderid+'/'+$rootScope.selectedBranchId +'?type=ordering_policy',
     	        data:{"text":ordering_policyFormated}, 
     	    	 }).success(function(data, status, headers, cfg){
+                $rootScope.hideSpinner();
     	    	    $scope.handleAddOPData(data);
     		 	   }).error(function(data, status, headers, cfg){
+                $rootScope.hideSpinner();
     		        $rootScope.OZNotify(status, 'error');  
     		   	 });
           }
@@ -90,12 +96,15 @@ angular.module('oz.ProviderApp')
 
      $scope.getOP=function(){
       if($rootScope.selectedBranchId && $rootScope.selectedproviderid){ 
+        $rootScope.showSpinner();
   	    $http({
   	          method: 'GET',
   	          url: '/api/branchpolicy/'+$rootScope.selectedproviderid+'/'+$rootScope.selectedBranchId +'?type=ordering_policy',
   	    	   }).success(function(data, status, headers, cfg){
+                $rootScope.hideSpinner();
   	    	      $scope.handleGetOPData(data);
   		    	 }).error(function(data, status, headers, cfg){
+                $rootScope.hideSpinner();
   		         $rootScope.OZNotify(status, 'error');  
   		    	 });
             }
@@ -146,13 +155,16 @@ angular.module('oz.ProviderApp')
      var refunds_policyFormated = '<!DOCTYPE html><html><meta name="viewport" content="width=device-width, initial-scale=1"><div style = "text-align:justify">'+ refunds_policy + '</div></html>';
 
        if($rootScope.selectedBranchId && $rootScope.selectedproviderid){  
+         $rootScope.showSpinner();
          $http({
   	        method: 'POST',
   	        url: ' /api/branchpolicy/'+$rootScope.selectedproviderid+'/'+$rootScope.selectedBranchId +'?type=refunds_policy',
   	        data:{"text":refunds_policyFormated}, 
   	    	  }).success(function(data, status, headers, cfg){
+              $rootScope.hideSpinner();
   	    	    $scope.handleAddRPData(data);
   		 	    }).error(function(data, status, headers, cfg){
+              $rootScope.hideSpinner();
   		        $rootScope.OZNotify(status, 'error');  
   		   	 });
           }
@@ -168,13 +180,16 @@ angular.module('oz.ProviderApp')
      var refunds_policyFormated = '<!DOCTYPE html><html><meta name="viewport" content="width=device-width, initial-scale=1"><div style = "text-align:justify">'+ refunds_policy + '</div></html>';
 
        if($rootScope.selectedBranchId && $rootScope.selectedproviderid){  
+         $rootScope.showSpinner();
          $http({
   	        method: 'PUT',
   	        url: ' /api/branchpolicy/'+$rootScope.selectedproviderid+'/'+$rootScope.selectedBranchId +'?type=refunds_policy',
   	        data:{"text":refunds_policyFormated}, 
   	    	 }).success(function(data, status, headers, cfg){
+              $rootScope.hideSpinner();
   	    	    $scope.handleAddRPData(data);
   		   	 }).error(function(data, status, headers, cfg){
+              $rootScope.hideSpinner();
   		       $rootScope.OZNotify(status, 'error');  
   		   	 });
           }
@@ -200,12 +215,15 @@ angular.module('oz.ProviderApp')
 
      $scope.getRP=function(){
        if($rootScope.selectedBranchId && $rootScope.selectedproviderid){  
+          $rootScope.showSpinner();
     	    $http({
     	        method: 'GET',
     	        url: '/api/branchpolicy/'+$rootScope.selectedproviderid+'/'+$rootScope.selectedBranchId +'?type=refunds_policy',
     	    	 }).success(function(data, status, headers, cfg){
+                $rootScope.hideSpinner();
     	    	    $scope.handleGetRPData(data);
     		 	 }).error(function(data, status, headers, cfg){
+                $rootScope.hideSpinner();
     		        $rootScope.OZNotify(status, 'error');  
     		   	 });
           }
@@ -255,14 +273,16 @@ angular.module('oz.ProviderApp')
        $rootScope.OZNotify("Please enter policy", 'error');  
       }else{
      var price_policyFormated = '<!DOCTYPE html><html><meta name="viewport" content="width=device-width, initial-scale=1"><div style = "text-align:justify">'+ price_policy + '</div></html>';
-
+       $rootScope.showSpinner();
        $http({
           method: 'POST',
           url: ' /api/branchpolicy/'+$rootScope.selectedproviderid+'/'+$rootScope.selectedBranchId +'?type=price_policy',
           data:{"text":price_policyFormated}, 
          }).success(function(data, status, headers, cfg){
+            $rootScope.hideSpinner();
             $scope.handleAddPPData(data);
          }).error(function(data, status, headers, cfg){
+            $rootScope.hideSpinner();
             $rootScope.OZNotify(status, 'error');  
          });
       }
@@ -275,14 +295,16 @@ angular.module('oz.ProviderApp')
        $rootScope.OZNotify("Please enter policy", 'error');  
       }else{
      var price_policyFormated = '<!DOCTYPE html><html><meta name="viewport" content="width=device-width, initial-scale=1"><div style = "text-align:justify">'+ price_policy + '</div></html>';
-
+      $rootScope.showSpinner();
        $http({
           method: 'PUT',
           url: ' /api/branchpolicy/'+$rootScope.selectedproviderid+'/'+$rootScope.selectedBranchId +'?type=price_policy',
           data:{"text":price_policyFormated}, 
          }).success(function(data, status, headers, cfg){
+           $rootScope.hideSpinner();
             $scope.handleAddPPData(data);
          }).error(function(data, status, headers, cfg){
+           $rootScope.hideSpinner();
            $rootScope.OZNotify(status, 'error');  
          });
        }
@@ -307,12 +329,15 @@ angular.module('oz.ProviderApp')
 
      $scope.getPP=function(){
        if($rootScope.selectedBranchId && $rootScope.selectedproviderid){  
+        $rootScope.showSpinner();
           $http({
               method: 'GET',
               url: '/api/branchpolicy/'+$rootScope.selectedproviderid+'/'+$rootScope.selectedBranchId +'?type=price_policy',
              }).success(function(data, status, headers, cfg){
+                $rootScope.hideSpinner();
                 $scope.handleGetPPData(data);
            }).error(function(data, status, headers, cfg){
+                $rootScope.hideSpinner();
                 $rootScope.OZNotify(status, 'error');  
              });
          }
@@ -364,14 +389,16 @@ angular.module('oz.ProviderApp')
         $rootScope.OZNotify("Please enter policy", 'error');  
       }else{
      var delivery_policyFormated = '<!DOCTYPE html><html><meta name="viewport" content="width=device-width, initial-scale=1"><div style = "text-align:justify">'+ delivery_policy + '</div></html>';
-
+       $rootScope.showSpinner();
        $http({
           method: 'POST',
           url: ' /api/branchpolicy/'+$rootScope.selectedproviderid+'/'+$rootScope.selectedBranchId +'?type=delivery_policy',
           data:{"text":delivery_policyFormated}, 
          }).success(function(data, status, headers, cfg){
+            $rootScope.hideSpinner();
             $scope.handleAddDPData(data);
          }).error(function(data, status, headers, cfg){
+            $rootScope.hideSpinner();
             $rootScope.OZNotify(status, 'error');  
          });
        }
@@ -383,14 +410,16 @@ angular.module('oz.ProviderApp')
         $rootScope.OZNotify("Please enter policy", 'error');  
       }else{
      var delivery_policyFormated = '<!DOCTYPE html><html><meta name="viewport" content="width=device-width, initial-scale=1"><div style = "text-align:justify">'+ delivery_policy + '</div></html>';
-
+      $rootScope.showSpinner();
        $http({
           method: 'PUT',
           url: ' /api/branchpolicy/'+$rootScope.selectedproviderid+'/'+$rootScope.selectedBranchId +'?type=delivery_policy',
           data:{"text":delivery_policyFormated}, 
          }).success(function(data, status, headers, cfg){
+            $rootScope.hideSpinner();
             $scope.handleAddDPData(data);
          }).error(function(data, status, headers, cfg){
+            $rootScope.hideSpinner();
            $rootScope.OZNotify(status, 'error');  
          });
        }
@@ -415,12 +444,15 @@ angular.module('oz.ProviderApp')
 
      $scope.getDP=function(){
        if($rootScope.selectedBranchId && $rootScope.selectedproviderid){  
+        $rootScope.showSpinner();
         $http({
             method: 'GET',
             url: '/api/branchpolicy/'+$rootScope.selectedproviderid+'/'+$rootScope.selectedBranchId +'?type=delivery_policy',
            }).success(function(data, status, headers, cfg){
+              $rootScope.hideSpinner();
               $scope.handleGetDPData(data);
          }).error(function(data, status, headers, cfg){
+              $rootScope.hideSpinner();
               $rootScope.OZNotify(status, 'error');  
            });
        }
@@ -471,14 +503,16 @@ angular.module('oz.ProviderApp')
         $rootScope.OZNotify("Please enter policy", 'error');  
       }else{
      var cancellation_policyFormated = '<!DOCTYPE html><html><meta name="viewport" content="width=device-width, initial-scale=1"><div style = "text-align:justify">'+ cancellation_policy + '</div></html>';
-
+      $rootScope.showSpinner();
        $http({
           method: 'POST',
           url: ' /api/branchpolicy/'+$rootScope.selectedproviderid+'/'+$rootScope.selectedBranchId +'?type=cancellation_policy',
           data:{"text":cancellation_policyFormated}, 
          }).success(function(data, status, headers, cfg){
+            $rootScope.hideSpinner();
             $scope.handleAddCPData(data);
          }).error(function(data, status, headers, cfg){
+            $rootScope.hideSpinner();
             $rootScope.OZNotify(status, 'error');  
          });
        }
@@ -491,15 +525,17 @@ angular.module('oz.ProviderApp')
         $rootScope.OZNotify("Please enter policy", 'error');  
       }else{
      var cancellation_policyFormated = '<!DOCTYPE html><html><meta name="viewport" content="width=device-width, initial-scale=1"><div style = "text-align:justify">'+ cancellation_policy + '</div></html>';
-        
+       $rootScope.showSpinner();
        $http({
           method: 'PUT',
           url: ' /api/branchpolicy/'+$rootScope.selectedproviderid+'/'+$rootScope.selectedBranchId +'?type=cancellation_policy',
           data:{"text":cancellation_policyFormated}, 
          }).success(function(data, status, headers, cfg){
+            $rootScope.hideSpinner();
             $scope.handleAddCPData(data);
          }).error(function(data, status, headers, cfg){
-           $rootScope.OZNotify(status, 'error');  
+            $rootScope.hideSpinner();
+            $rootScope.OZNotify(status, 'error');  
          });
        }
      };
@@ -523,13 +559,15 @@ angular.module('oz.ProviderApp')
 
      $scope.getCP=function(){
        if($rootScope.selectedBranchId && $rootScope.selectedproviderid){  
-
+       $rootScope.showSpinner();
         $http({
             method: 'GET',
             url: '/api/branchpolicy/'+$rootScope.selectedproviderid+'/'+$rootScope.selectedBranchId +'?type=cancellation_policy',
            }).success(function(data, status, headers, cfg){
+              $rootScope.hideSpinner();
               $scope.handleGetCPData(data);
          }).error(function(data, status, headers, cfg){
+              $rootScope.hideSpinner();
               $rootScope.OZNotify(status, 'error');  
            });
      }
