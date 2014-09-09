@@ -39,7 +39,7 @@ angular.module('oz.UserApp')
       {
         user:
           {
-            'mobileno' : '91'+$scope.user.mobileno,
+            'mobileno' : $scope.user.mobileno,
             'email' : $scope.user.email,
             'password' : $scope.user.password,
             'username' : $scope.user.username,
