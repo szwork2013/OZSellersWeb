@@ -41,13 +41,16 @@ angular.module('oz.ProviderApp')
 
 
  $scope.getAllProducts=function(branchid,providerid){
+ 
   $scope.products=[];
    if((branchid!==null || branchid !==undefined ) && (providerid !==null || providerid !== undefined)){
    $scope.productPricelist=[];
+    $rootScope.showSpinner();
     ProviderServices.get_allProducts.getAllProducts({
         branchid:branchid,
     	  providerid:providerid},
       	function (successData) {
+        $rootScope.hideSpinner();
         if (successData.success == undefined) {
           $scope.noProducts=true;
           if(successData.error.code=='AL001'){
@@ -83,13 +86,12 @@ angular.module('oz.ProviderApp')
 // update price
 $scope.changePrice=function(product){
   if($scope.priceForm.$dirty){
-
-
   if($scope.priceForm.$invalid){
     // $rootScope.ProdoAppMessage("Please add valid information", 'error');
     $scope.priceForm.submitted=true;
   }
  else{
+   $rootScope.showSpinner();
   $scope.priceForm.$setPristine();
   $log.debug( product);
   $scope.productPrices=[];
@@ -111,6 +113,7 @@ $scope.changePrice=function(product){
       }).success(function(data, status, headers, config) {
       if(data.success){
        // $log.debug(data);
+       $rootScope.hideSpinner();
        $scope.disableEditorPrice();
        $scope.getAllProducts($rootScope.selectedBranchId,$rootScope.selectedproviderid);
        $rootScope.OZNotify(data.success.message, 'success'); 
@@ -121,9 +124,6 @@ $scope.changePrice=function(product){
           }
          $rootScope.OZNotify(data.error.message, 'error');  
       }
-
-
-
       }).error(function (data, status, headers, cfg) {
         // $log.debug(status);
        $rootScope.OZNotify(status, 'error'); 
@@ -194,12 +194,14 @@ $scope.changePrice=function(product){
          else{
           $scope.priceForm.$setPristine();
           if(list.holding_price.value>0){
+            $rootScope.showSpinner();
            $http({
               method: 'PUT', 
               url: '/api/saveprice/'+$rootScope.selectedBranchId +'/'+list.productid, 
               data:  $scope.content ,
               // file:file, 
             }).success(function(data, status, headers, config) {
+               $rootScope.hideSpinner();
               $log.debug(data);
             if(data.success){
              
@@ -213,8 +215,6 @@ $scope.changePrice=function(product){
                 }
                $rootScope.OZNotify(data.error.message, 'error');  
             }
-
-
 
             }).error(function (data, status, headers, cfg) {
               // $log.debug(status);
@@ -235,18 +235,18 @@ $scope.changePrice=function(product){
 
     $scope.activateHolpingPrice = function(list)
     {
-      
+       $rootScope.showSpinner();
         $http({
               method: 'PUT', 
               url: '/api/activateprice/'+$rootScope.selectedBranchId +'/'+list.productid
             }).success(function(data, status, headers, config) {
+              $rootScope.hideSpinner();
               $log.debug(data);
             if(data.success){
              $log.debug(data)
              // $scope.cancel(list);
               $rootScope.OZNotify(data.success.message, 'success');
               $scope.getAllProducts($rootScope.selectedBranchId,$rootScope.selectedproviderid);
-             
             }
             else{
                 if(data.error.code=='AL001'){
@@ -256,8 +256,6 @@ $scope.changePrice=function(product){
                 $log.debug(data.error.message);
             }
 
-
-
             }).error(function (data, status, headers, cfg) {
               // $log.debug(status);
              $rootScope.OZNotify(status, 'error'); 
@@ -266,11 +264,12 @@ $scope.changePrice=function(product){
 
  $scope.deactivateHolpingPrice = function(list)
     {
-      
+       $rootScope.showSpinner();
         $http({
               method: 'PUT', 
               url: '/api/deactivateprice/'+$rootScope.selectedBranchId +'/'+list.productid
             }).success(function(data, status, headers, config) {
+               $rootScope.hideSpinner();
               $log.debug(data);
             if(data.success){
              $log.debug(data)
