@@ -519,10 +519,12 @@ $scope.handleSaveProductResponse=function(data, status, headers, config){
  
   $scope.productlist=[];
   if((branchid!==null || branchid !==undefined ) && (providerid !==null || providerid !== undefined)){
-    ProviderServices.get_allProducts.getAllProducts({
+        $rootScope.showSpinner();
+        ProviderServices.get_allProducts.getAllProducts({
         branchid:branchid,
     	  providerid:providerid},
       	function (successData) {
+        $rootScope.hideSpinner();
         if (successData.success == undefined) {
            if(successData.error.code=='AL001'){
             $rootScope.showModal();
@@ -557,10 +559,12 @@ $scope.handleSaveProductResponse=function(data, status, headers, config){
 
    $scope.getProduct = function (branchid,productid) {
      if((branchid !==null || branchid !== undefined) && (productid !==null || productid!==undefined)){
+      $rootScope.showSpinner();
       ProviderServices.get_product.getProduct({
          branchid:branchid,
          productid:productid
       }, function (successData) {
+        $rootScope.hideSpinner();
         $scope.ErrMsging=0;
         if (successData.success == undefined) { //if not product
            $scope.handleGetProductError(successData.error);
@@ -696,13 +700,15 @@ $scope.getSelectedProduct = function (product1) {
   var arrayProductIds=[];
   arrayProductIds.push(productid);
 
-if(value=='publish'){
+   if(value=='publish'){
+   $rootScope.showSpinner();
    $http({
         method: 'PUT',
         url: '/api/publishunpublish/product/'+$scope.selectedBranchId+'?action=publish', 
         data: {"productids":arrayProductIds} ,
         // file:file, 
       }).success(function(data, status, headers, config) {
+        $rootScope.hideSpinner();
         // $log.debug(data);
         if(data.success){
           $rootScope.OZNotify(data.success.message, 'success'); 
@@ -723,12 +729,14 @@ if(value=='publish'){
 
     }
     else if(value=='unpublish'){
+         $rootScope.showSpinner();
          $http({
               method: 'PUT',
               url: '/api/publishunpublish/product/'+$scope.selectedBranchId+'?action=unpublish', 
               data: {"productids":arrayProductIds} ,
               // file:file, 
             }).success(function(data, status, headers, config) {
+              $rootScope.hideSpinner();
               // $log.debug(data);
               if(data.success){
                 $rootScope.OZNotify(data.success.message, 'success'); 
