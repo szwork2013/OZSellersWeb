@@ -74,6 +74,7 @@ angular.module('oz.ProviderApp')
            
         }
        }, function (error) {
+         $rootScope.hideSpinner();
          $rootScope.OZNotify("Server Error:" + error.status, 'error');
        });
   }
@@ -111,9 +112,9 @@ $scope.changePrice=function(product){
         data: {"productpricedata":$scope.productPrices} ,
         // file:file, 
       }).success(function(data, status, headers, config) {
+      $rootScope.hideSpinner();
       if(data.success){
        // $log.debug(data);
-       $rootScope.hideSpinner();
        $scope.disableEditorPrice();
        $scope.getAllProducts($rootScope.selectedBranchId,$rootScope.selectedproviderid);
        $rootScope.OZNotify(data.success.message, 'success'); 
@@ -125,6 +126,7 @@ $scope.changePrice=function(product){
          $rootScope.OZNotify(data.error.message, 'error');  
       }
       }).error(function (data, status, headers, cfg) {
+        $rootScope.hideSpinner();
         // $log.debug(status);
        $rootScope.OZNotify(status, 'error'); 
      });
@@ -217,6 +219,7 @@ $scope.changePrice=function(product){
             }
 
             }).error(function (data, status, headers, cfg) {
+             $rootScope.hideSpinner(); 
               // $log.debug(status);
              $rootScope.OZNotify(status, 'error'); 
            });
@@ -257,6 +260,7 @@ $scope.changePrice=function(product){
             }
 
             }).error(function (data, status, headers, cfg) {
+             $rootScope.hideSpinner(); 
               // $log.debug(status);
              $rootScope.OZNotify(status, 'error'); 
            });
@@ -289,6 +293,7 @@ $scope.changePrice=function(product){
 
 
             }).error(function (data, status, headers, cfg) {
+             $rootScope.hideSpinner(); 
               // $log.debug(status);
              $rootScope.OZNotify(status, 'error'); 
            });

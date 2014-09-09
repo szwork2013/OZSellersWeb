@@ -550,6 +550,7 @@ $scope.handleSaveProductResponse=function(data, status, headers, config){
          
         }
        }, function (error) {
+         $rootScope.hideSpinner();
          $rootScope.OZNotify("Server Error:" + error.status, 'error');  
        });
   }
@@ -572,6 +573,7 @@ $scope.handleSaveProductResponse=function(data, status, headers, config){
           $scope.handleGetProductSuccess(successData); 
         }
       }, function (error) { //if error geting product
+        $rootScope.hideSpinner();
         $rootScope.OZNotify("Server Error:" + error.status, 'error');
         $scope.ErrMsging=1;
         document.getElementById("ErrMsging").innerHTML = "Server Error:" + error.status;
@@ -723,6 +725,7 @@ $scope.getSelectedProduct = function (product1) {
           $rootScope.OZNotify(data.error.message, 'error'); 
         }
        }).error(function (data, status, headers, cfg) {
+        $rootScope.hideSpinner();
         // $log.debug(status);
        $rootScope.OZNotify(status, 'error'); 
      });
@@ -751,6 +754,7 @@ $scope.getSelectedProduct = function (product1) {
                 $rootScope.OZNotify(data.error.message, 'error'); 
               }
              }).error(function (data, status, headers, cfg) {
+              $rootScope.hideSpinner();
               // $log.debug(status);
              $rootScope.OZNotify(status, 'error'); 
            });
