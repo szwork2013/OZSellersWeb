@@ -58,7 +58,7 @@ $log.debug($rootScope.orderConfigStatus);
       $scope.init();  
       $rootScope.selectedBranchId=selectedBranchId;
       $scope.getBranchAddress($rootScope.selectedBranchId);
-      $scope.getLatestOrders();
+      $scope.getLatestOrdersWithSpinner();
     });
 
    $scope.getBranchAddress=function(selectedBranchId){
@@ -73,6 +73,27 @@ $log.debug($rootScope.orderConfigStatus);
    }
     
    $scope.getLatestOrders=function(){
+      if($scope.tabForOrders.recieved == true){
+       $scope.getReceivedLatest();
+     }
+     else if($scope.tabForOrders.approval == true){
+       $scope.getApprovedLatest();
+     }
+     else if($scope.tabForOrders.processing == true){
+        $scope.getProcessingLatest();
+     }
+     else if($scope.tabForOrders.delivery == true){
+       $scope.getDeliveryLatest();
+     }
+      else if($scope.tabForOrders.past == true){
+       $scope.getPastOrdersLatest();
+     }
+      else if($scope.tabForOrders.product == true){
+       $scope.getProductOrdersLatest();
+     }
+   };
+
+   $scope.getLatestOrdersWithSpinner=function(){
       if($scope.tabForOrders.recieved == true){
        $scope.getReceived();
      }
@@ -94,8 +115,41 @@ $log.debug($rootScope.orderConfigStatus);
    };
 
 
-
 $scope.getReceived=function(){
+  $scope.hideReceivedOrders;
+    $scope.resetCounters();
+    // $scope.orders=[];
+    if( $rootScope.selectedBranchId && $rootScope.selectedproviderid){
+       $rootScope.showSpinner();
+     ProviderServices.get_Orders.getOrders({
+        branchid: $rootScope.selectedBranchId,
+        providerid:$rootScope.selectedproviderid,
+        criteriastatus:'recieved'
+       },
+        function (successData) {
+        if (successData.success ) {
+           $rootScope.hideSpinner();
+             $scope.orders=successData.success.suborders;
+             $scope.hideReceivedOrders=false;
+             // $rootScope.TotalOrdersCount=successData.success.suborders.length;
+             $log.debug($scope.orders);
+        } else {
+           $scope.orders=[];
+              $scope.hideReceivedOrders=true;
+              // $rootScope.OZNotify(successData.error.message, 'error');  
+               if(successData.error.code=='AL001'){
+                  $rootScope.showModal();
+                }
+        }
+       }, function (error) {
+         $rootScope.hideSpinner();
+         $scope.hideReceivedOrders=true;
+         $rootScope.OZNotify("Server Error:" + error.status, 'error');
+       });
+     }
+ };
+
+$scope.getReceivedLatest=function(){
   $scope.hideReceivedOrders;
     $scope.resetCounters();
     // $scope.orders=[];
@@ -127,7 +181,41 @@ $scope.getReceived=function(){
  };
 
    $scope.getApproved=function(){
-    $scope.hideApproveOrders
+    $scope.hideApproveOrders;
+    $scope.resetCounters();
+    // $scope.orders=[];
+    if( $rootScope.selectedBranchId && $rootScope.selectedproviderid){
+       $rootScope.showSpinner();
+     ProviderServices.get_Orders.getOrders({
+        branchid: $rootScope.selectedBranchId,
+        providerid:$rootScope.selectedproviderid,
+        criteriastatus:'approved'
+       },
+        function (successData) {
+           $rootScope.hideSpinner();
+        if (successData.success ) {
+             $scope.orders=successData.success.suborders;
+             $scope.hideApproveOrders=false;
+             // $rootScope.TotalOrdersCount=successData.success.suborders.length;
+             $log.debug($scope.orders);
+        } else {
+           $scope.orders=[];
+              $scope.hideApproveOrders=true;
+              // $rootScope.OZNotify(successData.error.message, 'error');  
+               if(successData.error.code=='AL001'){
+                  $rootScope.showModal();
+                }
+        }
+       }, function (error) {
+         $rootScope.hideSpinner();
+         $scope.hideApproveOrders=true;
+         $rootScope.OZNotify("Server Error:" + error.status, 'error');
+       });
+     }
+ };
+
+ $scope.getApprovedLatest=function(){
+    $scope.hideApproveOrders;
     $scope.resetCounters();
     // $scope.orders=[];
     if( $rootScope.selectedBranchId && $rootScope.selectedproviderid){
@@ -159,6 +247,41 @@ $scope.getReceived=function(){
 
 
  $scope.getProcessing=function(){
+  $scope.hideProcessingOrders;
+    $scope.resetCounters();
+    // $scope.orders=[];
+    if( $rootScope.selectedBranchId && $rootScope.selectedproviderid){
+       $rootScope.showSpinner();
+     ProviderServices.get_Orders.getOrders({
+        branchid: $rootScope.selectedBranchId,
+        providerid:$rootScope.selectedproviderid,
+        criteriastatus:'packing'
+       },
+        function (successData) {
+           $rootScope.hideSpinner();
+          // $log.debug("calling.......");
+        if (successData.success ) {
+             $scope.orders=successData.success.suborders;
+             $scope.hideProcessingOrders=false;
+             // $scope.processingOrdersCount=$scope.orders.length;
+              $log.debug($scope.orders);
+        } else {
+           $scope.orders=[];
+             $scope.hideProcessingOrders=true;
+             // $rootScope.OZNotify(successData.error.message, 'error');  
+              if(successData.error.code=='AL001'){
+                  $rootScope.showModal();
+                }
+        }
+       }, function (error) {
+         $rootScope.hideSpinner();
+         $scope.hideProcessingOrders=true;
+         $rootScope.OZNotify("Server Error:" + error.status, 'error');
+       });
+     }
+ };
+
+ $scope.getProcessingLatest=function(){
   $scope.hideProcessingOrders;
     $scope.resetCounters();
     // $scope.orders=[];
@@ -196,6 +319,40 @@ $scope.getReceived=function(){
     $scope.resetCounters();
     // $scope.orders=[];
     if( $rootScope.selectedBranchId && $rootScope.selectedproviderid){
+       $rootScope.showSpinner();
+     ProviderServices.get_Orders.getOrders({
+        branchid: $rootScope.selectedBranchId,
+        providerid:$rootScope.selectedproviderid,
+        criteriastatus:'delivery'
+       },
+        function (successData) {
+           $rootScope.hideSpinner();
+        if (successData.success ) {
+             $scope.orders=successData.success.suborders;
+             $scope.hideDeliveryOrders=false;
+             // $scope.deliveryOrdersCount=$scope.orders.length;
+              // $log.debug($scope.orders);
+        } else {
+           $scope.orders=[];
+             $scope.hideDeliveryOrders=true;
+             // $rootScope.OZNotify(successData.error.message, 'error');  
+              if(successData.error.code=='AL001'){
+                  $rootScope.showModal();
+                }
+        }
+       }, function (error) {
+         $rootScope.hideSpinner();
+         $scope.hideDeliveryOrders=true;
+         $rootScope.OZNotify("Server Error:" + error.status, 'error');
+       });
+     }
+   };
+
+    $scope.getDeliveryLatest=function(){
+    $scope.hideDeliveryOrders;
+    $scope.resetCounters();
+    // $scope.orders=[];
+    if( $rootScope.selectedBranchId && $rootScope.selectedproviderid){
      ProviderServices.get_Orders.getOrders({
         branchid: $rootScope.selectedBranchId,
         providerid:$rootScope.selectedproviderid,
@@ -224,6 +381,40 @@ $scope.getReceived=function(){
 
 
    $scope.getPastOrders=function(){
+    $scope.hidePastOrders;
+    $scope.resetCounters();
+    // $scope.orders=[];
+    if( $rootScope.selectedBranchId && $rootScope.selectedproviderid){
+       $rootScope.showSpinner();
+     ProviderServices.get_Orders.getOrders({
+        branchid: $rootScope.selectedBranchId,
+        providerid:$rootScope.selectedproviderid,
+        criteriastatus:'past'
+       },
+        function (successData) {
+           $rootScope.hideSpinner();
+        if (successData.success ) {
+             $scope.orders=successData.success.suborders;
+             $scope.hidePastOrders=false;
+             // $scope.pastOrdersCount=$scope.orders.length;
+              $log.debug($scope.orders);
+        } else {
+           $scope.orders=[];
+             $scope.hidePastOrders=true;
+             // $rootScope.OZNotify(successData.error.message, 'error');  
+              if(successData.error.code=='AL001'){
+                  $rootScope.showModal();
+                }
+        }
+       }, function (error) {
+         $rootScope.hideSpinner();
+         $scope.hidePastOrders=true;
+         $rootScope.OZNotify("Server Error:" + error.status, 'error');
+       });
+     }
+  };
+
+   $scope.getPastOrdersLatest=function(){
     $scope.hidePastOrders;
     $scope.resetCounters();
     // $scope.orders=[];
@@ -258,6 +449,23 @@ $scope.getReceived=function(){
     $scope.getProductOrders=function(){
       $scope.hideProductOrders
       $scope.resetCounters();
+      $scope.orders=[];
+      $rootScope.showSpinner();
+      $http({
+          method: 'GET',
+          url: 'api/allorders/'+ $rootScope.selectedBranchId+'?type=product&providerid='+$rootScope.selectedproviderid,
+         }).success(function(data, status, headers, cfg){
+            $rootScope.hideSpinner();
+            $scope.handleGetProductOrders(data);
+         }).error(function(data, status, headers, cfg){
+            $rootScope.hideSpinner();
+            $rootScope.OZNotify(status, 'error');  
+         });
+     };
+
+  $scope.getProductOrdersLatest=function(){
+      $scope.hideProductOrders
+      $scope.resetCounters();
        $scope.orders=[];
       $http({
           method: 'GET',
@@ -268,7 +476,6 @@ $scope.getReceived=function(){
             $rootScope.OZNotify(status, 'error');  
          });
      };
-
 
      $scope.handleGetProductOrders=function(data){
       if(data.success){
