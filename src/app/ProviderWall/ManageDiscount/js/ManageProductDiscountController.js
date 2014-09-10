@@ -107,14 +107,23 @@ angular.module('oz.ProviderApp')
 
     $scope.containerOfDiscountCode = {};
 
-   $scope.$watch('selectedBranchId', function (selectedBranchId) {
-        $scope.containerOfDiscountCode = [];    
+    $scope.currentSelectedDiscount = [];
 
-        $scope.discountid = '';
+    $scope.discountid = '';
+
+   $scope.$watch('selectedBranchId', function (selectedBranchId) {
+            
+            $scope.containerOfDiscountCode = [];    
+
+            $scope.discountid = '';
 
             $scope.productsList = [];
 
             $scope.finalSelectedProducts = [];
+
+            $scope.currentSelectedDiscount = [];
+
+
        if(selectedBranchId !== undefined && selectedBranchId !== '')
         {
 
@@ -127,8 +136,6 @@ angular.module('oz.ProviderApp')
     $scope.productsList = [];
 
     $scope.finalSelectedProducts = [];
-
-    $scope.discountid = '';
 
     $scope.set = 0;
 
@@ -225,7 +232,7 @@ angular.module('oz.ProviderApp')
             }
             if(data.success)
             {    $scope.productsList = [];
-                 $scope.productsList = data.success.products; 
+                 $scope.productsList = angular.copy(data.success.products); console.log(JSON.stringify($scope.productsList));
                  countProductsLength = angular.copy(data.success.products);
             } 
     });
@@ -245,7 +252,7 @@ angular.module('oz.ProviderApp')
             }
             if(data.success)
             {    $scope.finalSelectedProducts = [];
-                 $scope.finalSelectedProducts = data.success.products; 
+                 $scope.finalSelectedProducts = angular.copy(data.success.products); console.log('data selected ----' + JSON.stringify($scope.finalSelectedProducts));
                  for(var i = 0 ; i<$scope.finalSelectedProducts.length; i ++)
                  {
                     for(var j = 0; j < $scope.productsList.length ; j ++)
@@ -256,7 +263,7 @@ angular.module('oz.ProviderApp')
                         }
                     }
                  }
-
+              
                  for(var i = 0 ;i<$scope.productsList.length;i++)
                  {
                     $scope.productsList[i].$$hashKey = undefined;
@@ -351,9 +358,9 @@ angular.module('oz.ProviderApp')
             $scope.productids.push($scope.finalSelectedProducts[i].productid);
         }
         $scope.content = {'products' : $scope.productids};
-        if($scope.discountid === '')
+        if($scope.discountid === '' || $scope.currentSelectedDiscount.length === 0)
         {
-            $rootScope.OZNotify('Please select discount code from side list! If list is empty then please add discount code','error');
+            $rootScope.OZNotify('Please select discount code from dropdown list! If list is empty then please add discount code','error');
         }
         else
         {   //console.log('///////'+JSON.stringify($scope.content));
@@ -404,18 +411,26 @@ angular.module('oz.ProviderApp')
             $rootScope.OZNotify('Some issue with server! Please try after some time', 'error');$scope.showSpinners = 0;
     });
 
-    $scope.assignCodes = function(id, hover)
+    $scope.assignCodes = function(id)
     {
-           $scope.discountid = id;
-           for(var z = 0 ; z < $scope.containerOfDiscountCode.length ; z ++)
+           $scope.discountid = id.discountid;
+           // for(var z = 0 ; z < $scope.containerOfDiscountCode.length ; z ++)
+           // {
+           //      document.getElementById(z).style.backgroundColor = '#FFFFFF';
+           // }
+           // document.getElementById(hover).style.backgroundColor = '#ddd';
+           $scope.currentSelectedDiscount = [];
+           for(var i = 0 ; i < $scope.containerOfDiscountCode.length; i++)
            {
-                document.getElementById(z).style.backgroundColor = '#FFFFFF';
+            if(id.discountid === $scope.containerOfDiscountCode[i].discountid)
+            {
+                  $scope.currentSelectedDiscount = angular.copy($scope.containerOfDiscountCode[i]);
+            }
            }
-           document.getElementById(hover).style.backgroundColor = '#ddd';
            $scope.productsList = [];
            $scope.finalSelectedProducts = [];
            ProviderServicesList.getAllProductList();
-           ProviderServicesList.getExistingProductDetails(id);
+           ProviderServicesList.getExistingProductDetails(id.discountid);
     };
 
     $scope.edit = function(list)

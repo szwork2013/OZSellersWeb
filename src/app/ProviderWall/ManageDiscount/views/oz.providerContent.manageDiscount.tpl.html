@@ -1,4 +1,4 @@
-<div style="border: 1px solid #EEE8E8; border-radius:6px; padding:10px;" class="container">
+  <div style="border: 1px solid #EEE8E8; border-radius:6px; padding:10px;" class="container">
 <!-- Add discounts code -->
 
 <div id="tabs" >
@@ -29,58 +29,103 @@
 
 
 
-  <div style = 'margin:0px;padding:20px;' ng-if = 'assignDiscountCodes === 1 && manageDiscountCodes === 0' class="row">
-    <div style= 'border: 1px solid #ccc; border-radius:4px;' class="col-md-2">
-       <table class = 'table table-hover' style = 'margin-bottom : 4%;'>
-           <tr>
-               <td style = 'border-top:0px; border-bottom : 1px solid #ccc;'> <h5> Discount Codes </h5> </td>
-           </tr>
-           <tr ng-repeat = 'list in containerOfDiscountCode'>
-               <td ng-bind = 'list.discountcode' ng-click = 'assignCodes(list.discountid, $index)' class = 'cursorPointerHyperlink' id = '{{$index}}' ng-class = '{selectBackgroundColor : $first}'>
-          <!--      <select  class=" form-control" ng-model="selectedDiscountId" ng-options="code.discountid as code.discountcode for code in containerOfDiscountCode" ></select> -->
-               </td>
-           </tr>
-       </table>
-    </div>
-    <div style= 'border: 1px solid #ccc; border-radius:4px;' class="col-md-5">
-      <table class = 'table table-hover' style = 'margin-bottom : 0%;'>
-           <tr>
-               <td style = 'border-top:0px'>  <input type= 'text' class = 'form-control' ng-model = 'searchProduct' placeholder = 'Search products'></td>
-           </tr>
-            <tr>
-               <td> <div class = 'productNameWidth cursorPointerHyperlink'  ng-click= 'addAllProductsToFinalList()' >Add All Products</div></td>
-           </tr>
-          <tr ng-repeat = 'list in productsList | filter : searchProduct'>
-              <td  ng-click = 'addToFinalProductList(list, $index)' style = 'cursor : e-resize' ><span ng-bind = 'list.productname' > </span></td>
-          </tr>
-      </table>
-    </div>
-<!--     <div class="col-md-2 border-radius" style= 'border: 0px solid #ccc;'>
-     <div > 
-          <div><button class = 'btn btn-default'>>></button></div>
-                <br>
-          <div><button class = 'btn btn-default'><<</button></div>
-     </div> 
-    </div> -->
-    <div style= 'border: 1px solid #ccc;cursor : w-resize;border-radius:4px;' class="col-md-5" >
-       <table class = 'table table-hover' style = 'margin-bottom : 0%;'>
-           <tr>
-               <td style = 'border-top:0px'> <input type= 'text' class = 'form-control' ng-model = 'findProducts' placeholder = 'Search products'></td>
-           </tr>
-           <tr>
-               <td> <div class = 'productNameWidth cursorPointerHyperlink'  ng-click= 'clearAllProductsToFinalList()' >Remove All Products </div></td>
-           </tr>
-           <tr ng-repeat = 'list in finalSelectedProducts | filter : findProducts track by $index ' > 
-               <td ng-bind = 'list.productname' style = 'cursor : w-resize' ng-click='insertProductToProductList(list,$index)'></td>
-           </tr>
+  <div style = 'margin:0px;padding:20px;' ng-if = 'assignDiscountCodes === 1 && manageDiscountCodes === 0' >
+    <div class = 'row' style = 'margin : 5px;'>
+        <div class = 'row'>
+            <div style= 'border: 1px solid #ccc; border-radius:4px;' class="col-md-12">
+               <select  class=" form-control" ng-options="list as list.discountcode for list in containerOfDiscountCode" ng-model="list.discountid"  style = 'width: 40%; float : right;margin-bottom : 10px;margin-top : 7px;'  ng-change = 'assignCodes(list.discountid)'></select>
+                <span style = 'float: right;margin-top: 12px;' > Please select discount code from the list : &nbsp;&nbsp;</span>
 
-           <tr>
-               <td>
-                   <button class = 'btn btn-info' ng-click = 'assignDiscountsToProducts()'> Apply Code To Products </button>
-               </td>
-          </tr>
-       </table>
-    </div>
+            </div>
+        </div>   
+        <div class = 'row'>
+                <table class = 'table' ng-if = 'currentSelectedDiscount.length !== 0' style = 'border : 1px solid #ccc; border-radius : 5px;'>
+                      <tr>
+                        <th style = 'width : 20%'> Discount Coupen Code </th>
+                        <th style = 'width : 40%'> Description </th>
+                        <th style = 'width : 10%'> Percent</th>
+                        <th style = 'width : 15%'> Start Date </th>
+                        <th style = 'width : 15%'> End Date </th>    
+                      </tr>
+                      <tr>
+                        <td ng-bind = 'currentSelectedDiscount.discountcode'></td>
+                        <td ng-bind = 'currentSelectedDiscount.description' style = 'word-break: break-word;'></td>
+                        <td ng-bind = 'currentSelectedDiscount.percent'></td>
+                        <td ng-bind = 'currentSelectedDiscount.startdate | date: fullDate'></td>
+                        <td ng-bind = 'currentSelectedDiscount.expirydate | date: fullDate'></td>
+                      </tr>
+                </table>
+        </div> 
+     </div>   
+
+     <div class = 'row' style = 'margin : 5px;'>
+            <div style= 'border: 1px solid #ccc; border-radius:4px;' class="col-md-6">
+             <!--  <table class = 'table table-hover' style = 'margin-bottom : 0%;'>
+                   <tr>
+                       <td style = 'border-top:0px'>  <input type= 'text' class = 'form-control' ng-model = 'searchProduct' placeholder = 'Search products'></td>
+                   </tr>
+                    <tr>
+                       <td> <div class = 'productNameWidth cursorPointerHyperlink'  ng-click= 'addAllProductsToFinalList()' >Add All Products</div></td>
+                   </tr>
+                  <tr ng-repeat = 'list in productsList | filter : searchProduct'>
+                      <td  ng-click = 'addToFinalProductList(list, $index)' style = 'cursor : e-resize' ><span ng-bind = 'list.productname' > </span></td>
+                  </tr>
+              </table> -->
+              <div class = 'row'>
+                    <div style = 'margin : 5px' > <h5> Products without discount code applied </h5> </div>
+              </div>
+              <div class = 'row' style = 'padding : 5px;'>
+                      <input type= 'text' class = 'form-control' ng-model = 'searchProduct' placeholder = 'Filter products' >
+              </div>
+              <div class = 'row'>
+                      <div class = 'productNameWidth cursorPointerHyperlink' style="margin : 5px;" ng-click= 'addAllProductsToFinalList()' >Add All Products</div>
+
+              </div>      
+              <hr style = 'margin-bottom : 5px; margin-top : 5px;'>    
+              <div class = 'row'>
+                  <div ng-repeat = 'list in productsList | filter : searchProduct'>
+                      <div class = 'row' style = 'cursor : e-resize; ' ng-click = 'addToFinalProductList(list, $index)' data-toggle="tooltip" data-placement="left" title="Click on the product to move it into next list">
+                          <div class = 'col-xs-6 col-ms-6'>
+                              <span  style = 'margin-left : 5px;margin-right : 5px;' ng-bind = 'list.productname'></span>
+                          </div>
+                          <div class = 'col-xs-6 col-ms-6'>
+                          </div>
+                      </div>    
+                      <hr style = 'margin-bottom : 5px; margin-top : 5px;'>
+                  </div>    
+              </div>
+            </div>
+
+            <div style= 'border: 1px solid #ccc;cursor : border-radius:4px; ' class="col-md-6 " >
+
+              <div class = 'row'>
+                    <div style = 'margin : 5px' > <h5> Products with discount code applied </h5> </div>
+              </div>
+              <div class = 'row' style = 'padding : 5px;'>
+                      <input type= 'text' class = 'form-control' ng-model = 'findProducts' placeholder = 'Filter products' >
+              </div>
+              <div class = 'row'>
+                      <div class = 'productNameWidth cursorPointerHyperlink' style="margin : 5px;" ng-click= 'clearAllProductsToFinalList()' >Remove All Products</div>
+                
+              </div>   
+              <hr style = 'margin-bottom : 5px; margin-top : 5px;'>     
+              <div class = 'row'>
+                  <div ng-repeat = 'list in finalSelectedProducts | filter : findProducts'>
+                      <div class = 'row' style = 'cursor : w-resize; ' ng-click = 'insertProductToProductList(list,$index)' data-toggle="tooltip" data-placement="right" title="Click on the product to move it to previous list">
+                          <div class = 'col-xs-6 col-ms-6'>
+                              <span  style = 'margin-left : 5px;margin-right : 5px;' ng-bind = 'list.productname'></span>
+                          </div>
+                          <div class = 'col-xs-6 col-ms-6'>
+                          </div>
+                      </div>    
+                      <hr style = 'margin-bottom : 5px; margin-top : 5px;'>
+                  </div>    
+              </div>
+              <div class = 'row'>
+                      <button class = 'btn btn-info' ng-click = 'assignDiscountsToProducts()'  style = 'float : right; margin : 5px;'> Apply Code To Products </button>
+              </div>
+            </div>
+        </div>    
   </div>
 
 <div ng-if = 'manageDiscountCodes === 1 && assignDiscountCodes === 0' style = 'padding-top:5%'>
