@@ -67,7 +67,8 @@ angular.module('oz.ProviderApp')
               productname: successData.success.proudctcatalog[i].productname,
               productcode: successData.success.proudctcatalog[i].productcode,
               price: successData.success.proudctcatalog[i].price.value,
-              newprice: successData.success.proudctcatalog[i].price.value
+              newprice: successData.success.proudctcatalog[i].price.value,
+              discount:successData.success.proudctcatalog[i].discount
             })
          };
          // $log.debug($scope.productPricelist);

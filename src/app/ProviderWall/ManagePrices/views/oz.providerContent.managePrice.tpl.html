@@ -61,7 +61,7 @@
     <table class="table child table-hover  prodo-productTableFont">
     
     <tr>
-       <td colspan="3" ng-show="editorPrice.editorEnabled==1">
+       <td colspan="5" ng-show="editorPrice.editorEnabled==1">
         
         <div  ng-show="priceForm.$dirty" class="prodo-product-Invalid">{{priceForm.price.$error}}
               <span ng-show="priceForm.$error.required">Please enter valid product price</span>
@@ -75,24 +75,39 @@
     </tr>
 
     	<tr>
-    		<td class="ozWidth30">
+    		<td class="ozWidth20">
     			<b>Product Name [product code]</b>
     		</td>
-    		<td class="ozWidth30">
+    		<td class="ozWidth15">
     			<b> Current Price</b>
     		</td>
+        <td class="ozWidth10">
+          <b> Discount</b>
+        </td>
+         <td class="ozWidth15">
+          <b> Discounted Price</b>
+        </td>
     		<td class="ozWidth30" ng-show="editorPrice.editorEnabled==1">
     			<b> New Price</b>
     		</td>
     	</tr>
 
     	<tr ng-repeat="product in productPricelist | filter : searchPro1"> 
-    	   <td class="ozWidth30">
+    	   <td class="ozWidth20">
     		 <span >{{product.productname}} [ {{product.productcode}} ]</span>
     		</td>
-    		<td class="ozWidth30">
+    		<td class="ozWidth15">
     			&#x20B9;   <span ng-bind="product.price "></span>
-    		</td><!-- class="prodo-product-Invalid" prodo-validation-->
+    		</td>
+         <td class="ozWidth10">
+           <span ng-hide="product.discount.percent=='none'"><span ng-bind="product.discount.percent" > </span>%</span>
+           <span ng-show="product.discount.percent=='none'">NA</span>
+        </td>
+         <td class="ozWidth15">
+          <span ng-hide="product.discount.percent=='none'">&#x20B9; <span ng-bind="product.discount.discountedprice" > </span></span>
+          <span ng-show="product.discount.percent=='none'">NA</span>
+        </td>
+        <!-- class="prodo-product-Invalid" prodo-validation-->
     		<td class="ozWidth30" ng-show="editorPrice.editorEnabled==1">
     			 <input  ng-model="product.newprice"   id="prodo-product-features_textfield" class="form-control prodo-validation" ng-maxlength="50" min="0" type="number"   required  />  
     		</td>
