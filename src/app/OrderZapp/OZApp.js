@@ -59,9 +59,10 @@ angular.module('oz.OrderZappApp',['ui.router', 'ui.bootstrap', 'ngAnimate','text
     });
 
 $scope.getProviders=function(){
-
+        $rootScope.showSpinner();
          ProviderServices.get_allProviders.getAllProviders(
              function (successData) {
+              $rootScope.hideSpinner();
               if (successData.success == undefined) {
                 $rootScope.provider={};
                 $rootScope.providers=[];
@@ -84,6 +85,7 @@ $scope.getProviders=function(){
               }
               $state.transitionTo('providerorders.view.orderbyBranch');
             }, function (error) {
+              $rootScope.hideSpinner();
               $rootScope.OZNotify("Server Error:" + error.status, 'error');
             });
 };
@@ -147,9 +149,11 @@ $scope.getProviders=function(){
      $rootScope.selectedBranchId;
      // $rootScope.branches = [];
      // $scope.selectedBranchId;
+     $rootScope.showSpinner();
      ProviderServices.get_branches.getBranches({providerid:providerid},
       function (successData) {
-      if (successData.success == undefined) {
+       $rootScope.hideSpinner();
+       if (successData.success == undefined) {
        $rootScope.selectedBranchId="";
        $rootScope.branches = [];
        $rootScope.deliveryTimeSlots=[];
@@ -170,6 +174,7 @@ $scope.getProviders=function(){
        }
       }
      }, function (error) {
+       $rootScope.hideSpinner();
        $rootScope.OZNotify("Server Error:" + error.status, 'error');
      });
    };
