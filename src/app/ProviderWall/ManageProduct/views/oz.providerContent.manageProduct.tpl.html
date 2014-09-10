@@ -526,17 +526,20 @@
 
           <tr >
 
-            <td class="prodo-width50"> 
-             <span class="prodo-fontWeight">Food Type:    &nbsp; </span><span ng-bind="product.foodtype" > </span>  
-             <i ng-hide="product.foodtype=='both'" class="fa fa-circle" ng-class="{veg : (product.foodtype == 'veg'.toLowerCase()) , nonveg : (product.foodtype == 'non-veg'.toLowerCase()) }"></i>
-              <i ng-show="product.foodtype=='both'" class="fa fa-circle veg"></i>
-              <i ng-show="product.foodtype=='both'" class="fa fa-circle nonveg"></i>
-
-             </td>
-
               <td class="prodo-width50"> 
                <span class="prodo-fontWeight">Price:    &nbsp; </span> <span ng-bind="product.price.currency" > </span>  <span ng-bind="product.price.value" ></span>&nbsp; /  <span ng-bind="product.price.uom" > </span>
              </td>
+
+              <td class="prodo-width50" ng-hide="product.discount.percent=='none'"> 
+               <span class="prodo-fontWeight">Discount:  &nbsp; </span>  <span ng-bind="product.discount.percent" > </span>% &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+               <span class="prodo-fontWeight">Discounted Price:  &nbsp; </span>  <span ng-bind="product.price.currency" > </span> <span ng-bind="product.discount.discountedprice" > </span>&nbsp; /  <span ng-bind="product.price.uom" > </span>  
+             </td>
+
+             <td class="prodo-width50" ng-show="product.discount.percent=='none'"> 
+               <span class="prodo-fontWeight">Discount:  &nbsp; </span> Not Applied 
+             </td>
+
          
           </tr>
            <tr >
@@ -556,9 +559,18 @@
          
             
           <tr  class="prodo-productTableFont" >
-          	<td  >  <span class="prodo-fontWeight">Category : &nbsp;</span><span  class="prodo-descriptionDisplay">  {{product.category.ancestors[0].categoryname}}  >  {{product.category.ancestors[1].categoryname}}  >  {{product.category.ancestors[2].categoryname}} >  {{product.category.categoryname}}  </span></td>
+          	 <td  >  <span class="prodo-fontWeight">Category : &nbsp;</span><span  class="prodo-descriptionDisplay">  {{product.category.ancestors[0].categoryname}}  >  {{product.category.ancestors[1].categoryname}}  >  {{product.category.ancestors[2].categoryname}} >  {{product.category.categoryname}}  </span></td>
+             
+             <td > 
+             <span class="prodo-fontWeight">Food Type:    &nbsp; </span><span ng-bind="product.foodtype" > </span>  
+             <i ng-hide="product.foodtype=='both'" class="fa fa-circle" ng-class="{veg : (product.foodtype == 'veg'.toLowerCase()) , nonveg : (product.foodtype == 'non-veg'.toLowerCase()) }"></i>
+              <i ng-show="product.foodtype=='both'" class="fa fa-circle veg"></i>
+              <i ng-show="product.foodtype=='both'" class="fa fa-circle nonveg"></i>
 
-           <td  ng-show="product.leadtime">  <span class="prodo-fontWeight">Lead Time : &nbsp;</span><span  class="prodo-descriptionDisplay">  {{product.leadtime.value}}  {{product.leadtime.option}} </span></td>
+             </td>
+             
+
+          <!--  <td  ng-show="product.leadtime">  <span class="prodo-fontWeight">Lead Time : &nbsp;</span><span  class="prodo-descriptionDisplay">  {{product.leadtime.value}}  {{product.leadtime.option}} </span></td> -->
           </tr>
 
 		 <tr>
