@@ -81,14 +81,21 @@
                       <div class = 'productNameWidth cursorPointerHyperlink' style="margin : 5px;" ng-click= 'addAllProductsToFinalList()' >Add All Products</div>
 
               </div>      
-              <hr style = 'margin-bottom : 5px; margin-top : 5px;'>    
+              <hr style = 'margin-bottom : 5px; margin-top : 5px;'>  
+
+              <div class = 'row'>
+                  <div class = 'col-md-6 col xs-6'><h5>Product Name</h5></div>
+                  <div class = 'col-md-6 col xs-6'><h5>Product Price</div>
+              </div>
+
               <div class = 'row'>
                   <div ng-repeat = 'list in productsList | filter : searchProduct'>
-                      <div class = 'row' style = 'cursor : e-resize; ' ng-click = 'addToFinalProductList(list, $index)' data-toggle="tooltip" data-placement="left" title="Click on the product to move it into next list">
+                      <div class = 'row' style = 'cursor : e-resize; ' ng-click = 'addToFinalProductList(list, $index)' data-container="body" data-toggle="popover " data-placement="left" data-content = "Click on the product to move it into next list">
                           <div class = 'col-xs-6 col-ms-6'>
                               <span  style = 'margin-left : 5px;margin-right : 5px;' ng-bind = 'list.productname'></span>
                           </div>
                           <div class = 'col-xs-6 col-ms-6'>
+                              <span ng-bind = 'list.price.value + " " + list.price.currency'></span>
                           </div>
                       </div>    
                       <hr style = 'margin-bottom : 5px; margin-top : 5px;'>
@@ -110,12 +117,21 @@
               </div>   
               <hr style = 'margin-bottom : 5px; margin-top : 5px;'>     
               <div class = 'row'>
+                      <div class = 'col-xs-4 col-md-4'><h5>Product Name</h5></div>
+                      <div class = 'col-xs-4 col-md-4'><h5>Actual Price </h5></div>
+                      <div class = 'col-md-4 col-xs-4'><h5>Discounted Price </h5></div>
+              </div>
+              <div class = 'row'>
                   <div ng-repeat = 'list in finalSelectedProducts | filter : findProducts'>
                       <div class = 'row' style = 'cursor : w-resize; ' ng-click = 'insertProductToProductList(list,$index)' data-toggle="tooltip" data-placement="right" title="Click on the product to move it to previous list">
-                          <div class = 'col-xs-6 col-ms-6'>
+                          <div class = 'col-xs-4 col-ms-4'>
                               <span  style = 'margin-left : 5px;margin-right : 5px;' ng-bind = 'list.productname'></span>
                           </div>
-                          <div class = 'col-xs-6 col-ms-6'>
+                          <div class = 'col-xs-4 col-ms-4'>
+                                  <span ng-bind = 'list.price.value + " " + list.price.currency'></span>
+                          </div>
+                          <div class = 'col-xs-4 col-ms-4'>
+                                  <span ng-bind = 'list.price.discountedprice + " " + list.price.currency'></span>
                           </div>
                       </div>    
                       <hr style = 'margin-bottom : 5px; margin-top : 5px;'>
@@ -293,3 +309,33 @@
 
  </div>
 </div>
+
+<div class="modal fade" id="resultDiscountModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm" style="width: 35%; padding-top: 100px;">
+     <div class="modal-content">
+        <div class="prodo-session-modal-body-theme modal-header">
+           <center><h4 class="modal-title" style="margin-left: 10px; ">Alert</h4></center>
+        </div>
+        <div class="modal-body">
+             <p class="prodo-session-modal-text-theme text-info text-left"> 
+                <strong>
+                  <em>Discount code not applied for the following products</em>
+                </strong>  
+                    <ol>
+                          <li ng-repeat = 'list in successMessage'>
+                            <span ng-bind = 'list'></span>
+                          </li>
+                    </ol>   
+                  <strong class="prodo-session-modal-text-theme text-info text-left">     
+                      <em> The reason for not applying discount code for above products is that the above products is already been applied with other discount code.</em>
+                      <em> All other products are applied with the selected discount code.</em>
+                  </strong>    
+              
+             </p>
+         </div>
+        <div class="modal-footer">
+             <button type="button" class="prodo-button-theme btn btn-primary" data-dismiss="modal">continue</button>
+         </div>
+      </div>
+   </div>
+ </div>

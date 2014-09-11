@@ -1,27 +1,9 @@
 angular.module('oz.ProviderApp')
   .controller('OZProductDiscountController', ['$scope', '$state', '$http', '$timeout', '$sce', '$log', 'UserSessionService',  'ProviderServicesList', '$rootScope', function($scope, $state, $http, $timeout, $sce, $log, UserSessionService, ProviderServicesList, $rootScope) {
-  
-    
-    // $rootScope.selectedproviderid
-    // ProviderServices.
 
-    // ProviderServicesList.getAllProducts($rootScope.selectedproviderid);
-      
-    // var cleanUpEventGotAllProducts = $scope.$on("gotAllProductsWithDiscounts",function(event,data){
-    //         if(data.error)
-    //         {
-    //             $rootScope.OZNotify(data.error.message,'error');
-    //         }
-    //         if(data.success)
-    //         {   
-    //         } 
-    // });
     $scope.codeContent = {'discountcode':'', 'description' : '', 'percent' : '', 'startdate': '', 'expirydate' : ''};                                                                               
-    // var cleanUpEventNotGotAllProducts = $scope.$on("notGotAllProductsWithDiscounts",function(event,data){
-    //         $rootScope.OZNotify('Some issue with server! Please try after some time', 'error');$scope.showSpinners = 0;
-    // });
-    $scope.temporaryContentArray = [];
 
+    $scope.temporaryContentArray = [];
 
     $scope.today =  new Date();
 
@@ -73,7 +55,6 @@ angular.module('oz.ProviderApp')
 
     $scope.cancelAll = function()
     {
-            //$scope.codeContent = {'code':'', 'description' : '', 'percentage' : '', 'startdate': '', 'enddate' : ''}; 
             $scope.errorForEmptyCode = '';
             $scope.errorForEmptyDescription= '';
             $scope.errorForInvalidPercentage = '';
@@ -163,6 +144,7 @@ angular.module('oz.ProviderApp')
          $scope.finalSelectedProducts = [];
          ProviderServicesList.getAllDiscountCodes();
          ProviderServicesList.getAllProductList();
+         $scope.currentSelectedDiscount = [];
     };
 
     var cleanUpEventaddedProductDiscountCode = $scope.$on("codeAddedSuccessfully",function(event,data){
@@ -200,15 +182,13 @@ angular.module('oz.ProviderApp')
                   }
                   else
                   {
-                // $rootScope.OZNotify(data.error.message,'error');
+
                     $scope.containerOfDiscountCode = [];    $scope.discountid = '';
                 }
             }
             if(data.success)
             {    
                  $scope.containerOfDiscountCode = angular.copy(data.success.discountcodes);
-                  ProviderServicesList.getExistingProductDetails($scope.containerOfDiscountCode[0].discountid);
-                 $scope.discountid = $scope.containerOfDiscountCode[0].discountid;
                  $scope.temporaryContentArray = [];
                  $scope.temporaryContentArray = angular.copy(data.success.discountcodes);
             } 
@@ -232,19 +212,19 @@ angular.module('oz.ProviderApp')
             }
             if(data.success)
             {    $scope.productsList = [];
-                 $scope.productsList = angular.copy(data.success.products); console.log(JSON.stringify($scope.productsList));
+                 $scope.productsList = angular.copy(data.success.products); 
                  countProductsLength = angular.copy(data.success.products);
             } 
     });
                                                                             
     var cleanUpEventnotgotAllProducts = $scope.$on("getProductListFailure",function(event,data){
-            $rootScope.OZNotify('Some issue with server! Please try after some time', 'error');$scope.showSpinners = 0;
+            $rootScope.OZNotify('Some issue with server! Please try after some time', 'error');
+            $scope.showSpinners = 0;
     });
  
     var cleanUpEventGotExistingProductsWithCode = $scope.$on("gotProductContent",function(event,data){
             if(data.error)
             {
-                //$rootScope.OZNotify(data.error.message,'error');
                   if(data.error.code === 'AL001')
                   {
                         $rootScope.showModal();
@@ -252,18 +232,7 @@ angular.module('oz.ProviderApp')
             }
             if(data.success)
             {    $scope.finalSelectedProducts = [];
-                 $scope.finalSelectedProducts = angular.copy(data.success.products); console.log('data selected ----' + JSON.stringify($scope.finalSelectedProducts));
-                 for(var i = 0 ; i<$scope.finalSelectedProducts.length; i ++)
-                 {
-                    for(var j = 0; j < $scope.productsList.length ; j ++)
-                    {
-                        if($scope.productsList[j].productid === $scope.finalSelectedProducts[i].productid)
-                        {
-                            $scope.productsList.splice(j,1);
-                        }
-                    }
-                 }
-              
+                 $scope.finalSelectedProducts = angular.copy(data.success.products); 
                  for(var i = 0 ;i<$scope.productsList.length;i++)
                  {
                     $scope.productsList[i].$$hashKey = undefined;
@@ -272,8 +241,7 @@ angular.module('oz.ProviderApp')
                  {
                     $scope.finalSelectedProducts[j].$$hashKey = undefined;
                  }
-                 // $scope.productsList = _.filter($scope.productsList, function(obj){ return !_.findWhere($scope.finalSelectedProducts, obj); });
-                 // console.log('test-----'+JSON.stringify($scope.productsList));
+                 $scope.filterList();
             } 
     });
                                                                             
@@ -289,20 +257,24 @@ angular.module('oz.ProviderApp')
     
     $scope.addToFinalProductList = function(list, index)
     {   
-         // if($scope.finalSelectedProducts.length === 0)
-         // {
-         //    $scope.finalSelectedProducts.splice(0,1);
-         // }
-         $scope.finalSelectedProducts.push(list);
-         var indexOfSelectedProduct = '';
-         for(var i = 0; i<$scope.productsList.length; i++)
+         if($scope.currentSelectedDiscount.length === 0)
          {
-               if($scope.productsList[i].productname === list.productname)
-               {
-                indexOfSelectedProduct = i;
-               }
+          $rootScope.OZNotify('Please select discount code before moving product!', 'error');
          }
-         $scope.productsList.splice(indexOfSelectedProduct,1);   
+         else
+         {
+                 list.price.discountedprice = list.price.value - (list.price.value)*($scope.currentSelectedDiscount.percent/100);
+                 $scope.finalSelectedProducts.push(list);
+                 var indexOfSelectedProduct = '';
+                 for(var i = 0; i<$scope.productsList.length; i++)
+                 {
+                       if($scope.productsList[i].productname === list.productname)
+                       {
+                        indexOfSelectedProduct = i;
+                       }
+                 }
+                 $scope.productsList.splice(indexOfSelectedProduct,1);   
+       }
     };
 
     $scope.insertProductToProductList = function(list, index)
@@ -321,17 +293,23 @@ angular.module('oz.ProviderApp')
 
     $scope.addAllProductsToFinalList = function()
     {
-            if($scope.productsList.length !== 0)
+            if($scope.currentSelectedDiscount.length === 0)
             {
-                for(var i = 0; i<$scope.productsList.length ; i++)
-                    {
-                        $scope.finalSelectedProducts.push($scope.productsList[i]);
-                    }
-
+              $rootScope.OZNotify('Please select discount code before moving products!', 'error');
             }
-            // $scope.finalSelectedProducts = [];
-            // $scope.finalSelectedProducts = $scope.productsList;
-            $scope.productsList = [];
+            else
+            {
+                if($scope.productsList.length !== 0)
+                {
+                    for(var i = 0; i<$scope.productsList.length ; i++)
+                        {
+                            $scope.productsList[i].price.discountedprice = $scope.productsList[i].price.value - ($scope.productsList[i].price.value)*($scope.currentSelectedDiscount.percent/100);
+                            $scope.finalSelectedProducts.push($scope.productsList[i]);
+                        }
+
+                }
+                $scope.productsList = [];
+           }     
     };
 
     $scope.clearAllProductsToFinalList = function()
@@ -344,8 +322,7 @@ angular.module('oz.ProviderApp')
                     }
 
             }
-            // $scope.finalSelectedProducts = [];
-            // $scope.finalSelectedProducts = $scope.productsList;
+
             $scope.finalSelectedProducts = [];
 
     };
@@ -378,12 +355,14 @@ angular.module('oz.ProviderApp')
               else
               {
                 $rootScope.OZNotify(data.error.message,'error');
-               }
+                ProviderServicesList.getAllProductList();
+                ProviderServicesList.getExistingProductDetails($scope.currentSelectedDiscount.discountid);
+              }
             }
             if(data.success)
             {    
                 var varProductsArray = data.success.alreadyappliedproductids;
-                var successMessage = '';
+                $scope.successMessage = [];
                 if(varProductsArray.length !== 0)
                 {
                       for(var i = 0 ; i < varProductsArray.length; i++)
@@ -392,17 +371,25 @@ angular.module('oz.ProviderApp')
                         {
                           if(countProductsLength[j].productid === varProductsArray[i])
                           {
-                            successMessage = successMessage + ' ' + countProductsLength[j].productname + ',';
+                             $scope.successMessage.push(countProductsLength[j].productname);
                           }
 
                          }
                       }
                       var message = '';
-                      message = 'Discount code not applied for' + successMessage + ' ' + ' The reason for not applying discount code is that these products already have discount code previously applied! Rest all products the current discount code is successfully applied';
-                      $rootScope.OZNotify(message, 'success');
+                      // message = 'Discount code not applied for' + successMessage + ' ' + ' The reason for not applying discount code is that these products already have discount code previously applied! Rest all products the current discount code is successfully applied';
+                      // $rootScope.OZNotify(message, 'success');
+                       ProviderServicesList.getExistingProductDetails($scope.currentSelectedDiscount.discountid);ProviderServicesList.getAllProductList();
+                        $('#resultDiscountModal').modal({ 
+                          keyboard: false,
+                          backdrop: 'static',
+                          show: true
+                        });
                 }
                 else{
                    $rootScope.OZNotify(data.success.message, 'success');
+                   ProviderServicesList.getExistingProductDetails($scope.currentSelectedDiscount.discountid);
+                   ProviderServicesList.getAllProductList();
                 } 
             } 
     });
@@ -532,6 +519,22 @@ angular.module('oz.ProviderApp')
     {
              $scope.currentDiscountCode = ids;
     };
+
+    $scope.filterList = function()
+    {
+                for(var i = 0 ; i<$scope.finalSelectedProducts.length; i ++)
+                 {
+                    for(var j = 0; j < $scope.productsList.length ; j ++)
+                    {
+                        if($scope.productsList[j].productid === $scope.finalSelectedProducts[i].productid)
+                        {
+                            $scope.productsList.splice(j,1);
+                        }
+                    }
+
+                 }
+       // $rootScope.hideSpinner();          
+    }
 
     $scope.$on('$destroy', function(event, message) 
     {
