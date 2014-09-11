@@ -104,7 +104,7 @@
            <span ng-show="product.discount.percent=='none'">NA</span>
         </td>
          <td class="ozWidth15">
-          <span ng-hide="product.discount.percent=='none'">&#x20B9; <span ng-bind="product.discount.discountedprice" > </span></span>
+          <span ng-hide="product.discount.percent=='none'">&#x20B9; <span ng-bind="product.discount.discountedprice.toFixed(2)" > </span></span>
           <span ng-show="product.discount.percent=='none'">NA</span>
         </td>
         <!-- class="prodo-product-Invalid" prodo-validation-->

@@ -533,7 +533,7 @@
               <td class="prodo-width50" ng-hide="product.discount.percent=='none'"> 
                <span class="prodo-fontWeight">Discount:  &nbsp; </span>  <span ng-bind="product.discount.percent" > </span>% &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-               <span class="prodo-fontWeight">Discounted Price:  &nbsp; </span>  <span ng-bind="product.price.currency" > </span> <span ng-bind="product.discount.discountedprice" > </span>&nbsp; /  <span ng-bind="product.price.uom" > </span>  
+               <span class="prodo-fontWeight">Discounted Price:  &nbsp; </span>  <span ng-bind="product.price.currency" > </span> <span ng-bind="product.discount.discountedprice.toFixed(2)" > </span>&nbsp; /  <span ng-bind="product.price.uom" > </span>  
              </td>
 
              <td class="prodo-width50" ng-show="product.discount.percent=='none'"> 
