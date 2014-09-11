@@ -379,7 +379,7 @@ angular.module('oz.ProviderApp')
                       var message = '';
                       // message = 'Discount code not applied for' + successMessage + ' ' + ' The reason for not applying discount code is that these products already have discount code previously applied! Rest all products the current discount code is successfully applied';
                       // $rootScope.OZNotify(message, 'success');
-                       ProviderServicesList.getExistingProductDetails($scope.currentSelectedDiscount.discountid);ProviderServicesList.getAllProductList();
+                       ProviderServicesList.getAllProductList();ProviderServicesList.getExistingProductDetails($scope.currentSelectedDiscount.discountid);
                         $('#resultDiscountModal').modal({ 
                           keyboard: false,
                           backdrop: 'static',
@@ -388,8 +388,9 @@ angular.module('oz.ProviderApp')
                 }
                 else{
                    $rootScope.OZNotify(data.success.message, 'success');
-                   ProviderServicesList.getExistingProductDetails($scope.currentSelectedDiscount.discountid);
                    ProviderServicesList.getAllProductList();
+                   ProviderServicesList.getExistingProductDetails($scope.currentSelectedDiscount.discountid);
+
                 } 
             } 
     });
