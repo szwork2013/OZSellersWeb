@@ -90,6 +90,24 @@ $scope.changePrice=function(product){
     $scope.priceForm.submitted=true;
   }
  else{
+
+      $('#priceConfirmModal').modal('toggle');
+      $('#priceConfirmModal').modal('show');
+      $('#ChangeProductPriceOkButton').on('click', function (event) {
+       $scope.updatePrices(product);
+      });
+
+   }
+  }
+  else{
+     $rootScope.OZNotify("Product's price not changed...", 'success');
+     $scope.disableEditorPrice(); 
+  }
+ };
+
+
+
+$scope.updatePrices=function(product){
   $scope.priceForm.$setPristine();
   $log.debug( product);
   $scope.productPrices=[];
@@ -122,19 +140,13 @@ $scope.changePrice=function(product){
          $rootScope.OZNotify(data.error.message, 'error');  
       }
 
-
-
       }).error(function (data, status, headers, cfg) {
         // $log.debug(status);
        $rootScope.OZNotify(status, 'error'); 
      });
-   }
-  }
-  else{
-     $rootScope.OZNotify("Product's price not changed...", 'success');
-     $scope.disableEditorPrice(); 
-  }
- };
+
+};
+
 
 // update price
 
