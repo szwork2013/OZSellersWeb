@@ -1,10 +1,16 @@
 <div ng-if = 'showSOrderView === 0 && controlWallView === 1'><br> 
-  <input type= ' text' ng-model = 'search' class = 'form-control'><div class = "mainOrderContainer" ng-repeat = "list in orders | filter : search" >
+  <input type= ' text' ng-model = 'search' class = 'form-control'><div class = "mainOrderContainer" ng-repeat = "list in failed_orders | filter : search" >
     <div class = "highlighrOrderContainer">
       <div class = 'subOrderContainer row' style = 'min-height : 120px;'>
-        <div class = 'col-md-12 col-xs-12'>
-          <h5 ><b>Sub-order No : </b> <span ng-bind = "list.suborder.suborderid"></span></h5>
+        <div>
+          <div class = 'col-md-6 col-xs-6'>
+            <h5 ><b>Sub-order No : </b> <span ng-bind = "list.suborder.suborderid"></span></h5>
+          </div>
+          <div class = 'col-md-6 col-xs-6'>
+            <h5 ><span class="label label-danger" ng-bind = "list.orderfailedreason"></span></h5>
+          </div>
         </div>
+    
         <div  class="col-md-6 col-xs-6">
           <div class = 'row'>
             <h5>
@@ -123,7 +129,7 @@
                  <span class=" oz-contentsRight">{{product.qty}} {{product.uom}}</span>
               </div>
               <div  class="col-md-3 fontsize" style = 'text-align : right'>
-                 <span class=" oz-contentsRight"> {{product.baseprice}}</span>
+                 <span class=" oz-contentsRight"> {{product.orderprice/product.qty}}</span>
               </div>
               <div  class="col-md-3 fontsize" style = 'text-align : right'>
                  <span class="marginLeft15 oz-contentsRight " > {{product.orderprice}}</span>
@@ -138,7 +144,7 @@
 		</div>
 </div>	
 
-<div ng-show="hideLoadMore === 0 && orders.length !== 0 && orders.length > 9" style = "padding : 3%;" >
-    <button class="btn" style = " width : 100%" ng-click="loadMoreOrder(orders[orders.length-1].orderid, 'passed')">Load More Orders
+<div ng-show="hideLoadMore === 0 && failed_orders.length !== 0 && failed_orders.length > 9" style = "padding : 3%;" >
+    <button class="btn" style = " width : 100%" ng-click="loadMoreOrder(failed_orders[failed_orders.length-1].orderid, 'failed')">Load More Orders
     <img src = '../assets/images/spinner.gif' style = "width: 14%;height: 20px;" ng-if = "showSpinners === 1"></button>
 </div></div>

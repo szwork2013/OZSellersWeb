@@ -27,6 +27,8 @@ angular.module('oz.UserApp')
 
      $scope.orders = {};
 
+     $scope.failed_orders = {};
+
      $scope.currentPage = 0;
 
      $scope.pageSize = 7;
@@ -177,11 +179,58 @@ angular.module('oz.UserApp')
            }
            else
            {
-            OZWallService.getAllBranchOrders($scope.currentBranchId,$scope.type);
+            OZWallService.getAllBranchProductOrders($scope.currentBranchId,$scope.type);
           }
            $scope.orderViewStatus = false;         
            $scope.productViewStatus = true;
      };
+
+    $scope.handleAllBranchProductSpecificOrdersResponse = function(data){
+      $scope.hideLoadMore = 0;
+      if (data.success) {
+        console.log(data);
+        $scope.showSOrderView = 0;
+        $scope.controlWallView = 1;
+        $scope.showSpinners = 0;
+        if(data.success.orders == undefined) { 
+          $scope.products = {};
+          $scope.products = data.success.doc;
+          $scope.viewProductContent = 1;   
+        }
+        if($scope.orders !== undefined) {
+          if($scope.orders.length >0){
+            $scope.showOrderResult = 1;
+          } else {
+            $scope.showOrderResult = 0;
+          }
+        } 
+        $scope.showTabs = 1;
+        $scope.showSpinnerLogo = 0;
+        $rootScope.OZNotify(data.success.message,'success'); 
+      } else {
+        if(data.error.code=='AL001'){
+          $rootScope.showModal();
+        } else {
+          $scope.showOrderResult = 0;
+          $scope.showSpinners = 0; 
+          $scope.showTabs = 1;
+          $scope.products = {};
+          $scope.orders = {};
+          $scope.showSpinnerLogo = 0;
+          $log.debug(data.error.message);
+          $rootScope.OZNotify(data.error.message,'error');
+        }
+      }
+    };
+
+    var cleanUpEventGetAllBranchProductSpecificorders = $scope.$on("gotAllBranchProductSpecificOrders",function(event,data){
+      $log.debug(data);
+      $scope.handleAllBranchProductSpecificOrdersResponse(data);
+    });
+
+    var cleanUpEventNotGotAllBranchProductSpecificorders = $scope.$on("notGotAllBranchProductSpecificOrders",function(event,data){
+        $rootScope.OZNotify('Some issue with server! Please try after some time', 'error');$scope.showSpinners = 0;
+    });
 
      $scope.showOrderContents = function()
      {
@@ -193,7 +242,7 @@ angular.module('oz.UserApp')
            }
            else
            {
-            OZWallService.getAllBranchOrders($scope.currentBranchId,$scope.type); $scope.showSpinnerLogo = 1;
+            OZWallService.getAllBranchPassedOrders($scope.currentBranchId,$scope.type); $scope.showSpinnerLogo = 1;
           }
             $scope.showRadioButtonss = 1;
            $scope.viewOrderContent = 0;
@@ -202,62 +251,116 @@ angular.module('oz.UserApp')
            $scope.productViewStatus = false;
      };
 
-    var cleanUpEventGetAllBranchSpecificorders = $scope.$on("gotAllBranchSpecificOrders",function(event,data){
-           $scope.hideLoadMore = 0;
-            if(data.error)
-            {//test 
-                  if(data.error.code === 'AL001')
-                  {
-                        $rootScope.showModal();
-                  }
-                  else
-                  {
-                      $rootScope.OZNotify(data.error.message,'error');
-                      $scope.showOrderResult = 0;
-                      $scope.showSpinners = 0; 
-                      $scope.showTabs = 1;
-                  }
-                  $scope.products = {};
-                  $scope.orders = {};
-                  $scope.showSpinnerLogo = 0;
-            }
-            if(data.success)
-            {   
-                //$scope.orders = {};
-                //$rootScope.hideSpinner();
-                 $scope.showSOrderView = 0;
-                 $scope.controlWallView = 1;
-                $scope.showSpinners = 0;
-                if(data.success.orders !== undefined)
-                { 
-                  $scope.orders = data.success.orders; 
-                  $scope.viewOrderContent = 1;    
-                }
-                else
-                {
-                  $scope.products = {};
-                  $scope.products = data.success.doc;
-                  $scope.viewProductContent = 1;
-                }
+     $scope.handleAllBranchSpecificOrdersResponse = function(data){
+      $scope.hideLoadMore = 0;
+      if (data.success) {
+        console.log(data);
+        $scope.showSOrderView = 0;
+        $scope.controlWallView = 1;
+        $scope.showSpinners = 0;
+        if(data.success.orders !== undefined) { 
+          $scope.orders = data.success.orders; 
+          $scope.viewOrderContent = 1;    
+        }
+        if($scope.orders !== undefined) {
+          if($scope.orders.length >0){
+            $scope.showOrderResult = 1;
+          } else {
+            $scope.showOrderResult = 0;
+          }
+        } 
+        $scope.showTabs = 1;
+        $scope.showSpinnerLogo = 0;
+        $rootScope.OZNotify(data.success.message,'success'); 
+      } else {
+        if(data.error.code=='AL001'){
+          $rootScope.showModal();
+        } else {
+          $scope.showOrderResult = 0;
+          $scope.showSpinners = 0; 
+          $scope.showTabs = 1;
+          $scope.products = {};
+          $scope.orders = {};
+          $scope.showSpinnerLogo = 0;
+          $log.debug(data.error.message);
+          $rootScope.OZNotify(data.error.message,'error');
+        }
+      }
+    };
 
-                if($scope.orders !== undefined)
-                 {
-                   if($scope.orders.length >0)
-                   {
-                        $scope.showOrderResult = 1;
-                   }
-                   else
-                   {
-                        $scope.showOrderResult = 0;
-                   }
-                 } 
-                $scope.showTabs = 1;
-                $scope.showSpinnerLogo = 0;
-              } 
+    var cleanUpEventGetAllBranchSpecificorders = $scope.$on("gotAllBranchSpecificOrders",function(event,data){
+      $log.debug(data);
+      $scope.handleAllBranchSpecificOrdersResponse(data);   
     });
 
     var cleanUpEventNotGotAllBranchSpecificorders = $scope.$on("notGotAllBranchSpecificOrders",function(event,data){
-            $rootScope.OZNotify('Some issue with server! Please try after some time', 'error');$scope.showSpinners = 0;
+      $rootScope.OZNotify('Some issue with server! Please try after some time', 'error');$scope.showSpinners = 0;
+    });
+
+
+    $scope.showFailedOrderContents = function()
+     {
+           $scope.type = "order";
+           if($scope.currentBranchId === '')
+           {
+            // $rootScope.OZNotify('Please search provider from sidebar and then proceed ! ', 'error');
+              $rootScope.OZNotify('Please search provider from sidebar to view order details ! ', 'error');
+           }
+           else
+           {
+            OZWallService.getAllBranchFailedOrders($scope.currentBranchId,$scope.type); $scope.showSpinnerLogo = 1;
+          }
+            $scope.showRadioButtonss = 1;
+           $scope.viewOrderContent = 0;
+           $scope.viewProductContent = 0;
+           $scope.orderViewStatus = true;   
+           $scope.productViewStatus = false;
+     };
+
+     $scope.handleAllBranchSpecificFailedOrdersResponse = function(data){
+      $scope.hideLoadMore = 0;
+      if (data.success) {
+        console.log(data);
+        $scope.showSOrderView = 0;
+        $scope.controlWallView = 1;
+        $scope.showSpinners = 0;
+        if(data.success.orders !== undefined) { 
+          $scope.failed_orders = data.success.orders; 
+          $scope.viewOrderContent = 1;    
+        }
+        if($scope.failed_orders !== undefined) {
+          if($scope.failed_orders.length >0){
+            $scope.showOrderResult = 1;
+          } else {
+            $scope.showOrderResult = 0;
+          }
+        } 
+        $scope.showTabs = 1;
+        $scope.showSpinnerLogo = 0;
+        $rootScope.OZNotify(data.success.message,'success'); 
+      } else {
+        if(data.error.code=='AL001'){
+          $rootScope.showModal();
+        } else {
+          $scope.showOrderResult = 0;
+          $scope.showSpinners = 0; 
+          $scope.showTabs = 1;
+          $scope.products = {};
+          $scope.failed_orders = {};
+          $scope.showSpinnerLogo = 0;
+          $log.debug(data.error.message);
+          $rootScope.OZNotify(data.error.message,'error');
+        }
+      }
+    };
+
+    var cleanUpEventGetAllBranchSpecificFailedorders = $scope.$on("gotAllBranchSpecificFailedOrders",function(event,data){
+      $log.debug(data);
+      $scope.handleAllBranchSpecificFailedOrdersResponse(data);   
+    });
+
+    var cleanUpEventNotGotAllBranchSpecificFailedorders = $scope.$on("notGotAllBranchSpecificFailedOrders",function(event,data){
+      $rootScope.OZNotify('Some issue with server! Please try after some time', 'error');$scope.showSpinners = 0;
     });
 
 
@@ -468,10 +571,10 @@ angular.module('oz.UserApp')
             $rootScope.OZNotify('Some issue with server! Please try after some time', 'error');
     });
 
-    $scope.loadMoreOrder = function(id)
+    $scope.loadMoreOrder = function(id, ordertype)
     { 
           $scope.showSpinners = 1;
-          OZWallService.loadMoreOrder(id);
+          OZWallService.loadMoreOrder(id, ordertype);
     };
 
      var cleanUpEventLoadMore = $scope.$on("more",function(event,data){
@@ -693,6 +796,8 @@ angular.module('oz.UserApp')
         cleanUpEventNotRemoveHelpContent();
         cleanUpEventAddHelpContent();
         cleanUpEventNotAddedHelpContent();
+        cleanUpEventGetAllBranchProductSpecificorders();
+        cleanUpEventNotGotAllBranchProductSpecificorders();
         // cleanUpEventgetAllCountSuccess();
         // cleanUpEventNotGotAllCount();
 

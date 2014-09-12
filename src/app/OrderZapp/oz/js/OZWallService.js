@@ -7,14 +7,15 @@ angular.module('oz.UserApp').factory('OZWallService', [
   function ($rootScope, $resource, $http, $state, $log) {
   var wallService = {
   	getOrderData : $resource('/api/allproductprovider', {}, {getContentOfOrder : {method :'GET'} }),
-    getAllBranchesorders : $resource('/api/allorders/:branchid?type=:data', {}, { getOrderContent : {method : 'GET', params : { branchid : '@branchid', type : '@data'}}}),
+    getAllBranchesProductorders : $resource('/api/allorders/:branchid?type=:data&ordertype=:orderdata', {}, { getOrderContent : {method : 'GET', params : { branchid : '@branchid', type : '@data', ordertype: '@orderdata'}}}),
+    getAllBranchesorders : $resource('/api/allorders/:branchid?type=:data&ordertype=:orderdata', {}, { getOrderContent : {method : 'GET', params : { branchid : '@branchid', type : '@data', ordertype: '@orderdata'}}}),
     sendTemplates : $resource('/api/statictemplates' , {} , { sentTemplateContent : {method : 'POST'} }),
     getTemplates : $resource('/api/statictemplates?type=:data&result=json' , {} , { getTemplateContent : {method : 'GET', params : {data : '@data'}} }),
     changeTemplates : $resource('/api/statictemplates?type=:data' , {} , { changeTemplateContent : {method : 'PUT', params : {data : '@data'}} }),
     acceptProviderRequests : $resource('/api/acceptreject/:providerid?action=:data' , {} , { acceptProviderRequest : {method : 'GET',   params : {providerid : '@providerid', data : '@data'}} }),
     getProviders : $resource('/api/newproviders' , {} , { getProvidersList : {method : 'GET'} }),
     getSuborderContent : $resource('/api/searchsuborder/:suborderid', {} , { getContent : {method : 'GET', params : {suborderid : '@suborderid'}}}),
-    loadMoreOrders : $resource('api/nextorders/:orderid', {}, {get : {method : 'GET', params : {orderid : '@orderid'}}}),
+    loadMoreOrders : $resource('api/nextorders/:orderid?ordertype=:data', {}, {get : {method : 'GET', params : {orderid : '@orderid', ordertype: '@data'}}}),
     getAllCategories : $resource('api/productcategory', {}, {get : {method : 'GET'}}),
     insertLevelOne : $resource('api/createproductcategory', {}, { post : { method : 'POST'}}),//rejectProviderRequest : $resource('/api/reject/:providerid', {} , {rejectProvider : {method : 'POST', params : {providerid : '@providerid'}}}),
     insertLowerLevel : $resource('api/createproductcategory/:categoryid', {}, {insert: {method : 'POST', params : {categoryid : '@categoryid'}}}),
@@ -72,15 +73,39 @@ angular.module('oz.UserApp').factory('OZWallService', [
   	})
   };
 
-  controller.getAllBranchOrders = function(branchid, type)
+  controller.getAllBranchProductOrders = function(branchid, type)
   {
     wallService.getAllBranchesorders.getOrderContent({branchid: branchid, data : type}, function(success)
+    {
+      $rootScope.$broadcast('gotAllBranchProductSpecificOrders', success);
+    },
+    function(error)
+    {
+      $rootScope.$broadcast('notGotAllBranchProductSpecificOrders', error);
+    })
+  };
+
+  controller.getAllBranchPassedOrders = function(branchid, type)
+  {
+    wallService.getAllBranchesorders.getOrderContent({branchid: branchid, data : type, orderdata: 'passed'}, function(success)
     {
       $rootScope.$broadcast('gotAllBranchSpecificOrders', success);
     },
     function(error)
     {
       $rootScope.$broadcast('notGotAllBranchSpecificOrders', error);
+    })
+  };
+
+  controller.getAllBranchFailedOrders = function(branchid, type)
+  {
+    wallService.getAllBranchesorders.getOrderContent({branchid: branchid, data : type, orderdata: 'failed'}, function(success)
+    {
+      $rootScope.$broadcast('gotAllBranchSpecificFailedOrders', success);
+    },
+    function(error)
+    {
+      $rootScope.$broadcast('notGotAllBranchSpecificFailedOrders', error);
     })
   };
 
@@ -177,9 +202,9 @@ angular.module('oz.UserApp').factory('OZWallService', [
     });
   };
 
-  controller.loadMoreOrder = function(orderid)
+  controller.loadMoreOrder = function(orderid, ordertype)
   {
-    wallService.loadMoreOrders.get({orderid : orderid} , function(success)
+    wallService.loadMoreOrders.get({orderid : orderid, data: ordertype} , function(success)
     {
       $rootScope.$broadcast('more', success);
     },

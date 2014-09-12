@@ -452,6 +452,9 @@ angular.module('oz.OrderZappApp')
     })
     .state('oz.ozWall.ozProductContent', {
       templateUrl : 'OrderZapp/oz/views/oz.product.view.tpl.html',
+    })
+    .state('oz.ozWall.ozFailedOrderViewContent',{
+      templateUrl : 'OrderZapp/oz/views/oz.failed.order.view.tpl.html',
     }) 
     .state('oz.ozWall.ozT&CContent', {
       templateUrl : 'OrderZapp/oz/views/oz.termsandconditions.view.tpl.html'
