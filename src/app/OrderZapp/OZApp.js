@@ -122,12 +122,15 @@ $scope.getProviders=function(){
     });
 
    $scope.getProviderId=function(provider){
+    console.log(provider);
+      $rootScope.selectedproviderid='';
+      $rootScope.provider={};
       $rootScope.selectedproviderid=provider.providerid;
       $rootScope.provider=provider;
       $rootScope.orderConfigStatus=provider.orderprocess_configuration;
       $log.debug("pid "+ $rootScope.selectedproviderid);
-      if($rootScope.selectedproviderid){
-        $scope.getBranches($rootScope.selectedproviderid);
+      if(provider.providerid){
+        $scope.getBranches(provider.providerid);
       } 
    };
 
