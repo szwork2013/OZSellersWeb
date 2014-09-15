@@ -267,23 +267,36 @@ angular.module('oz.ProviderApp')
  
     $scope.addToFinalProductList = function(list, index)
     {   
+         var alertFlagShow = 0;
+         for(var i = 0 ; i < $scope.finalSelectedProducts.length; i++)
+         {
+            if(list.productid === $scope.finalSelectedProducts[i].productid)
+            {
+                alertFlagShow = 1;
+            }
+         }
          if($scope.currentSelectedDiscount.length === 0)
          {
           $rootScope.OZNotify('Please select discount code before moving product!', 'error');
          }
+         else if(alertFlagShow === 1)
+         {
+            $rootScope.OZNotify('The selected product already exists in the list', 'error');
+         }
          else
          {
-                 list.price.discountedprice = list.price.value - (list.price.value)*($scope.currentSelectedDiscount.percent/100);
+                 list.price.discountedprice = (list.price.value - (list.price.value)*($scope.currentSelectedDiscount.percent/100)).toFixed(2);
                  $scope.finalSelectedProducts.push(list);
-                 var indexOfSelectedProduct = '';
-                 for(var i = 0; i<$scope.productsList.length; i++)
-                 {
-                       if($scope.productsList[i].productname === list.productname)
-                       {
-                        indexOfSelectedProduct = i;
-                       }
-                 }
-                 $scope.productsList.splice(indexOfSelectedProduct,1);   
+                 // var indexOfSelectedProduct = '';
+                 // for(var i = 0; i<$scope.productsList.length; i++)
+                 // {
+                 //       if($scope.productsList[i].productname === list.productname)
+                 //       {
+                 //        indexOfSelectedProduct = i;
+                 //       }
+                 // }
+                 // $scope.productsList.splice(indexOfSelectedProduct,1);   
+                 $rootScope.OZNotify('Selected product added successfully to the checklist', 'success');
        }
        $scope.set = 1;
        $scope.checkForEmptyarray = 1;
@@ -311,6 +324,7 @@ angular.module('oz.ProviderApp')
                  uniques = _.map(_.groupBy($scope.productsList,function(doc){return doc.productid;}),function(grouped){return grouped[0];});
                  $scope.productsList = [];
                  $scope.productsList = angular.copy(uniques);
+                 $rootScope.OZNotify('Selected product removed from the checklist', 'success');
     };
 
     $scope.addAllProductsToFinalList = function()
@@ -325,11 +339,12 @@ angular.module('oz.ProviderApp')
                 {
                     for(var i = 0; i<$scope.productsList.length ; i++)
                         {
-                            $scope.productsList[i].price.discountedprice = $scope.productsList[i].price.value - ($scope.productsList[i].price.value)*($scope.currentSelectedDiscount.percent/100);
+                            $scope.productsList[i].price.discountedprice = ($scope.productsList[i].price.value - ($scope.productsList[i].price.value)*($scope.currentSelectedDiscount.percent/100)).toFixed(2);
                             $scope.finalSelectedProducts.push($scope.productsList[i]);
                         }
                 }
-                $scope.productsList = [];
+                // $scope.productsList = [];
+                $rootScope.OZNotify('All products added to checklist', 'success');
            }     
            $scope.set = 1;
            $scope.checkForEmptyarray = 1;
@@ -355,6 +370,7 @@ angular.module('oz.ProviderApp')
                  uniques = _.map(_.groupBy($scope.productsList,function(doc){return doc.productid;}),function(grouped){return grouped[0];});
                  $scope.productsList = [];
                  $scope.productsList = angular.copy(uniques);
+                 $rootScope.OZNotify('All products removed from checklist', 'success');
     };
 
     $scope.assignDiscountsToProducts = function()
@@ -427,7 +443,7 @@ angular.module('oz.ProviderApp')
             else{
                if($scope.set === 0)
                {
-                $rootScope.OZNotify('Discount code unassigned', 'success');
+                $rootScope.OZNotify('Discount code assigned/unassigned', 'success');
                }
                if($scope.set === 1)
                {
@@ -576,16 +592,16 @@ angular.module('oz.ProviderApp')
 
     $scope.filterList = function()
     {
-                for(var i = 0 ; i<$scope.finalSelectedProducts.length; i ++)
-                 {
-                    for(var j = 0; j < $scope.productsList.length ; j ++)
-                    {
-                        if($scope.productsList[j].productid === $scope.finalSelectedProducts[i].productid)
-                        {
-                            $scope.productsList.splice(j,1);
-                        }
-                    }
-                 }
+                // for(var i = 0 ; i<$scope.finalSelectedProducts.length; i ++)
+                //  {
+                //     for(var j = 0; j < $scope.productsList.length ; j ++)
+                //     {
+                //         if($scope.productsList[j].productid === $scope.finalSelectedProducts[i].productid)
+                //         {
+                //             $scope.productsList.splice(j,1);
+                //         }
+                //     }
+                //  }
     }
 
     $scope.$on('$destroy', function(event, message) 
