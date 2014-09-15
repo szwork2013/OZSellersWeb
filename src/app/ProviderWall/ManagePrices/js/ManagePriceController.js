@@ -95,10 +95,6 @@ $scope.changePrice=function(product){
  else{
       $('#priceConfirmModal').modal('toggle');
       $('#priceConfirmModal').modal('show');
-      $('#ChangeProductPriceOkButton').on('click', function (event) {
-       $scope.updatePrices(product);
-      });
-
    }
   }
   else{
