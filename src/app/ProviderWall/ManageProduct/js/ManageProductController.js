@@ -6,6 +6,7 @@ angular.module('oz.ProviderApp')
     $scope.tabForPrice={};
     $scope.currentProdle='';
     $scope.editorPrice={};
+    $scope.tempEgglessArray=[];
     $scope.allCategories=[];
     $scope.ProductParentCategory=[];
     $scope.ProductCategory=[];
@@ -234,6 +235,67 @@ $scope.getCategoriesFromDB($rootScope.selectedproviderid);
   };
 
 
+
+$scope.removeEgglessConfig=function(){
+ 
+  if($scope.editMode.editorEnabled == true){
+
+
+   if($scope.product.foodtype=='both'){
+
+    if($scope.ProductConfigs.configuration){
+      var isExists=false;
+      for (var i = $scope.ProductConfigs.configuration.length - 1; i >= 0; i--) {
+         if($scope.ProductConfigs.configuration[i].prod_configtype=='ftp'){
+          isExists=true;
+         }else{
+          isExists=false;
+         }
+       }
+
+      if(isExists==false){
+        if($scope.tempEgglessArray[0]){
+          $scope.ProductConfigs.configuration.push($scope.tempEgglessArray[0]);
+        }
+       }
+    }
+
+    
+
+       
+  }else{
+    if($scope.ProductConfigs.configuration){
+        for (var i = $scope.ProductConfigs.configuration.length - 1; i >= 0; i--) {
+           if($scope.ProductConfigs.configuration[i].prod_configtype=='ftp'){
+              $scope.tempEgglessArray.push($scope.ProductConfigs.configuration[i]);
+              $scope.ProductConfigs.configuration.splice($scope.ProductConfigs.configuration.indexOf($scope.ProductConfigs.configuration[i]), 1);
+           }
+        };
+     }
+
+      if($scope.chckedIndexs.length>0){
+       for (var i = $scope.chckedIndexs.length - 1; i >= 0; i--) {
+         if($scope.chckedIndexs[i].prod_configtype=='ftp'){
+           $scope.tempEgglessArray.push($scope.chckedIndexs[i]);
+           $scope.chckedIndexs.splice($scope.chckedIndexs.indexOf($scope.chckedIndexs[i]), 1);
+         }
+      };
+    }
+  }
+      
+     // console.log($scope.ProductConfigs.configuration);
+     // console.log($scope.chckedIndexs);
+     //  console.log($scope.tempEgglessArray);
+ 
+       }
+};
+
+ $scope.$watch('product.foodtype', function (ftp) {
+   $scope.removeEgglessConfig();
+  });
+
+
+
    $scope.onFileSelect = function($files) {
     $log.debug($files);
      for (var i = 0; i < $files.length; i++) {
@@ -334,7 +396,7 @@ $scope.handleChangeLogo=function(data, status, headers, config){
 
 
   $scope.disableEditor = function () {
-
+          $scope.tempEgglessArray=[];
           $scope.selectedCategory={};
           $scope.selectedParentCategory={};
           $scope.category={};
@@ -353,6 +415,7 @@ $scope.handleChangeLogo=function(data, status, headers, config){
   };
 
 $scope.addProduct = function (editStatus) {
+  $scope.removeEgglessConfig();
  // $log.debug($scope.product);
     if (editStatus == 'add') { 
   if(($rootScope.selectedCategoryid ==undefined )||( $rootScope.selectedCategoryid =='') || ($rootScope.selectedCategoryid ==null)){
@@ -815,7 +878,7 @@ $scope.getSelectedProduct = function (product1) {
           });
               
        }
-
+  $scope.removeEgglessConfig();
   };
 
 
