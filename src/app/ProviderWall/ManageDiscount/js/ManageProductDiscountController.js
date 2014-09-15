@@ -7,6 +7,8 @@ angular.module('oz.ProviderApp')
 
     $scope.today =  new Date();
 
+    $scope.showFilterBoxes = 1;
+
     $scope.submit = function()
     {    
         $scope.errorForEmptyCode = '';
@@ -42,6 +44,11 @@ angular.module('oz.ProviderApp')
                 {
                     $scope.errorForInvalidEnddate = 'Please enter valid end date';$scope.allValidContent = 1;
                 }
+            }
+            if(moment.utc($scope.codeContent.startdate).diff(moment.utc($scope.codeContent.expirydate), 'days') > 0 )
+            {
+              $rootScope.OZNotify('The start date cant be greater than end date' , 'error');
+              $scope.allValidContent = 1;
             }
             if($scope.allValidContent === 0 )
             {   
@@ -92,6 +99,10 @@ angular.module('oz.ProviderApp')
 
     $scope.discountid = '';
 
+    $scope.searchProduct = '';
+
+    $scope.filterCodesWithExistingDiscounts = '';
+
    $scope.$watch('selectedBranchId', function (selectedBranchId) {
             
             $scope.containerOfDiscountCode = [];    
@@ -126,6 +137,7 @@ angular.module('oz.ProviderApp')
 
     $scope.isCollapsed = true;
 
+    $scope.checkForEmptyarray = 0;
 
      $scope.openAddDiscountCode = function(){
     $scope.isCollapsed = !$scope.isCollapsed;
@@ -275,6 +287,8 @@ angular.module('oz.ProviderApp')
                  }
                  $scope.productsList.splice(indexOfSelectedProduct,1);   
        }
+       $scope.set = 1;
+       $scope.checkForEmptyarray = 1;
     };
 
     $scope.insertProductToProductList = function(list, index)
@@ -289,6 +303,8 @@ angular.module('oz.ProviderApp')
                }
          }
          $scope.finalSelectedProducts.splice(indexOfSelectedProduct,1);
+         $scope.set = 0;
+         $scope.checkForEmptyarray = 1;
     };
 
     $scope.addAllProductsToFinalList = function()
@@ -310,6 +326,8 @@ angular.module('oz.ProviderApp')
                 }
                 $scope.productsList = [];
            }     
+           $scope.set = 1;
+           $scope.checkForEmptyarray = 1;
     };
 
     $scope.clearAllProductsToFinalList = function()
@@ -324,7 +342,8 @@ angular.module('oz.ProviderApp')
             }
 
             $scope.finalSelectedProducts = [];
-
+            $scope.set = 0;
+            checkForEmptyarray = 1;
     };
 
     $scope.assignDiscountsToProducts = function()
@@ -343,6 +362,7 @@ angular.module('oz.ProviderApp')
         {   //console.log('///////'+JSON.stringify($scope.content));
             ProviderServicesList.addignCodesToProd($scope.content,$scope.discountid);
         }
+        $scope.showFilterBoxes = 0;
     };
 
    var cleanUpEventAssignedDiscountCodes = $scope.$on("codeAssignedSuccessfully",function(event,data){
@@ -355,9 +375,15 @@ angular.module('oz.ProviderApp')
               else
               {
                 $rootScope.OZNotify(data.error.message,'error');
+                $scope.finalSelectedProducts = [];
                 ProviderServicesList.getAllProductList();
                 ProviderServicesList.getExistingProductDetails($scope.currentSelectedDiscount.discountid);
               }
+
+                $scope.searchProduct = '';
+                $scope.filterCodesWithExistingDiscounts = '';
+                $scope.filterList();
+                $scope.showFilterBoxes = 1;
             }
             if(data.success)
             {    
@@ -387,26 +413,47 @@ angular.module('oz.ProviderApp')
                         });
                 }
                 else{
-                   $rootScope.OZNotify(data.success.message, 'success');
+                   //$rootScope.OZNotify(data.success.message, 'success');
+                   if($scope.set === 0)
+                   {
+                    $rootScope.OZNotify('Discount code removed for the selected products', 'success');
+                   }
+                   if($scope.set === 1)
+                   {
+                    $rootScope.OZNotify('Discount code added for the selected products', 'success');
+                   }
                    ProviderServicesList.getAllProductList();
                    ProviderServicesList.getExistingProductDetails($scope.currentSelectedDiscount.discountid);
 
                 } 
+                $scope.showFilterBoxes = 1;
             } 
     });
                                                                             
     var cleanUpEventNotAssignedDiscountCodes = $scope.$on("codeNotAssignedSuccessfully",function(event,data){
             $rootScope.OZNotify('Some issue with server! Please try after some time', 'error');$scope.showSpinners = 0;
+        document.getElementById('textBoxOne').value = '';
+                 document.getElementById('textBoxTwo').value = '';
+
+    $scope.searchProduct = '';
+
+    $scope.filterCodesWithExistingDiscounts = '';
+
     });
 
     $scope.assignCodes = function(id)
     {
-           $scope.discountid = id.discountid;
-           // for(var z = 0 ; z < $scope.containerOfDiscountCode.length ; z ++)
+           $scope.discountid = id.discountid;$scope.checkForEmptyarray = 0
+           ;// for(var z = 0 ; z < $scope.containerOfDiscountCode.length ; z ++)
            // {
            //      document.getElementById(z).style.backgroundColor = '#FFFFFF';
            // }
            // document.getElementById(hover).style.backgroundColor = '#ddd';
+
+    $scope.showFilterBoxes = 0; $scope.showFilterBoxes = 1;             
+    $scope.searchProduct = '';
+
+    $scope.filterCodesWithExistingDiscounts = '';
            $scope.currentSelectedDiscount = [];
            for(var i = 0 ; i < $scope.containerOfDiscountCode.length; i++)
            {
@@ -532,9 +579,7 @@ angular.module('oz.ProviderApp')
                             $scope.productsList.splice(j,1);
                         }
                     }
-
                  }
-       // $rootScope.hideSpinner();          
     }
 
     $scope.$on('$destroy', function(event, message) 

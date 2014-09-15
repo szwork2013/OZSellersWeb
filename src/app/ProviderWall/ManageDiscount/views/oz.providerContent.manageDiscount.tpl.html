@@ -74,9 +74,9 @@
               <div class = 'row'>
                     <div style = 'margin : 5px' > <h5> Products without discount code applied </h5> </div>
               </div>
-              <div class = 'row' style = 'padding : 5px;'>
-                      <input type= 'text' class = 'form-control' ng-model = 'searchProduct' placeholder = 'Filter products' >
-              </div>
+         <!--      <div class = 'row' style = 'padding : 5px;' ng-if = 'showFilterBoxes === 1'>
+                      <input type= 'text' class = 'form-control' ng-model = 'searchProduct' placeholder = 'Filter products' id = 'textBoxOne' >
+              </div> -->
               <div class = 'row'>
                       <div class = 'productNameWidth cursorPointerHyperlink' style="margin : 5px;" ng-click= 'addAllProductsToFinalList()' >Add All Products</div>
 
@@ -108,9 +108,9 @@
               <div class = 'row'>
                     <div style = 'margin : 5px' > <h5> Products with discount code applied </h5> </div>
               </div>
-              <div class = 'row' style = 'padding : 5px;'>
-                      <input type= 'text' class = 'form-control' ng-model = 'findProducts' placeholder = 'Filter products' >
-              </div>
+         <!--      <div class = 'row' style = 'padding : 5px;' ng-if = 'showFilterBoxes === 1'>
+                      <input type= 'text' class = 'form-control' ng-model = 'filterCodesWithExistingDiscounts' placeholder = 'Filter products' id = 'textBoxTwo' >
+              </div> -->
               <div class = 'row'>
                       <div class = 'productNameWidth cursorPointerHyperlink' style="margin : 5px;" ng-click= 'clearAllProductsToFinalList()' >Remove All Products</div>
                 
@@ -122,7 +122,7 @@
                       <div class = 'col-md-4 col-xs-4'><h5>Discounted Price </h5></div>
               </div>
               <div class = 'row'>
-                  <div ng-repeat = 'list in finalSelectedProducts | filter : findProducts'>
+                  <div ng-repeat = 'list in finalSelectedProducts | filter : filterCodesWithExistingDiscounts'>
                       <div class = 'row' style = 'cursor : w-resize; ' ng-click = 'insertProductToProductList(list,$index)' data-toggle="tooltip" data-placement="right" title="Click on the product to move it to previous list">
                           <div class = 'col-xs-5 col-ms-5'>
                               <span  style = 'margin-left : 5px;margin-right : 5px;' ng-bind = 'list.productname'></span>
@@ -138,7 +138,7 @@
                   </div>    
               </div>
               <div class = 'row'>
-                      <button class = 'btn btn-info' ng-click = 'assignDiscountsToProducts()'  style = 'float : right; margin : 5px;'> Apply Code To Products </button>
+                      <button class = 'btn btn-info' ng-click = 'assignDiscountsToProducts()'  style = 'float : right; margin : 5px;' ng-if = 'checkForEmptyarray === 1 && currentSelectedDiscount.length !== 0'> Apply Code To Products </button>
               </div>
             </div>
         </div>    
