@@ -870,6 +870,7 @@ $scope.getSelectedProduct = function (product1) {
                  }
 
             }
+             $scope.removeEgglessConfig();  
           }, function (error) { 
             $rootScope.OZNotify("Server Error:" + error.status, 'error');
             $scope.ErrMsging=1;
@@ -878,7 +879,7 @@ $scope.getSelectedProduct = function (product1) {
           });
               
        }
-  $scope.removeEgglessConfig();
+ 
   };
 
 
