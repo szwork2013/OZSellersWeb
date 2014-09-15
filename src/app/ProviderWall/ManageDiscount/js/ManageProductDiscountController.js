@@ -287,6 +287,10 @@ angular.module('oz.ProviderApp')
        }
        $scope.set = 1;
        $scope.checkForEmptyarray = 1;
+                              var uniques = [];
+                 uniques = _.map(_.groupBy($scope.finalSelectedProducts,function(doc){return doc.productid;}),function(grouped){return grouped[0];});
+                 $scope.finalSelectedProducts = [];
+                 $scope.finalSelectedProducts = angular.copy(uniques);
     };
 
     $scope.insertProductToProductList = function(list, index)
@@ -303,6 +307,10 @@ angular.module('oz.ProviderApp')
          $scope.finalSelectedProducts.splice(indexOfSelectedProduct,1);
          $scope.set = 0;
          $scope.checkForEmptyarray = 1;
+                          var uniques = [];
+                 uniques = _.map(_.groupBy($scope.productsList,function(doc){return doc.productid;}),function(grouped){return grouped[0];});
+                 $scope.productsList = [];
+                 $scope.productsList = angular.copy(uniques);
     };
 
     $scope.addAllProductsToFinalList = function()
@@ -325,6 +333,10 @@ angular.module('oz.ProviderApp')
            }     
            $scope.set = 1;
            $scope.checkForEmptyarray = 1;
+                                  var uniques = [];
+                 uniques = _.map(_.groupBy($scope.finalSelectedProducts,function(doc){return doc.productid;}),function(grouped){return grouped[0];});
+                 $scope.finalSelectedProducts = [];
+                 $scope.finalSelectedProducts = angular.copy(uniques);
     };
 
     $scope.clearAllProductsToFinalList = function()
@@ -338,7 +350,11 @@ angular.module('oz.ProviderApp')
         }
         $scope.finalSelectedProducts = [];
         $scope.set = 0;
-        checkForEmptyarray = 1;
+        $scope.checkForEmptyarray = 1;
+                         var uniques = [];
+                 uniques = _.map(_.groupBy($scope.productsList,function(doc){return doc.productid;}),function(grouped){return grouped[0];});
+                 $scope.productsList = [];
+                 $scope.productsList = angular.copy(uniques);
     };
 
     $scope.assignDiscountsToProducts = function()
