@@ -17,45 +17,45 @@ angular.module('oz.ProviderApp')
         $scope.errorForInvalidStartDate = '';
         $scope.errorForInvalidEnddate = '';
         $scope.allValidContent = 0;       
-            if($scope.codeContent.discountcode === '')
+        if($scope.codeContent.discountcode === '')
+        {
+            $scope.errorForEmptyCode = 'Please enter valid discount code'; $scope.allValidContent = 1;
+        }
+        if($scope.codeContent.discountcode.length > 20)
+        {
+          $rootScope.OZNotify('The length of discount code should be less than 20 characters', 'error');$scope.allValidContent = 1;
+        }
+        if($scope.codeContent.description === '')
+        {
+            $scope.errorForEmptyDescription = 'Please enter valid description for discount code';$scope.allValidContent = 1;
+        }
+        if($scope.codeContent.percent === '' || $scope.regexForNumbers.test($scope.codeContent.percent) === false || $scope.codeContent.percent>100 || $scope.codeContent.percent<1)
+        {
+            $scope.errorForInvalidPercentage = 'Please enter valid percentage! Percent range should be between [1-100]';$scope.allValidContent = 1;
+        }
+        if($scope.codeContent.startdate === '' || $scope.codeContent.expirydate === '')
+        {   
+             if($scope.codeContent.startdate === '')
             {
-                $scope.errorForEmptyCode = 'Please enter valid discount code'; $scope.allValidContent = 1;
-            }
-            if($scope.codeContent.discountcode.length > 20)
-            {
-              $rootScope.OZNotify('The length of discount code should be less than 20 characters', 'error');$scope.allValidContent = 1;
-            }
-            if($scope.codeContent.description === '')
-            {
-                $scope.errorForEmptyDescription = 'Please enter valid description for discount code';$scope.allValidContent = 1;
-            }
-            if($scope.codeContent.percent === '' || $scope.regexForNumbers.test($scope.codeContent.percent) === false || $scope.codeContent.percent>100 || $scope.codeContent.percent<1)
-            {
-                $scope.errorForInvalidPercentage = 'Please enter valid percentage! Percent range should be between [1-100]';$scope.allValidContent = 1;
-            }
-            if($scope.codeContent.startdate === '' || $scope.codeContent.expirydate === '')
-            {   
-                 if($scope.codeContent.startdate === '')
-                {
 
-                    $scope.errorForInvalidStartDate = 'Please enter valid start date';$scope.allValidContent = 1;
-                }
-                if($scope.codeContent.expirydate === '')
-                {
-                    $scope.errorForInvalidEnddate = 'Please enter valid end date';$scope.allValidContent = 1;
-                }
+                $scope.errorForInvalidStartDate = 'Please enter valid start date';$scope.allValidContent = 1;
             }
-            if(moment.utc($scope.codeContent.startdate).diff(moment.utc($scope.codeContent.expirydate), 'days') > 0 )
+            if($scope.codeContent.expirydate === '')
             {
-              $rootScope.OZNotify('The start date cant be greater than end date' , 'error');
-              $scope.allValidContent = 1;
+                $scope.errorForInvalidEnddate = 'Please enter valid end date';$scope.allValidContent = 1;
             }
-            if($scope.allValidContent === 0 )
-            {   
-               // $scope.isCollapsed = !$scope.isCollapsed;
-                $scope.codeContentObject = {'discountdata' : $scope.codeContent}; 
-                ProviderServicesList.addProductCode($scope.codeContentObject);
-            }
+        }
+        if(moment.utc($scope.codeContent.startdate).diff(moment.utc($scope.codeContent.expirydate), 'days') > 0 )
+        {
+          $rootScope.OZNotify('The start date cant be greater than end date' , 'error');
+          $scope.allValidContent = 1;
+        }
+        if($scope.allValidContent === 0 )
+        {   
+
+            $scope.codeContentObject = {'discountdata' : $scope.codeContent}; 
+            ProviderServicesList.addProductCode($scope.codeContentObject);
+        }
     };
 
     var countProductsLength = [];
@@ -264,7 +264,6 @@ angular.module('oz.ProviderApp')
 
     $scope.selectedDiscountId = '';
 
- 
     $scope.addToFinalProductList = function(list, index)
     {   
          var alertFlagShow = 0;
@@ -475,7 +474,7 @@ angular.module('oz.ProviderApp')
            // }
            // document.getElementById(hover).style.backgroundColor = '#ddd';
            $scope.filter.searchProducts = '';
-        $scope.filter.filterCodesWithExistingDiscounts = '';
+           $scope.filter.filterCodesWithExistingDiscounts = '';
     $scope.showFilterBoxes = 0; $scope.showFilterBoxes = 1;             
 
            $scope.currentSelectedDiscount = [];
