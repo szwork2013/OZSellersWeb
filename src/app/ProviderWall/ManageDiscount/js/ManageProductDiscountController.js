@@ -355,21 +355,29 @@ angular.module('oz.ProviderApp')
 
     $scope.clearAllProductsToFinalList = function()
     {    
-        if($scope.finalSelectedProducts.length !== 0)
+        if($scope.currentSelectedDiscount.length === 0)
         {
-            for(var i = 0; i<$scope.finalSelectedProducts.length ; i++)
-                {
-                    $scope.productsList.push($scope.finalSelectedProducts[i]);
-                }
+            $rootScope.OZNotify('Please select atleast one discount code from above list and then proceed', 'error');
         }
-        $scope.finalSelectedProducts = [];
-        $scope.set = 0;
-        $scope.checkForEmptyarray = 1;
-                         var uniques = [];
-                 uniques = _.map(_.groupBy($scope.productsList,function(doc){return doc.productid;}),function(grouped){return grouped[0];});
-                 $scope.productsList = [];
-                 $scope.productsList = angular.copy(uniques);
-                 $rootScope.OZNotify('All products removed from checklist', 'success');
+       else
+       {
+
+                        if($scope.finalSelectedProducts.length !== 0)
+                        {
+                            for(var i = 0; i<$scope.finalSelectedProducts.length ; i++)
+                                {
+                                    $scope.productsList.push($scope.finalSelectedProducts[i]);
+                                }
+                        }
+                        $scope.finalSelectedProducts = [];
+                        $scope.set = 0;
+                        $scope.checkForEmptyarray = 1;
+                                         var uniques = [];
+                                 uniques = _.map(_.groupBy($scope.productsList,function(doc){return doc.productid;}),function(grouped){return grouped[0];});
+                                 $scope.productsList = [];
+                                 $scope.productsList = angular.copy(uniques);
+                                 $rootScope.OZNotify('All products removed from checklist', 'success');
+        }
     };
 
     $scope.assignDiscountsToProducts = function()
