@@ -159,7 +159,7 @@ angular.module('oz.OrderZappApp')
           return ManageSellerService.Pickup_Address.GetPickupAddress({providerid:$rootScope.selectedproviderid}).$promise;
         },
         StateDataList: function(GetLocationService, $rootScope) {
-          return GetLocationService.LocationData.GetAllLocationData({keydata: 'state', data:'IN'}).$promise;
+          return GetLocationService.LocationData.GetAllLocationData({keydata: 'state', data:'india'}).$promise;
         },
         CityDataList: function(GetLocationService, StateDataList, $rootScope) {
           if (StateDataList.success && StateDataList.success.states.length !==0) {
@@ -298,9 +298,9 @@ angular.module('oz.OrderZappApp')
         StateData: function(GetLocationService, CountryData, $rootScope) {
           if (CountryData.success && CountryData.success.country.length !== 0) {
             var countries = CountryData.success.country;
-            var result = countries.indexOf("IN");
+            var result = countries.indexOf("india");
             if (result !== -1) {
-              return GetLocationService.LocationData.GetAllLocationData({keydata: 'state', data:'IN'}).$promise;
+              return GetLocationService.LocationData.GetAllLocationData({keydata: 'state', data:'india'}).$promise;
             } else {
               return GetLocationService.LocationData.GetAllLocationData({keydata: 'state', data:CountryData.success.country[0]}).$promise;
             }
