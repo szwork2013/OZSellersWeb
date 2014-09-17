@@ -127,8 +127,8 @@ $scope.getReceived=function(){
         criteriastatus:'recieved'
        },
         function (successData) {
+          $rootScope.hideSpinner();
         if (successData.success ) {
-           $rootScope.hideSpinner();
              $scope.orders=successData.success.suborders;
              $scope.hideReceivedOrders=false;
              // $rootScope.TotalOrdersCount=successData.success.suborders.length;
