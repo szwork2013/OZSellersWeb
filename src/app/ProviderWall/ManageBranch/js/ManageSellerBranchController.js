@@ -7,7 +7,7 @@ angular.module('oz.ProviderApp')
     $scope.providers_branch_list = [];
     $scope.addnewbranch = false;
     $scope.support_nos = [];
-    $scope.addbranch = {homedelivery: false,pickup: true, chargeinpercent:false , 'operationHours' : {'from': {'hours' : '', 'minutes' : ''}, 'to' : {'hours' : '', 'minutes' : ''}}, 'timeslots' : [{'from': {'hours':'', 'minutes': ''}, 'to': {'hours': '',' minutes': ''}}, {'from': {'hours':'', 'minutes': ''}, 'to': {'hours': '', 'minutes': ''}}]};
+    $scope.addbranch = {homedelivery: false,pickup: true, chargeinpercent:false , 'operationHours' : {'from': {'hours' : '', 'minutes' : ''}, 'to' : {'hours' : '', 'minutes' : ''}}, 'timeslots' : [{'from': {'hours':'', 'minutes': ''}, 'to': {'hours': '',' minutes': ''}}]};
     $scope.form = {};
     $scope.selectedprovider = {};
     $scope.showBranchDetail = false;

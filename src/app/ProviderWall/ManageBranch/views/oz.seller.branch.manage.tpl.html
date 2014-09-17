@@ -168,7 +168,7 @@
 			     			<p><small style="color:red;" ng-show="((timeslotForm.totimeinhours.$dirty && timeslotForm.totimeinhours.$invalid) || (timeslotForm.totimeinminutes.$dirty && timeslotForm.totimeinminutes.$invalid)) || (form.addBranchForm.submitted && (timeslotForm.totimeinhours.$invalid || timeslotForm.totimeinminutes.$invalid))">*Please enter valid delivery time slot hours and minutes in (numbers only and hours should be in range [0-23] and minutes should be in range [00-59])</small></p>
 			     		</div>
 			     		<div class="col-md-2">
-			     			<h5 ng-show="$index > 1"><a href="" class="pull-right" ng-click="removeSlots(slot)"><i class="fa fa-times"></i></a></h5>
+			     			<h5 ng-show="$index > 0"><a href="" class="pull-right" ng-click="removeSlots(slot)"><i class="fa fa-times"></i></a></h5>
 			     		</div>
 			     	</ng-form>
 		     	</div>
