@@ -140,7 +140,6 @@ angular.module('oz.ProviderApp')
 
     $scope.manageDeliveryAreaAvailability = function(){
       $scope.deliveryAvailablityArea = [];
-      $scope.form.locationForm.$setPristine();
       $scope.AreaUnderZipcode = [];
       $scope.edit_delivery_available = [];
       $scope.viewAreaAvailability = false;
