@@ -124,6 +124,7 @@ angular.module('oz.ProviderApp')
     // function to send and stringify user registration data to Rest APIs
     $scope.jsonAddBranchData = function(){
       var timeslots = [];
+      var validated_timeslots = [];
       for (var i = 0; i < $scope.addbranch.timeslots.length; i++) {
         if ((parseInt($scope.addbranch.timeslots[i].from.hours) < parseInt($scope.addbranch.timeslots[i].to.hours)) || ( (parseInt($scope.addbranch.timeslots[i].from.hours) == parseInt($scope.addbranch.timeslots[i].to.hours)) && (parseInt($scope.addbranch.timeslots[i].from.minutes) < parseInt($scope.addbranch.timeslots[i].to.minutes)))) {
           var from_hrs = parseInt($scope.addbranch.timeslots[i].from.hours);
@@ -135,6 +136,28 @@ angular.module('oz.ProviderApp')
           timeslots.push({from:from_timeslot, to: to_timeslot});
         } 
       } 
+
+      for (var i = 0; i < timeslots.length; i++) {
+        if(i == 0) {
+          validated_timeslots.push({from:timeslots[i].from, to: timeslots[i].to});
+        } else if(i > 0){  
+          if (timeslots[i].from >= timeslots[i-1].from && timeslots[i].from <= timeslots[i-1].to) {
+            $rootScope.OZNotify("Every Delivery Time Slots must have different time intervals.",'error');
+          } else {
+            if (timeslots[i].to >= timeslots[i-1].from && timeslots[i].to <= timeslots[i-1].to) {
+              $rootScope.OZNotify("Every Delivery Time Slots must have different time intervals.",'error');
+            } else {
+              if ((timeslots[i].from < timeslots[i-1].from) && (timeslots[i-1].to < timeslots[i].to)) {
+                $rootScope.OZNotify("Every Delivery Time Slots must have different time intervals.",'error');
+              } else{
+                validated_timeslots.push({from:timeslots[i].from, to: timeslots[i].to});
+              }
+            }
+          } 
+        }
+      }; 
+
+      console.log(validated_timeslots);
       if ((parseInt($scope.addbranch.operationHours.from.hours) < parseInt($scope.addbranch.operationHours.to.hours)) || ( (parseInt($scope.addbranch.operationHours.from.hours) == parseInt($scope.addbranch.operationHours.to.hours)) && (parseInt($scope.addbranch.operationHours.from.minutes) < parseInt($scope.addbranch.operationHours.to.minutes)))) {
         if (($scope.addbranch.timeslots.length == timeslots.length) && ($scope.addbranch.timeslots.length > 0  && timeslots.length > 0)) {
           var supportnos = $scope.addbranch.supportno;
@@ -175,7 +198,7 @@ angular.module('oz.ProviderApp')
                   'from' : working_from_time,
                   'to' : working_to_time
                 },
-                'deliverytimingslots': timeslots
+                'deliverytimingslots': validated_timeslots
               }  
           };
           return JSON.stringify(Branchdata); 
@@ -209,16 +232,20 @@ angular.module('oz.ProviderApp')
     $scope.addSellerBranch = function(){
       if ($scope.form.addBranchForm.$valid) {
         if ($scope.jsonAddBranchData()) {
-          $rootScope.showSpinner();
-          ManageBranchService.addBranch($scope.jsonAddBranchData());
+          console.log($scope.jsonAddBranchData());
+          // $rootScope.showSpinner();
+          // ManageBranchService.addBranch($scope.jsonAddBranchData());
         } else {
           $scope.form.addBranchForm.submitted = true;
+          console.log($scope.jsonAddBranchData());
         }    
       } else {
         $log.debug('incorrect data');
+        console.log($scope.jsonAddBranchData());
         $scope.form.addBranchForm.submitted = true;
       }
     }
+
 
     var cleanupEventAddBranchDone = $scope.$on("addBranchDone", function(event, message){
       $log.debug(message);
