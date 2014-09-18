@@ -7,53 +7,60 @@
 		</div>
 	</div>
 	<div style="margin:0px;" class="row">
-		<div class="col-md-2">
+		<form class="css-form" name="form.locationForm" novalidate>
+			<div class="col-md-2">
 
-			<div id="oz-signup-input-group" class="input-group">
-				<p class="text-muted">Please Select Country</p>
-	 			<input name="country" class="form-control" type="text" placeholder="country" required ng-model="country" typeahead="country for country in countries | filter:$viewValue | limitTo:6" ng-blur="" />
+				<div id="oz-signup-input-group" class="input-group">
+					<p class="text-muted">Please Select Country</p>
+		 			<input name="country" class="form-control" type="text" placeholder="country" required ng-model="location.country" typeahead="country for country in countries | filter:$viewValue | limitTo:6" typeahead-on-select="" />
+		 			<small style="color:red;" ng-show="(form.locationForm.country.$dirty && form.locationForm.country.$invalid)">*Please select country from provided list only.</small>
+				</div>
+
+			</div>		
+
+			<div class="col-md-2">
+
+				<div id="oz-signup-input-group" class="input-group">
+					<p class="text-muted">Please Select State</p>
+		 			<input id="state" name="state" class="form-control" type="text" placeholder="state" required ng-model="location.state" typeahead="state for state in states | filter:$viewValue | limitTo:6" typeahead-on-select="getCityForState(location.state)" ng-blur="getCity(location.state)"/>
+		 			<small style="color:red;" ng-show="(form.locationForm.state.$dirty && form.locationForm.state.$invalid)">*Please select state from provided list only.</small>
+				</div>
+
+			</div>	
+
+			<div class="col-md-2">
+
+				<div id="oz-signup-input-group" class="input-group">
+					<p class="text-muted">Please Select City</p>
+		 			<input id="city" name="city" class="form-control" type="text" placeholder="city" required ng-model="location.city" typeahead="city for city in cities | filter:$viewValue | limitTo:6" typeahead-on-select="getZipcodeForCity(location.city)" ng-blur="getZipcode(location.city)" />
+		 			<small style="color:red;" ng-show="(form.locationForm.city.$dirty && form.locationForm.city.$invalid)">*Please select city from provided list only.</small>
+				</div>
+
 			</div>
+			
+			<div class="col-md-2">	
 
-		</div>		
+				<div id="oz-signup-input-group" class="input-group">
+					<p class="text-muted">Please Select Zipcode*</p>
+		 			<input id="zipcode" name="zipcode" class="form-control" type="text" placeholder="zipcode" ng-model="location.zipcode" ng-pattern="/^[0-9]{6}$/" typeahead="zipcode for zipcode in zipcodes | filter:$viewValue | limitTo:6" typeahead-on-select="getAreaForZipcode(location.zipcode)" ng-blur="getArea(location.zipcode)" />
+		 			<small style="color:red;" ng-show="(form.locationForm.zipcode.$dirty && form.locationForm.zipcode.$invalid)">*Please select zipcode from provided list only.</small>
+				</div>			
 
-		<div class="col-md-2">
-
-			<div id="oz-signup-input-group" class="input-group">
-				<p class="text-muted">Please Select State</p>
-	 			<input id="state" name="state" class="form-control" type="text" placeholder="state" required ng-model="state" typeahead="state for state in states | filter:$viewValue | limitTo:6" ng-blur="getCityForState(state)" />
 			</div>
+			<div class="col-md-1">
+				<p style="margin:10px auto;"><center>Or</center></p>
+			</div>	
+			<div class="col-md-2">	
 
-		</div>	
+				<div id="oz-signup-input-group" class="input-group">
+					<p class="text-muted">Please Select Area*</p>
+		 			<input id="area" name="area" class="form-control" type="text" placeholder="area" ng-model="locationarea.area" typeahead="locationarea as locationarea.area for locationarea in locationareas | filter:$viewValue | limitTo:6" typeahead-on-select="getAvailabilityForArea(locationarea.area)" ng-blur="getAvailability(locationarea.area)"/>
+		 			<small style="color:red;" ng-show="(form.locationForm.area.$dirty && form.locationForm.area.$invalid)">*Please select area from provided list only.</small>
+				</div>			
 
-		<div class="col-md-2">
-
-			<div id="oz-signup-input-group" class="input-group">
-				<p class="text-muted">Please Select City</p>
-	 			<input id="city" name="city" class="form-control" type="text" placeholder="city" required ng-model="city" typeahead="city for city in cities | filter:$viewValue | limitTo:6" ng-blur="getZipcodeForCity(city)" />
-			</div>
-
-		</div>
-		
-		<div class="col-md-2">	
-
-			<div id="oz-signup-input-group" class="input-group">
-				<p class="text-muted">Please Select Zipcode*</p>
-	 			<input id="zipcode" name="zipcode" class="form-control" type="text" placeholder="zipcode" required ng-model="zipcode" typeahead="zipcode for zipcode in zipcodes | filter:$viewValue | limitTo:6" ng-blur="getAreaForZipcode(zipcode)" />
-			</div>			
-
-		</div>
-		<div class="col-md-1">
-			<p style="margin:10px auto;"><center>Or</center></p>
-		</div>	
-		<div class="col-md-2">	
-
-			<div id="oz-signup-input-group" class="input-group">
-				<p class="text-muted">Please Select Area*</p>
-	 			<input id="area" name="area" class="form-control" type="text" placeholder="area" required ng-model="locationarea.area" typeahead="locationarea as locationarea.area for locationarea in locationareas | filter:$viewValue | limitTo:6" ng-blur="getAvailabilityForArea(locationarea.area)" />
-			</div>			
-
-		</div>	
-		<div class="col-md-1"></div>	
+			</div>	
+			<div class="col-md-1"></div>	
+		</form>
 	</div>
 
 	<!-- Delivery Charge add view start -->

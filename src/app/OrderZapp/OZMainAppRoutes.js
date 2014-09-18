@@ -317,28 +317,6 @@ angular.module('oz.OrderZappApp')
             }
           }
         },
-        ZipcodeData: function(GetLocationService, CityData, $rootScope) {
-          if (CityData.success && CityData.success.city.length !==0) {
-            var cities = CityData.success.city;
-            var result = cities.indexOf("Pune");
-            if (result !== -1) {
-              return GetLocationService.LocationData.GetAllLocationData({keydata: 'zipcode', data:'Pune'}).$promise;
-            } else {
-              return GetLocationService.LocationData.GetAllLocationData({keydata: 'zipcode', data:CityData.success.city[0]}).$promise;
-            }
-          }
-        },
-        AreaData: function(GetLocationService, CityData, $rootScope){
-          if (CityData.success && CityData.success.city.length !==0) {
-            var cities = CityData.success.city;
-            var result = cities.indexOf("Pune");
-            if (result !== -1) {
-              return GetLocationService.LocationArea.GetAllAreaForCity({data:'Pune'}).$promise;
-            } else {
-              return GetLocationService.LocationArea.GetAllAreaForCity({data:CityData.success.city[0]}).$promise;
-            }
-          }
-        },
         checkIfSessionExist: function(UserSettingService, $rootScope) {
           return UserSettingService.CheckIfUserLoggedin.checkUserSession().$promise;
         }
