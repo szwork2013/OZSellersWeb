@@ -232,16 +232,16 @@ angular.module('oz.ProviderApp')
     $scope.addSellerBranch = function(){
       if ($scope.form.addBranchForm.$valid) {
         if ($scope.jsonAddBranchData()) {
-          console.log($scope.jsonAddBranchData());
-          // $rootScope.showSpinner();
-          // ManageBranchService.addBranch($scope.jsonAddBranchData());
+          $log.debug($scope.jsonAddBranchData());
+          $rootScope.showSpinner();
+          ManageBranchService.addBranch($scope.jsonAddBranchData());
         } else {
           $scope.form.addBranchForm.submitted = true;
-          console.log($scope.jsonAddBranchData());
+          $log.debug($scope.jsonAddBranchData());
         }    
       } else {
         $log.debug('incorrect data');
-        console.log($scope.jsonAddBranchData());
+        $log.debug($scope.jsonAddBranchData());
         $scope.form.addBranchForm.submitted = true;
       }
     }
