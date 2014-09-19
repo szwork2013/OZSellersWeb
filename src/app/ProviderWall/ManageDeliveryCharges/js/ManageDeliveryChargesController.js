@@ -406,7 +406,7 @@ angular.module('oz.ProviderApp')
 
     $scope.getAvailability = function(area) {
       if (area !== '' && area !== undefined) {
-        if ($scope.current.area !== area) {
+        if ($scope.current.area !== area.area) {
           $timeout(function() {
             $scope.get_Availability(area)
           }, 500);
