@@ -88,7 +88,7 @@ angular.module('oz.ProviderApp')
 
     var cleanupEventChange_in_provideridDone = $scope.$on("change_in_providerid", function(event, data){
       $log.debug('change_in_providerid ' + data);
-      $scope.form.locationForm.$setPristine();
+      // $scope.form.locationForm.$setPristine();
       $scope.deliveryAvailablityArea = [];
       $scope.AreaUnderZipcode = [];
       $scope.edit_delivery_available = [];
@@ -103,7 +103,7 @@ angular.module('oz.ProviderApp')
 
     var cleanupEventChange_in_provideridDone = $scope.$on("change_in_branchid", function(event, data){
       $log.debug('change_in_branchid ' + data);
-      $scope.form.locationForm.$setPristine();
+      // $scope.form.locationForm.$setPristine();
       $scope.deliveryAvailablityArea = [];
       $scope.AreaUnderZipcode = [];
       $scope.edit_delivery_available = [];

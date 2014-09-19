@@ -25,7 +25,7 @@ angular.module('oz.ProviderApp')
     		Get_Area_For_Zipcode: $resource('/api/location?key=:keydata&value=:data', {}, { area_for_zipcode: { method: 'GET', params: { keydata: '@keydata', data: '@data' } } }),
     		Get_Area_For_Delivery: $resource('/api/branchdeliverycharges/:branchid?zipcode=:zipcode', {}, { area_for_delivery: { method: 'GET', params: { branchid: '@branchid', zipcode: '@zipcode' } } }),
     		Add_Charges_For_Delivery: $resource('/api/managedeliverycharges/:branchid', {}, { manage_delivery_charges: { method: 'PUT', params: { branchid: '@branchid'} } }),
-    		Get_AllAvailableAreas_For_Delivery: $resource('/api/branchdeliverycharges/:branchid', {}, { all_brancharea_for_delivery: { method: 'GET' } }),
+    		Get_AllAvailableAreas_For_Delivery: $resource('/api/branchdeliverycharges/:branchid', {}, { all_brancharea_for_delivery: { method: 'GET' }, params: { branchid: '@branchid'} }),
 	      Get_Area_For_City: $resource('api/location/area?city=:data&result=jsonarray', {}, { Get_All_Area_List: {method: 'GET'} })
     	};
 	    var DeliveryChargeService = {};
