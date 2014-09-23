@@ -247,21 +247,28 @@
 
 <!-- Innvoice ////////////////////////////////// -->
 <div class="hidecustinfo">
-<div class="headingDiv"> 
- <span class="bold"> Customer Info & Invoice </span> 
-</div>
-<div class="row" >
-  <div>
-     <div  class="col-md-4">
-        <span class="bold">Mobile No:</span>
-        <span ng-bind="order.consumer.mobileno"> </span>
-    </div>
-      <div  class="col-md-6">
-        <span class="bold">Email:</span>
-        <span ng-bind="order.consumer.email " class="breakword"> </span>
-    </div>
+  <div class="headingDiv"> 
+   <span class="bold"> Customer Info & Invoice </span> 
   </div>
-</div>
+  <div class="table-responsive" >
+    <table class="table table-condensed" >
+      <tr>
+        <td style="border-top:none">
+           <span class="bold">Name:</span>
+            <span  ng-bind="order.consumer.name"> </span>
+        </td>
+         <td style="border-top:none">
+           <span class="bold">Mobile No:</span>
+            <span ng-bind="order.consumer.mobileno"> </span>
+        </td>
+         <td style="border-top:none">
+           <span class="bold">Email:</span>
+            <span ng-bind="order.consumer.email " class="breakword"> </span>
+        </td>
+
+      </tr>
+    </table>
+  </div>
 </div>
 
 
@@ -391,26 +398,29 @@
 <a  style="color:black" href="" ng-init="showCustInfo=false" ng-click="showCustInfo = showCustInfo === false ? true: false;"><i class="fa fa-arrow-down"></i> <span class="bold"> Customer Info & Invoice </span> </a>
 
 </div>
-<div class="row" ng-show="showCustInfo==true">
-  <div>
-
-
-     <div  class="col-md-4">
-        <span class="bold">Mobile No:</span>
+<div class="table-responsive" ng-show="showCustInfo==true">
+<table class="table table-condensed" >
+  <tr>
+    <td style="border-top:none">
+       <span class="bold">Name:</span>
+        <span  ng-bind="order.consumer.name"> </span>
+    </td>
+     <td style="border-top:none">
+       <span class="bold">Mobile No:</span>
         <span ng-bind="order.consumer.mobileno"> </span>
-    </div>
-
-      <div  class="col-md-6">
-        <span class="bold">Email:</span>
+    </td>
+     <td style="border-top:none">
+       <span class="bold">Email:</span>
         <span ng-bind="order.consumer.email " class="breakword"> </span>
-    </div>
-     <div  class="col-md-2">
-       <div class="pull-right" ng-show="(  order.status=='packing' || order.status=='factorytostore' || order.status=='indelivery'  ||  order.status=='ordercomplete'  )">
+    </td>
+     <td style="border-top:none">
+         <div class="pull-right" ng-show="(  order.status=='packing' || order.status=='factorytostore' || order.status=='indelivery'  ||  order.status=='ordercomplete'  )">
         <a ng-click="printInvoice(order.suborderid,selectedBranchId)" href="" class="btn btn-default btn-sm ">  Invoice <span class= "fa fa-print "></span></a>
        </div>
-    </div>
+    </td>
+  </tr>
+</table>
 
-  </div>
 </div>
        
 
