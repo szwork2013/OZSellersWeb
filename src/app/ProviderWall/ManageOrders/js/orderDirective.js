@@ -86,7 +86,9 @@ $scope.convertMomentFormat = function(time)
         }
         else{
            if(data.error.code=='AL001'){
-            $rootScope.showModal();
+             $('#calenderModal').modal('hide');
+             $('#cancelReasonModal').modal('hide');
+             $rootScope.showModal();
           }
           $scope.NodeliveryTimeSlot=true;
           $scope.deliveryTimeSlot=[];
@@ -297,6 +299,8 @@ $scope.getDate=function(dayorder){
         $rootScope.OZNotify(data.error.message, 'error');  
         $log.debug(data.error.message);
         if(data.error.code=='AL001'){
+          $('#calenderModal').modal('hide');
+          $('#cancelReasonModal').modal('hide');
           $rootScope.showModal();
         }
    }
