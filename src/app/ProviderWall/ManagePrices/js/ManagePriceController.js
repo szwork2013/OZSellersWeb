@@ -135,6 +135,7 @@ $scope.updatePrices=function(product){
       }
       else{
           if(data.error.code=='AL001'){
+            $('#priceConfirmModal').modal('hide');
             $rootScope.showModal();
           }
          $rootScope.OZNotify(data.error.message, 'error');  
