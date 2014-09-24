@@ -24,7 +24,9 @@ html,body{
 textarea {
   resize: none;
 }
-
+.borderless td {
+    border-top: none;
+}
 #oz-main-view {
 	min-height:100%;
 	padding-bottom: 50px;
