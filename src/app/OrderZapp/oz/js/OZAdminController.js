@@ -66,7 +66,7 @@ angular.module('oz.UserApp')
     var tempProviderArray = [];
 
     $scope.application = {'version' : '', 'description' : ''};
-
+// Manage category Search all level categories in manage category
     var cleanUpEventGotAllCategories = $scope.$on("gotAllCategoriesContent",function(event,data){
 		    if(data.error)
 		    {
@@ -110,6 +110,8 @@ angular.module('oz.UserApp')
     var cleanUpEventNotGotAllCategories = $scope.$on("notGotAllCategories",function(event,data){
             $rootScope.OZNotify('Some issue with server! Please try after some time', 'error');
     });
+
+// Manage category Search all level categories in manage category
 
     $scope.fetchLevelIIContent = function()
     { 
@@ -172,6 +174,9 @@ angular.module('oz.UserApp')
       }
     };
 
+    //end
+
+//adding content into the categories
 
     $scope.addToLavelFirst = function()
     {
@@ -187,10 +192,6 @@ angular.module('oz.UserApp')
     	OZWallService.addToLowerCategories($scope.levelOneIds.categoryid, $scope.content);
     };
 
-    // $scope.addToLevelThree = function()
-    // {
-    // 	OZWallService.addToLowerCategories($scope.le)
-    // }
 
     $scope.addToLevelThree = function()
     {
@@ -205,6 +206,8 @@ angular.module('oz.UserApp')
       console.log(JSON.stringify($scope.content)+'----'+ $scope.levelThreeIds.categoryid);
       OZWallService.addToLowerCategories($scope.levelThreeIds.categoryid, $scope.content);
     }
+
+    //end
 
      var cleanUpEventAddToCategoryFirsts = $scope.$on("addedToFirstCategory",function(event,data){
 		    if(data.error)
@@ -230,12 +233,7 @@ angular.module('oz.UserApp')
             $rootScope.OZNotify('Some issue with server! Please try after some time', 'error');
     });
 
-    // $scope.test = function(content)
-    // {
-    // 	alert(content);
-    // };
-
-     var cleanUpEventCategoryAddedSuccessfully = $scope.$on("insertToLowerCategorySuccess",function(event,data){
+    var cleanUpEventCategoryAddedSuccessfully = $scope.$on("insertToLowerCategorySuccess",function(event,data){
 		    if(data.error)
 		    {
     	      if(data.error.code === 'AL001')
@@ -258,6 +256,7 @@ angular.module('oz.UserApp')
     var cleanUpEventCategoryNotaddedSuccessfully = $scope.$on("insertToLowerCategoryError",function(event,data){
             $rootScope.OZNotify('Some issue with server! Please try after some time', 'error');
     });
+// The following function will refresh all the category id fields    
 
     $scope.refreshArrayLists = function()
     {
@@ -277,6 +276,7 @@ angular.module('oz.UserApp')
     	list.editing = false;
     };
 
+ //changing category options
     $scope.modifyCategoryName = function(list)
     {
     	if(list.categoryname === '')
@@ -313,6 +313,11 @@ angular.module('oz.UserApp')
             $rootScope.OZNotify('Some issue with server! Please try after some time', 'error');
     });
 
+
+// End of Manage Category    
+
+
+//Manage user defined tags
     var cleanUpEventGotAllTags= $scope.$on("gotAllTags",function(event,data){
             if(data.error)
             {
@@ -416,6 +421,10 @@ angular.module('oz.UserApp')
     var cleanUpEventTagRemoveFailure = $scope.$on("productTagNotDeleted",function(event,data){
             $rootScope.OZNotify('Some issue with server! Please try after some time', 'error');
     });
+
+//end
+
+// Seller Participation agreement    
 
    $scope.allProvidersContent = [];
 
@@ -582,6 +591,10 @@ angular.module('oz.UserApp')
         OZWallService.getAllSellerAgreementContent(list.providerid);
       }
     };
+
+// en
+
+// Manage product configuration    
 
     $scope.getLevelThreeContent = function()
     {
@@ -814,6 +827,8 @@ angular.module('oz.UserApp')
             $rootScope.OZNotify('Some issue with server! Please try after some time', 'error');
     });
 
+
+// Order configuration
     $scope.addOrderStatus = function()
     {
       if($scope.order.index === '' || $scope.regexForNumbers.test($scope.order.index) === false)
@@ -956,6 +971,8 @@ angular.module('oz.UserApp')
     //       OZWallService.getAllAcceptedProviders();alert('test');
     // };
 
+//End    
+// Provider accepance
     OZWallService.getAllAcceptedProviders();
 
     $scope.assignCategoryDeleteCriteria = function(index, categoryid)
@@ -990,6 +1007,9 @@ angular.module('oz.UserApp')
     {
       $rootScope.OZNotify('Some issue with the server! Please try again after some time', 'error');
     });
+ //End
+ 
+ //Transaction processing fees   
 
     $scope.providerPercentEdit = function(provider)
     {
@@ -1041,7 +1061,7 @@ angular.module('oz.UserApp')
     {
       $rootScope.OZNotify('Some issue with the server! Please try after some time', 'error');
     });
-
+// Apk upload
     $scope.onAPKSelect = function($files)  {
      for (var i = 0; i < $files.length; i++) {
       if(($files[i].name.split('.').pop() == 'apk')){
@@ -1111,7 +1131,7 @@ angular.module('oz.UserApp')
                       });
                }       
     };
-
+//End
     $scope.$on('$destroy', function(event, message) 
     {
         cleanUpEventGotAllCategories();

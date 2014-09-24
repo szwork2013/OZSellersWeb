@@ -68,7 +68,7 @@ angular.module('oz.UserApp')
     $scope.typeadheadFaqTitleArray = ['Refunds, Cancellation, Returns', 'Payments', 'Discounts', 'OrderZapp', 'Delivery', 'Order'];
 
     $scope.newFaqContentObject = {'question' : '', 'answer' : '', 'questionheading' : ''};
-
+//Tab synchronisation
     $scope.trigger = function()
     {
       $scope.active.init = true;
@@ -83,6 +83,11 @@ angular.module('oz.UserApp')
             $scope.active.category = true;
             $scope.active.analytics = false;
             $scope.active.policies = false;
+            $scope.showSOrderView = 0;
+            $scope.branchContent = [];
+            $scope.currentBranchId = '';
+            $scope.orders = [];
+            $scope.products = [];
     };
 
     $scope.triggerPoliciesWizard = function()
@@ -91,6 +96,11 @@ angular.module('oz.UserApp')
        $scope.active.category = false;
        $scope.active.policies = true;
        $scope.active.analytics = false;
+       $scope.showSOrderView = 0;
+          $scope.branchContent = [];
+            $scope.currentBranchId = '';
+             $scope.orders = [];
+            $scope.products = [];
     };
 
     $scope.triggerAnalyticsWizard = function()
@@ -99,8 +109,13 @@ angular.module('oz.UserApp')
        $scope.active.category = false;
        $scope.active.policies = false;
        $scope.active.analytics = true;
+       $scope.showSOrderView = 0;
+          $scope.branchContent = [];
+            $scope.currentBranchId = '';
+             $scope.orders = [];
+            $scope.products = [];
     };
-  
+//End  
     $scope.providerlogo = '';
       
      $scope.showSpinners = 0;
@@ -117,7 +132,7 @@ angular.module('oz.UserApp')
      $scope.feedbackContentObject = [];
    
      $scope.showRadioButtonss = 0;
-
+// Event listner from search controller
      $scope.$on('branch', function (event, name, branches, image, providerid)
       {
               $scope.emptyAllContent();
@@ -132,7 +147,7 @@ angular.module('oz.UserApp')
               $scope.active.init = true;
               // $state.transitionTo('');
       });
-
+//End
      $scope.clearTemplatecontent = function()
      {
                 $scope.template.content = '';
@@ -149,15 +164,17 @@ angular.module('oz.UserApp')
           $scope.viewOrderContent = 0;
           $scope.orderContentObject = {};
       };
-
+//Response from search controller
       $scope.$on('order', function(event, content)
       {
           $scope.orderContentObject = content; 
           $scope.showSOrderView = 1;
           $scope.controlWallView = 0;
+          $state.transitionTo('oz.ozWall.ozOrderViewContent');
+          $scope.trigger();
           // console.log('content from suborder search '+ content);
       });
- 
+//End  
      $scope.showOrderContent = function(branchid)
      {   
          $scope.orders = [];              $scope.hideLoadMore = 0; 
@@ -364,6 +381,41 @@ angular.module('oz.UserApp')
     });
 
 
+    $scope.loadMoreOrder = function(id, ordertype)
+    { 
+          $scope.showSpinners = 1;
+          OZWallService.loadMoreOrder(id, ordertype);
+    };
+
+     var cleanUpEventLoadMore = $scope.$on("more",function(event,data){
+        if(data.error)
+        {
+                if(data.error.code === 'AL001')
+                  {
+                        $rootScope.showModal();
+                  }
+                  else
+                  {$rootScope.OZNotify(data.error.message,'error');  $scope.showSpinners = 0;}
+        }
+        if(data.success)
+        {      $scope.showSpinners = 0;
+               for (var j = 0 ; j<data.success.orders.length; j++)
+               {
+                      $scope.orders.push(data.success.orders[j]);
+               }
+               if(data.success.orders.length <10)
+               {
+                 $scope.hideLoadMore = 1;
+               }
+        } 
+    });
+
+    var cleanUpEventLoadMoreFail = $scope.$on("fail",function(event,data){
+            $rootScope.OZNotify('Some issue with server! Please try after some time', 'error');
+    });
+// Manage order done
+
+//Manage T&C Help SA etc
     $scope.sendTemplateContent = function(type)
     {   
       OZWallService.insertTemplateContent($scope.jsonTemplateContent(type), type);
@@ -505,7 +557,7 @@ angular.module('oz.UserApp')
         $scope.showTextAngular = 1;
 
     };
-
+//Seller acceptance module
     $scope.accept = function(id)
     {
           OZWallService.acceptProviderRequest(id, 'accept');
@@ -537,11 +589,6 @@ angular.module('oz.UserApp')
     var cleanUpEventproviderRequestAcceptORRejectFail = $scope.$on("providerRequestNotAccepted",function(event,data){
             $rootScope.OZNotify('Some issue with server! Please try after some time', 'error');
     });
-
-    // $scope.getAllProviderList = function()
-    // {
-      
-    // };
     
     $scope.getAllProvidersList = function()
     {
@@ -571,39 +618,8 @@ angular.module('oz.UserApp')
             $rootScope.OZNotify('Some issue with server! Please try after some time', 'error');
     });
 
-    $scope.loadMoreOrder = function(id, ordertype)
-    { 
-          $scope.showSpinners = 1;
-          OZWallService.loadMoreOrder(id, ordertype);
-    };
-
-     var cleanUpEventLoadMore = $scope.$on("more",function(event,data){
-        if(data.error)
-        {
-                if(data.error.code === 'AL001')
-                  {
-                        $rootScope.showModal();
-                  }
-                  else
-                  {$rootScope.OZNotify(data.error.message,'error');  $scope.showSpinners = 0;}
-        }
-        if(data.success)
-        {      $scope.showSpinners = 0;
-               for (var j = 0 ; j<data.success.orders.length; j++)
-               {
-                      $scope.orders.push(data.success.orders[j]);
-               }
-               if(data.success.orders.length <10)
-               {
-                 $scope.hideLoadMore = 1;
-               }
-        } 
-    });
-
-    var cleanUpEventLoadMoreFail = $scope.$on("fail",function(event,data){
-            $rootScope.OZNotify('Some issue with server! Please try after some time', 'error');
-    });
-
+   
+// View user feedback
     $scope.getAllFeedbackContent = function()
     {
        OZWallService.getAllFeedbacks();
@@ -632,7 +648,8 @@ angular.module('oz.UserApp')
     var cleanUpEventNotGotFeedback = $scope.$on("notGotFeedbackContent",function(event,data){
             $rootScope.OZNotify('Some issue with server! Please try after some time', 'error');
     });
-
+//End
+// Help module
     var cleanUpEventGotAllHelpContent = $scope.$on("gotHelpContent",function(event,data){
         if(data.error)
         {
@@ -768,7 +785,7 @@ angular.module('oz.UserApp')
     var cleanUpEventNotAddedHelpContent = $scope.$on("notAddedHelpContent",function(event,data){
             $rootScope.OZNotify('Some issue with server! Please try after some time', 'error');
     });
-
+// Help module done
 
     $scope.$on('$destroy', function(event, message) 
     {
