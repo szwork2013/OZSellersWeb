@@ -705,6 +705,7 @@ $scope.getSelectedProduct = function (product1) {
  $scope.handleGetProductError=function(error){
     //error code check here
     if(error.code=='AL001'){
+      $('#changeProductModal').modal('hide');
       $rootScope.showModal();
     }
     else{
@@ -846,6 +847,7 @@ $scope.getSelectedProduct = function (product1) {
             if (successData.success == undefined) {
               // $rootScope.OZNotify(successData.error.message, 'error');
                if(successData.error.code=='AL001'){
+                        $('#addProductModal').modal('hide');
                         $rootScope.showModal();
                       }
                $log.debug(successData.error.message);
