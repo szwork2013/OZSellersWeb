@@ -177,10 +177,18 @@ angular.module('oz.ProviderApp')
 
     $scope.getCity = function(state) {
       if (state !== '' && state !== undefined) {
-        if ($scope.current.state !== state) {
+        if ($scope.current.state !== undefined && $scope.current.state !== state) {
           $timeout(function() {
-            $scope.get_City(state)
+            $scope.get_City(state);
           }, 500);
+        }
+        else {
+          var result = $scope.states.indexOf(state);
+          if (result !== -1) {
+            $scope.get_City(state);
+          } else {
+            $rootScope.OZNotify("Please select state from the provided list." , 'error');   
+          }
         }
       }
     };
@@ -276,10 +284,17 @@ angular.module('oz.ProviderApp')
 
     $scope.getZipcode = function(city) {
       if (city !== '' && city !== undefined) {
-        if ($scope.current.city !== city) {
+        if ($scope.current.city !== undefined && $scope.current.city !== city) {
           $timeout(function() {
-            $scope.get_Zipcode(city)
+            $scope.get_Zipcode(city);
           }, 500);
+        } else {
+          var result = $scope.cities.indexOf(city);
+          if (result !== -1) {
+            $scope.get_Zipcode(city);
+          } else {
+            $rootScope.OZNotify("Please select city from the provided list." , 'error');   
+          }
         }
       }
     };
@@ -442,14 +457,14 @@ angular.module('oz.ProviderApp')
             if (result !== -1) {
               if (available_areas[result] == $scope.AllBranchAreaList[result].coverage.area) {
                 $scope.viewAreaAvailability = true;
-                $scope.delivery_available.push({value:$scope.AllBranchAreaList[result].value, coverage:{area:$scope.AllBranchAreaList[result].coverage.area, city:$scope.AllBranchAreaList[result].coverage.city, zipcode:$scope.AllBranchAreaList[result].coverage.zipcode}, available:true});
+                $scope.delivery_available.push({value:$scope.AllBranchAreaList[result].value, minorderamt:$scope.AllBranchAreaList[result].minorderamt, maxorderamt:$scope.AllBranchAreaList[result].maxorderamt, coverage:{area:$scope.AllBranchAreaList[result].coverage.area, city:$scope.AllBranchAreaList[result].coverage.city, zipcode:$scope.AllBranchAreaList[result].coverage.zipcode}, available:true});
                 $scope.edit_delivery_available = angular.copy($scope.delivery_available);
                 $rootScope.hideSpinner();
               } 
             } else {
               $scope.viewAddAreaAvailability = true;
               $scope.viewEditAreaAvailability = false;
-              $scope.add_availability.push({value:0, coverage:{area:availability_for_area, city:availability_for_city, zipcode:availability_for_zipcode}, available:false})
+              $scope.add_availability.push({value:0, minorderamt:0, maxorderamt:0, coverage:{area:availability_for_area, city:availability_for_city, zipcode:availability_for_zipcode}, available:false})
               $rootScope.hideSpinner();
             }          
           }
@@ -573,10 +588,10 @@ angular.module('oz.ProviderApp')
             var result = deliveryArea.indexOf(arealist[i]);
             if (result !== -1) {
               if (deliveryArea[result] == $scope.deliveryAvailablityArea[result].coverage.area) {
-                $scope.delivery_available.push({value:$scope.deliveryAvailablityArea[result].value, coverage:{area:$scope.deliveryAvailablityArea[result].coverage.area, city:city, zipcode:zipcode}, available:true})
+                $scope.delivery_available.push({value:$scope.deliveryAvailablityArea[result].value, minorderamt:$scope.deliveryAvailablityArea[result].minorderamt, maxorderamt:$scope.deliveryAvailablityArea[result].maxorderamt, coverage:{area:$scope.deliveryAvailablityArea[result].coverage.area, city:city, zipcode:zipcode}, available:true});
               }
             } else {
-                $scope.delivery_available.push({value:0, coverage:{area:arealist[i], city:city, zipcode:zipcode}, available:false})
+                $scope.delivery_available.push({value:0, minorderamt:0, maxorderamt:0, coverage:{area:arealist[i], city:city, zipcode:zipcode}, available:false})
             }
           } 
           console.log($scope.delivery_available);
@@ -587,7 +602,7 @@ angular.module('oz.ProviderApp')
           $scope.viewAddAreaAvailability = true;
           $scope.viewEditAreaAvailability = false;
           for (var i = 0; i < arealist.length; i++) {
-            $scope.add_availability.push({value:0, coverage:{area:arealist[i], city:availability_for_city, zipcode:zipcode}, available:false})
+            $scope.add_availability.push({value:0, minorderamt:0, maxorderamt:0, coverage:{area:arealist[i], city:availability_for_city, zipcode:zipcode}, available:false})
           }
         } 
         $rootScope.OZNotify(data.success.message,'success'); 
@@ -626,16 +641,22 @@ angular.module('oz.ProviderApp')
         availability_for_city = city;
         console.log(add_availability);
         for (var i = 0; i < add_availability.length; i++) {
-          add_area_availability.push({value:add_availability[i].value, coverage:{area:add_availability[i].coverage.area, city:add_availability[i].coverage.city, zipcode:add_availability[i].coverage.zipcode}, available:add_availability[i].available})
+          if (add_availability[i].maxorderamt == 0 || parseInt(add_availability[i].minorderamt) <= parseInt(add_availability[i].maxorderamt)) {
+            add_area_availability.push({value:add_availability[i].value, minorderamt:add_availability[i].minorderamt, maxorderamt:add_availability[i].maxorderamt, coverage:{area:add_availability[i].coverage.area, city:add_availability[i].coverage.city, zipcode:add_availability[i].coverage.zipcode}, available:add_availability[i].available});
+          }
         };
         if (add_area_availability.length > 0) {
-          $rootScope.showSpinner();
-          var zipcode = add_area_availability[0].coverage.zipcode;
-          var data = $scope.jsonAddDeliveryAvailabilityData(add_area_availability);
-          $log.debug(data);
-          $scope.deliveryChargeError = false;
-          console.log(data);
-          ManageDeliveryChargesService.AddDeliveryAvailability(data, zipcode);
+          if (add_area_availability.length == add_availability.length) {
+            $rootScope.showSpinner();
+            var zipcode = add_area_availability[0].coverage.zipcode;
+            var data = $scope.jsonAddDeliveryAvailabilityData(add_area_availability);
+            $log.debug(data);
+            $scope.deliveryChargeError = false;
+            console.log(data);
+            ManageDeliveryChargesService.AddDeliveryAvailability(data, zipcode);
+          } else {
+            $rootScope.OZNotify("Minimum order value should be less than or equal to maximum order value.", 'error');   
+          }
         }
       } else {
         $scope.deliveryChargeError = true;
@@ -658,7 +679,7 @@ angular.module('oz.ProviderApp')
               $scope.viewAreaAvailability = true;
               $scope.viewAddAreaAvailability = false;
               $scope.viewEditAreaAvailability = false;
-              $scope.delivery_available.push({value:$scope.add_availability[i].value, coverage:{area:$scope.add_availability[i].coverage.area, city:$scope.add_availability[i].coverage.city, zipcode:$scope.add_availability[i].coverage.zipcode}, available:true});
+              $scope.delivery_available.push({value:$scope.add_availability[i].value, minorderamt:$scope.add_availability[i].minorderamt, maxorderamt:$scope.add_availability[i].maxorderamt, coverage:{area:$scope.add_availability[i].coverage.area, city:$scope.add_availability[i].coverage.city, zipcode:$scope.add_availability[i].coverage.zipcode}, available:true});
               $scope.edit_delivery_available = angular.copy($scope.delivery_available);
             } 
           };
@@ -709,15 +730,27 @@ angular.module('oz.ProviderApp')
     } 
 
     $scope.editAreaDeliveryAvailability = function(editDeliveryCharge){
+      var edit_area_availability = [];
       var zipcode = editDeliveryCharge[0].coverage.zipcode;
       console.log(zipcode);
       if ($scope.form.editDeliveryChargeForm.$valid) {
-        $rootScope.showSpinner();
-        $scope.deliveryChargeError = false;
-        $scope.form.editDeliveryChargeForm.submitted = false;
-        var data = $scope.jsonEditDeliveryAvailabilityData(editDeliveryCharge);
-        $log.debug(data);
-        ManageDeliveryChargesService.EditDeliveryAvailability(data, zipcode);
+        for (var i = 0; i < editDeliveryCharge.length; i++) {
+          if (editDeliveryCharge[i].maxorderamt == 0 || parseInt(editDeliveryCharge[i].minorderamt) <= parseInt(editDeliveryCharge[i].maxorderamt)) {
+            edit_area_availability.push({value:editDeliveryCharge[i].value, minorderamt:editDeliveryCharge[i].minorderamt, maxorderamt:editDeliveryCharge[i].maxorderamt, coverage:{area:editDeliveryCharge[i].coverage.area, city:editDeliveryCharge[i].coverage.city, zipcode:editDeliveryCharge[i].coverage.zipcode}, available:editDeliveryCharge[i].available});
+          }
+        };
+        if (edit_area_availability.length > 0) {
+          if (edit_area_availability.length == editDeliveryCharge.length) {
+            $rootScope.showSpinner();
+            $scope.deliveryChargeError = false;
+            $scope.form.editDeliveryChargeForm.submitted = false;
+            var data = $scope.jsonEditDeliveryAvailabilityData(edit_area_availability);
+            $log.debug(data);
+            ManageDeliveryChargesService.EditDeliveryAvailability(data, zipcode);
+          } else {
+            $rootScope.OZNotify("Minimum order value should be less than or equal to maximum order value.", 'error');   
+          }
+        }
       } else {
         $scope.deliveryChargeError = true;
         $scope.form.editDeliveryChargeForm.submitted = true;
@@ -740,13 +773,13 @@ angular.module('oz.ProviderApp')
               $scope.viewAreaAvailability = false;
               $scope.viewAddAreaAvailability = true;
               $scope.viewEditAreaAvailability = false;
-              $scope.add_availability.push({value:0, coverage:{area:$scope.edit_delivery_available[i].coverage.area, city:$scope.edit_delivery_available[i].coverage.city, zipcode:$scope.edit_delivery_available[i].coverage.zipcode}, available:false});
+              $scope.add_availability.push({value:0, minorderamt:0, maxorderamt:0, coverage:{area:$scope.edit_delivery_available[i].coverage.area, city:$scope.edit_delivery_available[i].coverage.city, zipcode:$scope.edit_delivery_available[i].coverage.zipcode}, available:false});
             } else {
               $scope.delivery_available = [];
               $scope.viewAreaAvailability = true;
               $scope.viewAddAreaAvailability = false;
               $scope.viewEditAreaAvailability = false;
-              $scope.delivery_available.push({value:$scope.edit_delivery_available[i].value, coverage:{area:$scope.edit_delivery_available[i].coverage.area, city:$scope.edit_delivery_available[i].coverage.city, zipcode:$scope.edit_delivery_available[i].coverage.zipcode}, available:true});
+              $scope.delivery_available.push({value:$scope.edit_delivery_available[i].value, minorderamt:$scope.edit_delivery_available[i].minorderamt, maxorderamt:$scope.edit_delivery_available[i].maxorderamt, coverage:{area:$scope.edit_delivery_available[i].coverage.area, city:$scope.edit_delivery_available[i].coverage.city, zipcode:$scope.edit_delivery_available[i].coverage.zipcode}, available:true});
               $scope.edit_delivery_available = angular.copy($scope.delivery_available);
             }
           };

@@ -68,7 +68,9 @@
 	<div ng-show="add_availability.length > 0 && viewAddAreaAvailability" style="margin:0px;" class="row">
 		<div style="margin:10px auto;" class="col-md-12">
 			<div style="padding:10px; margin:5px auto; " class="col-md-12">
-				<p style="letter-spacing:1px; font-size:13px;" class="text-info"><em>** While adding delivery charges for available areas please enter amount in rupees and those who have selected <strong>charge in percentage</strong> option while creating branches must enter amount in percentage. </em></p>
+				<p style="letter-spacing:1px; font-size:14px;" class="text-info"><em>** While adding delivery charges for available areas please enter amount in rupees and those who have selected <strong>charge in percentage</strong> option while creating branches must enter amount in percentage. </em></p>
+				<p style="letter-spacing:1px; font-size:14px;" class="text-info"><em>* Minimum order value means that delivery and delivery charges applied for that particular area only if order value is above or equal to mentioned amount. </em></p>
+				<p style="letter-spacing:1px; font-size:14px;" class="text-info"><em>* Maximum order value means that delivery and delivery charges applied for that particular area only if order value is below or equal to mentioned amount. </em></p>
 			</div>
 			<form class="css-form" name="form.addDeliveryChargeForm" novalidate>
 				<p><small style="color:red;" ng-show="(deliveryChargeError && form.addDeliveryChargeForm.submitted)">*Please enter delivery charge in digits only.</small></p>
@@ -79,8 +81,10 @@
 							<td width="15%">City</td>
 							<td width="15%">Zipcode</td>
 							<td width="15%">Area</td>
-							<td width="25%">Availability</td>
-							<td width="20%">Delivery Charge(<i class="fa fa-inr"></i>)</td>
+							<td width="15%">Availability</td>
+							<td width="10%">Delivery Charge(<i class="fa fa-inr"></i>&nbsp;or&nbsp;%)</td>
+							<td width="10%">*Minimum Value(<i class="fa fa-inr"></i>)</td>
+							<td width="10%">*Maxmium Value(<i class="fa fa-inr"></i>)</td>
 						</tr>
 					</thead>
 					<tbody>
@@ -91,7 +95,13 @@
 							<td>{{available.coverage.area}}</td>
 							<td><input type="checkbox" ng-model="available.available"></td>
 							<td>
-								<input style="width:80%" name="value" class="form-control" type="text" ng-pattern="/^[0-9]*$/" ng-model="available.value" required/>
+								<input style="width:90%" name="value" class="form-control" type="text" ng-pattern="/^[0-9]*$/" ng-model="available.value" required/>
+							</td>
+							<td>
+								<input style="width:90%" name="value" class="form-control" type="text" ng-pattern="/^[0-9]*$/" ng-model="available.minorderamt" required/>
+							</td>
+							<td>
+								<input style="width:90%" name="value" class="form-control" type="text" ng-pattern="/^[0-9]*$/" ng-model="available.maxorderamt" required/>
 							</td>
 						</tr>
 					</tbody>				
@@ -119,8 +129,10 @@
 						<td width="15%">City</td>
 						<td width="15%">Zipcode</td>
 						<td width="15%">Area</td>
-						<td width="25%">Availability</td>
-						<td width="20%">Delivery Charge(<i class="fa fa-inr"></i>)</td>
+						<td width="15%">Availability</td>
+						<td width="10%">Delivery Charge(<i class="fa fa-inr"></i>&nbsp;or&nbsp;%)</td>
+						<td width="10%">Minimum Value(<i class="fa fa-inr"></i>)</td>
+						<td width="10%">Maxmium Value(<i class="fa fa-inr"></i>)</td>
 					</tr>
 				</thead>
 				<tbody>
@@ -132,6 +144,8 @@
 						<td ng-show="area.available"><p style="font-size:12px; color:green;margin-left: 40px;"><i class="fa fa-check"></i></p></td>
 						<td ng-show="!area.available"><p style="font-size:12px; color:#d60027;margin-left: 40px;"><i class="fa fa-times"></i></p></td>
 						<td><p style="font-size:12px;letter-spacing:1px;">{{area.value}}</p></td>
+						<td><p style="font-size:12px;letter-spacing:1px;">{{area.minorderamt}}</p></td>
+						<td><p style="font-size:12px;letter-spacing:1px;">{{area.maxorderamt}}</p></td>
 					</tr>
 				</tbody>				
 			</table>
@@ -160,8 +174,10 @@
 							<td width="15%">City</td>
 							<td width="15%">Zipcode</td>
 							<td width="15%">Area</td>
-							<td width="25%">Availability</td>
-							<td width="20%">Delivery Charge(<i class="fa fa-inr"></i>)</td>
+							<td width="15%">Availability</td>
+							<td width="10%">Delivery Charge(<i class="fa fa-inr"></i>&nbsp;or&nbsp;%)</td>
+							<td width="10%">Minimum Value(<i class="fa fa-inr"></i>)</td>
+							<td width="10%">Maxmium Value(<i class="fa fa-inr"></i>)</td>
 						</tr>
 					</thead>
 					<tbody>
@@ -171,7 +187,9 @@
 							<td>{{area.coverage.zipcode}}</td>
 							<td>{{area.coverage.area}}</td>
 							<td><input type="checkbox" ng-model="area.available"></td>
-							<td><input style="width:80%" class="form-control" type="text" ng-pattern="/^[0-9]*$/" ng-model="area.value" required/></td>
+							<td><input style="width:90%" class="form-control" type="text" ng-pattern="/^[0-9]*$/" ng-model="area.value" required/></td>
+							<td><input style="width:90%" class="form-control" type="text" ng-pattern="/^[0-9]*$/" ng-model="area.minorderamt" required/></td>
+							<td><input style="width:90%" class="form-control" type="text" ng-pattern="/^[0-9]*$/" ng-model="area.maxorderamt" required/></td>
 						</tr>
 					</tbody>				
 				</table>

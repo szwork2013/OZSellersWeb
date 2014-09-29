@@ -8,8 +8,10 @@
 						<td width="15%">City</td>
 						<td width="15%">Zipcode</td>
 						<td width="15%">Area</td>
-						<td width="25%">Availability</td>
-						<td width="20%">Delivery Charge(<i class="fa fa-inr"></i>)</td>
+						<td width="15%">Availability</td>
+						<td width="10%">Delivery Charge(<i class="fa fa-inr"></i>&nbsp;or&nbsp;%)</td>
+						<td width="10%">Minimum Value(<i class="fa fa-inr"></i>)</td>
+						<td width="10%">Maxmium Value(<i class="fa fa-inr"></i>)</td>
 					</tr>
 				</thead>
 				<tbody>
@@ -20,6 +22,8 @@
 						<td>{{area.coverage.area}}</td>
 						<td><p style="font-size:12px;"><span class="label label-success"><i class="fa fa-check"></i>&nbsp;&nbsp;Available</span></p></td>
 						<td><p style="font-size:12px;letter-spacing:1px;">{{area.value}}</p></td>
+						<td><p style="font-size:12px;letter-spacing:1px;">{{area.minorderamt}}</p></td>
+						<td><p style="font-size:12px;letter-spacing:1px;">{{area.maxorderamt}}</p></td>
 					</tr>
 				</tbody>				
 			</table>
